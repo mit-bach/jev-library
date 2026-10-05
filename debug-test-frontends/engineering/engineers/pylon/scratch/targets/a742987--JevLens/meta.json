@@ -1,0 +1,15 @@
+{
+  "full_name": "a742987/JevLens",
+  "html_url": "https://github.com/a742987/JevLens",
+  "description": "Jev decision visualisation and debugging panel for coding agents. MCP server + local web timeline, confidence alerts and trace export.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-26T13:58:23Z",
+  "size": 125,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "ae1ff103d185197bc5a753c8aa21f6420cf1e0eb"
+}

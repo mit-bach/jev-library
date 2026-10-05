@@ -1,0 +1,444 @@
+#!/usr/bin/env node
+/**
+ * The command line.
+ *
+ * Three shapes, because "easy to wire in" means different things in a
+ * Makefile, in a shell and in another program:
+ *
+ *   jev-test-filter --base main --exec -- vitest run
+ *   jev-test-filter --base main --json          -> the whole scoring
+ *   jev-test-filter --base main                 -> arguments on stdout
+ *
+ * `--exec` is the one to reach for, and not merely out of convenience: it
+ * hands the arguments to `spawn` with no shell in between, so nothing can be
+ * re-split. The stdout form cannot offer that. A test name contains spaces
+ * almost by definition, `renderLine` therefore quotes it, and an unquoted
+ * `$(...)` word-splits without re-parsing those quotes -- so
+ * `vitest run $(jev-test-filter)` hands vitest five arguments where one was
+ * meant. The stdout form is for reading and for `eval`, and the help text
+ * says so.
+ *
+ * Only this file writes to a stream or exits.
+ */
+import { spawn } from "node:child_process";
+import { realpathSync } from "node:fs";
+import { mkdir, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
+import { displayName } from "./questions.ts";
+import { fullName } from "./filter.ts";
+import { loadDiff } from "./diff.ts";
+import { assessSnapshots, findSnapshotChangesInWorktree, loadSnapshotTestSources, snapshotTestFile } from "./snapshot.ts";
+import type { SnapshotReview } from "./snapshot.ts";
+import { loadContext } from "./context.ts";
+import { loadRecord, RECORD_DIR, RECORD_FILE, replay, run, saveRecord } from "./run.ts";
+import type { RunRecord, RunResult } from "./run.ts";
+import type { GateOptions } from "./gate.ts";
+import type { Framework, JevContext } from "./types.ts";
+
+const FORMATS: readonly string[] = ["vitest", "jest", "node", "bun", "playwright", "rust", "go", "auto"];
+
+/** Where a run leaves its answers, and what a bare `--replay` means. */
+export const DEFAULT_RECORD_PATH = `${RECORD_DIR}/${RECORD_FILE}`;
+
+export interface CliArgs {
+  base: string | null;
+  staged: boolean;
+  paths: string[];
+  format: Framework | null;
+  cutoff: number | undefined;
+  unsureBelow: number | undefined;
+  unsureMargin: number | undefined;
+  concurrency: number | undefined;
+  json: boolean;
+  dryRun: boolean;
+  verifySnapshots: boolean;
+  replayPath: string | null;
+  contextPath: string | null;
+  exec: string[] | null;
+  help: boolean;
+}
+
+/**
+ * One gate value from the command line.
+ *
+ * `Number()` alone is not enough: `Number("abc")` is NaN, and NaN compares
+ * false against every score, so a typo in `--cutoff` would deselect the whole
+ * suite without a word. An empty string is refused for the same reason
+ * `Number("")` is 0.
+ */
+function gateNumber(flag: string, raw: string | boolean | undefined): number | undefined {
+  if (raw === undefined) return undefined;
+  const text = String(raw).trim();
+  const n = Number(text);
+  if (text === "" || !Number.isFinite(n)) throw new Error(`${flag} needs a number, got ${JSON.stringify(String(raw))}`);
+  return n;
+}
+
+/**
+ * `--exec` takes everything after the `--` that follows it, so the runner's
+ * own flags never have to be escaped past this parser.
+ */
+export function parseCliArgs(argv: string[]): CliArgs {
+  const execAt = argv.indexOf("--exec");
+  const own = execAt === -1 ? argv : argv.slice(0, execAt);
+  let exec: string[] | null = null;
+  if (execAt !== -1) {
+    const rest = argv.slice(execAt + 1);
+    exec = rest[0] === "--" ? rest.slice(1) : rest;
+    if (exec.length === 0) throw new Error("--exec needs a command, e.g. --exec -- vitest run");
+  }
+
+  // `--replay` may be given without a path. parseArgs has no notion of an
+  // optional value -- a bare one is an error, and only `--replay=` reaches a
+  // default -- so a bare one is rewritten before parseArgs sees it. A path is
+  // a path; anything starting with `-` is the next option.
+  const args = own.map((a, i) =>
+    a === "--replay" && (i === own.length - 1 || own[i + 1]!.startsWith("-"))
+      ? `--replay=${DEFAULT_RECORD_PATH}`
+      : a,
+  );
+
+  const { values, positionals } = parseArgs({
+    args,
+    allowPositionals: true,
+    options: {
+      base: { type: "string" },
+      staged: { type: "boolean", default: false },
+      format: { type: "string", default: "auto" },
+      cutoff: { type: "string" },
+      "unsure-below": { type: "string" },
+      "unsure-margin": { type: "string" },
+      concurrency: { type: "string" },
+      json: { type: "boolean", default: false },
+      "dry-run": { type: "boolean", default: false },
+      "verify-snapshots": { type: "boolean", default: false },
+      replay: { type: "string" },
+      context: { type: "string" },
+      help: { type: "boolean", short: "h", default: false },
+    },
+  });
+
+  const format = String(values.format);
+  if (!FORMATS.includes(format)) {
+    throw new Error(`unknown --format ${format}; expected one of ${FORMATS.join(", ")}`);
+  }
+  if (values["verify-snapshots"] && (exec !== null || values.replay !== undefined)) {
+    throw new Error("--verify-snapshots cannot be combined with --exec or --replay");
+  }
+  // Refused rather than ignored: a replay re-gates answers already given to
+  // questions already asked, and a snapshot review asks no per-test question,
+  // so a context could change neither -- and silently doing nothing with a
+  // flag reads as the flag having worked.
+  if (values.context !== undefined && values.replay !== undefined) {
+    throw new Error("--context cannot be combined with --replay; the record already holds the answers its context produced");
+  }
+  if (values.context !== undefined && values["verify-snapshots"]) {
+    throw new Error("--context cannot be combined with --verify-snapshots");
+  }
+
+  return {
+    base: values.base === undefined ? null : String(values.base),
+    staged: Boolean(values.staged),
+    paths: positionals,
+    format: format === "auto" ? null : (format as Framework),
+    cutoff: gateNumber("--cutoff", values.cutoff),
+    unsureBelow: gateNumber("--unsure-below", values["unsure-below"]),
+    unsureMargin: gateNumber("--unsure-margin", values["unsure-margin"]),
+    concurrency: values.concurrency === undefined ? undefined : Number(values.concurrency),
+    json: Boolean(values.json),
+    dryRun: Boolean(values["dry-run"]),
+    verifySnapshots: Boolean(values["verify-snapshots"]),
+    replayPath: values.replay === undefined ? null : String(values.replay),
+    contextPath: values.context === undefined ? null : String(values.context),
+    exec,
+    help: Boolean(values.help),
+  };
+}
+
+/**
+ * The gate values the command line set, and nothing else.
+ *
+ * Absent rather than defaulted, because a flag is only one of the places a
+ * gate value comes from: whatever it leaves unset falls through to the
+ * record being replayed, then to the gate's own defaults.
+ */
+export function gateFlags(args: CliArgs): GateOptions {
+  return {
+    ...(args.cutoff === undefined ? {} : { cutoff: args.cutoff }),
+    ...(args.unsureBelow === undefined ? {} : { unsureBelow: args.unsureBelow }),
+    ...(args.unsureMargin === undefined ? {} : { unsureMargin: args.unsureMargin }),
+  };
+}
+
+/**
+ * Shell-safe single quoting, for a line a human will read or `eval`.
+ *
+ * Not for an unquoted `$(...)`: that word-splits without re-parsing quotes,
+ * so a quoted test name arrives as several arguments. `--exec` exists so
+ * that nobody has to get this right.
+ */
+function quote(arg: string): string {
+  return /^[A-Za-z0-9_@%+=:,./-]+$/.test(arg) ? arg : `'${arg.replace(/'/g, `'\\''`)}'`;
+}
+
+export function renderLine(res: RunResult): string {
+  return res.filter.argv.map(quote).join(" ");
+}
+
+/** The command to run, or null when nothing was selected. */
+export function execArgv(cmd: string[], res: RunResult): string[] | null {
+  if (res.filter.mode === "none") return null;
+  return [...cmd, ...res.filter.argv];
+}
+
+/** A Playwright list must exist before its runner can consume --test-list. */
+export async function materializeFilter(res: RunResult, cwd = process.cwd()): Promise<void> {
+  if (res.filter.mode !== "test-list" || !res.filter.testList) return;
+  const path = join(cwd, res.filter.argv[1]!);
+  await mkdir(dirname(path), { recursive: true });
+  await writeFile(path, `${res.filter.testList.join("\n")}\n`, "utf8");
+}
+
+/**
+ * The status the stdout form exits with when nothing was selected.
+ *
+ * An empty argv is what "everything was selected" and "nothing was selected"
+ * both look like on stdout, and the second must not read as the first: a
+ * shell that runs `eval "vitest run $(jev-test-filter)"` on an empty line
+ * runs the WHOLE suite, which is the opposite of what the tool decided.
+ * `--exec` has no such ambiguity, which is why it is the shape to reach for.
+ */
+export const EXIT_NOTHING_SELECTED = 3;
+
+/** The status of the stdout form, which is the only shape that needs one. */
+export function stdoutExitCode(res: RunResult): number {
+  return res.filter.mode === "none" ? EXIT_NOTHING_SELECTED : 0;
+}
+
+/**
+ * Whether this run's record is worth keeping.
+ *
+ * A fallback record holds no answers -- the run never got any, or gave up on
+ * the ones it had. Writing it over the last good record destroys exactly the
+ * material `--replay` exists to re-gate, and it was measured happening: one
+ * `HTTP 529 system_overloaded` replaced a complete scoring, and the next
+ * `--replay` reported the 529 instead of re-gating the earlier answers.
+ */
+export function shouldSaveRecord(record: RunRecord): boolean {
+  return record.fallback === null;
+}
+
+export function renderJson(res: RunResult): string {
+  return `${JSON.stringify(
+    {
+      framework: res.framework,
+      mode: res.filter.mode,
+      argv: res.filter.argv,
+      ...(res.filter.testList === undefined ? {} : { test_list: res.filter.testList }),
+      fallback: res.selection.fallback,
+      selected: res.selection.selected.length,
+      total: res.selection.all.length,
+      spent: res.spent,
+      tests: res.selection.verdicts.map((v) => ({
+        file: v.test.file,
+        ...(v.test.project === undefined ? {} : { project: v.test.project }),
+        name: displayName(v.test),
+        pattern_name: fullName(v.test),
+        line: v.test.line,
+        selected: v.selected,
+        reason: v.reason,
+        score: v.answer?.value ?? null,
+        confidence: v.answer?.confidence ?? null,
+      })),
+    },
+    null,
+    2,
+  )}\n`;
+}
+
+export function renderSnapshotReport(review: SnapshotReview): string {
+  if (review.entries.length === 0) return "No changed text snapshots.\n";
+  return `${review.entries.map((entry) =>
+    `${entry.status}\t${entry.file}\t${entry.kind}\tscore=${entry.score ?? "?"}\tconfidence=${entry.confidence ?? "?"}`,
+  ).join("\n")}\n`;
+}
+
+const HELP = `jev-test-filter — score every test against a git diff and emit runner arguments
+
+Usage:
+  jev-test-filter [options] --exec -- <command...>
+  jev-test-filter [options] [paths...]
+
+Options:
+  --base <ref>        compare against the merge base with <ref>, as a pull request does
+  --staged            use the staged change instead of the working tree
+  --format <name>     vitest | jest | node | bun | playwright | rust | go | auto  (default: auto)
+  --cutoff <n>        select at or above this score level (default: 2)
+  --unsure-below <n>  a confidence under this counts as unsure (default: 0.5)
+  --unsure-margin <n> rescue an unsure answer this far under the cutoff (default: 1)
+  --concurrency <n>   requests in flight at once
+  --json              print the full scoring instead of the arguments
+  --dry-run           extract and report without calling Jev
+  --verify-snapshots  review changed Vitest text snapshots without modifying files
+  --replay <file>     re-gate a recorded run offline (default: .jev-test-filter/last.json)
+  --context <file>    read flaker's jev-context: quarantined tests, failure history, gate defaults
+  --exec -- <cmd...>  append the arguments to <cmd...> and run it
+  -h, --help          this text
+
+Examples:
+  jev-test-filter --base main --exec -- vitest run
+  jev-test-filter --base main --format node --exec -- node --test
+  jev-test-filter --base main --format bun --exec -- bun test
+  jev-test-filter --base main --format playwright --exec -- npx playwright test
+  jev-test-filter --verify-snapshots --json
+  jev-test-filter --base main --format go --exec -- go test
+  jev-test-filter --base main --format rust --exec -- cargo test
+  jev-test-filter --base main --json > selection.json
+
+Rust is never discovered automatically: listing its tests builds the test
+targets, so it happens only under --format rust.
+
+Without --exec the arguments are written to stdout, shell-quoted. They are
+meant to be read, or passed through eval:
+
+  eval "vitest run $(jev-test-filter --base main)"
+
+An unquoted $(...) will not work: a test name contains spaces, so the
+arguments are quoted, and the shell word-splits them without re-parsing the
+quotes. Use --exec instead of working around it.
+
+Environment:
+  TYPESAFE_API_KEY    required unless --dry-run or --replay
+`;
+
+async function main(): Promise<number> {
+  let args: CliArgs;
+  try {
+    args = parseCliArgs(process.argv.slice(2));
+  } catch (err: unknown) {
+    process.stderr.write(`jev-test-filter: ${err instanceof Error ? err.message : String(err)}\n`);
+    return 2;
+  }
+  if (args.help) {
+    process.stdout.write(HELP);
+    return 0;
+  }
+
+  if (args.verifySnapshots) {
+    const diff = await loadDiff({ cwd: process.cwd(), base: args.base, staged: args.staged });
+    const revision = args.base ? "HEAD" : args.staged ? ":" : null;
+    const changes = (await findSnapshotChangesInWorktree(diff.text, process.cwd(), revision)).filter((change) =>
+      args.paths.length === 0 || args.paths.some((path) => {
+        const normalized = path.replace(/^\.\//, "").replace(/\/$/, "");
+        const testFile = snapshotTestFile(change);
+        return change.file === normalized || change.file.startsWith(`${normalized}/`)
+          || testFile === normalized || testFile?.startsWith(`${normalized}/`);
+      }));
+    const context = await loadSnapshotTestSources(process.cwd(), changes, 24_000, revision);
+    const review = args.dryRun
+      ? { entries: changes.map((change) => ({ ...change, status: "unknown" as const, score: null, confidence: null })), error: null, spent: null }
+      : await assessSnapshots(diff.text, diff.stat, undefined, changes, context);
+    if (review.error) process.stderr.write(`jev-test-filter: snapshot review incomplete (${review.error})\n`);
+    process.stdout.write(args.json ? `${JSON.stringify(review, null, 2)}\n` : renderSnapshotReport(review));
+    return 0;
+  }
+
+  let res: RunResult;
+  if (args.replayPath !== null) {
+    const record = await loadRecord(args.replayPath);
+    const selection = replay(record, gateFlags(args));
+    const { buildFilter } = await import("./filter.ts");
+    res = {
+      selection,
+      framework: record.framework,
+      filter: selection.fallback === null ? buildFilter(selection, record.framework) : { mode: "all", argv: [] },
+      record,
+      spent: null,
+    };
+  } else {
+    // Read before anything is asked: a context that cannot be used is a usage
+    // error, and paying for a run it would have changed is worse than stopping.
+    let context: JevContext | null = null;
+    if (args.contextPath !== null) {
+      try {
+        context = await loadContext(args.contextPath);
+      } catch (err: unknown) {
+        process.stderr.write(`jev-test-filter: ${err instanceof Error ? err.message : String(err)}\n`);
+        return 2;
+      }
+    }
+    res = await run({
+      base: args.base,
+      staged: args.staged,
+      paths: args.paths,
+      format: args.format,
+      dryRun: args.dryRun,
+      context,
+      ...(args.format === "playwright" && args.exec ? { playwrightCommand: args.exec } : {}),
+      ...gateFlags(args),
+      ...(args.concurrency === undefined ? {} : { concurrency: args.concurrency }),
+    });
+    if (shouldSaveRecord(res.record)) await saveRecord(process.cwd(), res.record);
+  }
+
+  if (res.selection.fallback !== null) {
+    process.stderr.write(`jev-test-filter: running everything (${res.selection.fallback})\n`);
+  } else {
+    const { selected, all } = res.selection;
+    process.stderr.write(`jev-test-filter: ${selected.length}/${all.length} tests selected (${res.filter.mode})\n`);
+  }
+
+  if (args.json) {
+    process.stdout.write(renderJson(res));
+    return 0;
+  }
+
+  try {
+    await materializeFilter(res);
+  } catch (err: unknown) {
+    process.stderr.write(`jev-test-filter: could not write Playwright test list; running everything (${err instanceof Error ? err.message : String(err)})\n`);
+    res.filter = { mode: "all", argv: [] };
+  }
+
+  if (args.exec) {
+    const argv = execArgv(args.exec, res);
+    if (argv === null) {
+      process.stderr.write("jev-test-filter: nothing selected; not running\n");
+      return 0;
+    }
+    return await new Promise<number>((resolve) => {
+      const child = spawn(argv[0]!, argv.slice(1), { stdio: "inherit" });
+      child.on("close", (code) => resolve(code ?? 1));
+      child.on("error", (err) => {
+        process.stderr.write(`jev-test-filter: ${err.message}\n`);
+        resolve(127);
+      });
+    });
+  }
+
+  process.stdout.write(`${renderLine(res)}\n`);
+  return stdoutExitCode(res);
+}
+
+/** Resolve npm's bin symlink before deciding whether this module is the entrypoint. */
+function isCliInvocation(argv1: string | undefined, moduleUrl: string): boolean {
+  if (!argv1) return false;
+  try {
+    return realpathSync(argv1) === realpathSync(fileURLToPath(moduleUrl));
+  } catch {
+    return false;
+  }
+}
+
+// Only run when invoked as a program, so the tests can import the renderers.
+if (isCliInvocation(process.argv[1], import.meta.url)) {
+  main().then(
+    (code) => { process.exitCode = code; },
+    (err: unknown) => {
+      process.stderr.write(`jev-test-filter: ${err instanceof Error ? err.message : String(err)}\n`);
+      process.exitCode = 1;
+    },
+  );
+}

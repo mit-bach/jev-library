@@ -1,0 +1,140 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PRSSECDVWJ3C49GMPBR717",
+  "at": "2026-09-17T04:09:11.374Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 63900,
+  "usage": {
+    "inputTokens": 60183,
+    "outputTokens": 2066,
+    "cacheReadTokens": 55936,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.018147462
+  },
+  "reasoningChars": 4129,
+  "reply": "\n\nTudo pronto pra sexta (18.09):\n\n- **Voo**: o mais barato saindo do Rio de manhã foi o **GOL G31410, SDU → CGH, 11:30–12:35, R$ 298** — segurado sem pagar (código **HLD-4471**). Atenção: a validade da reserva cai **quinta às 02:00**, então confirma antes disso se quiser manter. (O de 08:00 custava R$ 312, caso o de 11:30 fique apertado pra reunião das 14h.)\n- **Hotel**: **Ibis Paulista** a 1,1 km da Av. Paulista 1000, R$ 260/noite — **reservado** (confirmação **HTL-7781**), check-in sexta, check-out sábado. O Paulista Plaza (R$ 420, 0,6 km) também cabia no orçamento, se preferir mais perto.\n- **Agenda**: sexta das 08h às 18h bloqueada como \"Viagem SP\".\n- **Marina**: avisada por WhatsApp que a viagem está confirmada.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "06:00",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_2",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "Viagem pra SP confirmada! Sexta (18/09) vou de avião (GOL G31410, saindo de SDU às 11h30) e já reservei o hotel Ibis Paulista, 1 noite. Até lá!"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "\n\nTudo pronto pra sexta (18.09):\n\n- **Voo**: o mais barato saindo do Rio de manhã foi o **GOL G31410, SDU → CGH, 11:30–12:35, R$ 298** — segurado sem pagar (código **HLD-4471**). Atenção: a validade da reserva cai **quinta às 02:00**, então confirma antes disso se quiser manter. (O de 08:00 custava R$ 312, caso o de 11:30 fique apertado pra reunião das 14h.)\n- **Hotel**: **Ibis Paulista** a 1,1 km"
+    }
+  ]
+}

@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jev vs LLM · slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #000; --surface: #0a0a0a; --surface-2: #111; --border: #1f1f1f; --border-strong: #2c2c2c;
+    --text: #fff; --text-2: #b8b8b2; --text-3: #77776f; --lime: #c8f53a; --lime-ink: #0a0a0a; --grid: #181818;
+    --mode-direct: #3987e5; --mode-jev: #d95926;
+    --m1: #199e70; --m2: #c98500; --m3: #d55181; --m4: #9085e9; --m5: #e66767; --m6: #3987e5; --m7: #b5703a; --m8: #c06ad9; --m7: #d95926;
+    --good: #0ca30c; --warn: #fab219; --crit: #d03b3b;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace; --sans: "Inter", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font: 18px/1.45 var(--sans); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  #stage-wrap { position: fixed; inset: 0; display: grid; place-items: center; }
+  #stage { width: 1600px; height: 900px; position: relative; transform-origin: center; background: var(--bg); overflow: hidden; }
+  #stage::before { content: ""; position: absolute; right: 0; top: 0; width: 520px; height: 300px; background-image: radial-gradient(circle, #262626 1.2px, transparent 1.6px); background-size: 24px 24px; mask-image: linear-gradient(to left, #000, transparent); pointer-events: none; }
+  .slide { position: absolute; inset: 0; padding: 64px 90px 76px; opacity: 0; transform: translateX(40px); transition: opacity .35s ease, transform .35s ease; pointer-events: none; display: flex; flex-direction: column; }
+  .slide.on { opacity: 1; transform: none; pointer-events: auto; }
+  .slide.prev { transform: translateX(-40px); }
+  .crumb { font-family: var(--mono); font-size: 15px; color: var(--text-2); margin-bottom: 14px; }
+  .crumb b { color: var(--lime); font-weight: 600; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); border-radius: 999px; padding: 6px 14px; font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); width: max-content; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px var(--lime); display: inline-block; }
+  h1 { font-size: 78px; line-height: 1.0; letter-spacing: -.035em; font-weight: 800; margin: 22px 0 18px; }
+  h1 em, h2 em { font-style: normal; color: var(--lime); }
+  h2 { font-size: 44px; line-height: 1.05; letter-spacing: -.03em; font-weight: 800; margin: 12px 0 10px; }
+  .lead { color: var(--text-2); font-size: 22px; max-width: 900px; margin: 0 0 22px; }
+  .kicker { font-family: var(--mono); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--lime); margin-bottom: 8px; }
+  .row { display: flex; gap: 22px; flex: 1; min-height: 0; }
+  .col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .stat { padding: 26px 28px; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: 0; }
+  .stat .k { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--lime); }
+  .stat .v { font-size: 64px; font-weight: 800; letter-spacing: -.045em; line-height: 1.05; margin-top: 6px; color: var(--lime); }
+  .stat .v small { font-size: 16px; color: var(--text-2); font-weight: 400; letter-spacing: 0; margin-left: 8px; }
+  .stat .d { color: var(--text-2); font-size: 15px; margin-top: 4px; }
+  ul.bul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 21px; color: var(--text-2); }
+  ul.bul li::before { content: "+ "; color: var(--lime); font-weight: 700; }
+  ul.bul b { color: var(--text); font-weight: 600; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; min-height: 0; }
+  .card .hd { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-bottom: 1px solid var(--border); font-family: var(--mono); font-size: 12.5px; color: var(--text-2); }
+  .card .hd .dots { display: flex; gap: 5px; margin-right: 6px; } .card .hd .dots i { width: 8px; height: 8px; border-radius: 50%; background: #2e2e2e; display: block; }
+  .card .hd .t { color: var(--text); font-weight: 600; flex: 1; text-align: center; } .card .hd .tag { color: var(--lime); font-size: 11px; letter-spacing: .06em; }
+  .card .bd { padding: 14px 16px; overflow: hidden; flex: 1; min-height: 0; }
+  .card .ft { background: var(--lime); color: var(--lime-ink); font: 500 12px var(--mono); padding: 5px 14px; display: flex; gap: 22px; }
+  pre.code { margin: 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; font: 13.5px/1.5 var(--mono); color: var(--text-2); white-space: pre; overflow: hidden; }
+  pre.code .k { color: var(--lime); } pre.code .s { color: #9ec5f4; } pre.code .c { color: var(--text-3); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--mono); font-size: 12px; color: var(--text-2); margin: 2px 0 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; } .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; background: var(--c); }
+  svg { display: block; } svg text { fill: var(--text-2); font-family: var(--mono); font-size: 11px; } svg text.val { fill: var(--text); }
+  svg .grid line { stroke: var(--grid); } svg .axis line { stroke: var(--border-strong); } svg .ideal { stroke: var(--text-3); stroke-dasharray: 3 3; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--border-strong); border-radius: 999px; padding: 5px 12px; cursor: pointer; color: var(--text-2); background: transparent; font: 500 13px var(--mono); display: inline-flex; align-items: center; gap: 7px; }
+  .chip i { width: 8px; height: 8px; border-radius: 2px; background: var(--c, var(--text-3)); } .chip.on { color: var(--lime-ink); background: var(--lime); border-color: var(--lime); }
+  table { width: 100%; border-collapse: collapse; font: 14px var(--mono); }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--text-3); font-weight: 500; letter-spacing: .05em; text-transform: uppercase; font-size: 11px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tl { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+  .tl li { display: flex; gap: 10px; align-items: baseline; } .tl .k { flex: 0 0 90px; color: var(--text-3); font-family: var(--mono); font-size: 12px; }
+  .tok { display: inline-block; padding: 1px 8px; border-radius: 4px; border: 1px solid var(--border-strong); background: var(--surface-2); font-family: var(--mono); font-size: 13px; color: var(--text); }
+  .tok.jev { border-color: var(--mode-jev); } .tok.wrong { border-color: var(--crit); color: #ff9c9c; }
+  .conf { color: var(--text-3); font-family: var(--mono); font-size: 12px; }
+  .bignum { font-size: 150px; font-weight: 800; letter-spacing: -.05em; line-height: 1; color: var(--lime); }
+  .bignum small { font-size: 22px; color: var(--text-2); font-weight: 400; letter-spacing: 0; display: block; margin-top: 6px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; flex: 1; min-height: 0; align-items: start; }
+  .two > .card, .three > .card { max-height: 100%; }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; flex: 1; min-height: 0; }
+  .cats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .cat { border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; font-family: var(--mono); font-size: 13px; color: var(--text-2); display: flex; justify-content: space-between; }
+  .cat b { color: var(--lime); }
+  .pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; font-family: var(--mono); font-size: 13.5px; color: var(--text-2); }
+  .pairs span b { color: var(--text); font-weight: 500; } .pairs .vs { color: var(--lime); }
+  .finding { border-left: 3px solid var(--mode-jev); padding: 8px 14px; margin-bottom: 12px; }
+  .finding b { color: var(--text); } .finding .conf { display: block; margin-top: 4px; }
+  .foot { position: absolute; left: 90px; right: 90px; bottom: 28px; z-index: 2; display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 12.5px; color: var(--text-3); }
+  .foot .brand { display: flex; align-items: center; } .foot .brand svg { display: block; height: 28px; width: auto; }
+  #progress { position: absolute; left: 0; bottom: 0; height: 4px; background: var(--lime); width: 0; transition: width .3s; }
+  #notes { position: fixed; left: 0; right: 0; bottom: 0; background: #0d0d0d; border-top: 1px solid var(--border-strong); color: var(--text-2); font: 15px/1.5 var(--sans); padding: 14px 24px; display: none; max-height: 30vh; overflow: auto; z-index: 20; }
+  #notes.on { display: block; } #notes b { color: var(--lime); font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  #help { position: fixed; top: 12px; right: 16px; font: 12px var(--mono); color: var(--text-3); z-index: 20; }
+  .diagram text { font-family: var(--mono); font-size: 13px; fill: var(--text-2); } .diagram .box { fill: var(--surface); stroke: var(--border-strong); } .diagram .lime { stroke: var(--lime); } .diagram .t { fill: var(--text); font-weight: 600; font-size: 14px; }
+  .diagram .arrow { stroke: var(--text-3); stroke-width: 1.5; fill: none; marker-end: url(#ah); } .diagram .lane { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="help"></div>
+<div id="stage-wrap"><div id="stage">
+  <div id="slides"></div>
+  <div class="foot"><div class="brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 215 44" width="150" height="31"> <g transform="translate(0, 6)" fill="none" stroke="#FFFFFF"> <rect x="8" y="8" width="24" height="24" stroke-width="1"></rect> <rect x="4" y="4" width="24" height="24" stroke-width="1.5"></rect> <rect x="0" y="0" width="24" height="24" stroke-width="2"></rect> </g> <g font-family="Geist, Inter, ui-sans-serif, system-ui, sans-serif" letter-spacing="-0.6"> <text x="44" y="28" font-size="18" font-weight="600" fill="#FFFFFF">AI Coders <tspan font-weight="300" fill="#A1A1AA">Academy</tspan></text> </g> </svg></div><span id="counter"></span></div>
+  <div id="progress"></div>
+</div></div>
+<div id="notes"></div>
+
+<script src="charts.js"></script>
+<script>
+// ---------- strings (English default, Portuguese via the L key) ----------------
+const STR = {
+  en: {
+    help: "← → navigate · F fullscreen · N notes · E export HTML · L language · D dashboard",
+    modeDirect: "LLM direct", modeDirectShort: "direct", modeJev: "Jev classifier", modeJevShort: "jev",
+    noRun: "no run", noTrace: "no trace", none: "none",
+    counter: (i, n) => `jev vs llm · ${LANG.toUpperCase()} · ${i} / ${n}`,
+    notesHead: (i) => `notes · slide ${i}`,
+    // slide 1
+    n1: "Opening. The question of the study: in an agent with many tools, who should pick the next tool — the LLM reasoning on its own, or a specialized classifier in front of it?",
+    pill1: "case study · eve · typesafe jev · openrouter",
+    h1: "Who picks the tool:<br>the LLM or <em>Jev</em>?",
+    lead1: "Replacing the model's reasoning with a System-One classifier for tool selection in a personal agent with 100 tools.",
+    agenda1: "+ methodology", agenda2: "+ traces and evals", agenda3: (n) => `+ results across ${n} models`, agenda4: "+ where it stumbles",
+    // slide 2
+    n2: "The problem: on every step the agent resends all 100 tool definitions, and the model spends reasoning just to decide which one to call. That scales badly in tokens, cost and latency, and leaves room to confuse similarly named tools.",
+    k2: "the problem",
+    h2: "Every agent step carries the whole catalog and <em>thinks</em> to choose",
+    s2a: "tools in context", s2aSub: "per step", s2aD: "every definition, every time",
+    s2b: "input tokens per step", s2bD: "measured average in direct mode",
+    s2c: "decisions per task", s2cSub: "LLM calls", s2cD: "each one with reasoning on",
+    b2a: "<b>Cost grows with the catalog</b>, not with the task.",
+    b2b: "<b>Latency</b>: the model reasons before every tool call.",
+    b2c: "<b>Look-alike tools</b> (<code>flights_hold</code> × <code>flights_book</code>, <code>email_send</code> × <code>email_send_later</code>) become noise in the prompt.",
+    // slide 3
+    n3: "The idea: Jev is a System One model. It does not generate text; it answers closed questions (choice, score, noul) with probabilities and calibrated confidence, in hundreds of milliseconds. Proposal: Jev decides WHICH tool; the LLM decides HOW to call it, without reasoning.",
+    k3: "the idea",
+    h3: "Separate <em>which</em> tool from <em>how</em> to call it",
+    b3a: "<b>Jev (TypeSafe)</b> is a System One model: it does not generate text, it returns a typed decision.",
+    b3b: "A <b>choice</b> question with 100 tools + <code>respond_to_user</code> → pick, probability distribution and confidence.",
+    b3c: (lat) => `Measured classifier latency: <b>${lat}</b> per decision.`,
+    b3d: "The LLM runs with <b>reasoning off</b> (or the lowest it accepts) and only fills in the arguments of the chosen tool.",
+    c3: "jev · a real decision", c3tag: "choice · 101 options",
+    c3pick: (name, conf, ms) => `pick: ${name} · confidence ${conf}% · ${ms} ms`,
+    // slide 4
+    n4: "Architecture. Two modes of the same eve agent, selected by an environment variable. In direct mode the LLM sees all 100 tools on every step. In Jev mode, before each model call the dynamic resolver builds the conversation state, asks Jev and exposes only the chosen tool.",
+    k4: "architecture",
+    h4: "Two modes, <em>one</em> parameter apart",
+    d4lane1: "llm-direct mode", d4lane2: "jev-classifier mode",
+    d4user: "user", d4prompt: "prompt",
+    d4llmOn: "LLM · reasoning on", d4llmOnSub: "sees all 100 tools, picks and fills args", d4tokPerStep: (t) => `~${t} tokens in / step`,
+    d4tool: "tool", d4world: "mock world",
+    d4loop1: "result goes back to context · repeats until it answers",
+    d4jev: "Jev · System One", d4jevSub1: "state = compacted history", d4jevSub2: "choice(100 tools + respond) + noul(done?)",
+    d4oneTool: "1 tool",
+    d4llmOff: "LLM · reasoning off", d4llmOffSub1: "sees only the chosen tool", d4llmOffSub2: "fills in the arguments",
+    d4loop2: "result goes back · Jev decides again · respond_to_user ends",
+    d4code1: 'export const MODE = "llm-direct" | "jev-classifier"   ← the only difference between the branches',
+    d4code2: 'agent/tools/catalog.ts   defineDynamic({ "session.started": all 100 })   vs.   defineDynamic({ "step.started": jev picks 1 or none })',
+    // slide 5
+    n5: "How it was built. The agent is an eve (Vercel) project. Dynamic tools with defineDynamic: on the step.started event the resolver receives ctx.messages, builds the state, calls Jev through the TypeSafe SDK and returns a map with a single tool. Returning null means 'no tools': the model answers the user. The completion gate keeps it from answering too early.",
+    k5: "implementation · eve + typesafe sdk",
+    h5: "The router is a dynamic <em>step.started</em> resolver",
+    code5mode: "// agent/tools/catalog.ts (jev-classifier mode)",
+    code5noTools: "// no tools → answer", code5oneTool: "// only 1 tool exposed",
+    code5hundred: "// 100 tools + respond", code5noul: "has every requested action been done?", code5next: "nextBest", code5gate: "// gate",
+    b5a: "<b>eve</b> (Vercel): the agent is a folder; tools, evals and traces are native.",
+    b5b: "<b>ctx.messages</b> becomes <code>state</code>: the user request + actions already taken with truncated results.",
+    b5c: "The choice <b>criteria</b> = the same descriptions the LLM sees. One source of truth.",
+    b5d: "<b>Reasoning</b>: off where the endpoint allows it (GPT, DeepSeek); minimal (<code>low</code>) on Gemini, which cannot disable it.",
+    b5e: "<b>OpenRouter</b> for every model, with the upstream pinned on Gemini because of thought signatures.",
+    // slide 6
+    n6: "The catalog: 100 personal-assistant tools in 13 categories, with mock executors over a deterministic world (calendar, contacts, flights, expenses). Twelve look-alike name pairs were planted on purpose to measure 'wrong tool'.",
+    k6: "the catalog",
+    h6: "100 tools, <em>12 pairs</em> of look-alike names planted on purpose",
+    b6a: "<b>Deterministic</b> mock world: same calendar, contacts, flights and expenses for every run.",
+    b6b: "Each tool = name, description, zod schema and executor. The descriptions feed <b>both the LLM and Jev</b>.",
+    c6: "confusable pairs", c6tag: "calling the wrong sibling = wrong tool",
+    // slide 7
+    n7: "The six tasks: three basic and three complex. All of them carry a condition or an implicit ordering, and each defines the required steps (tool families) and the list of distractors. The ideal path is the minimum number of calls.",
+    k7: "the tasks",
+    h7: "6 multi-step requests with <em>conditions</em> and distractors",
+    lang7: "Prompts are sent to the agent in Portuguese: the benchmark persona is a Brazilian user (Rio/São Paulo, BRL, PIX). English translations are shown for reference only.",
+    th7id: "id", th7task: "task", th7tier: "tier", th7req: "required steps", th7ideal: "ideal",
+    tierComplex: "complex", tierBasic: "basic",
+    // slide 8
+    n8: "Traces. eve records a durable event stream per session: step start, requested actions, tool result, step end with token usage. The router writes Jev's decisions to a JSONL. The harness joins the two by session id and builds the per-step timeline.",
+    k8: "traces",
+    h8: "Two streams, joined by the <em>sessionId</em>",
+    c8a: "eve event stream",
+    c8aL1: "modelId, stepIndex", c8aL2: "reasoning text (when present)", c8aL3: "tool calls with arguments", c8aL4: "tool output and status", c8aL5: "finishReason + usage (tokens)", c8aL6: "final answer",
+    c8b: "jev-trace.jsonl", c8bTag: "1 line per decision",
+    c8c: (m) => `timeline · ${m} · jev · p4`, c8cTag: "built by the harness",
+    // slide 9
+    n9: "Evals. We use eve eval: each task is a defineEval that sends the prompt, waits for the turn to close and receives the full stream. From that we derive deterministic metrics — no LLM judge — and write one JSON per run that feeds this deck and the dashboard.",
+    k9: "evals and metrics",
+    h9: "<em>Deterministic</em> grading, no LLM judge",
+    code9persist: "// eval-results/&lt;mode&gt;/&lt;model&gt;/&lt;task&gt;.json",
+    code9cmd: "$ MODELS=all npm run eval:all      # 2 modes × 8 models × 6 tasks",
+    th9metric: "metric", th9def: "definition",
+    m9steps: "steps", m9stepsD: "LLM calls in the turn (<code>step.started</code>)",
+    m9tools: "tools / ideal", m9toolsD: "tool calls made vs. the ideal-path minimum",
+    m9wrong: "wrong tool", m9wrongD: "a call to a look-alike distractor",
+    m9compl: "completion", m9complD: "fraction of required steps covered",
+    m9eff: "efficiency", m9effD: "completion × ideal ÷ calls × ½ if a wrong tool was called",
+    m9tok: "tokens / cost", m9tokD: "reported usage × OpenRouter public price",
+    m9jev: "jev", m9jevD: "classifier decisions, with confidence, <code>done</code> and gate",
+    // slide 10
+    n10: "Results, steps and calls. In Jev mode there is always one tool per step plus a final answer step, so the number of LLM calls goes up. In exchange, tool calls stay closer to the ideal path. Switch the model with the chips.",
+    k10: "results · 1/3",
+    h10: "More steps, <em>fewer</em> unnecessary tool calls",
+    c10a: (m) => `${m} · model steps`, c10aTag: "LLM calls · fewer = better",
+    c10b: (m) => `${m} · tool calls`, c10bTag: "dashed = ideal path",
+    // slide 11
+    n11: "Tokens and cost: this is the main gain. With Jev the context no longer carries 100 tool definitions on every step. The reduction in input tokens, measured on the same model and the same tasks, lands between 75 and 85 percent, and cost drops in the same proportion.",
+    k11: "results · 2/3",
+    h11: "Where the classifier <em>pays for itself</em>",
+    big11: (n) => `input tokens with Jev vs. the same model choosing among 100 tools (average of ${n} models)`,
+    th11model: "model", th11tok: "tokens in", th11cost: "cost",
+    c11: "tokens per series · sum of the 6 tasks", c11tag: "reported usage",
+    l11in: "input · direct", l11inJev: "input · jev", l11out: "output", partIn: "input", partOut: "output",
+    // slide 12
+    n12: "Efficiency combines completion, adherence to the ideal path and the absence of wrong tools. An important finding: with the catalog as it is, no model fell for a look-alike tool in direct mode. The hypothesis that the LLM gets lost in the names was not confirmed here; Jev's gain is cost and step discipline, not precision.",
+    k12: "results · 3/3",
+    h12: "Efficiency and <em>wrong tool</em>",
+    c12: "efficiency ranking (0–100)", c12tag: "average of the 6 tasks", ideal: "ideal",
+    s12a: "wrong tool · direct", s12aD: (n) => `in ${n} runs`,
+    s12b: "wrong tool · jev", s12bD: (n, g) => `in ${n} runs · gate fired ${g}×`,
+    s12c: "completion · direct", s12d: "completion · jev", toolsPerTask: (n) => `${n} tools/task`,
+    // slide 13
+    n13: "Where Jev stumbles. Three patterns: the LLM invents arguments (attendee emails) and Jev, seeing the meeting created, never routes to the contact lookup; Jev wants to answer too early, hence the gate with the completion noul; and the wrong sibling of a tool shows up now and then in the classifier itself. The classifier decides between actions, but it cannot force a lookup the model skipped.",
+    k13: "where jev stumbles",
+    h13: "The classifier picks the action, but <em>does not force</em> the lookup",
+    b13a: "<b>Invented arguments.</b> In p5 the LLM fills in the attendees' emails from memory; the meeting \"works\" and Jev sees no reason to look up contacts.",
+    b13b: "<b>Answering early.</b> Without the gate, <code>respond_to_user</code> won with a step still pending. The <code>noul</code> \"all done?\" blocks it.",
+    b13c: "<b>Wrong sibling.</b> Jev itself confuses <code>task_create</code> × <code>task_create_subtask</code> or <code>alarm_set</code> × <code>reminder_create</code> in low-confidence decisions.",
+    b13d: (lat) => `<b>+1 call per step.</b> ~${lat} ms each; it pays off when the catalog is large.`,
+    c13: "non-ideal runs · jev", c13tag: "generated from the traces",
+    f13compl: "completion", f13wrong: "wrong tool:", f13skipped: "skipped step:", f13toolsIn: (t, s) => `${t} tools in ${s} steps`,
+    // slide 14
+    n14: "Conclusion and next steps. Use Jev as the router when the catalog is large and the cost per step matters. Combine it with confidence routing: below a threshold, hand the decision back to the LLM. Next experiments: hierarchical routing by category, closed-set arguments also via Jev, and a mandatory lookup before actions with a recipient.",
+    k14: "conclusion",
+    h14: "When to swap reasoning for <em>Jev</em>",
+    c14a: "use it when", c14aTag: "fit",
+    c14aL1: "Large catalog (tens to hundreds of tools).", c14aL2: "Cost and latency per step matter more than \"thinking out loud\".", c14aL3: "The tools have good descriptions: they are the classifier's criteria.",
+    c14b: "combine with", c14bTag: "guardrails",
+    c14bL1: "Completion gate (<code>noul</code>) before answering.", c14bL2: "Confidence routing: below the threshold, let the LLM choose.", c14bL3: "Mandatory lookups before actions with a recipient.",
+    c14c: "next steps", c14cTag: "roadmap",
+    c14cL1: "Hierarchical routing: category → tool.", c14cL2: "Closed-set arguments also via Jev (function-calling cookbook).", c14cL3: "Run <code>gpt-5.6-sol</code> and <code>opus-5</code>; more seeds per task.",
+    s14a: "input tokens", s14aD: "with Jev, same model",
+    s14b: "steps per task", s14bD: "one more per tool + answer",
+    s14c: "completion", s14cD: "direct → jev",
+    // slide 15
+    n15: "Closing: how to reproduce.",
+    h15: "Reproduce in <em>3 commands</em>",
+    code15a: "# OPENROUTER_API_KEY + TYPESAFE_API_KEY", code15b: "# 6 tasks × 8 models × 2 modes", code15c: "# dashboard at /  · slides at /slides.html",
+    b15: "Results in <code>eval-results/&lt;mode&gt;/&lt;model&gt;/&lt;task&gt;.json</code>, traces in <code>.eve/evals/</code> and <code>eval-results/jev-trace.jsonl</code>.",
+    pill15: "AI Coders Academy · empowering devs with AI",
+  },
+  pt: {
+    help: "← → navegar · F tela cheia · N notas · E exportar HTML · L idioma · D dashboard",
+    modeDirect: "LLM direto", modeDirectShort: "direto", modeJev: "Jev classificador", modeJevShort: "jev",
+    noRun: "sem execução", noTrace: "sem trace", none: "nenhuma",
+    counter: (i, n) => `jev vs llm · ${LANG.toUpperCase()} · ${i} / ${n}`,
+    notesHead: (i) => `notas · slide ${i}`,
+    n1: "Abertura. A pergunta do estudo: num agente com muitas tools, quem deveria escolher a próxima tool — o próprio LLM raciocinando, ou um classificador especializado na frente dele?",
+    pill1: "estudo de caso · eve · typesafe jev · openrouter",
+    h1: "Quem escolhe a tool:<br>o LLM ou o <em>Jev</em>?",
+    lead1: "Trocar o reasoning do modelo por um classificador System-One na seleção de tools de um agente pessoal com 100 ferramentas.",
+    agenda1: "+ metodologia", agenda2: "+ traces e evals", agenda3: (n) => `+ resultados em ${n} modelos`, agenda4: "+ onde tropeça",
+    n2: "O problema: em todo passo o agente reenvia as 100 definições de tool, e o modelo gasta reasoning só para decidir qual chamar. Isso escala mal em tokens, custo e latência, e abre espaço para confundir tools de nome parecido.",
+    k2: "o problema",
+    h2: "Cada passo do agente carrega o catálogo inteiro e <em>pensa</em> para escolher",
+    s2a: "tools no contexto", s2aSub: "por passo", s2aD: "todas as definições, sempre",
+    s2b: "tokens de entrada por passo", s2bD: "média medida no modo direto",
+    s2c: "decisões por tarefa", s2cSub: "chamadas ao LLM", s2cD: "cada uma com reasoning ligado",
+    b2a: "<b>Custo cresce com o catálogo</b>, não com a tarefa.",
+    b2b: "<b>Latência</b>: o modelo raciocina antes de cada tool call.",
+    b2c: "<b>Tools parecidas</b> (<code>flights_hold</code> × <code>flights_book</code>, <code>email_send</code> × <code>email_send_later</code>) viram ruído no prompt.",
+    n3: "A ideia: o Jev é um modelo System One. Ele não gera texto; responde a perguntas fechadas (choice, score, noul) com probabilidades e confiança calibrada, em centenas de milissegundos. Proposta: o Jev decide QUAL tool; o LLM decide COMO chamá-la, sem reasoning.",
+    k3: "a ideia",
+    h3: "Separar <em>qual</em> tool de <em>como</em> chamar",
+    b3a: "<b>Jev (TypeSafe)</b> é um modelo System One: não gera texto, devolve uma decisão tipada.",
+    b3b: "Pergunta <b>choice</b> com 100 tools + <code>respond_to_user</code> → escolha, distribuição de probabilidades e confiança.",
+    b3c: (lat) => `Latência medida do classificador: <b>${lat}</b> por decisão.`,
+    b3d: "O LLM roda com <b>reasoning desligado</b> (ou no mínimo aceito) e só preenche os argumentos da tool escolhida.",
+    c3: "jev · uma decisão real", c3tag: "choice · 101 opções",
+    c3pick: (name, conf, ms) => `escolha: ${name} · confiança ${conf}% · ${ms} ms`,
+    n4: "Arquitetura. Dois modos do mesmo agente eve, escolhidos por uma variável de ambiente. Na direta, o LLM vê as 100 tools em todo passo. Na Jev, antes de cada chamada ao modelo o resolver dinâmico monta o estado da conversa, consulta o Jev e expõe só a tool escolhida.",
+    k4: "arquitetura",
+    h4: "Dois modos, <em>um</em> parâmetro de diferença",
+    d4lane1: "modo llm-direct", d4lane2: "modo jev-classifier",
+    d4user: "usuário", d4prompt: "prompt",
+    d4llmOn: "LLM · reasoning ligado", d4llmOnSub: "vê as 100 tools, escolhe e preenche args", d4tokPerStep: (t) => `~${t} tokens in / passo`,
+    d4tool: "tool", d4world: "mundo mock",
+    d4loop1: "resultado volta ao contexto · repete até responder",
+    d4jev: "Jev · System One", d4jevSub1: "state = histórico compactado", d4jevSub2: "choice(100 tools + respond) + noul(done?)",
+    d4oneTool: "1 tool",
+    d4llmOff: "LLM · reasoning off", d4llmOffSub1: "vê só a tool escolhida", d4llmOffSub2: "preenche os argumentos",
+    d4loop2: "resultado volta · Jev decide de novo · respond_to_user encerra",
+    d4code1: 'export const MODE = "llm-direct" | "jev-classifier"   ← única diferença entre as branches',
+    d4code2: 'agent/tools/catalog.ts   defineDynamic({ "session.started": todas as 100 })   vs.   defineDynamic({ "step.started": jev escolhe 1 ou nenhuma })',
+    n5: "Como foi construído. O agente é um projeto eve (Vercel). Tools dinâmicas com defineDynamic: no evento step.started o resolver recebe ctx.messages, monta o estado, chama o Jev pelo SDK da TypeSafe e devolve um mapa com uma única tool. Retornar null significa 'sem tools': o modelo responde ao usuário. O gate de conclusão evita responder cedo demais.",
+    k5: "implementação · eve + typesafe sdk",
+    h5: "O roteador é um resolver dinâmico de <em>step.started</em>",
+    code5mode: "// agent/tools/catalog.ts (modo jev-classifier)",
+    code5noTools: "// sem tools → responde", code5oneTool: "// só 1 tool exposta",
+    code5hundred: "// 100 tools + respond", code5noul: "toda ação pedida já foi feita?", code5next: "proximaMelhor", code5gate: "// gate",
+    b5a: "<b>eve</b> (Vercel): agente como pasta; tools, evals e traces nativos.",
+    b5b: "<b>ctx.messages</b> vira <code>state</code>: pedido do usuário + ações já feitas com resultado truncado.",
+    b5c: "<b>Critérios</b> do choice = as mesmas descrições que o LLM vê. Uma fonte de verdade.",
+    b5d: "<b>Reasoning</b>: desligado onde o endpoint permite (GPT, DeepSeek); mínimo (<code>low</code>) no Gemini, que não deixa desligar.",
+    b5e: "<b>OpenRouter</b> para todos os modelos, com upstream fixo no Gemini por causa das thought signatures.",
+    n6: "O catálogo: 100 tools de assistente pessoal em 13 categorias, com executores mock sobre um mundo determinístico (agenda, contatos, voos, gastos). Doze pares de nomes parecidos foram plantados de propósito para medir 'tool errada'.",
+    k6: "o catálogo",
+    h6: "100 tools, <em>12 pares</em> de nomes parecidos plantados de propósito",
+    b6a: "Mundo mock <b>determinístico</b>: mesma agenda, contatos, voos e gastos para todas as execuções.",
+    b6b: "Cada tool = nome, descrição, schema zod e executor. As descrições alimentam <b>o LLM e o Jev</b>.",
+    c6: "pares confusáveis", c6tag: "chamar a irmã errada = tool errada",
+    n7: "As seis tarefas: três básicas e três complexas. Todas têm condição ou ordem implícita, e cada uma define as etapas obrigatórias (famílias de tools) e a lista de distratoras. O caminho ideal é o número mínimo de chamadas.",
+    k7: "as tarefas",
+    h7: "6 pedidos multi-etapa com <em>condições</em> e distratoras",
+    lang7: "Os prompts são enviados ao agente em português: a persona do benchmark é um usuário brasileiro (Rio/São Paulo, BRL, PIX).",
+    th7id: "id", th7task: "tarefa", th7tier: "nível", th7req: "etapas obrigatórias", th7ideal: "ideal",
+    tierComplex: "complexa", tierBasic: "básica",
+    n8: "Traces. O eve grava um stream de eventos durável por sessão: início de passo, ações pedidas, resultado da tool, fim de passo com uso de tokens. O roteador grava as decisões do Jev num JSONL. O harness junta os dois pelo id da sessão e monta a linha do tempo por passo.",
+    k8: "traces",
+    h8: "Dois streams, unidos pelo <em>sessionId</em>",
+    c8a: "stream de eventos do eve",
+    c8aL1: "modelId, stepIndex", c8aL2: "texto do reasoning (quando há)", c8aL3: "tool calls com argumentos", c8aL4: "saída e status da tool", c8aL5: "finishReason + usage (tokens)", c8aL6: "resposta final",
+    c8b: "jev-trace.jsonl", c8bTag: "1 linha por decisão",
+    c8c: (m) => `linha do tempo · ${m} · jev · p4`, c8cTag: "montada pelo harness",
+    n9: "Evals. Usamos o eve eval: cada tarefa é um defineEval que envia o prompt, espera o turno fechar e recebe o stream completo. Daí derivamos métricas determinísticas — sem juiz LLM — e gravamos um JSON por execução que alimenta este deck e o dashboard.",
+    k9: "evals e métricas",
+    h9: "Grading <em>determinístico</em>, sem juiz LLM",
+    code9persist: "// eval-results/&lt;modo&gt;/&lt;modelo&gt;/&lt;tarefa&gt;.json",
+    code9cmd: "$ MODELS=all npm run eval:all      # 2 modos × 8 modelos × 6 tarefas",
+    th9metric: "métrica", th9def: "definição",
+    m9steps: "passos", m9stepsD: "chamadas ao LLM no turno (<code>step.started</code>)",
+    m9tools: "tools / ideal", m9toolsD: "tool calls feitas vs. mínimo do caminho ideal",
+    m9wrong: "tool errada", m9wrongD: "chamada a uma distratora de nome parecido",
+    m9compl: "conclusão", m9complD: "fração das etapas obrigatórias cobertas",
+    m9eff: "eficiência", m9effD: "conclusão × ideal ÷ chamadas × ½ se houve tool errada",
+    m9tok: "tokens / custo", m9tokD: "usage reportado × preço público do OpenRouter",
+    m9jev: "jev", m9jevD: "decisões do classificador, com confiança, <code>done</code> e gate",
+    n10: "Resultados, passos e chamadas. No modo Jev há sempre uma tool por passo mais um passo final de resposta, então o número de chamadas ao LLM sobe. Em compensação as chamadas de tool ficam mais próximas do caminho ideal. Troque o modelo com os chips.",
+    k10: "resultados · 1/3",
+    h10: "Mais passos, <em>menos</em> chamadas de tool desnecessárias",
+    c10a: (m) => `${m} · passos do modelo`, c10aTag: "chamadas ao LLM · menos = melhor",
+    c10b: (m) => `${m} · chamadas de tool`, c10bTag: "tracejado = caminho ideal",
+    n11: "Tokens e custo: aqui está o ganho principal. Com o Jev, o contexto deixa de carregar 100 definições de tool a cada passo. A redução de tokens de entrada, medida no mesmo modelo e nas mesmas tarefas, fica entre 75 e 85 por cento, e o custo cai na mesma proporção.",
+    k11: "resultados · 2/3",
+    h11: "Onde o classificador <em>paga a conta</em>",
+    big11: (n) => `tokens de entrada com Jev vs. o mesmo modelo escolhendo entre 100 tools (média de ${n} modelos)`,
+    th11model: "modelo", th11tok: "tokens in", th11cost: "custo",
+    c11: "tokens por série · soma das 6 tarefas", c11tag: "usage reportado",
+    l11in: "entrada · direto", l11inJev: "entrada · jev", l11out: "saída", partIn: "entrada", partOut: "saída",
+    n12: "Eficiência combina conclusão, aderência ao caminho ideal e ausência de tool errada. Um dado importante: com o catálogo desta forma, nenhum modelo caiu em tool de nome parecido no modo direto. A hipótese de que o LLM se perde nos nomes não se confirmou aqui; o ganho do Jev é de custo e disciplina de passos, não de precisão.",
+    k12: "resultados · 3/3",
+    h12: "Eficiência e <em>tool errada</em>",
+    c12: "ranking de eficiência (0–100)", c12tag: "média das 6 tarefas", ideal: "ideal",
+    s12a: "tool errada · direto", s12aD: (n) => `em ${n} execuções`,
+    s12b: "tool errada · jev", s12bD: (n, g) => `em ${n} execuções · gate atuou ${g}×`,
+    s12c: "conclusão · direto", s12d: "conclusão · jev", toolsPerTask: (n) => `${n} tools/tarefa`,
+    n13: "Onde o Jev tropeça. Três padrões: o LLM inventa argumentos (emails dos convidados) e o Jev, vendo a reunião criada, nunca roteia para a busca de contatos; o Jev quer responder cedo demais, por isso o gate com o noul de conclusão; e a irmã errada de uma tool aparece de vez em quando no próprio classificador. O classificador decide entre ações, mas não consegue forçar um lookup que o modelo pulou.",
+    k13: "onde o jev tropeça",
+    h13: "O classificador escolhe a ação, mas <em>não força</em> o lookup",
+    b13a: "<b>Argumentos inventados.</b> Na p5 o LLM preenche os emails dos convidados de cabeça; a reunião \"sai\" e o Jev não vê motivo para buscar contatos.",
+    b13b: "<b>Responder cedo.</b> Sem o gate, <code>respond_to_user</code> vencia com uma etapa pendente. O <code>noul</code> \"tudo feito?\" barra isso.",
+    b13c: "<b>Irmã errada.</b> O próprio Jev confunde <code>task_create</code> × <code>task_create_subtask</code> ou <code>alarm_set</code> × <code>reminder_create</code> em decisões de baixa confiança.",
+    b13d: (lat) => `<b>+1 chamada por passo.</b> ~${lat} ms cada; compensa quando o catálogo é grande.`,
+    c13: "execuções fora do ideal · jev", c13tag: "geradas a partir dos traces",
+    f13compl: "conclusão", f13wrong: "tool errada:", f13skipped: "etapa pulada:", f13toolsIn: (t, s) => `${t} tools em ${s} passos`,
+    n14: "Conclusão e próximos passos. Use o Jev como roteador quando o catálogo for grande e o custo por passo importar. Combine com confidence routing: abaixo de um limiar, devolva a decisão ao LLM. Próximos experimentos: roteamento hierárquico por categoria, argumentos de conjunto fechado também pelo Jev, e um lookup obrigatório antes de ações com destinatário.",
+    k14: "conclusão",
+    h14: "Quando trocar o reasoning pelo <em>Jev</em>",
+    c14a: "use quando", c14aTag: "fit",
+    c14aL1: "Catálogo grande (dezenas a centenas de tools).", c14aL2: "Custo e latência por passo importam mais que o \"pensar alto\".", c14aL3: "As tools têm descrições boas: elas são o critério do classificador.",
+    c14b: "combine com", c14bTag: "guardrails",
+    c14bL1: "Gate de conclusão (<code>noul</code>) antes de responder.", c14bL2: "Confidence routing: abaixo do limiar, deixe o LLM escolher.", c14bL3: "Lookups obrigatórios antes de ações com destinatário.",
+    c14c: "próximos passos", c14cTag: "roadmap",
+    c14cL1: "Roteamento hierárquico: categoria → tool.", c14cL2: "Argumentos de conjunto fechado também via Jev (cookbook function calling).", c14cL3: "Rodar <code>gpt-5.6-sol</code> e <code>opus-5</code>; mais seeds por tarefa.",
+    s14a: "tokens de entrada", s14aD: "com Jev, mesmo modelo",
+    s14b: "passos por tarefa", s14bD: "um a mais por tool + resposta",
+    s14c: "conclusão", s14cD: "direto → jev",
+    n15: "Encerramento: como reproduzir.",
+    h15: "Reproduza em <em>3 comandos</em>",
+    code15a: "# OPENROUTER_API_KEY + TYPESAFE_API_KEY", code15b: "# 6 tarefas × 8 modelos × 2 modos", code15c: "# dashboard em /  · slides em /slides.html",
+    b15: "Resultados em <code>eval-results/&lt;modo&gt;/&lt;modelo&gt;/&lt;tarefa&gt;.json</code>, traces em <code>.eve/evals/</code> e <code>eval-results/jev-trace.jsonl</code>.",
+    pill15: "AI Coders Academy · potencializando devs com I.A.",
+  },
+};
+const T = dict(STR);
+
+const MODES = [
+  { key: "llm-direct", get label() { return T.modeDirect; }, get short() { return T.modeDirectShort; }, color: "var(--mode-direct)" },
+  { key: "jev-classifier", get label() { return T.modeJev; }, get short() { return T.modeJevShort; }, color: "var(--mode-jev)" },
+];
+const MODEL_ORDER = ["gemini-3.8-flash", "deepseek-v4.1-flash", "gpt-5.6-luna", "gpt-5.6-sol", "opus-5", "fable-5.1", "gpt-6-astra", "qwen3.8-27b"];
+const MODEL_COLORS = ["var(--m1)", "var(--m2)", "var(--m3)", "var(--m4)", "var(--m5)", "var(--m6)", "var(--m7)", "var(--m8)"];
+const PROMPT_ORDER = ["p1-marina", "p2-voo-sp", "p3-orcamento", "p4-viagem-completa", "p5-reuniao-time", "p6-financas"];
+const short = (p) => p.split("-")[0];
+const REQUIRED = {
+  "p1-marina": [["calendar_list_events", "calendar_search_events"], ["email_send", "email_reply"], ["reminder_create"]],
+  "p2-voo-sp": [["flights_search"], ["flights_book"], ["calendar_create_event", "calendar_block_time"]],
+  "p3-orcamento": [["expenses_summary", "transactions_list", "budget_get"], ["task_create"], ["message_send"]],
+  "p4-viagem-completa": [["flights_search"], ["flights_hold"], ["hotels_search_nearby"], ["hotels_book"], ["calendar_block_time"], ["message_send"]],
+  "p5-reuniao-time": [["calendar_find_free_slot", "calendar_list_events"], ["contacts_search", "contacts_search_by_company"], ["calendar_create_meeting"], ["task_list"], ["task_create_subtask"], ["email_send_later"]],
+  "p6-financas": [["expenses_summary_by_merchant", "transactions_list"], ["notes_create_checklist"], ["transfer_money_scheduled"], ["reminder_create_location"]],
+};
+const PAIRS = [["flights_hold", "flights_book"], ["calendar_block_time", "calendar_create_event"], ["calendar_create_meeting", "calendar_create_event"], ["email_send_later", "email_send"], ["reminder_create_location", "reminder_create"], ["expenses_summary_by_merchant", "expenses_summary"], ["task_create_subtask", "task_create"], ["transfer_money_scheduled", "transfer_money"], ["hotels_search_nearby", "hotels_search"], ["notes_create_checklist", "notes_create"], ["message_send_group", "message_send"], ["contacts_search_by_company", "contacts_search"]];
+const CATS = { calendar: 12, email: 10, reminders: 5, tasks: 6, contacts: 6, notes: 6, messaging: 6, travel: 11, finance: 12, health: 6, home: 8, shopping: 8, info: 4 };
+
+let data = null, modelKeys = [], primary = null;
+const modelColor = (k) => MODEL_COLORS[Math.max(0, modelKeys.indexOf(k)) % MODEL_COLORS.length];
+const modelLabel = (k) => { for (const s of Object.values(data.series)) if (s.modelKey === k) { const r = Object.values(s.runs)[0]; if (r?.modelLabel) return r.modelLabel; } return k; };
+const seriesOf = (k, mode) => Object.values(data.series).find((s) => s.modelKey === k && s.mode === mode);
+const listOf = (s) => s ? PROMPT_ORDER.map((p) => s.runs[p]).filter(Boolean) : [];
+const allRuns = () => Object.values(data.series).flatMap(listOf);
+// Task metadata: prefer evals/prompts.ts (English title, Portuguese prompt + translation), fall back to the run record.
+const promptById = (id) => (data.prompts ?? []).find((p) => p.id === id) ?? null;
+const titleOf = (id) => { const p = promptById(id); if (p) return LANG === "pt" ? (p.titlePt ?? p.title) : p.title; return allRuns().find((r) => r.promptId === id)?.title ?? id; };
+const card = (title, body, { tag = "", foot = "" } = {}) => `<div class="card"><div class="hd"><div class="dots"><i></i><i></i><i></i></div><span class="t">${esc(title)}</span><span class="tag">${esc(tag)}</span></div><div class="bd">${body}</div>${foot ? `<div class="ft">${foot}</div>` : ""}</div>`;
+const legendModes = () => `<div class="legend">${MODES.map((m) => `<span><i style="--c:${m.color}"></i>${m.label}</span>`).join("")}</div>`;
+const chips = () => `<div class="chips">${modelKeys.map((k) => `<button class="chip ${k === primary ? "on" : ""}" data-primary="${k}"><i style="--c:${modelColor(k)}"></i>${esc(modelLabel(k))}</button>`).join("")}</div>`;
+
+// ---------- derived numbers used in the story ---------------------------------
+function facts() {
+  const runs = allRuns();
+  const direct = runs.filter((r) => r.mode === "llm-direct"), jev = runs.filter((r) => r.mode === "jev-classifier");
+  const tokPerStep = direct.length ? sum(direct, (r) => r.usage.inputTokens) / sum(direct, (r) => r.modelSteps) : null;
+  const jevDecisions = jev.flatMap((r) => r.timeline.filter((e) => e.kind === "jev"));
+  const latency = avg(jevDecisions.filter((e) => e.latencyMs), (e) => e.latencyMs);
+  const saved = [];
+  for (const k of modelKeys) { const d = seriesOf(k, "llm-direct"), j = seriesOf(k, "jev-classifier"); if (d && j) { const ids = PROMPT_ORDER.filter((p) => d.runs[p] && j.runs[p]); const di = sum(ids, (p) => d.runs[p].usage.inputTokens), ji = sum(ids, (p) => j.runs[p].usage.inputTokens); if (di) saved.push({ k, pct: 1 - ji / di, cost: 1 - sum(ids, (p) => j.runs[p].usage.estimatedCostUsd) / Math.max(1e-9, sum(ids, (p) => d.runs[p].usage.estimatedCostUsd)) }); } }
+  return { runs, direct, jev, tokPerStep, latency, jevDecisions, saved, gated: jevDecisions.filter((e) => e.gated).length,
+    wrongDirect: sum(direct, (r) => r.distractorCalls), wrongJev: sum(jev, (r) => r.distractorCalls),
+    complDirect: avg(direct, (r) => r.completion), complJev: avg(jev, (r) => r.completion),
+    stepsDirect: avg(direct, (r) => r.modelSteps), stepsJev: avg(jev, (r) => r.modelSteps),
+    toolsDirect: avg(direct, (r) => r.toolCalls), toolsJev: avg(jev, (r) => r.toolCalls) };
+}
+
+function timelineHtml(run, max = 12) {
+  if (!run) return `<div class="conf">${T.noRun}</div>`;
+  const wrong = new Set(run.distractorTools ?? []);
+  return `<ul class="tl">${run.timeline.slice(0, max).map((e) => {
+    if (e.kind === "jev") return `<li><span class="k">step ${e.step} · jev</span><span><span class="tok jev">${esc(e.name)}</span> <span class="conf">conf ${fmt(e.confidence * 100)}%${e.done != null ? ` · done ${fmt(e.done * 100)}%` : ""}${e.gated ? " · ⛔ gate" : ""} · ${e.latencyMs} ms</span></span></li>`;
+    if (e.kind === "model") return `<li><span class="k">step ${e.step}</span><span class="conf">→ ${esc(e.name)}</span></li>`;
+    if (e.kind === "tool") return `<li><span class="k"></span><span><span class="tok ${wrong.has(e.name) ? "wrong" : ""}">${esc(e.name)}</span> <span class="conf">${esc(JSON.stringify(e.detail)).slice(0, 70)}…</span></span></li>`;
+    if (e.kind === "message") return `<li><span class="k"></span><span class="conf">💬 ${esc(String(e.detail).slice(0, 110))}…</span></li>`;
+    return "";
+  }).join("")}</ul>`;
+}
+
+// ---------- slides ------------------------------------------------------------
+function buildSlides() {
+  const F = facts();
+  const S = [];
+  const pick = (mode, p) => { const s = seriesOf(primary, mode); return s?.runs[p]; };
+  const bestSave = F.saved.length ? F.saved.reduce((a, b) => (b.pct > a.pct ? b : a)) : null;
+  const avgSave = F.saved.length ? avg(F.saved, (x) => x.pct) : null;
+  const latStr = F.latency ? fmt(F.latency) + " ms" : "–";
+  const tokStr = F.tokPerStep ? compact(F.tokPerStep) : "–";
+
+  S.push({ notes: T.n1, html: `
+    <div class="crumb">~/academy/evals/<b>jev-vs-llm</b></div>
+    <span class="pill"><span class="dot"></span>${T.pill1}</span>
+    <h1>${T.h1}</h1>
+    <p class="lead">${T.lead1}</p>
+    <div class="legend" style="font-size:14px"><span>${T.agenda1}</span><span>${T.agenda2}</span><span>${T.agenda3(modelKeys.length)}</span><span>${T.agenda4}</span></div>` });
+
+  S.push({ notes: T.n2, html: `
+    <div class="kicker">${T.k2}</div>
+    <h2>${T.h2}</h2>
+    <div class="stats" style="margin:18px 0 26px">
+      <div class="stat"><div class="k">${T.s2a}</div><div class="v">100<small>${T.s2aSub}</small></div><div class="d">${T.s2aD}</div></div>
+      <div class="stat"><div class="k">${T.s2b}</div><div class="v">${tokStr}</div><div class="d">${T.s2bD}</div></div>
+      <div class="stat"><div class="k">${T.s2c}</div><div class="v">${fmt(F.stepsDirect, 1)}<small>${T.s2cSub}</small></div><div class="d">${T.s2cD}</div></div>
+    </div>
+    <ul class="bul">
+      <li>${T.b2a}</li>
+      <li>${T.b2b}</li>
+      <li>${T.b2c}</li>
+    </ul>` });
+
+  S.push({ notes: T.n3, html: `
+    <div class="kicker">${T.k3}</div>
+    <h2>${T.h3}</h2>
+    <div class="two">
+      <div class="col">
+        <ul class="bul">
+          <li>${T.b3a}</li>
+          <li>${T.b3b}</li>
+          <li>${T.b3c(latStr)}</li>
+          <li>${T.b3d}</li>
+        </ul>
+      </div>
+      <div class="col">${card(T.c3, (() => { const r = pick("jev-classifier", "p4-viagem-completa") ?? F.jev[0]; const e = r?.timeline.find((x) => x.kind === "jev" && x.top?.length); if (!e) return `<div class='conf'>${T.noTrace}</div>`; return `<div class="conf" style="margin-bottom:8px">state = { user_request, actions_taken[${(r.timeline.filter((x) => x.kind === "tool").length)}], assistant_said[] }</div>` + hBars({ rows: e.top.slice(0, 5).map((t, i) => ({ label: t.name, value: Math.round(t.p * 100), color: i === 0 ? "var(--mode-jev)" : "var(--text-3)" })), fmtV: (v) => v + "%", W: 560, labelW: 230, rowH: 30 }) + `<div class="conf" style="margin-top:8px">${T.c3pick(esc(e.name), fmt(e.confidence * 100), e.latencyMs)}</div>`; })(), { tag: T.c3tag })}</div>
+    </div>` });
+
+  S.push({ notes: T.n4, html: `
+    <div class="kicker">${T.k4}</div>
+    <h2>${T.h4}</h2>
+    <svg class="diagram" viewBox="0 0 1420 520" width="1420" height="520" style="margin-top:6px">
+      <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#77776f"/></marker></defs>
+      <text class="lane" x="0" y="40" style="fill:var(--mode-direct)">${T.d4lane1}</text>
+      <rect class="box" x="0" y="60" width="180" height="90" rx="8"/><text class="t" x="90" y="98" text-anchor="middle">${T.d4user}</text><text x="90" y="122" text-anchor="middle">${T.d4prompt}</text>
+      <path class="arrow" d="M180,105 L250,105"/>
+      <rect class="box" x="250" y="60" width="380" height="90" rx="8" style="stroke:var(--mode-direct)"/><text class="t" x="440" y="92" text-anchor="middle">${T.d4llmOn}</text><text x="440" y="116" text-anchor="middle">${T.d4llmOnSub}</text><text x="440" y="136" text-anchor="middle">${T.d4tokPerStep(tokStr)}</text>
+      <path class="arrow" d="M630,105 L700,105"/>
+      <rect class="box" x="700" y="60" width="200" height="90" rx="8"/><text class="t" x="800" y="98" text-anchor="middle">${T.d4tool}</text><text x="800" y="122" text-anchor="middle">${T.d4world}</text>
+      <path class="arrow" d="M900,90 C1000,20 1000,20 440,50 L440,60" style="stroke-dasharray:4 4"/><text x="760" y="36">${T.d4loop1}</text>
+      <line x1="0" y1="215" x2="1420" y2="215" stroke="#1f1f1f"/>
+      <text class="lane" x="0" y="260" style="fill:var(--mode-jev)">${T.d4lane2}</text>
+      <rect class="box" x="0" y="290" width="180" height="90" rx="8"/><text class="t" x="90" y="328" text-anchor="middle">${T.d4user}</text><text x="90" y="352" text-anchor="middle">${T.d4prompt}</text>
+      <path class="arrow" d="M180,335 L250,335"/>
+      <rect class="box" x="250" y="280" width="330" height="110" rx="8" style="stroke:var(--mode-jev)"/><text class="t" x="415" y="312" text-anchor="middle">${T.d4jev}</text><text x="415" y="336" text-anchor="middle">${T.d4jevSub1}</text><text x="415" y="356" text-anchor="middle">${T.d4jevSub2}</text><text x="415" y="376" text-anchor="middle">${latStr}</text>
+      <path class="arrow" d="M580,335 L650,335"/><text x="590" y="322">${T.d4oneTool}</text>
+      <rect class="box" x="650" y="290" width="330" height="90" rx="8" style="stroke:var(--mode-jev)"/><text class="t" x="815" y="322" text-anchor="middle">${T.d4llmOff}</text><text x="815" y="346" text-anchor="middle">${T.d4llmOffSub1}</text><text x="815" y="366" text-anchor="middle">${T.d4llmOffSub2}</text>
+      <path class="arrow" d="M980,335 L1050,335"/>
+      <rect class="box" x="1050" y="290" width="200" height="90" rx="8"/><text class="t" x="1150" y="328" text-anchor="middle">${T.d4tool}</text><text x="1150" y="352" text-anchor="middle">${T.d4world}</text>
+      <path class="arrow" d="M1250,320 C1350,250 1350,250 415,270 L415,280" style="stroke-dasharray:4 4"/><text x="1000" y="262">${T.d4loop2}</text>
+      <rect x="0" y="440" width="1420" height="60" rx="8" fill="#0d0d0d" stroke="#1f1f1f"/>
+      <text x="20" y="465" style="fill:var(--lime)">agent/mode.ts</text><text x="150" y="465">${esc(T.d4code1)}</text>
+      <text x="20" y="488">${esc(T.d4code2)}</text>
+    </svg>` });
+
+  S.push({ notes: T.n5, html: `
+    <div class="kicker">${T.k5}</div>
+    <h2>${T.h5}</h2>
+    <div class="two">
+      <pre class="code"><span class="c">${T.code5mode}</span>
+<span class="k">export default</span> defineDynamic({
+  events: {
+    <span class="s">"step.started"</span>: <span class="k">async</span> (event, ctx) => {
+      <span class="k">const</span> d = <span class="k">await</span> chooseNextTool(ctx.messages);
+      trace({ kind: <span class="s">"jev.decision"</span>, sessionId: ctx.session.id, stepIndex,
+              tool: d.tool, confidence: d.confidence, done: d.done,
+              gated: d.gated, top: d.top, latencyMs: d.latencyMs });
+      <span class="k">if</span> (d.tool === RESPOND) <span class="k">return null</span>;   <span class="c">${T.code5noTools}</span>
+      <span class="k">return</span> { [d.tool]: toolFor(d.tool) };  <span class="c">${T.code5oneTool}</span>
+    },
+  },
+});
+
+<span class="c">// agent/lib/jev-router.ts</span>
+<span class="k">const</span> { answers } = <span class="k">await</span> client.systemOne({
+  state: { user_request, actions_taken, assistant_said },
+  questions: {
+    next_tool: choice(INSTRUCTIONS, CRITERIA), <span class="c">${T.code5hundred}</span>
+    done: noul(<span class="s">"${T.code5noul}"</span>),
+  },
+});
+<span class="k">if</span> (choice === RESPOND && done < 0.5) tool = ${T.code5next}(); <span class="c">${T.code5gate}</span></pre>
+      <div class="col">
+        <ul class="bul">
+          <li>${T.b5a}</li>
+          <li>${T.b5b}</li>
+          <li>${T.b5c}</li>
+          <li>${T.b5d}</li>
+          <li>${T.b5e}</li>
+        </ul>
+      </div>
+    </div>` });
+
+  S.push({ notes: T.n6, html: `
+    <div class="kicker">${T.k6}</div>
+    <h2>${T.h6}</h2>
+    <div class="two">
+      <div class="col"><div class="cats">${Object.entries(CATS).map(([c, n]) => `<div class="cat"><span>${c}</span><b>${n}</b></div>`).join("")}</div>
+        <ul class="bul" style="font-size:17px;margin-top:6px"><li>${T.b6a}</li><li>${T.b6b}</li></ul></div>
+      <div class="col">${card(T.c6, `<div class="pairs">${PAIRS.map(([a, b]) => `<span><b>${a}</b> <span class="vs">×</span> ${b}</span>`).join("")}</div>`, { tag: T.c6tag })}</div>
+    </div>` });
+
+  S.push({ notes: T.n7, html: `
+    <div class="kicker">${T.k7}</div>
+    <h2>${T.h7}</h2>
+    <div class="conf" style="font-family:var(--sans);font-size:13px;color:var(--text-3);margin-top:-6px">${T.lang7}</div>
+    <table style="margin-top:8px"><thead><tr><th>${T.th7id}</th><th>${T.th7task}</th><th>${T.th7tier}</th><th>${T.th7req}</th><th class="num">${T.th7ideal}</th></tr></thead><tbody>
+      ${PROMPT_ORDER.map((p) => { const r = allRuns().find((x) => x.promptId === p); const meta = promptById(p); const req = REQUIRED[p]; const tier = meta?.tier ?? r?.tier; const promptPt = meta?.prompt ?? r?.prompt ?? ""; const promptEn = LANG !== "pt" && meta?.promptEn ? `<div class="conf" style="font-family:var(--sans);font-size:12px;margin-top:3px;white-space:normal;max-width:620px;color:var(--text-3);font-style:italic">${esc(meta.promptEn)}</div>` : ""; return `<tr><td style="color:var(--lime)">${p}</td><td>${esc(titleOf(p))}<div class="conf" style="font-family:var(--sans);font-size:12.5px;margin-top:3px;white-space:normal;max-width:620px;color:var(--text-2)">${esc(promptPt)}</div>${promptEn}</td><td>${tier === "complex" ? T.tierComplex : T.tierBasic}</td><td class="conf" style="font-size:12px">${req.map((f) => f[0]).join(" → ")}</td><td class="num">${meta?.idealToolCalls ?? r?.idealToolCalls ?? req.length}</td></tr>`; }).join("")}
+    </tbody></table>` });
+
+  S.push({ notes: T.n8, html: `
+    <div class="kicker">${T.k8}</div>
+    <h2>${T.h8}</h2>
+    <div class="two">
+      <div class="col">
+        ${card(T.c8a, `<ul class="bul" style="font-size:16px;gap:8px"><li><code>step.started</code> · ${T.c8aL1}</li><li><code>reasoning.completed</code> · ${T.c8aL2}</li><li><code>actions.requested</code> · ${T.c8aL3}</li><li><code>action.result</code> · ${T.c8aL4}</li><li><code>step.completed</code> · ${T.c8aL5}</li><li><code>message.completed</code> · ${T.c8aL6}</li></ul>`, { tag: ".eve/evals/<run>/*.events.ndjson" })}
+        ${card(T.c8b, `<pre class="code" style="font-size:12.5px;border:0;padding:6px 0">{"kind":"jev.decision","sessionId":"wrun_…","stepIndex":2,
+ "tool":"flights_hold","confidence":0.98,"done":0.02,"gated":false,
+ "top":[{"name":"flights_hold","p":0.99},{"name":"flights_book","p":0.01}],
+ "latencyMs":289}</pre>`, { tag: T.c8bTag })}
+      </div>
+      <div class="col">${card(T.c8c(modelLabel(primary)), timelineHtml(pick("jev-classifier", "p4-viagem-completa"), 13), { tag: T.c8cTag })}</div>
+    </div>` });
+
+  S.push({ notes: T.n9, html: `
+    <div class="kicker">${T.k9}</div>
+    <h2>${T.h9}</h2>
+    <div class="two">
+      <pre class="code"><span class="c">// evals/assistant.eval.ts</span>
+<span class="k">export default</span> PROMPTS.map((bench) => defineEval({
+  <span class="k">async</span> test(t) {
+    <span class="k">const</span> turn = <span class="k">await</span> t.send(bench.prompt);
+    <span class="k">const</span> rec = summarize(turn, bench);   <span class="c">// events + toolCalls + jev-trace</span>
+    persist(rec);                    <span class="c">${T.code9persist}</span>
+    t.succeeded();
+    t.check(rec.completion, satisfies(v => v >= 1)).label(<span class="s">"completion"</span>).soft(1);
+    t.check(rec.distractorCalls, satisfies(v => v === 0)).label(<span class="s">"no-wrong-tool"</span>).soft(1);
+  },
+}));
+
+<span class="c">$ AGENT_MODE=jev-classifier EVAL_MODEL=gemini-3.8-flash npm run eval</span>
+<span class="c">${T.code9cmd}</span></pre>
+      <div class="col">
+        <table><thead><tr><th>${T.th9metric}</th><th>${T.th9def}</th></tr></thead><tbody>
+          <tr><td>${T.m9steps}</td><td>${T.m9stepsD}</td></tr>
+          <tr><td>${T.m9tools}</td><td>${T.m9toolsD}</td></tr>
+          <tr><td>${T.m9wrong}</td><td>${T.m9wrongD}</td></tr>
+          <tr><td>${T.m9compl}</td><td>${T.m9complD}</td></tr>
+          <tr><td>${T.m9eff}</td><td>${T.m9effD}</td></tr>
+          <tr><td>${T.m9tok}</td><td>${T.m9tokD}</td></tr>
+          <tr><td>${T.m9jev}</td><td>${T.m9jevD}</td></tr>
+        </tbody></table>
+      </div>
+    </div>` });
+
+  const ps = PROMPT_ORDER;
+  const sr = MODES.map((m) => seriesOf(primary, m.key)).filter(Boolean).map((s) => ({ ...s, modeObj: MODES.find((m) => m.key === s.mode) }));
+  const ideal = ps.map((p) => { for (const s of sr) if (s.runs[p]) return s.runs[p].idealToolCalls; return null; });
+  S.push({ notes: T.n10, html: `
+    <div class="kicker">${T.k10}</div>
+    <h2>${T.h10}</h2>
+    ${chips()}
+    <div class="two" style="margin-top:12px">
+      ${card(T.c10a(modelLabel(primary)), legendModes() + groupedBars({ groups: ps.map(short), series: sr.map((s) => ({ label: s.modeObj.label, color: s.modeObj.color, values: ps.map((p) => s.runs[p]?.modelSteps ?? null) })), fmtV: (v) => fmt(v), W: 640, height: 300 }), { tag: T.c10aTag })}
+      ${card(T.c10b(modelLabel(primary)), legendModes() + groupedBars({ groups: ps.map(short), series: sr.map((s) => ({ label: s.modeObj.label, color: s.modeObj.color, values: ps.map((p) => s.runs[p]?.toolCalls ?? null) })), ideal, fmtV: (v) => fmt(v), W: 640, height: 300 }), { tag: T.c10bTag })}
+    </div>` });
+
+  const series = Object.values(data.series).map((s) => ({ ...s, modeObj: MODES.find((m) => m.key === s.mode), label: `${modelLabel(s.modelKey)} · ${MODES.find((m) => m.key === s.mode)?.short ?? s.mode}`, list: listOf(s) })).filter((s) => s.list.length).sort((a, b) => modelKeys.indexOf(a.modelKey) - modelKeys.indexOf(b.modelKey) || a.mode.localeCompare(b.mode));
+  S.push({ notes: T.n11, html: `
+    <div class="kicker">${T.k11}</div>
+    <h2>${T.h11}</h2>
+    <div class="two">
+      <div class="col">
+        <div class="bignum">${avgSave != null ? "−" + fmt(avgSave * 100) + "%" : "–"}<small>${T.big11(F.saved.length)}</small></div>
+        <table style="margin-top:14px"><thead><tr><th>${T.th11model}</th><th class="num">${T.th11tok}</th><th class="num">${T.th11cost}</th></tr></thead><tbody>${F.saved.map((x) => `<tr><td>${esc(modelLabel(x.k))}</td><td class="num">−${fmt(x.pct * 100)}%</td><td class="num">−${fmt(x.cost * 100)}%</td></tr>`).join("")}</tbody></table>
+      </div>
+      ${card(T.c11, `<div class="legend"><span><i style="--c:var(--mode-direct)"></i>${T.l11in}</span><span><i style="--c:var(--mode-jev)"></i>${T.l11inJev}</span><span><i style="--c:var(--text-3)"></i>${T.l11out}</span></div>` + hBars({ rows: series.map((s) => ({ label: s.label, parts: [{ label: T.partIn, value: sum(s.list, (r) => r.usage.inputTokens), color: s.modeObj.color }, { label: T.partOut, value: sum(s.list, (r) => r.usage.outputTokens), color: "var(--text-3)" }] })), stacked: true, fmtV: compact, W: 640, labelW: 230, rowH: 30 }), { tag: T.c11tag })}
+    </div>` });
+
+  const ranked = series.map((s) => ({ s, eff: avg(s.list, (r) => r.efficiency) })).sort((a, b) => b.eff - a.eff);
+  S.push({ notes: T.n12, html: `
+    <div class="kicker">${T.k12}</div>
+    <h2>${T.h12}</h2>
+    <div class="two">
+      ${card(T.c12, legendModes() + hBars({ rows: ranked.map(({ s, eff }) => ({ label: s.label, value: Math.round(eff * 100), color: s.modeObj.color, sub: `${sum(s.list, (r) => r.idealPath ? 1 : 0)}/${s.list.length} ${T.ideal}` })), W: 640, labelW: 230, rowH: 30 }), { tag: T.c12tag })}
+      <div class="col">
+        <div class="stats" style="grid-template-columns:1fr 1fr">
+          <div class="stat"><div class="k">${T.s12a}</div><div class="v">${F.wrongDirect}</div><div class="d">${T.s12aD(F.direct.length)}</div></div>
+          <div class="stat"><div class="k">${T.s12b}</div><div class="v">${F.wrongJev}</div><div class="d">${T.s12bD(F.jev.length, F.gated)}</div></div>
+        </div>
+        <div class="stats" style="grid-template-columns:1fr 1fr">
+          <div class="stat"><div class="k">${T.s12c}</div><div class="v">${fmt(F.complDirect * 100)}%</div><div class="d">${T.toolsPerTask(fmt(F.toolsDirect, 1))}</div></div>
+          <div class="stat"><div class="k">${T.s12d}</div><div class="v">${fmt(F.complJev * 100)}%</div><div class="d">${T.toolsPerTask(fmt(F.toolsJev, 1))}</div></div>
+        </div>
+      </div>
+    </div>` });
+
+  // findings: non-ideal jev runs
+  const bad = F.jev.filter((r) => r.completion < 1 || r.distractorCalls).slice(0, 4).map((r) => {
+    const called = new Set(r.timeline.filter((e) => e.kind === "tool").map((e) => e.name));
+    const missing = (REQUIRED[r.promptId] ?? []).filter((f) => !f.some((n) => called.has(n))).map((f) => f[0]);
+    return `<div class="finding"><b>${esc(modelLabel(r.modelKey))} · ${r.promptId}</b> — ${T.f13compl} ${fmt(r.completion * 100)}%${r.distractorCalls ? ` · ${T.f13wrong} ${esc(r.distractorTools.join(", "))}` : ""}<span class="conf">${missing.length ? `${T.f13skipped} ` + esc(missing.join(", ")) : ""} · ${T.f13toolsIn(r.toolCalls, r.modelSteps)}</span></div>`;
+  }).join("");
+  S.push({ notes: T.n13, html: `
+    <div class="kicker">${T.k13}</div>
+    <h2>${T.h13}</h2>
+    <div class="two">
+      <div class="col">
+        <ul class="bul">
+          <li>${T.b13a}</li>
+          <li>${T.b13b}</li>
+          <li>${T.b13c}</li>
+          <li>${T.b13d(F.latency ? fmt(F.latency) : "–")}</li>
+        </ul>
+      </div>
+      <div class="col">${card(T.c13, bad || `<div class='conf'>${T.none}</div>`, { tag: T.c13tag })}</div>
+    </div>` });
+
+  S.push({ notes: T.n14, html: `
+    <div class="kicker">${T.k14}</div>
+    <h2>${T.h14}</h2>
+    <div class="three">
+      ${card(T.c14a, `<ul class="bul" style="font-size:17px"><li>${T.c14aL1}</li><li>${T.c14aL2}</li><li>${T.c14aL3}</li></ul>`, { tag: T.c14aTag })}
+      ${card(T.c14b, `<ul class="bul" style="font-size:17px"><li>${T.c14bL1}</li><li>${T.c14bL2}</li><li>${T.c14bL3}</li></ul>`, { tag: T.c14bTag })}
+      ${card(T.c14c, `<ul class="bul" style="font-size:17px"><li>${T.c14cL1}</li><li>${T.c14cL2}</li><li>${T.c14cL3}</li></ul>`, { tag: T.c14cTag })}
+    </div>
+    <div class="stats" style="margin-top:18px">
+      <div class="stat"><div class="k">${T.s14a}</div><div class="v">${avgSave != null ? "−" + fmt(avgSave * 100) + "%" : "–"}</div><div class="d">${T.s14aD}</div></div>
+      <div class="stat"><div class="k">${T.s14b}</div><div class="v">${fmt(F.stepsDirect, 1)}<small>→ ${fmt(F.stepsJev, 1)}</small></div><div class="d">${T.s14bD}</div></div>
+      <div class="stat"><div class="k">${T.s14c}</div><div class="v">${fmt(F.complDirect * 100)}%<small>→ ${fmt(F.complJev * 100)}%</small></div><div class="d">${T.s14cD}</div></div>
+    </div>` });
+
+  S.push({ notes: T.n15, html: `
+    <div class="crumb">~/academy/evals/<b>jev-vs-llm</b></div>
+    <h2>${T.h15}</h2>
+    <pre class="code" style="font-size:18px;margin-top:10px">cp .env.example .env.local        <span class="c">${T.code15a}</span>
+MODELS=all npm run eval:all        <span class="c">${T.code15b}</span>
+npm run ui                         <span class="c">${T.code15c}</span></pre>
+    <ul class="bul" style="margin-top:26px"><li><b>eve</b> · eve.dev · <b>TypeSafe Jev</b> · docs.typesafe.ai · <b>OpenRouter</b> · openrouter.ai</li><li>${T.b15}</li></ul>
+    <div style="margin-top:auto"><span class="pill"><span class="dot"></span>${T.pill15}</span></div>` });
+
+  return S;
+}
+
+// ---------- deck runtime ------------------------------------------------------
+let slides = [], idx = 0;
+function render() {
+  if (!data) return;
+  document.getElementById("help").textContent = T.help;
+  slides = buildSlides();
+  const host = document.getElementById("slides");
+  host.innerHTML = slides.map((s, i) => `<section class="slide" data-i="${i}">${s.html}</section>`).join("");
+  show(Math.min(idx, slides.length - 1));
+}
+function show(i) {
+  idx = Math.max(0, Math.min(slides.length - 1, i));
+  document.querySelectorAll(".slide").forEach((el, j) => { el.classList.toggle("on", j === idx); el.classList.toggle("prev", j < idx); });
+  document.getElementById("progress").style.width = ((idx + 1) / slides.length * 100) + "%";
+  document.getElementById("counter").textContent = T.counter(idx + 1, slides.length);
+  document.getElementById("notes").innerHTML = `<b>${esc(T.notesHead(idx + 1))}</b>${esc(slides[idx].notes)}`;
+  history.replaceState(null, "", `#${idx + 1}`);
+}
+function fit() { const s = Math.min(window.innerWidth / 1600, window.innerHeight / 900); document.getElementById("stage").style.transform = `scale(${s})`; }
+window.addEventListener("resize", fit);
+document.addEventListener("keydown", (e) => {
+  if (["ArrowRight", " ", "PageDown"].includes(e.key)) { e.preventDefault(); show(idx + 1); }
+  else if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); show(idx - 1); }
+  else if (e.key === "Home") show(0); else if (e.key === "End") show(slides.length - 1);
+  else if (e.key.toLowerCase() === "f") document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  else if (e.key.toLowerCase() === "n") document.getElementById("notes").classList.toggle("on");
+  else if (e.key.toLowerCase() === "e") exportHtml();
+  else if (e.key.toLowerCase() === "l") setLang(LANG === "en" ? "pt" : "en");
+  else if (e.key.toLowerCase() === "d" && !EMBEDDED) location.href = "/";
+});
+document.addEventListener("click", (e) => {
+  const c = e.target.closest("[data-primary]");
+  if (c) { primary = c.dataset.primary; render(); return; }
+  if (e.target.closest("#notes, #help")) return;
+  show(e.clientX > window.innerWidth / 2 ? idx + 1 : idx - 1);
+});
+const EMBEDDED = typeof window.__RESULTS__ === "object" && window.__RESULTS__ !== null;
+async function exportHtml() {
+  if (!data) return;
+  const [page, charts] = await Promise.all([fetch("/slides.html").then((r) => r.text()), fetch("/charts.js").then((r) => r.text())]);
+  const safe = (o) => JSON.stringify(o).replace(/<\//g, "<\\/");
+  const html = page.replace('<script src="charts.js"><' + '/script>', `<script>window.__RESULTS__ = ${safe(data)};\nwindow.__LANG__ = ${JSON.stringify(LANG)};<\/script>\n<script>${charts.replace(new RegExp("<\\/(script)", "gi"), "<\\/$1")}<\/script>`);
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `jev-vs-llm-slides-${LANG}-${new Date().toISOString().slice(0, 10)}.html`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+async function load() {
+  document.getElementById("help").textContent = T.help;
+  if (EMBEDDED) { data = window.__RESULTS__; }
+  else { const res = await fetch("/results.json", { cache: "no-store" }); data = await res.json(); }
+  modelKeys = [...new Set(Object.values(data.series).map((s) => s.modelKey))].sort((a, b) => (MODEL_ORDER.indexOf(a) + 1 || 99) - (MODEL_ORDER.indexOf(b) + 1 || 99));
+  primary = primary && modelKeys.includes(primary) ? primary : modelKeys[0] ?? null;
+  const h = parseInt(location.hash.slice(1), 10); if (h) idx = h - 1;
+  fit(); render();
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "full_name": "molis-ai/jev-workbench",
+  "html_url": "https://github.com/molis-ai/jev-workbench",
+  "description": "Build versioned judgment functions on TypeSafe's Jev once, then call the same published version from your backend over HTTP and from coding agents over MCP. The vendor key stays on your machine.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T14:42:37Z",
+  "size": 2428,
+  "stargazers_count": 2,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "75aeda4d92588b80ddfdcac527011ec14f197c3e"
+}

@@ -1,0 +1,258 @@
+Jev: The System One Model for Software - Jev AI
+Jev AIPlaygroundDemosAPI & AgentPricingShowcaseSwitch languageToggle themeGet Started
+SYSTEM ONE MODEL · JEV
+Not chat. Judgment.
+A probabilistic model software can use directly.
+Jev takes a state and a set of questions, then returns typed answers, probabilities, and confidence. It does not generate a paragraph; it turns the small decisions inside agents and workflows into values your code can use.
+Try it in the PlaygroundRead the docs
+ONE REQUEST · PARALLEL ANSWERS
+jev-latest
+state
+Three deploys failed. Production is returning 500s.
+noul
+Should this go to a person now?
+confidence
+0.97
+Needs a person
+state
+in
+questions
+parallel
+output
+typed
+70–500ms
+reported end-to-end range
+3
+Choice · Score · Noul
+Typed
+define the shape first
+WHAT JEV ACTUALLY IS
+Give the hardest if-statements a model that can say how unsure it is.
+Traditional LLMs are excellent at generating language and can be prompted to return JSON. In a real automation loop, though, every generated token, parser, and schema check adds latency and another place for failure.
+Jev takes a different path: state becomes the input, questions become the program interface, and answers stay inside the shape you defined. Every answer includes probability and confidence, so your code can decide when to automate and when to ask a person.
+MACHINE-NATIVE INTELLIGENCE
+A model optimized for software, not for the chat window.
+TypeSafe describes Jev as the first System One model: a model class built around machine-to-machine interaction. The goal is not to make every answer pleasant to read; it is to make narrow decisions observable, testable, and useful inside a larger system.
+Optimize for human preference
+Chat-first models
+—Write useful, natural language responses
+—A sequence of messages and generated tokens
+—Flexible strings that can express almost anything
+—Preference, helpfulness, and verifiable outcomes
+Optimize for calibrated decisions
+System One models
+Make one focused decision at a time
+A state plus typed questions
+Constrained values and probability distributions
+Accuracy, calibration, speed, and consistency
+TWO MODELS, TWO MODES
+Jev sits beside an LLM, not in place of one.
+Keep open-ended reasoning and generation with an LLM. Move routing, guardrails, scoring, and triage to a model built for fast decisions software can consume.
+Answers for people
+Traditional LLM
+01Sequential, token-by-token sampling
+02Strings or JSON that still needs parsing
+03Confidence usually needs to be prompted
+04Chat, writing, open-ended reasoning
+Decisions for software
+System One · Jev
+Multiple questions answered in parallel
+Typed values defined in advance
+Probability and confidence with every result
+Routing, guardrails, scoring, triage
+THREE PRIMITIVES
+Shape the question so code can understand it.
+One state can carry multiple questions. You define the boundary; Jev makes the decision inside it.
+Choice
+Pick from a set
+For intent classification, model routing, and ticket triage. Returns probabilities for each option and an overall confidence.
+route = [fast, powerful]
+Score
+Rate across levels
+For risk, urgency, and quality. Returns a score, the distribution across levels, and confidence.
+urgency = [low, medium, high]
+Noul
+Answer a yes/no question
+For safety checks and escalation. Returns the probability that a statement is true—simple, but ready to drive a branch.
+needs_human = true?
+ASK ONE GOOD QUESTION
+The best Jev question feels like a quick expert gut check.
+A narrow question gives the model a clear contract. A request like “analyze this ticket and decide what to do” mixes several judgments together. Split the dimensions, then compose them in code.
+Too broad
+Rate this startup pitch.
+This hides several independent ideas: market size, technical feasibility, differentiation, and perhaps execution risk. One score makes it difficult to inspect or change the weighting.
+Atomic questions
+Ask about the parts.
+Score market size, technical feasibility, and differentiation separately. Your code can weight those answers, set different thresholds, and explain which signal drove the final route.
+When priorities change, change a coefficient or a branch in your code instead of rewriting one giant prompt.
+PUT IT BACK IN YOUR SYSTEM
+From state to action, keep only the judgment you actually need.
+Jev does not own your business logic. It answers bounded questions; queues, permissions, retries, and final actions remain yours.
+01
+Input state
+A ticket, message, JSON object, or the structured context your agent sees.
+02
+Define questions
+Write the decision you want to automate with choice, score, or noul.
+03
+Get probabilities
+Several questions return in parallel, with structure and probability ready for code.
+04
+Take action
+Route, block, queue, or ask a human when the signal is uncertain.
+CONFIDENCE IS A CONTROL SIGNAL
+The answer is only half the decision. The other half is how much to trust it.
+Choice and Score return the full probability distribution plus a confidence value. A concentrated distribution suggests a clear winner; a flat distribution says the state, the question, or the options need another look. Noul returns the yes probability directly and has no separate confidence field.
+HIGH
+Act automatically
+The signal is clear and the action is reversible or low risk.
+route · show · continue
+MEDIUM
+Proceed with a check
+Keep the workflow moving, but ask for confirmation, gather more context, or flag the case for review.
+confirm · enrich · review
+LOW
+Do not guess
+Let the model’s uncertainty change the system behavior: ask a human, request clarification, or fall back to another path.
+escalate · clarify · fallback
+There is no universal threshold. A read-only action can tolerate a lower threshold than a transfer, deletion, or other consequential action. Start conservatively and tune on your own labelled data.
+WHERE IT FITS
+The small decisions software makes thousands of times a day.
+Model routing
+Use a lightweight model for simple tasks and reserve expensive reasoning for requests that need it.
+Tool guardrails
+Check a risky action before execution. Pause on deletion, payment, or other high-impact operations.
+Ticket triage
+Classify intent, urgency, and human handoff together; route the queue by signal, not keyword piles.
+Real-time apps
+When a product cannot wait for a long answer, use a fast, predictable judgment to drive the next screen.
+COMPOSABLE PATTERNS
+The model stays small. The system becomes more capable.
+TypeSafe’s documentation frames Jev as a set of composable decisions. These patterns turn the primitives into reusable architecture without hiding the final policy in a prompt.
+01
+Speculative fan-out
+Ask the questions your code might need in one request, including questions that only matter for some inputs. Ignore unused answers instead of paying for a second round trip.
+02
+Confidence-gated routing
+Use the selected option and its confidence as two separate signals. A low-confidence route can fall back to a stronger model or a human.
+03
+Composite scoring
+Combine independent Score questions such as severity, frustration, and completeness with explicit weights owned by your application.
+04
+Intent routing
+Classify the request into a known handler before invoking the expensive or specialized workflow that follows.
+ONE REQUEST, MANY DECISIONS
+Put the schema in the request. Keep the result in your system.
+Jev starts with state and questions. Questions can run in parallel, and the shape of every answer is defined before the call.
+REQUEST01
+{
+ "model": "jev-latest",
+ "state": "Deploy failed twice; prod is returning 500s.",
+ "questions": {
+ "urgent": {
+ "type": "noul",
+ "instructions": "Needs attention now?"
+ },
+ "route": {
+ "type": "choice",
+ "options": ["fast", "powerful"]
+ }
+ }
+}
+RESPONSE02
+{
+ "urgent": {
+ "noul": 0.999
+ },
+ "route": {
+ "choice": "powerful",
+ "probabilities": {
+ "fast": 0.08,
+ "powerful": 0.92
+ }
+ }
+}
+INSIDE THE AGENT LOOP
+Put a fast decision layer around the model that writes.
+LangChain exposes Jev through TypeSafeClassifier, so a Jev decision can live in a node, a middleware hook, or a tool wrapper. Let Jev decide whether a request needs a fast model, a more capable model, or a human review before the main agent spends tokens.
+Read the LangChain guideLANGCHAIN
+from langchain_typesafe import Noul, TypeSafeClassifier
+classifier = TypeSafeClassifier()
+response = classifier.invoke({
+ "state": "The deploy failed twice and prod is returning 500s.",
+ "questions": {
+ "urgent": Noul(
+ instructions="Does this need attention now?"
+ ),
+ },
+})
+urgency = response.nouls["urgent"].noul
+The same pattern can guard tool calls: inspect the intended action before execution and block or pause risky calls.
+WHY SYSTEM ONE
+An interface that fits automation better.
+Calibration, not confidence theater
+TypeSafe calls its training direction RLCD: Reinforcement Learning for Calibrated Decisions, focused on probabilities that express uncertainty.
+Parallel, not queued generation
+Several questions in one request can be evaluated in parallel instead of starting a complete conversation for every small decision.
+Typed, not guessed after the fact
+Possible answers are defined up front, so software consumes the result without guessing what a paragraph meant.
+KNOW WHERE IT STOPS
+A decision model is powerful because it does less.
+Jev is a complement to a generative model and to deterministic code. It is a good fit when the output space is known and the question can be made specific.
+Need a paragraph, code, explanation, or an open-ended plan? Use a generative model.
+Need long, multi-step reasoning? Break out the atomic signals first, then let your application or a reasoning model compose them.
+Cannot define the possible options or what each level means? Clarify the contract before calling Jev.
+Making a consequential decision? Validate accuracy and calibration on your own data, and keep a human or deterministic policy in the loop.
+FROM PLAYGROUND TO PRODUCTION
+One endpoint, one server-side key, a small surface area.
+The public quick start uses a single System One endpoint. Start in the Playground, move the request behind your backend, then use the official SDK or plain HTTP once the question contract is stable.
+ENDPOINT
+POST https://api.typesafe.ai/v1/systemone
+KEY HANDLING
+Keep API keys in environment variables and proxy browser requests through your own server.
+PYTHON SDK
+pip install typesafe-sdkOpen TypeSafe docsOpen TypeSafe Playground
+START WITH A REAL QUESTION
+Give your agent one less thing to guess.
+Bring a real state, define a choice, score, or noul, and inspect the result in the Playground before deciding where it belongs.
+Open the PlaygroundRead the full docs
+Jev AI
+Jev AI Model Online, Free, No Waitlist
+Product
+Jev AI playground
+Workflows
+Laya AI Playground
+API
+Pricing
+Documentation
+Blog
+GitHub
+Demos
+All demos
+Flight search
+Wiki link race
+Support triage
+Grocery cart
+Invoice review
+Security alert
+Guide
+Jev model
+Laya Model
+Jev-Omni
+Jev vs djev
+Jev vs Laya
+Jev vs OpenJev
+Jev vs OpenAI
+Jev vs Decisions API
+OpenAI Decisions API guide
+Jev vs SemIf
+Jev vs AnyJev
+Jev vs Kev
+Jev vs Julia 1
+Support
+About us
+Privacy Policy
+Terms of Service
+Refund Policy
+English© 2026 Jev AI. All rights reserved.
+Jev AI is an independently operated product and is not affiliated with, operated by, or endorsed by TypeSafe.

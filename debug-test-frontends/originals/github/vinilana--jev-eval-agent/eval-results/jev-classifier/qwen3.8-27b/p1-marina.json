@@ -1,0 +1,216 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PS2Z943S0F9T3HHA94HWAE",
+  "at": "2026-09-17T04:13:24.263Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 2,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.6666666666666666,
+  "requiredCovered": 2,
+  "requiredTotal": 3,
+  "completion": 0.6666666666666666,
+  "durationMs": 15857,
+  "usage": {
+    "inputTokens": 4111,
+    "outputTokens": 408,
+    "cacheReadTokens": 1024,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.001920154
+  },
+  "reasoningChars": 0,
+  "reply": "Sim! Amanhã (quinta, 17/09) você tem \"Reunião com Marina Costa – roadmap Q4\" das 10h às 11h no Google Meet. Enviei o e-mail confirmando o horário para marina.costa@example.com.\n\nSobre o lembrete 30 min antes (09h30): não consegui criá-lo agora porque a ferramenta de lembretes não está disponível neste momento — me avise que eu te ajudo a registrar de outra forma.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_list_events",
+      "confidence": 0.68,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 757,
+      "top": [
+        {
+          "name": "calendar_list_events",
+          "p": 0.69
+        },
+        {
+          "name": "calendar_search_events",
+          "p": 0.31
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "directions_get",
+          "p": 0
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "email_send",
+      "confidence": 0.97,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 259,
+      "top": [
+        {
+          "name": "email_send",
+          "p": 0.97
+        },
+        {
+          "name": "email_draft",
+          "p": 0.01
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_get_event",
+          "p": 0.01
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "email_send",
+      "confidence": 0.99,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 305,
+      "top": [
+        {
+          "name": "email_send",
+          "p": 1
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "contacts_search_by_company",
+          "p": 0
+        },
+        {
+          "name": "calendar_set_out_of_office",
+          "p": 0
+        },
+        {
+          "name": "product_search",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmando nossa reunião de amanhã (17/09) às 10h",
+        "body": "Olá, Marina,\n\nConfirmando nossa reunião de amanhã, quinta-feira 17/09, das 10h00 às 11h00 (America/Sao_Paulo), no Google Meet — pauta: roadmap do Q4.\n\nPode me avisar se precisar de qualquer ajuste.\n\nAbs,\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "alarm_set",
+      "confidence": 0.88,
+      "done": 0.05,
+      "gated": true,
+      "latencyMs": 753,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.89
+        },
+        {
+          "name": "alarm_set",
+          "p": 0.04
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.03
+        },
+        {
+          "name": "task_create",
+          "p": 0.03
+        },
+        {
+          "name": "message_send",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim! Amanhã (quinta, 17/09) você tem \"Reunião com Marina Costa – roadmap Q4\" das 10h às 11h no Google Meet. Enviei o e-mail confirmando o horário para marina.costa@example.com.\n\nSobre o lembrete 30 min antes (09h30): não consegui criá-lo agora porque a ferramenta de lembretes não está disponível neste momento — me avise que eu te ajudo a registrar de outra forma."
+    }
+  ]
+}

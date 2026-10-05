@@ -1,0 +1,146 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PVDE5QC248Z4Y1EXMEQTQ1",
+  "at": "2026-09-17T04:54:13.788Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "contacts": 2,
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 25298,
+  "usage": {
+    "inputTokens": 53835,
+    "outputTokens": 1213,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.599
+  },
+  "reasoningChars": 228,
+  "reply": "Tudo pronto:\n\n- **Reunião** \"Proposta comercial\" marcada para amanhã (17/09) às **15h–15h45**, primeiro horário livre da sua tarde, com convites enviados ao Pedro Alves e à Ana Beatriz (link de vídeo incluído).\n- **Subtarefa** \"Preparar pauta\" criada dentro de \"Revisar proposta comercial\", com prazo para amanhã.\n- **Email** com a pauta (revisão da proposta, alinhamento de escopo/prazos, próximos passos) agendado para a Ana amanhã às **8h**.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "13:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião — Proposta comercial",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "1. Revisão da proposta comercial; 2. Alinhamento de escopo e prazos; 3. Próximos passos."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta da reunião de hoje (15h) — Proposta comercial",
+        "body": "Oi Ana,\n\nSegue a pauta da nossa reunião de hoje, às 15h (45 min), com o Pedro Alves:\n\n1. Revisão da proposta comercial\n2. Alinhamento de escopo e prazos\n3. Próximos passos e responsáveis\n\nSe quiser incluir algum ponto, me avisa.\n\nAbraço,\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo pronto:\n\n- **Reunião** \"Proposta comercial\" marcada para amanhã (17/09) às **15h–15h45**, primeiro horário livre da sua tarde, com convites enviados ao Pedro Alves e à Ana Beatriz (link de vídeo incluído).\n- **Subtarefa** \"Preparar pauta\" criada dentro de \"Revisar proposta comercial\", com prazo para amanhã.\n- **Email** com a pauta (revisão da proposta, alinhamento de escopo/prazos, próximos p"
+    }
+  ]
+}

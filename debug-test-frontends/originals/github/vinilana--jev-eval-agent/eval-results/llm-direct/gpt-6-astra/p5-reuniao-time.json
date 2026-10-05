@@ -1,0 +1,156 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PVHE2SPV1PJRXYR9NXTY8G",
+  "at": "2026-09-17T04:56:22.616Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "contacts": 2,
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 23178,
+  "usage": {
+    "inputTokens": 21910,
+    "outputTokens": 569,
+    "cacheReadTokens": 20834,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.24755
+  },
+  "reasoningChars": 427,
+  "reply": "Reunião marcada para amanhã, **17/09, das 15h às 15h45**, em um horário livre na sua agenda, com convites enviados ao Pedro Alves e à Ana Beatriz.\n\nCriei a subtarefa **“Preparar pauta”** dentro de **“Revisar proposta comercial”** e agendei o email para Ana para amanhã às **8h**, com o link e uma pauta sugerida: revisão da proposta, alinhamento de escopo, valores e prazos, e próximos passos.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "12:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {
+        "list": "",
+        "include_done": false,
+        "due_before": ""
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Revisão da proposta comercial",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "Pauta sugerida: revisar a proposta comercial; alinhar escopo, valores e prazos; definir ajustes, responsáveis e próximos passos."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17",
+        "priority": "high"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta sugerida — reunião sobre a proposta comercial",
+        "body": "Oi, Ana!\n\nNossa reunião com Pedro Alves será hoje, 17/09, das 15h às 15h45 (horário de Brasília).\n\nPauta sugerida:\n- Revisar a proposta comercial.\n- Alinhar escopo, valores e prazos.\n- Definir ajustes, responsáveis e próximos passos.\n\nLink da reunião: https://meet.example.com/abc-defg-hij\n\nAté lá!\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reunião marcada para amanhã, **17/09, das 15h às 15h45**, em um horário livre na sua agenda, com convites enviados ao Pedro Alves e à Ana Beatriz.\n\nCriei a subtarefa **“Preparar pauta”** dentro de **“Revisar proposta comercial”** e agendei o email para Ana para amanhã às **8h**, com o link e uma pauta sugerida: revisão da proposta, alinhamento de escopo, valores e prazos, e próximos passos."
+    }
+  ]
+}

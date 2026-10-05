@@ -1,0 +1,107 @@
+Jev/typesafe·PlaygroundIndependent Jev playground & developer toolsPlaygroundToolsGamesUse casesDevelop ▾Get JevAPI DocsIntegrationsAgent SkillPricing◎English中文日本語한국어DeutschEspañolGet API keySign in☰← Home
+How to use the Jev API
+Jev exposes a single endpoint. You send a state and a set of questions; it returns typed answers with probabilities. Here's everything you need to make your first call.
+1. The endpoint
+Every request is a POST to https://api.typesafe.ai/v1/systemone, authenticated with a Bearer token. Official SDKs read your key from the TYPESAFE_API_KEY environment variable.
+curlPythonTypeScriptcurl
+curl -X POST https://api.typesafe.ai/v1/systemone \
+ -H "Authorization: Bearer $TYPESAFE_API_KEY" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "model": "jev-latest",
+ "state": "Customer: I was charged twice and I am furious.",
+ "questions": {
+ "topic": {
+ "type": "choice",
+ "instructions": "What is the issue about?",
+ "criteria": { "billing": "money problems", "bug": "broken product" }
+ },
+ "urgent": {
+ "type": "noul",
+ "instructions": "Escalate to a human now?"
+ }
+ }
+ }'
+Using a JevTypeSafeAI hosted key?
+Skip the TypeSafe waitlist. The same choice / score / noul API through our hosted endpoint, billed per input token from a prepaid balance — one jv_live_ key, no setup. Paste your key below and run this exact request against the live endpoint to confirm it works.
+curlPythonJavaScriptCopy
+curl https://jevtypesafeai.com/api/v1/decide \
+ -H "Authorization: Bearer $JEV_API_KEY" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "state": "Customer: I was charged twice and nobody has replied for 3 days.",
+ "questions": {
+ "route": { "type": "choice", "instructions": "Where should this go?",
+ "criteria": { "billing": "money", "bug": "broken", "account": "login" } },
+ "urgency": { "type": "score", "instructions": "How urgent is this?",
+ "criteria": ["routine", "today", "urgent", "critical"] },
+ "escalate": { "type": "noul", "instructions": "Escalate to a human now?" }
+ }
+ }'
+Test your key — run this exact request against the live endpoint, once:▶RunSends the request above to https://jevtypesafeai.com/api/v1/decide with your key and bills one tiny decision (≈ $0.00003). Your key stays in your browser. In production, keep it server-side.
+Full API reference & ready-made endpoints →
+2. The request body
+Three fields:
+model — jev-latest, or pin a version like jev-1.13.0 if you tune thresholds.
+state — the context, as a string, JSON object, or array of text. Up to ~64k tokens combined with your questions.
+questions — a map of question names to question objects. They're all evaluated in one round trip.
+3. The three question types
+choice — pick one option
+Give a criteria map of up to 255 labelled options. Jev returns the winning key, a probability per option, and a confidence.
+"topic": {
+ "type": "choice",
+ "instructions": "What is the primary issue?",
+ "criteria": {
+ "billing": "billing or payment problem",
+ "bug": "the product is broken",
+ "account": "login or access"
+ }
+}
+score — position on a scale
+Give an ordered criteria array of 2–10 level descriptions. Jev returns a (possibly fractional) score plus the full distribution.
+"severity": {
+ "type": "score",
+ "instructions": "How urgent is this?",
+ "criteria": [
+ "routine",
+ "handle today",
+ "urgent",
+ "critical, about to churn"
+ ]
+}
+noul — calibrated yes/no
+No criteria — just instructions. Jev returns noul, a probability from 0 to 1.
+"escalate": {
+ "type": "noul",
+ "instructions": "Escalate to a human immediately?"
+}
+4. The response
+You get back the resolved model, an answers map, and token usage:
+{
+ "model": "jev-1.13.0",
+ "answers": {
+ "topic": { "type": "choice", "choice": "billing",
+ "confidence": 1.0,
+ "probabilities": { "billing": 1.0, "bug": 0.0, "account": 0.0 } },
+ "severity": { "type": "score", "score": 3.0, "confidence": 1.0,
+ "legend": { "0": "routine", "3": "critical, about to churn" },
+ "probabilities": { "0": 0.0, "3": 1.0 } },
+ "escalate": { "type": "noul", "noul": 0.8 }
+ },
+ "usage": { "input_tokens": 434, "output_tokens": 75 }
+}
+Because the types are fixed, you can branch on the results with plain code — if (answers.escalate.noul > 0.7) — with no parsing, no regex, and no risk of a malformed response.
+5. Limits & good practices
+Rate limits: 250,000 tokens/second and 1,200 requests/minute.
+Context: up to 64k tokens for state + all questions; 32k for state + a single longest question.
+Pin versions in production if your thresholds matter — jev-latest can shift behavior.
+Batch questions into one call rather than many; they run in parallel and share the state cost.
+Use confidence to auto-handle the easy cases and route only the uncertain ones to a human or a bigger model.
+Get instant API access
+Sign in, prepay a small balance, and get a jv_live_ key in minutes — one key for the Core Decision API and every ready-made workflow endpoint. Instant, self-serve, no setup.
+Get an API key →See pricing
+Want to see it before you write any code? Every example on this page runs live in the playground. For official keys and full docs, see docs.typesafe.ai.
+▶ Run it in the playgroundSee pricingJev/typesafe·PlaygroundIndependent Jev playground & developer tools by CODEFASHION TECH LTD.PlaygroundToolsGamesMade with JevJev as a JudgeUse casesGet JevAgent skillJev AIWhat is JevAPIAPI docsEcosystemIntegrationsPricingJev topics© 2026 CODEFASHION TECH LTD.TermsPrivacycontact@jevtypesafeai.com
+Jev is developed by TypeSafe AI.
+Not affiliated with or endorsed by TypeSafe AI.
+How to use the Jev API — endpoint, request format & examples · Jev by TypeSafe AI

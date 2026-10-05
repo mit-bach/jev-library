@@ -1,0 +1,15 @@
+{
+  "full_name": "STiFLeR7/Jev-LLM-Playground",
+  "html_url": "https://github.com/STiFLeR7/Jev-LLM-Playground",
+  "description": "Independent playground for TypeSafe AI Jev decision models: typed decisions, support-ticket routing, reproducible evaluations, and a local browser demo.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-25T10:34:07Z",
+  "size": 841,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "23c78486ab38db6caed07efa45788a2f46107c1d"
+}

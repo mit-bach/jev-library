@@ -1,0 +1,84 @@
+{
+  "name": "jev-harness",
+  "version": "0.1.0",
+  "description": "Decision harness for TypeSafe Jev — confidence-gated System One decisions with recipes, shadow mode, and evals",
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./recipes": {
+      "types": "./dist/recipes/index.d.ts",
+      "import": "./dist/recipes/index.js"
+    },
+    "./recipes/*": {
+      "types": "./dist/recipes/*.d.ts",
+      "import": "./dist/recipes/*.js"
+    }
+  },
+  "bin": {
+    "jev-eval": "./dist/eval/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "example:alert": "tsx examples/alert-gate.ts",
+    "example:router": "tsx examples/model-router.ts",
+    "eval": "tsx eval/cli.ts",
+    "docs:gen": "tsx docs-site/scripts/generate.mts",
+    "docs:dev": "npm run docs:gen && vitepress dev docs-site",
+    "docs:build": "npm run docs:gen && vitepress build docs-site",
+    "demo:measure": "node demos/marketing/runs/measure.mjs",
+    "demo:shot": "node demos/marketing/runs/screenshot.mjs"
+  },
+  "keywords": [
+    "typesafe",
+    "jev",
+    "system-one",
+    "decision",
+    "harness",
+    "confidence",
+    "routing",
+    "guardrails"
+  ],
+  "author": "Antonio Coppe",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "playwright": "^1.63.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitepress": "^1.6.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntonioCoppe/jev-harness.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AntonioCoppe/jev-harness/issues"
+  },
+  "homepage": "https://github.com/AntonioCoppe/jev-harness#readme",
+  "files": [
+    "dist",
+    "recipes",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@opentelemetry/api": "^1.9.0"
+  },
+  "peerDependenciesMeta": {
+    "@opentelemetry/api": {
+      "optional": true
+    }
+  }
+}

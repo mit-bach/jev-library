@@ -1,0 +1,15 @@
+{
+  "full_name": "phyous/tsai-sc",
+  "html_url": "https://github.com/phyous/tsai-sc",
+  "description": "TypeSafe Jev controls original StarCraft shareware through keyboard and mouse with recorded action probabilities.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-16T06:40:58Z",
+  "size": 732,
+  "stargazers_count": 28,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "6046ecc60156c4a3c04d384b41821a4ff08501b7"
+}

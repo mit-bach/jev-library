@@ -1,0 +1,15 @@
+{
+  "full_name": "YUUM321/jev-klondike-benchmark",
+  "html_url": "https://github.com/YUUM321/jev-klondike-benchmark",
+  "description": "Reproducible Jev benchmark on Klondike Draw-1 with baselines, decision traces, latency metrics, and replay viewer",
+  "default_branch": "main",
+  "pushed_at": "2026-09-25T10:07:42Z",
+  "size": 134,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "7b3eb45519f45258dacec94d57a2e76e9b23aae2"
+}

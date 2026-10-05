@@ -1,0 +1,15 @@
+{
+  "full_name": "shivanathd/jev-playground",
+  "html_url": "https://github.com/shivanathd/jev-playground",
+  "description": "BYOK playground for TypeSafe Jev (System One): Choice, Score, Noul examples for production gates.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-19T03:48:55Z",
+  "size": 93,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "20574a96ab5ac3d39b945b290ff0daafec5eca39"
+}

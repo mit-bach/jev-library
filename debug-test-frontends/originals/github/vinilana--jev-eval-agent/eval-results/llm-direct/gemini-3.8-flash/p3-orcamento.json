@@ -1,0 +1,96 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PPPYJ12TCSEW0862NSW3G1",
+  "at": "2026-09-17T03:31:42.223Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 4966,
+  "usage": {
+    "inputTokens": 27194,
+    "outputTokens": 735,
+    "cacheReadTokens": 3900,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.02315175
+  },
+  "reasoningChars": 277,
+  "reply": "Você gastou **R$ 942,50** com restaurantes neste mês de setembro, ultrapassando o limite de R$ 800,00. \n\nComo o valor foi excedido, criei a tarefa **\"Revisar o orçamento\"** na sua lista de tarefas e enviei um resumo dos gastos por mensagem para você.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar o orçamento",
+        "priority": "high",
+        "notes": "Gastos com restaurante atingiram R$ 942,50 em setembro (acima do limite de R$ 800,00)."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Olá Vinícius! Você gastou R$ 942,50 com restaurantes neste mês (setembro/2026), ultrapassando o limite estipulado de R$ 800,00. Criei uma tarefa para você revisar o orçamento."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50** com restaurantes neste mês de setembro, ultrapassando o limite de R$ 800,00. \n\nComo o valor foi excedido, criei a tarefa **\"Revisar o orçamento\"** na sua lista de tarefas e enviei um resumo dos gastos por mensagem para você."
+    }
+  ]
+}

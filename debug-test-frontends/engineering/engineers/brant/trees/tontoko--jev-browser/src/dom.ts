@@ -1,0 +1,252 @@
+// Bundled once for evaluation in a frame. It contains no model-generated code.
+import { computeAccessibleName, getRole, isInaccessible } from 'dom-accessibility-api';
+
+const normalize = (text: string | null | undefined) => (text ?? '').replace(/\s+/g, ' ').trim();
+function inert(el: Element): boolean {
+  if (el.closest('[inert]')) return true;
+  const root = el.getRootNode();
+  return root instanceof ShadowRoot && inert(root.host);
+}
+const visible = (el: Element) => !inert(el) && !isInaccessible(el) && el.getClientRects().length > 0;
+const editableHost = (el: Element) => el instanceof HTMLElement && el.isContentEditable && !(el.parentElement instanceof HTMLElement && el.parentElement.isContentEditable);
+/** Editable content and native option labels are values, not surrounding context. */
+const valueHost = (el: Element) => ['SELECT','DATALIST','OPTION','OPTGROUP','TEXTAREA','INPUT'].includes(el.tagName) || el instanceof HTMLElement && el.isContentEditable;
+const valueHostSelector = 'select,datalist,option,textarea,input,[contenteditable]:not([contenteditable="false"])';
+/** Displayed text of a context group without the text of form controls or editors inside it. */
+function contextText(el: Element | null | undefined): string {
+  if (!(el instanceof HTMLElement) || valueHost(el)) return '';
+  if (!el.querySelector(valueHostSelector)) return el.innerText ?? '';
+  const parts: string[] = [], ownTextVisible = getComputedStyle(el).visibility === 'visible';
+  for (const node of el.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE) { if (ownTextVisible) parts.push(node.textContent ?? ''); continue; }
+    if (!(node instanceof HTMLElement)) continue;
+    const style = getComputedStyle(node);
+    if (style.display === 'none') continue;
+    // Inline children join without a separator, like innerText; block children are separated.
+    const text = contextText(node);
+    parts.push(style.display.startsWith('inline') ? text : ` ${text} `);
+  }
+  return parts.join('');
+}
+function context(el: Element): string {
+  const definition = el.closest('dd');
+  const term = definition?.previousElementSibling;
+  if (term?.tagName === 'DT') return normalize(`${contextText(term)} ${contextText(definition)}`).slice(0, 500);
+  const group = el.closest('tr,[role="row"],li,[role="listitem"]')
+    ?? el.closest('fieldset,form,article,section,[role="dialog"]') ?? el.parentElement;
+  return normalize(contextText(group)).slice(0, 500);
+}
+function isFillable(el: Element): boolean {
+  if (el instanceof HTMLTextAreaElement || editableHost(el)) return true;
+  return el instanceof HTMLInputElement && !['button','checkbox','color','file','hidden','image','radio','range','reset','submit'].includes(el.type);
+}
+/** Preserve native and ARIA tri-state values instead of inventing a boolean. */
+export function checkedState(el: Element): boolean | 'mixed' | undefined {
+  if (el instanceof HTMLInputElement && ['checkbox', 'radio'].includes(el.type))
+    return el.type === 'checkbox' && el.indeterminate ? 'mixed' : el.checked;
+  const value = el.getAttribute('aria-checked');
+  return value === 'mixed' ? 'mixed' : value === 'true' ? true : value === 'false' ? false : undefined;
+}
+export function describe(el: Element) {
+  const input = el as HTMLInputElement;
+  const role = getRole(el) ?? (editableHost(el) ? 'textbox' : '');
+  const options = el instanceof HTMLSelectElement ? Array.from(el.options).map((o, index) => ({
+    index,
+    label: normalize(o.label), value: o.value, selected: o.selected,
+    disabled: o.disabled || (o.parentElement instanceof HTMLOptGroupElement && o.parentElement.disabled),
+  })) : undefined;
+  const info = {
+    role,
+    name: normalize(computeAccessibleName(el)),
+    context: context(el),
+    tag: el.tagName.toLowerCase(),
+    inputType: el instanceof HTMLInputElement ? input.type : '',
+    fieldName: el.getAttribute('name') ?? '',
+    popup: el.getAttribute('aria-haspopup') ?? undefined,
+    controls: (el.getAttribute('aria-controls') ?? el.getAttribute('aria-owns') ?? '').split(/\s+/).filter(Boolean),
+    expanded: el.getAttribute('aria-expanded') === 'true',
+    ...(role === 'option' ? {listboxId:el.closest('[role="listbox"]')?.id} : {}),
+    ...('form' in el && (el as HTMLInputElement).form ? {
+      formId: `form${Array.from(document.forms).indexOf((el as HTMLInputElement).form!)}`,
+      formName: computeAccessibleName((el as HTMLInputElement).form!),
+    } : {}),
+    required: el.matches('[required],[aria-required="true"]'),
+    disabled: el.matches(':disabled,[aria-disabled="true"]'),
+    readOnly: el.matches('[readonly],[aria-readonly="true"]'),
+    fillable: isFillable(el),
+    ...(['checkbox', 'radio', 'switch'].includes(role) ? { checked: checkedState(el) } : {}),
+    ...(isFillable(el)
+      ? { filled: el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement ? el.value.length > 0 : normalize(el.textContent).length > 0 } : {}),
+    ...(options ? { options, multiple: (el as HTMLSelectElement).multiple } : {}),
+  };
+  // Exclude mutable input values and unrelated layout; include row identity and actual destinations.
+  const signature = JSON.stringify([info.role, info.name, info.context, info.tag, info.inputType, info.fieldName, info.formName, info.controls, info.listboxId,
+    el instanceof HTMLAnchorElement ? el.href : el.getAttribute('href'), el.getAttribute('formaction'), (el as HTMLButtonElement).form?.action,
+    info.multiple, info.options?.map(o => [o.label, o.value, o.disabled, ...(info.multiple ? [o.selected] : [])]), info.disabled, info.readOnly, info.fillable]);
+  return { info, signature, connected: el.isConnected, visible: visible(el) };
+}
+const maxTextLength = 700;
+/** Longer displayed text is kept as a shortened source rather than dropped; it never splits a surrogate pair. */
+const shortened = (text: string) => text.length <= maxTextLength ? text : text.slice(0, /[\uD800-\uDBFF]/.test(text[maxTextLength - 1]!) ? maxTextLength - 1 : maxTextLength);
+/** The same visible text eligibility drives observation and progress waits. */
+function observedText(el: Element, role: string): string | undefined {
+  if (['SCRIPT','STYLE','NOSCRIPT','TEMPLATE','HEAD','META','TITLE','LINK','INPUT','TEXTAREA','SELECT','OPTION'].includes(el.tagName) || el instanceof HTMLElement && el.isContentEditable) return;
+  const hasOwnText = Array.from(el.childNodes).some(n => n.nodeType === Node.TEXT_NODE && normalize(n.textContent));
+  const semanticText = ['heading','cell','rowheader','columnheader','definition','term','status','alert'].includes(role) || ['P','DD','DT','TD','TH','OUTPUT'].includes(el.tagName);
+  if (!hasOwnText && !semanticText) return;
+  const text = (el as HTMLElement).innerText ?? el.textContent ?? '';
+  if (text.trim() && !el.querySelector('input,textarea,select,[contenteditable="true"]')) return text;
+}
+
+/** Fixed read-only browser predicate used for local progress waits, never model-authored. */
+export function progressChanged(previous?: string, scopedRoots?: Element[]): string | boolean {
+  // A scoped observation watches only its own roots; a replaced or removed root is itself a change.
+  const roots: (Element | Document | ShadowRoot)[] = scopedRoots ? [...scopedRoots] : [document];
+  const parts: unknown[] = [location.href, ...(scopedRoots ? [scopedRoots.map(root => root.isConnected)] : [])];
+  const visited = new Set<Element>();
+  let scanned = 0;
+  for (const root of roots) for (const el of root instanceof Element ? [root, ...root.querySelectorAll('*')] : root.querySelectorAll('*')) {
+    if (visited.has(el)) continue;
+    visited.add(el);
+    if (++scanned > 6000) break;
+    if (el.shadowRoot) roots.push(el.shadowRoot);
+    if (!visible(el)) continue;
+    const evidence = observedText(el,getRole(el) ?? '');
+    if (evidence !== undefined) parts.push(['evidence',shortened(evidence)]);
+    if (el.matches('input,textarea,select,button,a,[role="button"],[role="combobox"],[role="option"],[role="checkbox"],[role="switch"],[contenteditable="true"]'))
+      parts.push([el.tagName,el.getAttribute('name'),el.getAttribute('aria-label'),el.matches(':disabled'),checkedState(el),el instanceof HTMLAnchorElement?el.href:null,el instanceof HTMLSelectElement ? Array.from(el.options,o=>[o.value,o.label,o.disabled,o.selected]) : (el as HTMLElement).innerText]);
+    else if (el.matches('h1,h2,h3,[role="status"],[role="alert"],[aria-busy],article,tbody tr,[role="row"]'))
+      parts.push([el.tagName,el.getAttribute('role'),el.getAttribute('aria-busy'),(el as HTMLElement).innerText?.slice(0,1000)]);
+  }
+  const key=JSON.stringify(parts);return previous===undefined?key:key!==previous;
+}
+const actionableRoles = new Set(['button','link','textbox','searchbox','checkbox','radio','switch','combobox','listbox','menuitem','menuitemcheckbox','menuitemradio','tab','option']);
+export type SemanticTextKind = 'text' | 'href' | 'checked';
+export function observe(options: { maxElements: number; maxTexts: number; maxHrefs?: number }, scopedRoots?: Element[], explicitRecords?: Element[], excludedRoots?: Element[]) {
+  const nodes: Element[] = [];
+  const elements: ReturnType<typeof describe>[] = [];
+  const texts: { text: string; context: string; role: string; value?: boolean; attribute?: string; truncated?: boolean }[] = [];
+  const textNodes: Element[] = [];
+  const textKinds: SemanticTextKind[] = [];
+  // Link URLs have their own budget so they never crowd displayed text out of maxTexts.
+  let truncatedElements = false, truncatedTexts = false, scanned = 0, displayed = 0, hrefs = 0;
+  const maxHrefs = options.maxHrefs ?? options.maxTexts;
+  const roots: (Element | Document | ShadowRoot)[] = scopedRoots ? [...scopedRoots] : [document];
+  const visited = new Set<Element>();
+  for (let r = 0; r < roots.length; r++) {
+    const root = roots[r]!;
+    const candidates = root instanceof Element ? [root, ...root.querySelectorAll('*')] : Array.from(root.querySelectorAll('*'));
+    for (const el of candidates) {
+      if (visited.has(el)) continue;
+      // Caller-excluded subtrees, including shadow content under an excluded host, are never observed or recorded.
+      if (excludedRoots?.length && withinSemanticRoots(el, excludedRoots)) continue;
+      visited.add(el);
+      if (++scanned > 6000) { truncatedElements = true; truncatedTexts = true; break; }
+      if (el.shadowRoot) roots.push(el.shadowRoot);
+      if (['SCRIPT','STYLE','NOSCRIPT','TEMPLATE','HEAD','META','TITLE','LINK'].includes(el.tagName) || !visible(el)) continue;
+      const role = getRole(el) ?? '';
+      if (actionableRoles.has(role) || isFillable(el)) {
+        if (nodes.length >= options.maxElements) truncatedElements = true;
+        else { nodes.push(el); elements.push(describe(el)); }
+      }
+      // Eligibility is shared with progress waits; retain original displayed text.
+      const text = observedText(el,role);
+      if (text !== undefined) {
+        if (displayed >= options.maxTexts) truncatedTexts = true;
+        else { displayed++; textKinds.push('text'); textNodes.push(el); texts.push({ text: shortened(text), context: context(el), role, ...(text.length > maxTextLength ? { truncated: true } : {}) }); }
+      }
+      if (el instanceof HTMLAnchorElement && el.hasAttribute('href')) {
+        if (hrefs >= maxHrefs) truncatedTexts = true;
+        else { hrefs++; textKinds.push('href'); textNodes.push(el); texts.push({ text: el.href, context: `${computeAccessibleName(el)} ${context(el)}`, role: 'link', attribute: 'href' }); }
+      }
+      if (['checkbox','radio','switch'].includes(role)) {
+        const d = describe(el);
+        if (displayed >= options.maxTexts) truncatedTexts = true;
+        else { displayed++; textKinds.push('checked'); textNodes.push(el); texts.push({ text: d.info.name, context: d.info.context, role, ...(typeof d.info.checked === 'boolean' ? { value: d.info.checked } : {}) }); }
+      }
+    }
+    if (scanned > 6000) break;
+  }
+  const recordNodes = (explicitRecords ?? [...visited].filter(el => el.matches('tbody tr,[role="row"],li,[role="listitem"],article'))).filter(el => visited.has(el) && visible(el));
+  const records = recordNodes.map((el, index) => {
+    const parent = recordNodes.findIndex(other => other !== el && other.contains(el) && !recordNodes.some(between => between !== other && between !== el && other.contains(between) && between.contains(el)));
+    return { index, parent: parent < 0 ? undefined : parent, readOnly: !el.matches('form,input,textarea,select,[contenteditable="true"]') && !el.querySelector('input,textarea,select,[contenteditable="true"]'), context: normalize(contextText(el)).slice(0, 1000), texts: textNodes.flatMap((node, i) => el === node || el.contains(node) ? [i] : []) };
+  });
+  return { nodes, textNodes, textKinds, elements, texts, records, recordInventoryComplete:scanned<=6000, truncatedElements, truncatedTexts, changeKey: String(progressChanged(undefined, scopedRoots?.length ? scopedRoots : undefined)), busy: !!document.querySelector('[aria-busy="true"]') };
+}
+
+/** No global text search: options must belong to the popup declared by this control. */
+export function matchingComboboxOptions(element: Element, wanted: string): Element[] {
+  if (!element.isConnected) return [];
+  const root = element.getRootNode() as Document | ShadowRoot;
+  const ids = (element.getAttribute('aria-controls') ?? element.getAttribute('aria-owns') ?? '').split(/\s+/).filter(Boolean);
+  const matches = new Set<Element>();
+  for (const id of ids) {
+    const popup = root.getElementById(id);
+    if (!popup || popup.getAttribute('role') !== 'listbox' || !visible(popup)) continue;
+    for (const option of popup.querySelectorAll('[role="option"]'))
+      if (option.closest('[role="listbox"]') === popup && visible(option) && !option.matches(':disabled,[aria-disabled="true"]') && normalize(computeAccessibleName(option)) === normalize(wanted)) matches.add(option);
+  }
+  return [...matches];
+}
+
+/** A bounded index of real semantic regions, not a guessed selector or a truncated action list. */
+export function regionNodes(): Element[] {
+  const roots:(Document|ShadowRoot)[]=[document],regions:Element[]=[];
+  for(const root of roots){
+    for(const node of root.querySelectorAll('*'))if(node.shadowRoot)roots.push(node.shadowRoot);
+    for(const node of root.querySelectorAll('form,main,nav,section,article,dialog,[role="form"],[role="main"],[role="region"],[role="dialog"],[role="navigation"]'))
+      if(visible(node))regions.push(node);
+  }
+  return regions;
+}
+export function regionDescription(element:Element){
+  const d=describe(element);
+  return {...d,info:{...d.info,role:d.info.role||element.tagName.toLowerCase(),name:d.info.name||normalize(element.querySelector('h1,h2,h3,legend')?.textContent)}};
+}
+
+/** Re-read only a selected semantic source. No selectors or code from the model. */
+export function readSemanticText(el: Element, kind: SemanticTextKind) {
+  if (!el.isConnected || !visible(el)) return null;
+  const role = getRole(el) ?? '';
+  if (kind === 'href') {
+    if (!(el instanceof HTMLAnchorElement) || !el.hasAttribute('href')) return null;
+    return {text:el.href,context:`${computeAccessibleName(el)} ${context(el)}`,role:'link',attribute:'href'};
+  }
+  if (kind === 'checked') {
+    if(!['checkbox','radio','switch'].includes(role))return null;
+    const d=describe(el);
+    return {text:d.info.name,context:d.info.context,role,...(typeof d.info.checked==='boolean'?{value:d.info.checked}:{})};
+  }
+  return {text:(el as HTMLElement).innerText ?? el.textContent ?? '',context:context(el),role};
+}
+
+/** Read a caller-selected property without changing the element. */
+export function readLocatorValue(el: Element, args: {property:string;attribute?:string;roots?:Element[]}) {
+  if (!el.isConnected || !visible(el)) return {error:'SEMANTIC_NO_MATCH'};
+  if (args.roots && !withinSemanticRoots(el,args.roots))return {error:'SEMANTIC_NO_MATCH'};
+  const role=getRole(el)??el.tagName.toLowerCase(),group=context(el);
+  if(args.property==='text')return {text:(el as HTMLElement).innerText??el.textContent??'',context:group,role};
+  if(args.property==='value'){
+    if(!(el instanceof HTMLInputElement||el instanceof HTMLTextAreaElement||el instanceof HTMLSelectElement)||el instanceof HTMLSelectElement&&el.multiple)return {error:'INVALID_ARGUMENT'};
+    return {text:el.value,value:el.value,context:group,role,attribute:'value'};
+  }
+  if(args.property==='checked'){
+    const checked=checkedState(el);if(checked===undefined)return {error:'INVALID_ARGUMENT'};
+    return {text:String(checked),value:checked,context:group,role,attribute:'checked'};
+  }
+  if(args.property==='attribute'){
+    const value=el.getAttribute(args.attribute!);if(value===null)return {error:'SEMANTIC_NO_MATCH'};
+    return {text:value,value,context:group,role,attribute:args.attribute};
+  }
+  return {error:'INVALID_ARGUMENT'};
+}
+
+export function withinSemanticRoots(el:Element,roots:Element[]):boolean {
+  let node:Element|null=el;
+  while(node){
+    if(roots.some(root=>root===node||root.contains(node)))return true;
+    const root=node.getRootNode();node=root instanceof ShadowRoot?root.host:null;
+  }
+  return false;
+}

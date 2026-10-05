@@ -1,0 +1,15 @@
+{
+  "full_name": "yAntPower/jev-decision-lab",
+  "html_url": "https://github.com/yAntPower/jev-decision-lab",
+  "description": "A self-hosted, bilingual playground for Jev\u2019s Choice, Noul, and Score judgments.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-25T01:38:58Z",
+  "size": 107,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "JavaScript",
+  "commit": "b60ce057c70499802ad9d56a92ab78007d183be6"
+}

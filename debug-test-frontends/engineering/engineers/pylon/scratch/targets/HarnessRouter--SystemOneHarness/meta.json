@@ -1,0 +1,15 @@
+{
+  "full_name": "HarnessRouter/SystemOneHarness",
+  "html_url": "https://github.com/HarnessRouter/SystemOneHarness",
+  "description": "The System One harness for System One models. Run Jev and other System One models locally or directly on HarnessRouter.ai.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T11:01:24Z",
+  "size": 10393,
+  "stargazers_count": 191,
+  "license": "Apache-2.0",
+  "archived": false,
+  "fork": false,
+  "homepage": "HarnessRouter.ai",
+  "language": "Python",
+  "commit": "ab8e8f08b4a6268c0633a474423d556599ee06a4"
+}

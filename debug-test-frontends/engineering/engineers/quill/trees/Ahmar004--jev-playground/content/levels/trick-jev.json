@@ -1,0 +1,109 @@
+{
+	"id": "trick-jev",
+	"order": 8,
+	"title": "Trick Jev",
+	"learn": {
+		"intro": "Jev reads the words you give it, literally. That is a strength, and a risk: wording can hide the real meaning, point at someone else, or even try to give Jev orders. Here are six messages, each written plainly and then in a tricky way. Guess which tricks fool Jev, then see what really happened.",
+		"compare": [
+			{
+				"racer": "jev",
+				"title": "Jev",
+				"points": [
+					"Answers the exact question it was asked",
+					"Reads wording literally",
+					"Can be misled by tricky phrasing"
+				]
+			},
+			{
+				"racer": "llm",
+				"title": "An LLM",
+				"points": [
+					"Reads the whole message in context",
+					"Can also be fooled",
+					"Its answer can come back in the wrong format"
+				]
+			}
+		]
+	},
+	"predict": {
+		"intro": "On the Play step, Jev and an LLM each read 12 short customer messages, 6 written plainly and 6 with a trick in the wording, and answer the same question about each: is the sender asking to cancel their subscription? Guess who answers more of the 12 correctly, and who costs less.",
+		"questions": [
+			{
+				"metric": "most_accurate",
+				"prompt": "Who answers more of the 12 messages correctly?"
+			},
+			{
+				"metric": "cheapest",
+				"prompt": "Who costs less for all 12 messages?"
+			}
+		]
+	},
+	"tasks": [
+		{
+			"id": "trick-jev",
+			"title": "Twelve messages: six plain, six tricky"
+		}
+	],
+	"widget": "tricks",
+	"reveal": {
+		"why": [
+			"Most tricks did not fool Jev: it read negations, other people and planted orders correctly. Where it slipped, the probability was close to the middle, a sign it was unsure.",
+			"Literal reading means the question must be precise. Ask exactly what you need to know, and treat any text you did not write as data, never as instructions.",
+			"These items were rewritten once after a first set did not fool Jev at all. Both results are on the Methodology page."
+		]
+	},
+	"docs": [
+		{
+			"path": "/jaggedness#literal-reading",
+			"title": "Literal reading"
+		},
+		{
+			"path": "/jaggedness#adversarial-content",
+			"title": "Adversarial content"
+		}
+	],
+	"check": {
+		"questions": [
+			{
+				"id": "trick-precise",
+				"prompt": "You use Jev to read customer messages, and some customers word them to fool it. What makes Jev harder to fool?",
+				"options": [
+					{
+						"id": "precise",
+						"text": "Ask one precise question, and treat the customer's text only as something to judge, never as instructions to follow"
+					},
+					{
+						"id": "long",
+						"text": "Make the question much longer"
+					},
+					{
+						"id": "trust",
+						"text": "Believe whatever the message says about itself"
+					}
+				],
+				"answerId": "precise",
+				"explanation": "Precise questions leave less room for wording to mislead, and text from users should never be followed as an order."
+			},
+			{
+				"id": "trick-signal",
+				"prompt": "In the results, what hinted that a trick might have fooled Jev?",
+				"options": [
+					{
+						"id": "middle",
+						"text": "Its probability was near the middle (around 50%), not near 0% or 100%"
+					},
+					{
+						"id": "high",
+						"text": "Its probability was near 100%"
+					},
+					{
+						"id": "fast",
+						"text": "It answered very fast"
+					}
+				],
+				"answerId": "middle",
+				"explanation": "A probability near 50 percent means Jev was unsure, which is the cue to review the item."
+			}
+		]
+	}
+}

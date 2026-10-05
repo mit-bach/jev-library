@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jev × マインスイーパー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1:wght@400;500;700;800&family=M+PLUS+1+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="title">
+      <h1>Jev × マインスイーパー</h1>
+      <p class="lede">数字に接した未開封マスごとに「このマスは地雷か？」を1問ずつ作り、全問をまとめて1回で Jev に聞きます。返ってきた確率を見て、どこを開くかはコードが決めます。</p>
+    </div>
+    <p id="conn" class="conn" data-state="checking">サーバを確認しています</p>
+  </header>
+
+  <main class="layout">
+    <section class="play" aria-label="盤面と操作">
+      <div class="controls">
+        <div class="row">
+          <label class="field">盤面
+            <select id="preset"></select>
+          </label>
+          <label class="field">シード
+            <input id="seed" type="number" min="1" max="999999" inputmode="numeric">
+          </label>
+          <button id="newBoard" type="button">新しい盤面</button>
+          <button id="sameBoard" type="button">同じ盤面でもう一度</button>
+        </div>
+
+        <fieldset class="row seg" id="modeSeg">
+          <legend>モード</legend>
+        </fieldset>
+
+        <div class="row" id="jevOptions">
+          <label class="field">Jevへの渡し方
+            <select id="style"></select>
+          </label>
+          <label class="field range">開く基準 <output id="safeOut"></output>
+            <input id="safeT" type="range" min="1" max="20" step="1">
+          </label>
+          <label class="field range">旗の基準 <output id="mineOut"></output>
+            <input id="mineT" type="range" min="80" max="99" step="1">
+          </label>
+        </div>
+
+        <div class="row" id="autoRow">
+          <button id="step" type="button" class="primary">1手進める</button>
+          <button id="run" type="button" class="primary">自動で解く</button>
+          <label class="field">速さ
+            <select id="delay">
+              <option value="1400">ゆっくり</option>
+              <option value="600" selected>ふつう</option>
+              <option value="150">速い</option>
+              <option value="0">最速</option>
+            </select>
+          </label>
+          <label class="check"><input id="autoNext" type="checkbox"> 終わったら次の盤面へ</label>
+        </div>
+
+        <div class="row" id="manualRow" hidden>
+          <button id="hint" type="button" class="primary">Jevに聞く</button>
+          <label class="check"><input id="flagMode" type="checkbox"> 旗を立てるモード</label>
+          <span class="note">クリックで開く、右クリックか F キーで旗</span>
+        </div>
+
+        <fieldset class="row seg small" id="heatSeg">
+          <legend>色分け</legend>
+          <label><input type="radio" name="heat" value="jev" checked> Jevの確率</label>
+          <label><input type="radio" name="heat" value="exact"> 厳密解</label>
+          <label><input type="radio" name="heat" value="none"> なし</label>
+        </fieldset>
+      </div>
+
+      <div class="board-wrap">
+        <div id="board" class="board" role="grid" aria-label="マインスイーパーの盤面"></div>
+      </div>
+
+      <div class="legend" aria-hidden="true">
+        <span>安全</span>
+        <span class="ramp"></span>
+        <span>地雷</span>
+        <span class="legend-note">未開封マスの色と数字は地雷である確率（%）</span>
+      </div>
+      <div class="legend moves" aria-hidden="true">
+        <span class="mk mk-jev"></span>Jevが決めた手
+        <span class="mk mk-solver"></span>ソルバーが決めた手
+        <span class="mk mk-code"></span>コードの決まりごと（初手など）
+      </div>
+
+      <p id="status" class="status" aria-live="polite"></p>
+
+      <details class="how">
+        <summary>このデモの仕組み</summary>
+        <p>1手ごとに、数字に接している未開封マスをすべて集め、マスごとに Noul 質問「Is the target cell a mine?」を作ります。質問にはそのマスに関係する手がかりだけを英語で載せ（例：<code>D4: exactly 1 of these 2 hidden cells is a mine: D5, E5</code>）、全問を1回のリクエストで送ります。Jev は各質問を独立に並列評価し、地雷である確率を返します。</p>
+        <p>「数字 − 周りの旗」のような算術は、渡す前にコードで済ませています（Jev は計算より読解と判断が得意なため）。「Jevへの渡し方」を「生の数字だけ」にすると、算術も Jev 任せになります。</p>
+        <p>Jev＋ソルバーでは、Jev が確信できる手（開く基準以下／旗の基準以上）だけを Jev に任せ、どのマスも確信できないときは厳密ソルバーに回します。答え合わせの数字は評価専用で、手の決定には使いません。</p>
+      </details>
+    </section>
+
+    <aside class="side" aria-label="記録と評価">
+      <section>
+        <h2>このゲーム</h2>
+        <dl class="kv" id="gameStats"></dl>
+      </section>
+
+      <section>
+        <h2>確率の当たり具合</h2>
+        <canvas id="calib" width="260" height="200" aria-label="Jevの予測確率と実際の地雷の割合"></canvas>
+        <dl class="kv" id="calibStats"></dl>
+        <p class="fine">点が対角線に近いほど、Jevの確率どおりに地雷があったことを示します。セッション全体の集計です。</p>
+      </section>
+
+      <section>
+        <h2>セッション成績</h2>
+        <table class="score" id="scoreTable"></table>
+      </section>
+
+      <section>
+        <h2>マスの詳細</h2>
+        <div id="inspect" class="inspect">
+          <p class="fine">盤面のマスにカーソルを合わせると、Jev に送った質問と答えを表示します。自動モードではクリックで固定できます。</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>手の記録</h2>
+        <ol id="log" class="log" reversed></ol>
+      </section>
+    </aside>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

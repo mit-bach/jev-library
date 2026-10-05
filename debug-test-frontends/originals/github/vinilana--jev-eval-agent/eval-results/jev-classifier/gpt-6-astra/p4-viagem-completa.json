@@ -1,0 +1,376 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PVZR56ZX09GW9KFWKFT99X",
+  "at": "2026-09-17T05:04:08.176Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 7,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 7,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 19667,
+  "usage": {
+    "inputTokens": 8054,
+    "outputTokens": 486,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.10484
+  },
+  "reasoningChars": 0,
+  "reply": "Segurei, sem pagar, o voo mais barato de sexta (18/09): GOL SDU → CGH, das 11h30 às 12h35, por R$ 298 — a reserva expira às 2h de sexta.\nReservei o Ibis Paulista por R$ 260 para uma noite (18–19/09), a 1,1 km da reunião.\nBloqueei sua agenda das 8h às 18h como “Viagem SP” e avisei a Marina pelo WhatsApp, deixando claro que o voo ainda depende de pagamento.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 312,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "message_read_recent",
+          "p": 0
+        },
+        {
+          "name": "transfer_money",
+          "p": 0
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 100000,
+        "earliest_departure": "00:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_hold",
+      "confidence": 0.96,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 304,
+      "top": [
+        {
+          "name": "flights_hold",
+          "p": 0.97
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.02
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.01
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        },
+        {
+          "name": "shopping_list_add",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "hotels_search_nearby",
+      "confidence": 0.61,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 306,
+      "top": [
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.62
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.34
+        },
+        {
+          "name": "flights_book",
+          "p": 0.03
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.01
+        },
+        {
+          "name": "hotels_book",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo, SP",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "hotels_book",
+      "confidence": 0.94,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 506,
+      "top": [
+        {
+          "name": "hotels_book",
+          "p": 0.95
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.03
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "flights_book",
+          "p": 0.01
+        },
+        {
+          "name": "notes_delete",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_2",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "calendar_block_time",
+      "confidence": 0.97,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 526,
+      "top": [
+        {
+          "name": "calendar_block_time",
+          "p": 0.98
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.01
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.01
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "message_read_recent",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00",
+        "calendar": "primary"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.91,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 521,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.92
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.07
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 5,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "Marina, a viagem do Vinícius a São Paulo nesta sexta, 18/09, para a reunião das 14h na Av. Paulista, 1000, está confirmada. Hotel reservado e agenda bloqueada das 8h às 18h. O voo está apenas segurado, ainda sem pagamento, com prazo até as 2h de sexta para emissão.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 6,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.96,
+      "done": 0.64,
+      "gated": false,
+      "latencyMs": 500,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.97
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.02
+        },
+        {
+          "name": "flights_book",
+          "p": 0.01
+        },
+        {
+          "name": "timer_set",
+          "p": 0
+        },
+        {
+          "name": "reminder_delete",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 6,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Segurei, sem pagar, o voo mais barato de sexta (18/09): GOL SDU → CGH, das 11h30 às 12h35, por R$ 298 — a reserva expira às 2h de sexta.\nReservei o Ibis Paulista por R$ 260 para uma noite (18–19/09), a 1,1 km da reunião.\nBloqueei sua agenda das 8h às 18h como “Viagem SP” e avisei a Marina pelo WhatsApp, deixando claro que o voo ainda depende de pagamento."
+    }
+  ]
+}

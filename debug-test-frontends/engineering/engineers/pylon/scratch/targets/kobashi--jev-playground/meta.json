@@ -1,0 +1,15 @@
+{
+  "full_name": "kobashi/jev-playground",
+  "html_url": "https://github.com/kobashi/jev-playground",
+  "description": "Can a model that only returns typed judgments choose a melody? A call-and-response app, four evals, and the finding that writing a note as \"7\" or \"C5\" swings accuracy 34 points.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T00:52:19Z",
+  "size": 124,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "ce66832f9098b5f1a5416b7ddb73f8ed151c9ab8"
+}

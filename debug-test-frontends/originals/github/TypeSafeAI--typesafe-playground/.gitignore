@@ -1,0 +1,36 @@
+.agent/local/
+.agent/private/
+.agent/tmp/
+.agent/**/*.secret.*
+.agent/**/secrets.*
+.agent/**/.env*
+!.agent/templates/.env.example
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+!.env.1password
+.DS_Store
+.venv/
+node_modules/
+coverage/
+
+.next/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+.playwright-mcp/
+.vercel
+
+playwright-report/
+test-results/
+
+# pnpm-only: these would install a different tree than pnpm-lock.yaml describes.
+package-lock.json
+npm-shrinkwrap.json
+yarn.lock
+bun.lockb
+
+# Local clean-room rebuilt apps and captured evidence.
+.clean-room/

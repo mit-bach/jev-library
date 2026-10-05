@@ -1,0 +1,30 @@
+{
+  "name": "jev-browser-qa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "E2E browser QA driven by Playwright, with TypeSafe Jev (via Vercel AI Gateway) as the judgment layer. Every run is recorded on video.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report artifacts/report",
+    "typecheck": "tsc --noEmit",
+    "jev:smoke": "tsx scripts/smoke.ts",
+    "dashboard": "tsx scripts/dashboard.ts",
+    "qa": "tsx src/cli.ts"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@ai-sdk/gateway": "^4.0.87",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.0.0",
+    "ai": "^7.0.107",
+    "dotenv": "^17.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "packageManager": "pnpm@11.12.0"
+}

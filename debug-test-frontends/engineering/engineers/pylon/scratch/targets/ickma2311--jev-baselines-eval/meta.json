@@ -1,0 +1,15 @@
+{
+  "full_name": "ickma2311/jev-baselines-eval",
+  "html_url": "https://github.com/ickma2311/jev-baselines-eval",
+  "description": "Pre-registered independent eval of TypeSafe Jev against a nano-class LLM, a frontier LLM, and a supervised encoder (Banking77 + CLINC150 zero-shot)",
+  "default_branch": "main",
+  "pushed_at": "2026-09-25T21:28:04Z",
+  "size": 739,
+  "stargazers_count": 5,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "3b828cb68992c00835b3f126a3d13534da875277"
+}

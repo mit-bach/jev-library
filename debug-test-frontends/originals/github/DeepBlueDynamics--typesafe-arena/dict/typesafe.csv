@@ -1,0 +1,50 @@
+phrase,action
+intent routing,INTENT_ROUTING
+intent-routing,INTENT_ROUTING
+Intent Routing,INTENT_ROUTING
+speculative fan-out,FAN_OUT
+speculative fan out,FAN_OUT
+fan-out,FAN_OUT
+confidence-gated routing,CONFIDENCE_ROUTING
+confidence gated routing,CONFIDENCE_ROUTING
+composite scoring,COMPOSITE_SCORING
+Choice,CHOICE
+Score,SCORE
+Noul,NOUL
+primitives,PRIMITIVES
+System One,SYSTEM_ONE
+confidence,CONFIDENCE
+state,STATE
+Jev,JEV
+jev-latest,JEV
+handler,HANDLER
+specialist LLM,SPECIALIST_LLM
+human agent,HUMAN_AGENT
+route,ROUTE
+classifier,CLASSIFIER
+TypeSafe,TYPESAFE
+TypeSafeClient,TYPESAFE_CLIENT
+AsyncTypeSafeClient,ASYNC_CLIENT
+system_one,SYSTEM_ONE_API
+self-consistency,SELF_CONSISTENCY
+re-ranking,RERANK
+guardrails,GUARDRAILS
+RAG,RAG
+skill suggestion,SKILL_SUGGESTION
+parallel questions,PARALLEL_QUESTIONS
+entity alignment,ENTITY_ALIGNMENT
+hierarchical classification,HIERARCHICAL_CLASSIFICATION
+citation check,CITATION_CHECK
+function calling,FUNCTION_CALLING
+quick start,QUICKSTART
+API reference,API
+agent skill,AGENT_SKILL
+probability,PROBABILITY
+probabilities,PROBABILITY
+threshold,THRESHOLD
+escalation,ESCALATION
+Ollama,OLLAMA
+playground,PLAYGROUND
+cookbook,COOKBOOK
+pattern,PATTERN
+question type,QUESTION_TYPE

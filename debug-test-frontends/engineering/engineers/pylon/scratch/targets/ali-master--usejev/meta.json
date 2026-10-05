@@ -1,0 +1,15 @@
+{
+  "full_name": "ali-master/usejev",
+  "html_url": "https://github.com/ali-master/usejev",
+  "description": "Run Laya locally with Bun: native ONNX inference, a TypeSafe-compatible API, and a bilingual decision playground.",
+  "default_branch": "master",
+  "pushed_at": "2026-09-30T12:40:23Z",
+  "size": 589,
+  "stargazers_count": 12,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "TypeScript",
+  "commit": "89e6b80fcc5e18bbf690c0af38b9e0c054d4ec3d"
+}

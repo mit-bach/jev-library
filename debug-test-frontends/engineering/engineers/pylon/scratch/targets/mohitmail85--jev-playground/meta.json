@@ -1,0 +1,15 @@
+{
+  "full_name": "mohitmail85/jev-playground",
+  "html_url": "https://github.com/mohitmail85/jev-playground",
+  "description": "Side-by-side comparison of Jev (BeatAPI's free jev-1.13 decision model) vs Gemini structured output, answering the same support-ticket decisions.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-27T15:01:49Z",
+  "size": 14,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "263a20be0113f9f03180929551df5fbff2693dc5"
+}

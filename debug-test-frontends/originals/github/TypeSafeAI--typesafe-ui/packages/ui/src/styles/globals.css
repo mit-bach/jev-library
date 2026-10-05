@@ -1,0 +1,256 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+@source "../../../apps/**/*.{ts,tsx}";
+@source "../../../components/**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    /* TypeSafe brand accents beyond the shadcn set. */
+    --color-teal: var(--teal);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-dot: var(--dot);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+    --ease-out-quart: cubic-bezier(0.2, 0, 0, 1);
+    /* Depth comes from layered shadows, borders stay for structure. */
+    --shadow-surface: var(--surface-shadow);
+    --shadow-surface-hover: var(--surface-shadow-hover);
+    --shadow-elevated: var(--elevated-shadow);
+}
+
+/*
+ * TypeSafe AI tokens.
+ * Pink is the primary action colour, teal marks "live" state,
+ * and surfaces are near-neutral greys with a faint dot grid behind them.
+ */
+:root {
+    --background: #f7f7f8;
+    --foreground: #1b1b1f;
+    --dot: #e6e8ed;
+    --card: #ffffff;
+    --card-foreground: #1b1b1f;
+    --popover: #ffffff;
+    --popover-foreground: #1b1b1f;
+    --primary: #bb305f;
+    --primary-foreground: #ffffff;
+    --secondary: #f2f2f4;
+    --secondary-foreground: #1b1b1f;
+    --muted: #f2f2f4;
+    --muted-foreground: #62656d;
+    --accent: #e9e9ec;
+    --accent-foreground: #1b1b1f;
+    --destructive: #c53030;
+    --border: #e0e0e4;
+    --input: #b8b9c0;
+    --ring: #d94a79;
+    --teal: #087d75;
+    --success: #15803d;
+    --warning: #8c5f14;
+    --chart-1: #d94a79;
+    --chart-2: #0b8f84;
+    --chart-3: #15803d;
+    --chart-4: #b7791f;
+    --chart-5: #c53030;
+    --radius: 0.625rem;
+    --sidebar: #f7f7f8;
+    --sidebar-foreground: #1b1b1f;
+    --sidebar-primary: #d94a79;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e9e9ec;
+    --sidebar-accent-foreground: #1b1b1f;
+    --sidebar-border: #e0e0e4;
+    --sidebar-ring: #d94a79;
+    --surface-shadow:
+        0 0 0 1px oklch(0 0 0 / 0.06),
+        0 1px 2px -1px oklch(0 0 0 / 0.06),
+        0 2px 4px 0 oklch(0 0 0 / 0.04);
+    --surface-shadow-hover:
+        0 0 0 1px oklch(0 0 0 / 0.08),
+        0 1px 2px -1px oklch(0 0 0 / 0.08),
+        0 2px 4px 0 oklch(0 0 0 / 0.06);
+    --elevated-shadow:
+        0 0 0 1px oklch(0 0 0 / 0.08),
+        0 4px 8px -2px oklch(0 0 0 / 0.08),
+        0 12px 24px -4px oklch(0 0 0 / 0.1);
+}
+
+.dark {
+    --background: #0c1015;
+    --foreground: #f4f4f5;
+    --dot: #19212c;
+    --card: #151a21;
+    --card-foreground: #f4f4f5;
+    --popover: #1e2024;
+    --popover-foreground: #f4f4f5;
+    --primary: #f386a1;
+    --primary-foreground: #1b1b1f;
+    --secondary: #1e2024;
+    --secondary-foreground: #f4f4f5;
+    --muted: #1e2024;
+    --muted-foreground: #a2a9b5;
+    --accent: #26282d;
+    --accent-foreground: #f4f4f5;
+    --destructive: #f0564f;
+    --border: #2b333e;
+    --input: #4a4d55;
+    --ring: #f386a1;
+    --teal: #19bcae;
+    --success: #2fcf6b;
+    --warning: #f5b72b;
+    --chart-1: #f386a1;
+    --chart-2: #19bcae;
+    --chart-3: #2fcf6b;
+    --chart-4: #f5b72b;
+    --chart-5: #f0564f;
+    --sidebar: #0f1012;
+    --sidebar-foreground: #f4f4f5;
+    --sidebar-primary: #f386a1;
+    --sidebar-primary-foreground: #1b1b1f;
+    --sidebar-accent: #26282d;
+    --sidebar-accent-foreground: #f4f4f5;
+    --sidebar-border: #2a2c31;
+    --sidebar-ring: #f386a1;
+    /* Layered depth is invisible on dark ground, so a single white ring carries it. */
+    --surface-shadow: 0 0 0 1px oklch(1 0 0 / 0.08);
+    --surface-shadow-hover: 0 0 0 1px oklch(1 0 0 / 0.13);
+    --elevated-shadow:
+        0 0 0 1px oklch(1 0 0 / 0.1),
+        0 12px 24px -4px oklch(0 0 0 / 0.5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
+    background-size: 16px 16px;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  /* Reduced motion: keep every state change, drop the motion that carries it. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Tiny uppercase tracked label: the TypeSafe signature. */
+  .eyebrow {
+    @apply text-muted-foreground font-mono text-[11px] font-medium tracking-[0.12em] uppercase;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  /* One-shot staged entrance for infrequent view changes (lab scenes). */
+  .scene-enter {
+    animation: scene-enter 300ms var(--ease-out-quart);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scene-enter {
+      animation: none;
+    }
+  }
+}
+
+@keyframes scene-enter {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+    filter: blur(4px);
+  }
+}
+
+/* Shiki dual-theme output. Light tokens are inline; dark overrides them. */
+.shiki,
+.shiki span {
+  background-color: transparent !important;
+}
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+/* Native meter semantics, with the same track and accent in both themes. */
+.jev-meter {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--muted);
+}
+.jev-meter::-webkit-meter-bar {
+  height: 100%;
+  border: 0;
+  border-radius: 999px;
+  background: var(--muted);
+  box-shadow: none;
+}
+.jev-meter::-webkit-meter-optimum-value {
+  border-radius: 999px;
+  background: var(--teal);
+}
+.jev-meter::-moz-meter-bar {
+  border-radius: 999px;
+  background: var(--teal);
+}

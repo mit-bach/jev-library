@@ -1,0 +1,15 @@
+{
+  "full_name": "bitnovus/jev-spam-eval",
+  "html_url": "https://github.com/bitnovus/jev-spam-eval",
+  "description": "Zero-shot spam filtering with TypeSafe Jev Noul questions, compared with TF-IDF baselines",
+  "default_branch": "main",
+  "pushed_at": "2026-09-18T15:21:10Z",
+  "size": 6416,
+  "stargazers_count": 2,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Jupyter Notebook",
+  "commit": "a3757a1b3412177a686c1b4d95227b50a8f73537"
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "legostin/jev-mcp",
+  "html_url": "https://github.com/legostin/jev-mcp",
+  "description": "MCP server that lets Claude Code, Codex & AI agents drive a real Chrome browser with JEV (TypeSafe System One): ~100 ms typed decisions, calibrated confidence, human-in-the-loop questions, safety gates and a debug trace.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-24T11:16:17Z",
+  "size": 2402,
+  "stargazers_count": 2,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://legostin.github.io/jev-mcp/",
+  "language": "TypeScript",
+  "commit": "606e948996f808d806e547fab902ed996339baa6"
+}

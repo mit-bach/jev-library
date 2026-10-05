@@ -1,0 +1,15 @@
+{
+  "full_name": "BrendanH18/jev_fsd",
+  "html_url": "https://github.com/BrendanH18/jev_fsd",
+  "description": "A driving simulator on real OpenStreetMap streets where TypeSafe's Jev model drives the car, with a decision inspector and a benchmark.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-01T03:09:47Z",
+  "size": 6838,
+  "stargazers_count": 4,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "JavaScript",
+  "commit": "bbc9012331dfb175a555c76c50487467ce93fb40"
+}

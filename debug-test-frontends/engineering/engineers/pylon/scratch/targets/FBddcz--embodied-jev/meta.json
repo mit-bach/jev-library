@@ -1,0 +1,15 @@
+{
+  "full_name": "FBddcz/embodied-jev",
+  "html_url": "https://github.com/FBddcz/embodied-jev",
+  "description": "EmbodiedJev: MuJoCo robot decision workbench with MiniCPM5-2B, Jev and compatible model APIs",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T11:18:00Z",
+  "size": 99876,
+  "stargazers_count": 253,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "f08de2e4e20d6cd69fea9c57ac1062c3ef510f1e"
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "patryckalves/jev-no-enem",
+  "html_url": "https://github.com/patryckalves/jev-no-enem",
+  "description": "Reproducible benchmark evaluating TypeSafe AI's Jev (System One paradigm) on Brazil's ENEM 2025 standardized exam. Evaluates typed decision-making, domain-specific accuracy, and RLCD uncertainty calibration against open LLM baselines with an interactive GitHub Pages dashboard.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T11:59:18Z",
+  "size": 116,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "https://patryckalves.github.io/jev-no-enem/",
+  "language": "Python",
+  "commit": "7f85f787e3d13ce75da5bbc8d578038af73cc077"
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "jeiel85/jevscope",
+  "html_url": "https://github.com/jeiel85/jevscope",
+  "description": "Local-first visual decision debugger and regression testbench for TypeSafe AI Jev",
+  "default_branch": "main",
+  "pushed_at": "2026-09-18T15:29:27Z",
+  "size": 209,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jeiel85.github.io/jevscope/",
+  "language": "TypeScript",
+  "commit": "d39ab43e88af20be7142b4335c84fbf69c740e0e"
+}

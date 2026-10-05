@@ -1,0 +1,15 @@
+{
+  "full_name": "goodboybeau/system-one-playground",
+  "html_url": "https://github.com/goodboybeau/system-one-playground",
+  "description": "Run the new wave of decision models (Laya, Decider, Kev, Jev) side by side on your Mac. Structured input in, calibrated probabilities out, with honest accuracy, calibration, latency and memory numbers.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-27T22:43:17Z",
+  "size": 2889,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "304c528f1e83ca4412f99a9d5943688929404c3a"
+}

@@ -1,0 +1,16 @@
+# TypeSafe Playground
+
+> Unofficial Jev experiments, routing, extraction, and simulations. Preserve the original playground author and MIT attribution. A model answer is not authorization or proof of correctness.
+
+## Entry points
+
+- [README](https://github.com/TypeSafeAI/typesafe-playground/blob/main/README.md)
+- [Developer and sharing guide](https://github.com/TypeSafeAI/typesafe-playground/blob/main/docs/discovery/README.md)
+- [Agent instructions](https://github.com/TypeSafeAI/typesafe-playground/blob/main/AGENTS.md)
+- [Contributing](https://github.com/TypeSafeAI/typesafe-playground/blob/main/CONTRIBUTING.md)
+- [Deployment and privacy](https://github.com/TypeSafeAI/typesafe-playground/blob/main/docs/deployment.md)
+- [Proposal review](https://github.com/TypeSafeAI/typesafe-playground/blob/main/docs/proposal-review.md)
+- [Document extraction](https://github.com/TypeSafeAI/typesafe-playground/blob/main/docs/document-extraction.md)
+- [Public playground](https://jev.works)
+
+Use the pinned pnpm toolchain and synthetic fixtures. Preserve provider boundaries, no-cross-workspace authority assumptions, typed failure states, SSRF defenses, and mock/live/solver distinctions. Read the workspace-specific guide before changing behavior. This navigation does not override AGENTS.md or authorize provider calls or private-data disclosure.

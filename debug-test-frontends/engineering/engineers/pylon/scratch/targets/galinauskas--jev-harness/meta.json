@@ -1,0 +1,15 @@
+{
+  "full_name": "galinauskas/jev-harness",
+  "html_url": "https://github.com/galinauskas/jev-harness",
+  "description": "A demo harness for testing TypeSafe\u2019s Jev model routing across OpenRouter, DeepSeek and OpenCode Go.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T12:32:18Z",
+  "size": 3767,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "Go",
+  "commit": "33a2c7b3017fd7851f00e4d51eff631e0418e9f7"
+}

@@ -1,0 +1,99 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PPRBFG722JK3WP4NJFQF1Y",
+  "at": "2026-09-17T03:32:36.728Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 13441,
+  "usage": {
+    "inputTokens": 36200,
+    "outputTokens": 539,
+    "cacheReadTokens": 34688,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0115068
+  },
+  "reasoningChars": 346,
+  "reply": "Pronto! ✅\n\nSim, amanhã você tem reunião com a **Marina Costa** às **10h** (roadmap Q4, no Google Meet). Enviei um email para ela (marina.costa@example.com) confirmando o horário e criei um lembrete para você às **09:30**, 30 minutos antes da reunião.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação - Reunião roadmap Q4 amanhã 10h",
+        "body": "Olá, Marina!\n\nPassando para confirmar nossa reunião de amanhã, 17/09 (quinta), às 10h00, sobre o roadmap Q4. O encontro está marcado no Google Meet, com duração prevista de 1 hora (10h–11h).\n\nSe precisar de algum ajuste, é só me avisar.\n\nAté amanhã!\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa - roadmap Q4 (Google Meet) às 10h",
+        "date": "2026-09-17",
+        "time": "09:30"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! ✅\n\nSim, amanhã você tem reunião com a **Marina Costa** às **10h** (roadmap Q4, no Google Meet). Enviei um email para ela (marina.costa@example.com) confirmando o horário e criei um lembrete para você às **09:30**, 30 minutos antes da reunião."
+    }
+  ]
+}

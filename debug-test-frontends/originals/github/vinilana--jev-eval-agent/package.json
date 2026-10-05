@@ -1,0 +1,31 @@
+{
+  "name": "jev-eval-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal-assistant agent (eve) with 100 mocked tools. Benchmarks two modes on the same task set: the LLM picks tools natively vs. TypeSafe Jev classifier picks the tool at every step.",
+  "scripts": {
+    "dev": "eve dev",
+    "dev:headless": "eve dev --no-ui",
+    "eval": "eve eval --max-concurrency 1 --skip-report",
+    "eval:verbose": "eve eval --max-concurrency 1 --skip-report --verbose",
+    "eval:all": "bash scripts/run-all.sh",
+    "eval:both": "bash scripts/run-all.sh",
+    "ui": "node scripts/serve-ui.mjs",
+    "typecheck": "tsc"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "@openrouter/ai-sdk-provider": "^3.0.0",
+    "@typesafe-ai/sdk": "^0.6.0",
+    "ai": "^7.0.93",
+    "eve": "^0.57.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "24.x",
+    "typescript": "^5.9.0"
+  }
+}

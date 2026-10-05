@@ -1,0 +1,1 @@
+Copied 2026-10-01 from engineering/engineers/reed/ after STOP.md existed. The workspace copy remains the child's product. The docs snapshot under corpus/01-primary-typesafe/ is still the page text this map cites.

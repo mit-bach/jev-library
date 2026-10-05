@@ -1,0 +1,15 @@
+{
+  "full_name": "takafumikobayashi/jev-snap-lab",
+  "html_url": "https://github.com/takafumikobayashi/jev-snap-lab",
+  "description": "Tiny inputs. Instant decisions. A small experimental playground for exploring fast, probabilistic decisions with Jev.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T01:36:19Z",
+  "size": 2891,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jev-snap-lab.vercel.app",
+  "language": "TypeScript",
+  "commit": "1dbfdfa03b296dcb7d88a64cf9a2d4525cc81cab"
+}

@@ -1,0 +1,96 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "opus-5",
+  "modelLabel": "Claude Opus 5",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PV1RCSRK3PKY33MM85VH1H",
+  "at": "2026-09-17T04:47:36.389Z",
+  "modelId": "openrouter/anthropic/claude-opus-5",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 10667,
+  "usage": {
+    "inputTokens": 51660,
+    "outputTokens": 491,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.270575
+  },
+  "reasoningChars": 0,
+  "reply": "Você gastou R$ 942,50 com restaurante em setembro — R$ 142,50 acima do limite de R$ 800. Como passou, criei a tarefa \"Revisar orçamento de restaurante\" (prioridade alta, prazo 18/09) e te enviei o resumo por WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurante",
+        "due_date": "2026-09-18",
+        "priority": "high",
+        "notes": "Gasto em restaurantes em setembro/2026: R$ 942,50 (limite R$ 800 — excedido em R$ 142,50)."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Resumo: em setembro/2026 você gastou R$ 942,50 em restaurantes, R$ 142,50 acima do limite de R$ 800. Criei a tarefa \"Revisar orçamento de restaurante\" (prioridade alta, prazo 18/09)."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou R$ 942,50 com restaurante em setembro — R$ 142,50 acima do limite de R$ 800. Como passou, criei a tarefa \"Revisar orçamento de restaurante\" (prioridade alta, prazo 18/09) e te enviei o resumo por WhatsApp."
+    }
+  ]
+}

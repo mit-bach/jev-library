@@ -1,0 +1,16 @@
+{
+  "name": "jev-minesweeper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeSafe Jev (System One) にブラウザ上のマインスイーパーを解かせるデモ",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.mjs",
+    "mock": "node server.mjs --mock",
+    "bench": "node bench.mjs",
+    "test": "node test/run-tests.mjs"
+  }
+}

@@ -1,0 +1,88 @@
+evidence.json HEAD 200 size_hdr 517 type_wait
+---- evidence.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="evidence.json"
+content-type: application/json; charset=utf-8
+etag: "01156295e0d2fd036f6ecefd12820db6"
+last-modified: Wed, 30 Sep 2026 20:58:32 GMT
+content-length: 70157
+followup-trials.json HEAD 200 size_hdr 525 type_wait
+---- followup-trials.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="followup-trials.json"
+content-type: application/json; charset=utf-8
+etag: "820a059171b4b82a511c77a446172c08"
+last-modified: Wed, 30 Sep 2026 23:23:03 GMT
+content-length: 222083
+followup-summary.json HEAD 200 size_hdr 525 type_wait
+---- followup-summary.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="followup-summary.json"
+content-type: application/json; charset=utf-8
+etag: "572bbd8f10c29ffa3d32384c246ecb5e"
+last-modified: Wed, 30 Sep 2026 19:36:25 GMT
+content-length: 15296
+calibration.json HEAD 200 size_hdr 521 type_wait
+---- calibration.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="calibration.json"
+content-type: application/json; charset=utf-8
+etag: "f5a3b7c94c9200ad0516247de556baa7"
+last-modified: Wed, 30 Sep 2026 23:23:23 GMT
+content-length: 152269
+latency-rerun.json HEAD 200 size_hdr 522 type_wait
+---- latency-rerun.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="latency-rerun.json"
+content-type: application/json; charset=utf-8
+etag: "65c57b6eff5b65d91955d733fc00deaf"
+last-modified: Wed, 30 Sep 2026 23:23:17 GMT
+content-length: 48958
+tokenizer-fingerprint.json HEAD 200 size_hdr 531 type_wait
+---- tokenizer-fingerprint.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="tokenizer-fingerprint.json"
+content-type: application/json; charset=utf-8
+etag: "371143aa7190a2b7bee92c768ca60fa6"
+last-modified: Wed, 30 Sep 2026 23:23:15 GMT
+content-length: 279399
+context-limit.json HEAD 200 size_hdr 522 type_wait
+---- context-limit.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="context-limit.json"
+content-type: application/json; charset=utf-8
+etag: "582e6be7fd4c1b0d27a95118dd2a9865"
+last-modified: Wed, 30 Sep 2026 23:23:25 GMT
+content-length: 16999
+option-injection.json HEAD 200 size_hdr 526 type_wait
+---- option-injection.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="option-injection.json"
+content-type: application/json; charset=utf-8
+etag: "db010050c0bb479de5aaff396fb226ea"
+last-modified: Thu, 01 Oct 2026 15:57:10 GMT
+content-length: 127175
+output-token-accounting.json HEAD 200 size_hdr 533 type_wait
+---- output-token-accounting.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="output-token-accounting.json"
+content-type: application/json; charset=utf-8
+etag: "88af0a788fcecf0ddc09c87a275eb0e0"
+last-modified: Wed, 30 Sep 2026 21:51:59 GMT
+content-length: 321176
+option-count-latency.json HEAD 200 size_hdr 531 type_wait
+---- option-count-latency.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="option-count-latency.json"
+content-type: application/json; charset=utf-8
+etag: "9e78876648f9002971ebfc0acb5332a6"
+last-modified: Wed, 30 Sep 2026 23:23:19 GMT
+content-length: 1575375
+option-position.json HEAD 200 size_hdr 525 type_wait
+---- option-position.json headers ----
+HTTP/2 200 
+content-disposition: inline; filename="option-position.json"
+content-type: application/json; charset=utf-8
+etag: "5661a882b7fb776e0c28e7a2058ca631"
+last-modified: Wed, 30 Sep 2026 23:23:27 GMT
+content-length: 156163

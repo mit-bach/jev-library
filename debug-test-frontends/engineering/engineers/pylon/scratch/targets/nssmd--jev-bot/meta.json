@@ -1,0 +1,15 @@
+{
+  "full_name": "nssmd/jev-bot",
+  "html_url": "https://github.com/nssmd/jev-bot",
+  "description": "Self-hosted Jev decision workbench and Feishu bot: automatic choices, probabilities, and experimental word/character writing.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T08:20:28Z",
+  "size": 64,
+  "stargazers_count": 6,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "4695a4e92fca03751dd86619612379576228bfda"
+}

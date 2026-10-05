@@ -1,0 +1,99 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "opus-5",
+  "modelLabel": "Claude Opus 5",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PV0XB7W1KJ2GVCSQFDXBMN",
+  "at": "2026-09-17T04:47:10.682Z",
+  "modelId": "openrouter/anthropic/claude-opus-5",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 12639,
+  "usage": {
+    "inputTokens": 52046,
+    "outputTokens": 546,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.27388
+  },
+  "reasoningChars": 0,
+  "reply": "Sim: você tem \"Reunião com Marina Costa – roadmap Q4\" amanhã (17/09), das 10:00 às 11:00, via Google Meet. Enviei o e-mail para marina.costa@example.com confirmando o horário e criei um lembrete para as 09:30.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação: reunião amanhã às 10h (roadmap Q4)",
+        "body": "Oi Marina,\n\nPassando para confirmar nossa reunião sobre o roadmap Q4 amanhã, 17/09, das 10:00 às 11:00, pelo Google Meet.\n\nSe precisar ajustar algo, me avisa.\n\nAbraço,\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa - roadmap Q4 (10:00, Google Meet)",
+        "date": "2026-09-17",
+        "time": "09:30"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim: você tem \"Reunião com Marina Costa – roadmap Q4\" amanhã (17/09), das 10:00 às 11:00, via Google Meet. Enviei o e-mail para marina.costa@example.com confirmando o horário e criei um lembrete para as 09:30."
+    }
+  ]
+}

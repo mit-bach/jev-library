@@ -1,0 +1,7 @@
+LICENSE
+README.md
+jev_harness/__init__.py
+jev_harness/client.py
+run_tests.py
+selftest.py
+selftest_journal.json

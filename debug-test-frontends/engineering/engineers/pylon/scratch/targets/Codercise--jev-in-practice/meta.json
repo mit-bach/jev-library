@@ -1,0 +1,15 @@
+{
+  "full_name": "Codercise/jev-in-practice",
+  "html_url": "https://github.com/Codercise/jev-in-practice",
+  "description": "A practical Jev playground for typed, probabilistic decisions across fraud, sales, and patent screening.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T17:48:48Z",
+  "size": 307,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "02be666a30ad39d4e9000199f7e8e2c612abfb4f"
+}

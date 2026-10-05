@@ -1,0 +1,141 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PV5T05TXDJN50P9V73JBZ0",
+  "at": "2026-09-17T04:50:05.287Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 26860,
+  "usage": {
+    "inputTokens": 73426,
+    "outputTokens": 1463,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.80741
+  },
+  "reasoningChars": 369,
+  "reply": "Tudo feito para sexta (18/09):\n\n- **Voo em hold (sem pagar)**: GOL G31410, SDU → CGH, 11:30–12:35, R$ 298 — o mais barato da manhã. Código HLD-4471, válido por 24h. Obs.: chega às 12:35 para a reunião das 14h, fica apertado; se preferir folga, o G31404 das 08:00 custa R$ 312.\n- **Hotel reservado**: Hotel Paulista Plaza (0,6 km da reunião, nota 4.4), R$ 420/noite, 18→19/09, confirmação HTL-7781. (Havia também o Ibis Paulista a R$ 260, 1,1 km, caso queira trocar.)\n- **Agenda**: bloqueio \"Viagem SP\" das 08:00 às 18:00 criado.\n- **Marina** avisada por WhatsApp com os detalhes da viagem.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "05:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_1",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "Oi Marina! A viagem pra São Paulo na sexta (18/09) está confirmada: voo GOL G31410 saindo do Santos Dumont às 11:30 (chegada em Congonhas 12:35), reunião às 14h na Av. Paulista, 1000, e hospedagem no Hotel Paulista Plaza por uma noite."
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo feito para sexta (18/09):\n\n- **Voo em hold (sem pagar)**: GOL G31410, SDU → CGH, 11:30–12:35, R$ 298 — o mais barato da manhã. Código HLD-4471, válido por 24h. Obs.: chega às 12:35 para a reunião das 14h, fica apertado; se preferir folga, o G31404 das 08:00 custa R$ 312.\n- **Hotel reservado**: Hotel Paulista Plaza (0,6 km da reunião, nota 4.4), R$ 420/noite, 18→19/09, confirmação HTL-7781. (H"
+    }
+  ]
+}

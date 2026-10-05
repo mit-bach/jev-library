@@ -1,0 +1,14 @@
+{
+  "name": "login",
+  "steps": [
+    { "goto": "/auth/login" },
+    { "expect": "This is a login page asking for an email address." },
+    { "fill": "#email", "value": "${QA_EMAIL}" },
+    { "press": "#email", "key": "Enter" },
+    { "waitForSelector": "#password" },
+    { "fill": "#password", "value": "${QA_PASSWORD}" },
+    { "click": "the button that submits the login form" },
+    { "waitForUrl": "!/auth/login" },
+    { "expect": "The user is signed in and sees the main application navigation, not a login form." }
+  ]
+}

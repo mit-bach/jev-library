@@ -1,0 +1,16 @@
+LICENSE
+README.md
+THIRD_PARTY.md
+assets/FREEDOOM-COPYING.txt
+download_assets.py
+gateway.mjs
+harness.py
+index.html
+navigation.py
+package-lock.json
+package.json
+requirements.txt
+run.sh
+server.py
+setup.sh
+tactics.py

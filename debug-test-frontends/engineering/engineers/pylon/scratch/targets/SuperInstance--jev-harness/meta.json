@@ -1,0 +1,15 @@
+{
+  "full_name": "SuperInstance/jev-harness",
+  "html_url": "https://github.com/SuperInstance/jev-harness",
+  "description": "A client for TypeSafe.ai Jev that cannot fail quietly \u2014 preflight contract checks, structured scoring, journalled calls.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T23:05:50Z",
+  "size": 14,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "a5f09486b3453dced58ad252ab4e5972affc3b46"
+}

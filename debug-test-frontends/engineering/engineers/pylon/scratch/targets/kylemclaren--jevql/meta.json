@@ -1,0 +1,15 @@
+{
+  "full_name": "kylemclaren/jevql",
+  "html_url": "https://github.com/kylemclaren/jevql",
+  "description": "Semantic SQL for Postgres, powered by Jev",
+  "default_branch": "main",
+  "pushed_at": "2026-09-19T11:12:03Z",
+  "size": 4152,
+  "stargazers_count": 14,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jevql.fly.dev/",
+  "language": "Go",
+  "commit": "274532af852e8edfb7715ec6dca1113e589cb191"
+}

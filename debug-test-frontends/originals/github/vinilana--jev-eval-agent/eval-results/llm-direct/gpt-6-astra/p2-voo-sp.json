@@ -1,0 +1,121 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PVFGJNJ7EXPX2SE6SKE68Y",
+  "at": "2026-09-17T04:55:16.027Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 5,
+  "toolCalls": 4,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 2
+  },
+  "idealPath": false,
+  "efficiency": 0.75,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 19556,
+  "usage": {
+    "inputTokens": 26959,
+    "outputTokens": 374,
+    "cacheReadTokens": 26083,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.28829
+  },
+  "reasoningChars": 447,
+  "reply": "Reservei o voo mais barato encontrado para sexta, **18/09**: GOL G31410, de Santos Dumont (SDU) para Congonhas (CGH), **11h30–12h35**, por **R$ 298**. A chegada prevista deixa 1h25 até a reunião das 14h, incluindo desembarque e deslocamento.\n\nO voo foi adicionado à sua agenda **Trabalho**. Código da reserva: **ABC123**.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 0,
+        "earliest_departure": "00:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_list_calendars",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 — SDU → CGH — Reserva ABC123",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU) → Aeroporto de Congonhas (CGH)",
+        "attendees": [],
+        "calendar": "Trabalho"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 4,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reservei o voo mais barato encontrado para sexta, **18/09**: GOL G31410, de Santos Dumont (SDU) para Congonhas (CGH), **11h30–12h35**, por **R$ 298**. A chegada prevista deixa 1h25 até a reunião das 14h, incluindo desembarque e deslocamento.\n\nO voo foi adicionado à sua agenda **Trabalho**. Código da reserva: **ABC123**."
+    }
+  ]
+}

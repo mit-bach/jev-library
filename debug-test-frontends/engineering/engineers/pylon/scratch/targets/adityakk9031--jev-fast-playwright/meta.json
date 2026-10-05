@@ -1,0 +1,15 @@
+{
+  "full_name": "Adityakk9031/jev-fast-playwright",
+  "html_url": "https://github.com/Adityakk9031/jev-fast-playwright",
+  "description": "Agent-agnostic MCP server: low-token browser UI testing via compressed DOM + Jev System-1 + Playwright",
+  "default_branch": "master",
+  "pushed_at": "2026-09-29T09:13:03Z",
+  "size": 6710,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "169573f737e5025c921ddf6c194c2bf7b5ce8a8c"
+}

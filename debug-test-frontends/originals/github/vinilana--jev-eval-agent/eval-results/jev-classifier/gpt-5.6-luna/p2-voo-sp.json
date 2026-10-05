@@ -1,0 +1,233 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PQ3X4JSJTJZ894QBM5ZAVH",
+  "at": "2026-09-17T03:38:48.108Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 6317,
+  "usage": {
+    "inputTokens": 3312,
+    "outputTokens": 260,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0009744
+  },
+  "reasoningChars": 0,
+  "reply": "Reservei o voo mais barato da manhã: **GOL G31410**, saindo do Santos Dumont às **11h30** e chegando em Congonhas às **12h35**, por **R$ 298**. Código da reserva: **ABC123**. Também adicionei o voo à sua agenda em **18/09**.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 275,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "home_lights_control",
+          "p": 0
+        },
+        {
+          "name": "task_list",
+          "p": 0
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 100000,
+        "earliest_departure": "00:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_book",
+      "confidence": 0.95,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 290,
+      "top": [
+        {
+          "name": "flights_book",
+          "p": 0.96
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.02
+        },
+        {
+          "name": "contacts_get",
+          "p": 0
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_event",
+      "confidence": 0.89,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 297,
+      "top": [
+        {
+          "name": "calendar_create_event",
+          "p": 0.9
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.04
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.03
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.01
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 — Rio de Janeiro → São Paulo",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU) → Aeroporto de Congonhas (CGH)",
+        "attendees": [],
+        "calendar": "principal"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.73,
+      "done": 0.66,
+      "gated": false,
+      "latencyMs": 479,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.75
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.09
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.06
+        },
+        {
+          "name": "calendar_update_event",
+          "p": 0.04
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.02
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reservei o voo mais barato da manhã: **GOL G31410**, saindo do Santos Dumont às **11h30** e chegando em Congonhas às **12h35**, por **R$ 298**. Código da reserva: **ABC123**. Também adicionei o voo à sua agenda em **18/09**."
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PPQEYHG7GFCMFND6W0H0Z5",
+  "at": "2026-09-17T03:32:07.841Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 6,
+  "toolCalls": 10,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 3,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "contacts": 2,
+    "calendar": 3,
+    "task": 2,
+    "notes": 1,
+    "email": 2
+  },
+  "idealPath": false,
+  "efficiency": 0.7,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 13802,
+  "usage": {
+    "inputTokens": 60806,
+    "outputTokens": 1990,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.053067
+  },
+  "reasoningChars": 251,
+  "reply": "Agendei a reunião com o Pedro Alves e a Ana Beatriz para amanhã (17/09), das 15:00 às 15:45, com os convites e o link de videoconferência enviados para ambos. Em seguida, criei a subtarefa **\"Preparar pauta\"** dentro da sua tarefa **\"Revisar proposta comercial\"**. Por fim, programei o e-mail com a pauta para ser enviado à Ana amanhã às 08:00.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "13:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {
+        "include_done": false
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "notes_search",
+      "detail": {
+        "query": "proposta comercial"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "email_search",
+      "detail": {
+        "query": "proposta comercial"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião: Alinhamento da Proposta Comercial",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "Revisão da proposta comercial e alinhamento de próximos passos."
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta da reunião - Proposta Comercial",
+        "body": "Oi Ana, tudo bem?\n\nSegue a pauta para a nossa reunião de hoje às 15h com o Pedro:\n1. Alinhamento sobre a proposta comercial\n2. Definição de responsabilidades e cronograma\n3. Próximos passos\n\nNos falamos mais tarde!\n\nAbraços,\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 5,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Agendei a reunião com o Pedro Alves e a Ana Beatriz para amanhã (17/09), das 15:00 às 15:45, com os convites e o link de videoconferência enviados para ambos. Em seguida, criei a subtarefa **\"Preparar pauta\"** dentro da sua tarefa **\"Revisar proposta comercial\"**. Por fim, programei o e-mail com a pauta para ser enviado à Ana amanhã às 08:00."
+    }
+  ]
+}

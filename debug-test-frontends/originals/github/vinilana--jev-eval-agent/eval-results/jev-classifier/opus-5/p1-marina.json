@@ -1,0 +1,180 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "opus-5",
+  "modelLabel": "Claude Opus 5",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PVK49E1JH44WC0FDHBSE0H",
+  "at": "2026-09-17T04:57:07.097Z",
+  "modelId": "openrouter/anthropic/claude-opus-5",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 2,
+  "failedToolCalls": 0,
+  "jevCalls": 3,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.6666666666666666,
+  "requiredCovered": 2,
+  "requiredTotal": 3,
+  "completion": 0.6666666666666666,
+  "durationMs": 12131,
+  "usage": {
+    "inputTokens": 4142,
+    "outputTokens": 638,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.03666
+  },
+  "reasoningChars": 0,
+  "reply": "Sim, você tem reunião com a Marina Costa amanhã (17/09) das 10h às 11h, pelo Google Meet, sobre o roadmap Q4. Já enviei o email para marina.costa@example.com confirmando o horário.\n\nNão consegui criar o lembrete das 9h30: a ferramenta de lembretes não está disponível no momento — só tive acesso ao envio de email. Se quiser, posso tentar de novo ou você pode criar o lembrete manualmente.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_list_events",
+      "confidence": 0.77,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 732,
+      "top": [
+        {
+          "name": "calendar_list_events",
+          "p": 0.78
+        },
+        {
+          "name": "calendar_search_events",
+          "p": 0.22
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        },
+        {
+          "name": "ride_estimate",
+          "p": 0
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "email_send",
+      "confidence": 0.96,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 298,
+      "top": [
+        {
+          "name": "email_send",
+          "p": 0.97
+        },
+        {
+          "name": "calendar_get_event",
+          "p": 0.01
+        },
+        {
+          "name": "email_draft",
+          "p": 0.01
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação da reunião de amanhã - roadmap Q4",
+        "body": "Oi Marina,\n\nPassando para confirmar nossa reunião sobre o roadmap Q4 amanhã, dia 17/09, das 10h às 11h, pelo Google Meet.\n\nSe precisar remarcar ou ajustar o horário, me avise.\n\nAbraço,\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "alarm_set",
+      "confidence": 0.83,
+      "done": 0.04,
+      "gated": true,
+      "latencyMs": 717,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.84
+        },
+        {
+          "name": "alarm_set",
+          "p": 0.07
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.05
+        },
+        {
+          "name": "task_create",
+          "p": 0.03
+        },
+        {
+          "name": "message_send",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim, você tem reunião com a Marina Costa amanhã (17/09) das 10h às 11h, pelo Google Meet, sobre o roadmap Q4. Já enviei o email para marina.costa@example.com confirmando o horário.\n\nNão consegui criar o lembrete das 9h30: a ferramenta de lembretes não está disponível no momento — só tive acesso ao envio de email. Se quiser, posso tentar de novo ou você pode criar o lembrete manualmente."
+    }
+  ]
+}

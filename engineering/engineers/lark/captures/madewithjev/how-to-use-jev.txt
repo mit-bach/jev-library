@@ -1,0 +1,572 @@
+How to use Jev: first call in 5 minutes
+Skip to content
+Made with Jev
+Builds
+
+All builds749
+By type
+Jev Engineering15
+GitHub330
+Skills12
+X posts433
+YouTube57
+Sites43
+Resources159
+Community submissions
+Use cases
+
+Agents and browsers170
+Context and memory33
+Coding and code review40
+Routing and model choice55
+SDKs and integrations123
+Open source146
+Benchmarks and evals137
+Search35
+Documents and OCR30
+Security and abuse33
+Inbox and support24
+Social feeds51
+Ads and marketing24
+Sales and leads15
+SEO and GEO10
+Ecommerce7
+Games and real time74
+Trading and markets26
+Robotics and devices14
+UI14
+Tools and apps50
+What people use Jev forTools
+Learn
+
+The basics
+Jev explained
+What is Jev
+What is Jev Engineering
+Jev vs an LLM
+Jev pricing
+Jev statistics
+
+By job
+Jev use cases
+Jev as a judge
+Jev for SEO
+Jev for ads
+Jev for marketing
+
+Building with Jev
+How to use Jev
+Jev with Claude Code
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Open-source Jev
+Fine-tune Jev
+Jev and images
+All guides19
+Free tools
+
+AI Slop DetectorHow AI-made does a page look?
+All free tools1
+
+Search⌘KSponsorsSubmit a build
+
+All builds749
+Tools
+Community
+What is Jev
+About
+Sponsors
+Builds by type
+Jev Engineering15
+GitHub330
+Skills12
+X posts433
+YouTube57
+Sites43
+Resources159
+Use cases
+Agents and browsers170
+Context and memory33
+Coding and code review40
+Routing and model choice55
+SDKs and integrations123
+Open source146
+Benchmarks and evals137
+Search35
+Documents and OCR30
+Security and abuse33
+Inbox and support24
+Social feeds51
+Ads and marketing24
+Sales and leads15
+SEO and GEO10
+Ecommerce7
+Games and real time74
+Trading and markets26
+Robotics and devices14
+UI14
+Tools and apps50
+Learn
+Jev explained
+What is Jev
+What is Jev Engineering
+Jev vs an LLM
+Jev pricing
+Jev statistics
+How to use Jev
+Jev with Claude Code
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Open-source Jev
+Fine-tune Jev
+Jev and images
+Jev use cases
+Jev as a judge
+Jev for SEO
+Jev for ads
+Jev for marketing
+All guides19
+Free tools
+AI Slop DetectorHow AI-made does a page look?
+All free tools1
+
+How to use Jev
+One POST request, two fields. You send the text and the questions you want answered about it; Jev sends back a typed answer, a probability for every option and a confidence score, in 70 to 500 milliseconds. Everything else on this page is what to do with that.
+Updated 22 Sept 2026 · by Made with Jev
+
+In short
+Get an API key from TypeSafe, then send one request. No SDK required.
+A call has a state (the text) and questions (choice, score or noul). All of them are answered in parallel.
+Branch on the confidence, not the probability. That is the whole pattern.
+For a coding agent: install the skill with npx skills add typesafe-ai/skills, or run an MCP server.
+Step 1: one request
+This is a whole Jev call. The state is what you want judged. Each key under questions is one question: a choice picks one of your options, a noul returns the probability that a statement is true, and a score places the state on a scale you define.Request · POST /v1/systemone{
+ "state": "Thanks for the refund. Still annoyed it took three emails.",
+ "model": "jev-latest",
+ "questions": {
+ "sentiment": {
+ "type": "choice",
+ "instructions": "The overall sentiment of this message",
+ "criteria": {
+ "positive": "Satisfied or thankful overall",
+ "mixed": "Both satisfied and unhappy",
+ "negative": "Unhappy overall"
+ }
+ },
+ "needs_follow_up": {
+ "type": "noul",
+ "instructions": "A human should reply to this message"
+ }
+ }
+}Response{
+ "sentiment": {
+ "choice": "mixed",
+ "probabilities": { "mixed": 0.79, "negative": 0.2, "positive": 0.01 },
+ "confidence": 0.61
+ },
+ "needs_follow_up": { "noul": 0.83 }
+}
+One thing catches everyone out: the question’s key, such as needs_follow_up, never reaches the model. Write the whole question in instructions, and write each criterion as the description of a bucket rather than as a label.
+Step 2: branch on the confidence
+The probabilities tell you what Jev picked. The confidence tells you how much weight the alternatives still carry, and that is the number your code should read. Above your threshold, act. Below it, hand the case to a person or to a larger model. Every production build in this directory has this shape somewhere in it.What the answer is forconst { sentiment, needs_follow_up } = await jev(state, questions);
+
+// Act on the sure ones; send the rest somewhere that can think.
+if (sentiment.confidence < 0.7) return escalate(message);
+
+if (needs_follow_up.noul > 0.8) return queueForHuman(message, sentiment.choice);
+
+return file(message, sentiment.choice);
+Where the threshold goes is an empirical question about your data, not a default. TypeSafe’s confidence docs explain how the score is produced.
+Step 3: ask more questions, not more calls
+Jev answers every question in a call in parallel against the same state, so the marginal cost of another question is close to nothing. Rob Hallam asks 61 questions about one draft post in about a second for $0.0004. The instinct to send one question per request is the most expensive mistake you can make with this model.
+When the option list is the problem rather than the question count, the skill-suggestion cookbook shows the standard workaround: score everything in one pass, then run a second call over the shortlist. TypeSafe’s own Wikiracing demo picks links the same way, because a choice holds at most 255 options.
+EndpointOne POST, JSON in and JSON out
+Latency70 to 500 ms, whatever the question count
+Price$0.042 per million input tokens; output free
+Context64k per request; 32k for state plus longest question
+Rate limits250,000 tokens a second, 1,200 requests a minute
+InputText only: a string, a JSON object or a list of strings
+Source: TypeSafe models and the quickstart. The same figures, with the evals, are on what is Jev.
+Calling it from where you already are
+You do not have to hold a TypeSafe key to use Jev. It is served through the gateways and framework integrations most stacks already have, which is also the quickest way to try it against a model you are currently paying for.
+
+RouteWhy you would use it
+Jev on OpenRouterOne key across models you already call
+Jev on Cloudflare AI GatewayAt the edge, with Workers
+Jev on Netlify AI GatewayThrough Netlify's gateway
+Jev through LiteLLMBehind the LiteLLM proxy
+Jev in Pydantic AITyped calls from Pydantic AI
+langchain-typesafeThe LangChain integration package
+Trace every judgment with PhoenixTracing each judgment in Phoenix
+Using Jev from a coding agent
+Two ways, and they are not the same thing. The agent skill teaches Claude Code or Codex to write programs that call Jev — install it with npx skills add typesafe-ai/skills, and the skills page lists the others people have published. An MCP server instead lets the agent ask Jev for a judgment while it works, as a tool call; those are on the Jev MCP page.
+Watch someone do it
+57 walkthroughs, tutorials and tests, all playable here. Start with Greg Isenberg’s if you want the shortest path to a working call, or the full tutorials below it if you would rather watch a whole build.
+
+Guide·youtube.com/@GregIsenberg
+Jev is HERE. How to use it
+Greg Isenberg and Ryan Vogel on the Startup Ideas Pod: what Jev is, the businesses it unlocks, and how to call it today through the Vercel AI Gateway.
+
+Guide·youtube.com/@promptwarrior
+Jev: full tutorial
+Moritz starts from the API key, then builds three prototypes: a voice-controlled browser, memory retrieval, and a YouTube topic scorer, and says where Jev still needs an LLM or plain code around it.
+
+Guide·youtube.com/@DavidOndrej
+Build anything with Jev
+David Ondrej explains how to use Jev, the architecture behind it, and how to build a business on it.
+
+Guide·youtube.com/@avb_fj
+Livestream: coding with Jev
+Neural Breakdown with AVB takes Jev apart and looks at architectures for models that predict JSON. The video starts at 6:57.
+
+Guide·youtube.com/@RAmjad
+Jev and Claude Code: the cheapest agentic loop yet
+Ray Amjad puts Jev inside an agentic coding loop and looks at what it costs to run.
+
+Guide·youtube.com/@nateherk
+I tested Jev on 12 real use cases
+Nate Herk compares speed and cost against ordinary models, then builds an X feed classifier and a real-time paper-trading prototype live.
+
+Guide·youtube.com/@KodeKloud
+Jev Explained in 3 Mins
+KodeKloud’s short: what a System One model decides, and why it answers in milliseconds.
+
+Guide·youtube.com/@CalebWritesCode
+Jev explained in 7min..
+Caleb Writes Code: what Jev is and how to use it, in seven minutes.
+
+Guide·youtube.com/@syntaxfm
+wtf is jev?
+CJ from Syntax explains how Jev works, then demos browser use, classification, code review, a model router and a chat bot with no LLM.
+
+Guide·youtube.com/@vogeldev
+Meet Jev: tested on 1,000 emails
+Ryan Vogel runs Jev on 100 and then 1,000 of his emails: category, priority, spam and reply predictions.
+
+Guide·youtube.com/@AICodeKing
+Jev and Browser Use, fully tested
+AICodeKing tests support routing, refund detection, prompt-injection resistance and browser automation.
+
+Guide·youtube.com/@retriever-ai
+Jev in the rtrvr.ai browser agent
+Retriever AI tests Jev on real browser tasks: where it worked, where it struggled, and how they will use it next to larger models.
+
+Guide·youtube.com/@NidhiSinghAttri
+Jev and herdr: routing between models
+Nidhi Singh’s setup: one terminal, three AI subscriptions, and Jev picks the model for Claude Code, Codex and Cursor.
+
+Guide·youtube.com/@TechBrewRideHome
+What is Jev? (Tech Brew Ride Home)
+A podcast segment on TypeSafe AI, its $40 million raise, and why the name is a nod to Jevons paradox.
+
+Guide·youtube.com/@GaryExplains
+Jev: fast and cheap, but there is a caveat
+Gary Explains on the catch: Jev understands natural language but it is not an LLM. It answers with structured values and a confidence level.
+
+Guide·youtube.com/@samwitteveenai
+Jev: the ultimate classification model?
+Sam Witteveen on System 1 thinking, then demos of Choice, Score and Noul, a practical example, and chained actions.
+
+Guide·youtube.com/@Itssssss_Jack
+Jev AI just dropped
+Jack Roberts walks through the three kinds of micro decision: a yes or no, a choice from preloaded options, and a score from 1 to 100.
+
+Guide·youtube.com/@maximilian-schwarzmueller
+It really is. No joke.
+Maximilian Schwarzmüller on a new kind of model that beats LLMs in the areas it was built for.
+
+Guide·youtube.com/@albertolgaard
+I tested the new Jev model
+Albert Olgaard tests Jev and explains why the System One models matter.
+
+Guide·youtube.com/@TheHunterBohm
+I paired Jev with Astra
+Hunter Bohm on how Jev works, pricing and parallel decisions, whether it is actually new, and his own Astra plus Jev benchmark.
+
+Guide·youtube.com/@RoboNuggets
+Jev will 10x your Claude Code (Here's How)
+RoboNuggets: how to put Jev to work inside Claude Code.
+
+Guide·youtube.com/@MG_cafe
+Jev Claude Code: Quick Setup
+MG walks through setting Jev up with Claude Code from scratch.
+
+Guide·youtube.com/@AIJasonZ
+Jev + Treg is a crazy combo for automation...
+AI Jason pairs Jev with Treg and builds automation on top of the two.
+
+Guide·youtube.com/@AI-GPTWorkshop
+JEV Is NOT an LLM — Here's What It Actually Does
+Zubair Trabzada's AI Workshop: what Jev actually does, and why calling it an LLM misleads.
+
+Guide·youtube.com/@Supabase
+The brand new AI: Jev
+Supabase, in a short: Jev introduced in under a minute.
+
+Guide·youtube.com/@samwitteveenai
+Open Jev Models Are Here!!
+Sam Witteveen goes through the open decision models released in Jev's first week.
+
+Guide·youtube.com/@engineerprompt
+Steerable Reranking: How JEV Solves RAG
+Prompt Engineering puts Jev in the reranking step of a RAG pipeline: why vector search and cosine similarity fail, how a steerable reranker works, and how it compares with LLM rerankers and cross-encoders. A Colab notebook comes with it.
+
+Guide·youtube.com/@JulianGoldieSEO
+Jev AI Full COURSE 1 HOUR
+Julian Goldie’s hour-long course: the three question types, many decisions batched in one request, and ten use cases, from email sorting and lead scoring to internal linking across 586 pages and a browser agent finding flights.
+
+Guide·youtube.com/@KevBuildsApps
+Jev AI just changed video editing forever
+Kev makes Jev the decision maker inside HyperEdit, his open-source AI video editor, and walks through the whole setup with Claude Code. The repository is free on GitHub.
+
+Guide·youtube.com/@CoderOne
+Open Source, Faster Jev is HERE
+Coderone on Laya, the open System One model from Convai Innovations: what typed decisions are, why they replace a share of LLM calls, and Laya run locally to see if its figures hold up.
+
+Guide·youtube.com/@daveebbelaar
+Jev Explained for Python Developers
+Dave Ebbelaar in Python: a support-ticket classification first, then Choice, Score and Noul, several questions in one call, and latency and price next to Claude Haiku, Opus 5 and Fable 5.1.
+
+Guide·youtube.com/@Raul-Marin-Calleja
+Jev para diseñadores: uso en Design Systems
+Raúl Marín, in Spanish: what Jev decides against what an LLM writes, then closed judgments applied to a design system — variant choice, email classification next to GPT, fast UI rendering and screens generated from prompts. 21 minutes, with chapters.
+
+Guide·youtube.com/@ZazenCodes
+Jev explained with Python examples
+ZazenCodes works through Jev hands on in Python, from a first call to typed decisions.
+
+Guide·youtube.com/@EdwardDonner
+Is Jev really better, faster and cheaper?
+Edward Donner puts Jev to the test against Luna.
+
+Guide·youtube.com/@seanai
+Jev System One Model, clearly explained
+Sean’s AI Stories: TypeSafe AI, fast judgment and evaluation, explained end to end.
+
+Guide·youtube.com/@CloudCodes
+Run a Jev-style model on your own GPU
+Cloud Codes sets up a Jev-style decision model on local hardware.
+
+Guide·youtube.com/@RobTheAIGuy
+Jev is INSANE! How to use it and its use cases
+Rob The AI Guy explains Jev fully, with the use cases he found.
+
+Guide·youtube.com/@LangChain
+Building a harness with Jev
+LangChain walks through putting Jev inside an agent harness.
+
+Guide·youtube.com/@ColeMedin
+Jev is the first of a whole new class of AI models
+Cole Medin on what the class is, and how to actually use it.
+
+Guide·youtube.com/@t3dotgg
+Jev is incredible
+Theo on what Jev does and why it matters.
+
+Guide·youtube.com/@LatentSpacePod
+Jev Creator: System One models for prod, not god
+Latent Space interviews TypeSafe’s Diogo Almeida on what System One models are for.
+
+Guide·youtube.com/@AdamGardner
+Jev vs. Laya: what they are and the controversy
+Adam Gardner on both decision models and the argument around them.
+
+Guide·youtube.com/@Telusko
+Jev crash course: typed AI decisions
+Telusko’s crash course on typed decisions with TypeSafe.
+
+Guide·youtube.com/@krishnaik06
+Will Jev replace LLMs?
+Krish Naik on what Jev is from TypeSafe AI, and whether it replaces an LLM.
+
+Guide·youtube.com/@LangChain
+How to build a harness with Jev
+A LangChain and TypeSafe conversation on building a harness around Jev.
+
+Guide·youtube.com/@TheFintechBuilder
+50 financial jobs, one model
+The Fintech Builder runs Jev on fifty financial jobs and shows where it works and where it does not.
+
+Guide·youtube.com/@builderio
+Is Jev actually good at computer use?
+Steve from Builder.io tests Jev on computer use.
+
+Guide·youtube.com/@MikeyNoCode
+Jev full tutorial for beginners
+Mikey No Code sets Jev up from scratch and shows how to use it.
+
+Guide·youtube.com/@GitButler
+What is Jev? (and is Laya better?)
+GitButler on what Jev is, and how Laya compares.
+
+Guide·youtube.com/@AIAutomationStation
+What is Jev and how to use it?
+AI Automation Station on what Jev is and why it matters.
+
+Guide·youtube.com/@Thetips4you
+What is Jev, and how to use it?
+Thetips4you’s short walkthrough of Jev and how to call it.
+
+Guide·youtube.com/@KayaRezende
+Jev’s top 5 use cases
+Kaya Rezende picks five things to build with Jev.
+
+Guide·youtube.com/@codebasics
+JEV explained in 17 minutes with code
+codebasics explains Jev with runnable code.
+
+Guide·youtube.com/@LearnwithWhiteboard
+What is Jev AI? Explained simply
+Learn with Whiteboard on how Jev works, whether it replaces LLMs, and Jev against LLMs.
+
+Guide·youtube.com/@JulianGoldieSEO
+Awesome Jev: 100+ powerful use cases
+Julian Goldie runs through more than a hundred Jev use cases.
+
+Guide·youtube.com/@JulianGoldieSEO
+3 free ways to run Jev
+Julian Goldie on three free ways to run Jev.
+
+Guide·youtube.com/@KevBuildsApps
+Jev + Claude + Obsidian Just Changed AI Forever (Full Setup)
+Kev Builds Apps wires Jev into an Obsidian vault over MCP: store the media and its metadata in the graph, then ask Jev to retrieve the logo, video or file a task needs instead of guessing.
+What to read next
+The official quickstart first. Then the cookbook for the two-pass pattern, and the harness guide for what a real system looks like once Jev is inside it.
+
+Guide·docs.typesafe.ai
+Quickstart: state, questions, typed answers
+The three question types, Choice, Score and Noul, in one support-ticket example.
+
+Guide·docs.typesafe.ai
+Cookbook: skill suggestion
+TypeSafe’s recipe for picking at most one skill per agent turn out of 182: one request ranks them all, a second reads the top three.
+
+Guide·dev.to
+How to use Jev: a practical guide
+Valyu’s practical guide to TypeSafe’s System One model, on DEV.
+
+Guide·langchain.com
+Building a harness with Jev
+Routing between models, and blocking risky tool calls with a Jev decision.
+
+Guide·developers.cloudflare.com
+Jev on Cloudflare
+Examples for support routing, refund decisions and risk escalation.
+
+Guide·github.com
+Worked examples via OpenRouter
+Rajeeve Kuriakose’s runnable Jev examples, through OpenRouter, so you can start today.
+When your first call works, the interesting question is what to point it at: the use cases group every build here by the job Jev does in it. For the code around the call, read the agent harness page, Jev with Claude Code and Jev agent orchestration. If a hosted call is the wrong shape for your data, training your own is the other route.
+Common questions
+How do I make my first Jev call?Send one POST to TypeSafe's API with two fields: a state, which is the text to judge, and a questions object, where each question has a type of choice, score or noul and its instructions. The response comes back typed, with a probability for each option and a confidence, in 70 to 500 milliseconds.
+Do I need an SDK?No. It is one HTTP request, so curl or fetch is enough. TypeSafe also ships Python and JavaScript SDKs that add retries with backoff when you go over a rate limit, and there are integrations for LangChain, Pydantic AI, LiteLLM, OpenRouter and the Cloudflare and Netlify gateways.
+How many questions can one call hold?Enough that people ask 61 in a single request. Jev answers every question in parallel against the same state, so a long rubric costs about the same as one question. The limits that do bite are 64k tokens per request, 32k for the state plus the longest question, and 255 options in a single choice.
+What do I do with the confidence score?Pick a threshold and act on the answers above it automatically, escalating the rest to a person or a larger model. The probabilities say which option Jev picked; the confidence says how sure it is, and it is the number your code should branch on.
+How do I use Jev with Claude Code or Cursor?Either install the TypeSafe agent skill with npx skills add typesafe-ai/skills, so the agent writes programs that call Jev, or run an MCP server so the agent can ask Jev directly as a tool call.
+Made with Jev is independent and not affiliated with TypeSafe AI. Every figure on this page is the one its author published, linked to where it can be checked.
+Sponsors
+#1TripWaffleStop juggling confirmation emails. Forward them to TripWaffle and get a beautiful…
+#2EvokeA reflex is a small program you install and ask for in your words. Type a…
+#3RankSpotRankSpot is a fully automated AI agent that gets you cited in AI answers and ranked in…
+#4OpenJEVClassify, route, score, and rank with TypeSafe’s Jev model. Try the playground or…
+#5GIF DeciderDescribe the moment. Jev reads it, searches, judges every candidate, and hands you the…Advertise from $19/wk
+
+Made with Jev
+The #1 directory of projects built with Jev.Submit a build
+Buy me a coffee
+
+From TypeSafe AI
+The Jev announcement
+Quickstart docs
+Workflow evals
+Not affiliated with TypeSafe AI.
+Browse
+All builds
+Jev Engineering reading list
+Jev GitHub repos
+Jev agent skills
+Jev demos and threads on X
+Jev tutorials and demos
+Jev apps you can try
+Jev docs and cookbooks
+Community feed
+Search the directory
+Learn about Jev
+All Jev guides
+What is Jev
+What is Jev Engineering
+Jev use cases
+Open-source Jev
+How to use Jev
+Jev pricing
+Jev explained
+Jev vs an LLM
+Jev for SEO
+Jev for ads
+Jev for marketing
+Jev as a judge
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Jev with Claude Code
+Fine-tune Jev
+Jev and images
+Jev statistics
+Categories
+Agents and browsers
+Context and memory
+Coding and code review
+Routing and model choice
+SDKs and integrations
+Open source
+Benchmarks and evals
+Search
+Documents and OCR
+Security and abuse
+Inbox and support
+Social feeds
+Ads and marketing
+Sales and leads
+SEO and GEO
+Ecommerce
+Games and real time
+Trading and markets
+Robotics and devices
+UI
+Tools and apps
+
+Tools
+Jev tools
+Free tools
+AI Slop Detector
+Take part
+Submit a build
+Sponsors
+Sponsor rules
+About
+
+© 2026 madewithjev.com
+Built byJon Kraayenbrink
+
+TripWaffleAd
+EvokeAd
+RankSpotAd
+OpenJEVAd
+GIF DeciderAd
+JevHubAd
+VestraAd
+blink.reviewAd
+SpacebrainAd
+Advertise from $19/wk
+TripWaffleAd
+EvokeAd
+RankSpotAd
+OpenJEVAd
+GIF DeciderAd
+JevHubAd
+VestraAd
+blink.reviewAd
+SpacebrainAd
+Advertise from $19/wk

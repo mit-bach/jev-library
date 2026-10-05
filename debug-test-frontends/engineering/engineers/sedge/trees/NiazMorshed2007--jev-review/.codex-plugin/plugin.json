@@ -1,0 +1,32 @@
+{
+  "name": "jev-review",
+  "version": "0.1.1",
+  "description": "An iterative, local-first software-quality score loop for AI coding agents, powered by Jev.",
+  "author": {
+    "name": "Jev Review contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "code-review",
+    "mcp",
+    "software-quality",
+    "jev"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Jev Review",
+    "shortDescription": "Evaluate code quality with Jev",
+    "longDescription": "Use Jev scores as a repeated feedback loop: implement, score, diagnose weak dimensions, improve, validate, and rescore with the user's local Jev API key.",
+    "developerName": "Jev Review contributors",
+    "category": "Developer Tools",
+    "capabilities": [
+      "MCP tools",
+      "Agent Skill",
+      "Code review"
+    ],
+    "defaultPrompt": [
+      "Implement this change using Jev Review as an iterative score loop: establish a baseline, diagnose weak important dimensions, improve the code, validate it, and rescore until no further justified improvement remains.",
+      "Evaluate this implementation with Jev Review, inspect the code yourself to explain weak scores, make focused improvements, and compare a follow-up evaluation against the baseline."
+    ]
+  }
+}

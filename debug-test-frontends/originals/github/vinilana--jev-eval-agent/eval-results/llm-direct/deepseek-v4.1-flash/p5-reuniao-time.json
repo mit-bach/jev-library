@@ -1,0 +1,145 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PPT8EKCVDXQ2GYWPJVBDKS",
+  "at": "2026-09-17T03:33:44.217Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 2,
+    "contacts": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 18534,
+  "usage": {
+    "inputTokens": 37611,
+    "outputTokens": 1213,
+    "cacheReadTokens": 35968,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0127389
+  },
+  "reasoningChars": 1573,
+  "reply": "Tudo pronto! ✅\n\n- **Reunião:** \"Reunião com Pedro Alves e Ana Beatriz\" amanhã (17/09) das 15h às 15h45 — horário livre na sua agenda. Convites enviados para pedro.alves@example.com e ana.souza@example.com (com link de vídeo).\n- **Subtarefa:** \"Preparar pauta\" criada dentro da tarefa \"Revisar proposta comercial\".\n- **Email agendado:** pauta enviada para Ana, programado para amanhã às 8h.\n\nSe quiser, posso ajustar o horário da reunião ou o conteúdo da pauta.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "12:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião com Pedro Alves e Ana Beatriz",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "Revisão da proposta comercial"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta da reunião de amanhã",
+        "body": "Olá, Ana!\n\nSegue a pauta da nossa reunião de amanhã (17/09) às 15h, com o Pedro Alves:\n\n1. Revisão da proposta comercial\n2. Pontos de ajuste e pendências\n3. Próximos passos e responsáveis\n\nAté lá!\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo pronto! ✅\n\n- **Reunião:** \"Reunião com Pedro Alves e Ana Beatriz\" amanhã (17/09) das 15h às 15h45 — horário livre na sua agenda. Convites enviados para pedro.alves@example.com e ana.souza@example.com (com link de vídeo).\n- **Subtarefa:** \"Preparar pauta\" criada dentro da tarefa \"Revisar proposta comercial\".\n- **Email agendado:** pauta enviada para Ana, programado para amanhã às 8h.\n\nSe quiser"
+    }
+  ]
+}

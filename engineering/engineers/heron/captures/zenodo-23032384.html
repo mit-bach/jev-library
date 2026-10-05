@@ -1,0 +1,1594 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="5fPGCLllnWrvFxH9QWI0l1TadV7byeEvfPcyK2VkS_s"/>
+    <meta name="google-site-verification" content="Rp5zp04IKW-s1IbpTOGB7Z6XY60oloZD5C3kTM-AiY4"/>
+
+    
+    
+    <meta name="generator" content="InvenioRDM 15.0"/>
+
+    
+    
+    
+      <meta  name="robots" content="noindex, nofollow">
+    
+  
+    <meta name="description" content="Independent study. Not affiliated with or endorsed by TypeSafe AI. Jev (jev-1.13.0), a &#34;System One&#34; decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model&#39;s label. Results. For Jev&#39;s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected ΔECE 0.264, 95% interval 0.244 to 0.278, p ≤ 1/2001), meeting the preregistered &#34;tracks&#34; criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected ΔECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev&#39;s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model&#39;s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection. Files: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study&#39;s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis). Preregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491. Version historyv1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Bröcker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.v1.0 (26 Sep 2026): first release." />
+    <meta name="citation_title" content="Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI&#39;s Jev lowers its confidence when humans disagree, on ChaosNLI" />
+    <meta name="citation_author" content="Khosla, Gautam" />
+    <meta name="citation_doi" content="10.5281/zenodo.23032384" />
+    <meta name="citation_keywords" content="calibration" />
+    <meta name="citation_keywords" content="expected calibration error" />
+    <meta name="citation_keywords" content="ChaosNLI" />
+    <meta name="citation_keywords" content="human label variation" />
+    <meta name="citation_keywords" content="natural language inference" />
+    <meta name="citation_keywords" content="preregistration" />
+    <meta name="citation_keywords" content="Jev" />
+    <meta name="citation_keywords" content="uncertainty" />
+    <meta name="citation_abstract_html_url" content="https://zenodo.org/records/23032384" />
+    <meta property="og:title" content="Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI&#39;s Jev lowers its confidence when humans disagree, on ChaosNLI" />
+    <meta property="og:description" content="Independent study. Not affiliated with or endorsed by TypeSafe AI. Jev (jev-1.13.0), a &#34;System One&#34; decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model&#39;s label. Results. For Jev&#39;s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected ΔECE 0.264, 95% interval 0.244 to 0.278, p ≤ 1/2001), meeting the preregistered &#34;tracks&#34; criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected ΔECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev&#39;s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model&#39;s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection. Files: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study&#39;s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis). Preregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491. Version historyv1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Bröcker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.v1.0 (26 Sep 2026): first release." />
+    <meta property="og:url" content="https://zenodo.org/records/23032384" />
+    <meta property="og:site_name" content="Zenodo" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@zenodo_org" />
+    <meta name="twitter:title" content="Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI&#39;s Jev lowers its confidence when humans disagree, on ChaosNLI" />
+    <meta name="twitter:description" content="Independent study. Not affiliated with or endorsed by TypeSafe AI. Jev (jev-1.13.0), a &#34;System One&#34; decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model&#39;s label. Results. For Jev&#39;s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected ΔECE 0.264, 95% interval 0.244 to 0.278, p ≤ 1/2001), meeting the preregistered &#34;tracks&#34; criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected ΔECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev&#39;s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model&#39;s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection. Files: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study&#39;s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis). Preregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491. Version historyv1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Bröcker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.v1.0 (26 Sep 2026): first release." />
+    
+      <meta name="citation_pdf_url" content="https://zenodo.org/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf"/>
+    <link rel="alternate" type="application/pdf" href="https://zenodo.org/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf">
+    <link rel="item" type="application/pdf" href="https://zenodo.org/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf">
+    
+    <link rel="alternate" type="application/octet-stream" href="https://zenodo.org/records/23032384/files/exp1_raw_SHA256.txt.ots">
+    <link rel="item" type="application/octet-stream" href="https://zenodo.org/records/23032384/files/exp1_raw_SHA256.txt.ots">
+    
+    <link rel="alternate" type="text/plain" href="https://zenodo.org/records/23032384/files/exp1_raw_SHA256.txt">
+    <link rel="item" type="text/plain" href="https://zenodo.org/records/23032384/files/exp1_raw_SHA256.txt">
+    
+    <link rel="alternate" type="application/octet-stream" href="https://zenodo.org/records/23032384/files/exp1_raw_final_SHA256.txt.ots">
+    <link rel="item" type="application/octet-stream" href="https://zenodo.org/records/23032384/files/exp1_raw_final_SHA256.txt.ots">
+    
+    <link rel="alternate" type="text/plain" href="https://zenodo.org/records/23032384/files/exp1_raw_final_SHA256.txt">
+    <link rel="item" type="text/plain" href="https://zenodo.org/records/23032384/files/exp1_raw_final_SHA256.txt">
+    
+    <link rel="alternate" type="application/zip" href="https://zenodo.org/records/23032384/files/jevbench_paper_source_v1.1.zip">
+    <link rel="item" type="application/zip" href="https://zenodo.org/records/23032384/files/jevbench_paper_source_v1.1.zip">
+
+
+<link rel="canonical" href="https://zenodo.org/records/23032384">
+      
+      
+      <title>Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI&#39;s Jev lowers its confidence when humans disagree, on ChaosNLI | Zenodo</title>
+      <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
+          <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-touch-icon-120.png"/>
+          <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-touch-icon-152.png"/>
+          <link rel="apple-touch-icon" sizes="167x167" href="/static/apple-touch-icon-167.png"/>
+          <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon-180.png"/>
+    
+      <link rel="stylesheet" href="/static/dist/css/6874.66341f2e5059614d.css" />
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    
+  </head>
+
+  <body data-invenio-config='{"isMathJaxEnabled": "//cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js?config=TeX-AMS-MML_HTMLorMML"}'  itemscope itemtype="http://schema.org/WebPage" data-spy="scroll" data-target=".scrollspy-target">
+      <a id="skip-to-main" class="ui button primary ml-5 mt-5 skip-link" href="#main">Skip to main</a>
+      <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+    
+
+<div>
+  <header class="theme header">
+
+    <div class="outer-navbar">
+      <div class="ui container invenio-header-container">
+        <nav id="invenio-nav" class="ui inverted menu borderless p-0">
+          <div class="item logo p-0">
+                      <a class="logo-link" href="https://zenodo.org/">
+                      <img class="ui image rdm-logo"
+                            src="/static/images/invenio-rdm.svg"
+                            alt="Zenodo home"/>
+                    </a>
+          </div>
+
+          <div id="rdm-burger-toggle">
+            <button
+              id="rdm-burger-menu-icon"
+              class="ui button transparent"
+              aria-label="Menu"
+              aria-haspopup="menu"
+              aria-expanded="false"
+              aria-controls="invenio-menu"
+            >
+              <span class="navicon" aria-hidden="true"></span>
+            </button>
+          </div>
+
+          <nav
+            id="invenio-menu"
+            aria-labelledby="rdm-burger-menu-icon"
+            class="ui fluid menu borderless mobile-hidden"
+          >
+            <button
+              id="rdm-close-burger-menu-icon"
+              class="ui button transparent"
+              aria-label="Close menu"
+            >
+              <span class="navicon" aria-hidden="true"></span>
+            </button>
+
+    
+    
+    
+      <div class="item p-0 search-bar">
+        <div id="header-search-bar" data-options='[{"key": "records", "text": "All Zenodo", "value": "/search"}]'>
+          <div class="ui fluid search">
+            <div class="ui icon input">
+              <input
+                autocomplete="off"
+                aria-label="Search records"
+                placeholder="Search records..."
+                type="text"
+                tabindex="0"
+                class="prompt"
+                value=""
+              >
+              <button class="ui icon button right-floated search" aria-label="Search">
+                <i aria-hidden="true" class="search icon"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+                  <div class="item">
+                    <a href="/communities">Communities</a>
+                  </div>
+
+              
+                <div class="item">
+                  <a href="/me/uploads">My dashboard</a>
+                </div>
+              
+              <div class="right menu item">
+    <form>
+      <a
+        href="/login/?next=/records/23032384"
+        class="ui button auth-button" aria-busy="false" aria-live="polite" aria-label="Log in"
+      >
+        <i class="sign-in icon auth-icon" aria-hidden="true"></i>
+        Log in
+      </a>
+      
+        <a href="/signup/" class="ui button signup">
+          <i class="edit outline icon"></i>
+          Sign up
+        </a>
+      
+    </form>
+              </div>
+          </nav>
+        </nav>
+      </div>
+    </div>
+      
+      
+    
+      
+    
+    
+      
+        <div class="ui info message top attached m-0 inv-banner" id="banner-98">
+          <div class="ui container">
+              <p><strong>Planned intervention</strong>: On Tuesday, October 6th, 07:00 UTC, Zenodo will be unavailable for 5-10 minutes to perform a storage cluster upgrade.</p>
+          </div>
+        </div>
+      
+    
+  </header>
+</div>
+
+  <main id="main">
+    <div class="invenio-page-body">
+<span id="detail-share-btn-require-link-expiration"
+        data-share-btn-require-link-expiration='false'>
+
+  <section id="banners" class="banners" aria-label="Information banner">
+    <!-- COMMUNITY HEADER: hide it when displaying the submission request -->
+    
+      
+    
+    <!-- /COMMUNITY HEADER -->
+
+    <!-- PREVIEW HEADER -->
+    
+    <!-- /PREVIEW HEADER -->
+
+    
+  </section>
+
+
+  <div class="ui container">
+    <div class="ui relaxed grid mt-5">
+      <div class="two column row top-padded">
+
+        
+        <article
+          class="sixteen wide tablet eleven wide computer column main-record-content">
+          
+
+              
+
+              
+
+              <section id="record-info"
+                       aria-label="Publication date and version number">
+                <div class="ui grid middle aligned">
+                  <div class="two column row">
+                    <div class="left floated left aligned column">
+                      <span class="ui" title="Publication date">
+                        Published September 29, 2026
+                      </span>
+                      <span
+                        class="label text-muted"> | Version v1.1</span>
+                    </div>
+                    <div class="right floated right aligned column">
+
+                      
+                      
+                        
+                          
+                        
+                        
+                          
+                        
+                        <a href="/search?q=&amp;f=resource_type%3Apublication%2Binner%3Apublication-preprint"
+                           role="note"
+                           class="ui label horizontal small neutral mb-5"
+                           aria-label="Resource type"
+                        >
+                          Preprint
+                        </a>
+                      
+
+                      <span role="note"
+                            class="ui label horizontal small access-status open mb-5"
+                            data-tooltip="The record and files are publicly accessible."
+                            data-inverted=""
+                            aria-label="Access status"
+                      >
+                        
+                          <i class="icon unlock"
+                             aria-hidden="true"></i>
+                        
+                        <span
+                          aria-label="The record and files are publicly accessible.">
+                          Open
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <div class="ui divider hidden"></div><section id="record-title-section"
+                       aria-label="Record title, authors and contributors">
+                <h1 id="record-title"
+                    class="wrap-overflowing-text">Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI&#39;s Jev lowers its confidence when humans disagree, on ChaosNLI</h1>
+
+                
+                  <section id="creatibutors"
+                           aria-label="Authors and contributors"><div class="ui grid">
+
+  
+    <div id="creators-section" class="row ui accordion affiliations">
+      <div class="sixteen wide mobile twelve wide tablet thirteen wide computer column">
+        <h3 class="sr-only">Authors/Creators</h3>
+        <ul class="creatibutors">
+          
+  
+  <li class="creatibutor-wrap separated">
+    <a class="ui creatibutor-link"
+      
+      href="/search?q=metadata.creators.person_or_org.name:%22Khosla,+Gautam%22"
+    >
+      <span class="creatibutor-name">Khosla, Gautam
+          (Researcher)</span></a>
+  
+
+  
+    
+      
+        
+        <a href="https://orcid.org/0009-0006-7404-8877"
+           aria-label="Khosla, Gautam's ORCID profile"
+           title="Khosla, Gautam's ORCID profile">
+          <img class="ml-5 inline-id-icon"
+               src="/static/images/orcid.svg"
+               alt="ORCID icon"/>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+  
+</li>
+  
+        </ul>
+      </div>
+
+      
+    </div>
+  
+
+  
+
+</div>
+                  </section>
+                
+              </section>
+
+
+
+  <section id="description" class="rel-mt-2 rich-input-content" aria-label="Record description">
+    <h2 id="description-heading" class="sr-only">Description</h2>
+    
+    <div style="word-wrap: break-word;">
+      <p>Independent study. Not affiliated with or endorsed by TypeSafe AI.</p>
+<p>Jev (jev-1.13.0), a "System One" decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model's label.</p>
+<p>Results. For Jev's Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected &Delta;ECE 0.264, 95% interval 0.244 to 0.278, p &le; 1/2001), meeting the preregistered "tracks" criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected &Delta;ECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev's confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model's confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection.</p>
+<p>Files: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study's result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis).</p>
+<p>Preregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491.</p>
+<p>Version history<br>v1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Br&ouml;cker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.<br>v1.0 (26 Sep 2026): first release.</p>
+    </div>
+  </section>
+
+
+<section
+      id="record-files" class="rel-mt-2 rel-mb-3"
+      aria-label="Files"
+    ><h2 id="files-heading">Files</h2>
+            
+  <div class="ui accordion panel mb-10 open" href="#files-preview-accordion-panel">
+    <h3 class="active title panel-heading open m-0">
+      <div
+        role="button"
+        id="files-preview-accordion-trigger"
+        aria-controls="files-preview-accordion-panel"
+        aria-expanded="true"
+        tabindex="0"
+        class="trigger"
+        aria-label="File preview"
+      >
+        <span id="preview-file-title">jevbench_paper_Khosla_2026_v1.1.pdf</span>
+        <i class="angle right icon" aria-hidden="true"></i>
+      </div>
+    </h3>
+    <div
+      role="region"
+      id="files-preview-accordion-panel"
+      aria-labelledby="files-preview-accordion-trigger"
+      class="active content preview-container pt-0 open"
+    >
+      <div>
+        
+  
+  <iframe
+    title="Preview"
+    class="preview-iframe"
+    id="preview-iframe"
+    name="preview-iframe"
+    src="/records/23032384/preview/jevbench_paper_Khosla_2026_v1.1.pdf?include_deleted=0"
+    tabindex="-1"
+  >
+  </iframe>
+      </div>
+    </div>
+  </div>
+  <div class="ui accordion panel mb-10 open" href="#files-list-accordion-panel">
+    <h3 class="active title panel-heading open m-0">
+      <div role="button" id="files-list-accordion-trigger" aria-controls="files-list-accordion-panel" aria-expanded="true" tabindex="0" class="trigger">
+        Files
+        <small class="text-muted"> (747.6 kB)</small>
+        <i class="angle right icon" aria-hidden="true"></i>
+      </div>
+    </h3>
+
+    <div role="region" id="files-list-accordion-panel" aria-labelledby="files-list-accordion-trigger" class="active content pt-0">
+      
+      <div>
+        
+  <table id="file-list-table" class="ui striped table files fluid open">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th class>
+            
+              <a role="button" class="ui compact mini button right floated archive-link" href="https://zenodo.org/api/records/23032384/files-archive">
+                <i class="file archive icon button" aria-hidden="true"></i> Download all
+              </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    
+      
+        
+        
+        <tr>
+          <td class="ten wide">
+            <div>
+              <a href="/records/23032384/files/exp1_raw_final_SHA256.txt?download=1">exp1_raw_final_SHA256.txt</a>
+            </div>
+            <small class="ui text-muted font-tiny">md5:00f020fd484d87c5fa02940e6db896d1
+            <div class="ui icon inline-block" data-tooltip="This is the file fingerprint (checksum), which can be used to verify the file integrity.">
+              <i class="question circle checksum icon"></i>
+            </div>
+            </small>
+          </td>
+	  <td>274 Bytes</td>
+          <td class="right aligned">
+            <span>
+              
+                <a role="button" class="ui compact mini button preview-link" href="/records/23032384/preview/exp1_raw_final_SHA256.txt?include_deleted=0" target="preview-iframe" data-file-key="exp1_raw_final_SHA256.txt">
+                  <i class="eye icon" aria-hidden="true"></i>Preview
+                </a>
+              <a role="button" class="ui compact mini button" href="/records/23032384/files/exp1_raw_final_SHA256.txt?download=1">
+                <i class="download icon" aria-hidden="true"></i>Download
+              </a>
+            </span>
+          </td>
+        </tr>
+      
+    
+      
+        
+        
+        <tr>
+          <td class="ten wide">
+            <div>
+              <a href="/records/23032384/files/exp1_raw_final_SHA256.txt.ots?download=1">exp1_raw_final_SHA256.txt.ots</a>
+            </div>
+            <small class="ui text-muted font-tiny">md5:61e89433d7e6bff138b7fd0954d07072
+            <div class="ui icon inline-block" data-tooltip="This is the file fingerprint (checksum), which can be used to verify the file integrity.">
+              <i class="question circle checksum icon"></i>
+            </div>
+            </small>
+          </td>
+	  <td>5.1 kB</td>
+          <td class="right aligned">
+            <span>
+              
+              <a role="button" class="ui compact mini button" href="/records/23032384/files/exp1_raw_final_SHA256.txt.ots?download=1">
+                <i class="download icon" aria-hidden="true"></i>Download
+              </a>
+            </span>
+          </td>
+        </tr>
+      
+    
+      
+        
+        
+        <tr>
+          <td class="ten wide">
+            <div>
+              <a href="/records/23032384/files/exp1_raw_SHA256.txt?download=1">exp1_raw_SHA256.txt</a>
+            </div>
+            <small class="ui text-muted font-tiny">md5:b025a89e255d082a94eec7a692431df4
+            <div class="ui icon inline-block" data-tooltip="This is the file fingerprint (checksum), which can be used to verify the file integrity.">
+              <i class="question circle checksum icon"></i>
+            </div>
+            </small>
+          </td>
+	  <td>274 Bytes</td>
+          <td class="right aligned">
+            <span>
+              
+                <a role="button" class="ui compact mini button preview-link" href="/records/23032384/preview/exp1_raw_SHA256.txt?include_deleted=0" target="preview-iframe" data-file-key="exp1_raw_SHA256.txt">
+                  <i class="eye icon" aria-hidden="true"></i>Preview
+                </a>
+              <a role="button" class="ui compact mini button" href="/records/23032384/files/exp1_raw_SHA256.txt?download=1">
+                <i class="download icon" aria-hidden="true"></i>Download
+              </a>
+            </span>
+          </td>
+        </tr>
+      
+    
+      
+        
+        
+        <tr>
+          <td class="ten wide">
+            <div>
+              <a href="/records/23032384/files/exp1_raw_SHA256.txt.ots?download=1">exp1_raw_SHA256.txt.ots</a>
+            </div>
+            <small class="ui text-muted font-tiny">md5:d9f188ab3e24915d93fa7b70f8b608ed
+            <div class="ui icon inline-block" data-tooltip="This is the file fingerprint (checksum), which can be used to verify the file integrity.">
+              <i class="question circle checksum icon"></i>
+            </div>
+            </small>
+          </td>
+	  <td>3.9 kB</td>
+          <td class="right aligned">
+            <span>
+              
+              <a role="button" class="ui compact mini button" href="/records/23032384/files/exp1_raw_SHA256.txt.ots?download=1">
+                <i class="download icon" aria-hidden="true"></i>Download
+              </a>
+            </span>
+          </td>
+        </tr>
+      
+    
+      
+        
+        
+        <tr>
+          <td class="ten wide">
+            <div>
+              <a href="/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf?download=1">jevbench_paper_Khosla_2026_v1.1.pdf</a>
+            </div>
+            <small class="ui text-muted font-tiny">md5:a0c2f36644a67bbd85e011209b7e23f8
+            <div class="ui icon inline-block" data-tooltip="This is the file fingerprint (checksum), which can be used to verify the file integrity.">
+              <i class="question circle checksum icon"></i>
+            </div>
+            </small>
+          </td>
+	  <td>316.7 kB</td>
+          <td class="right aligned">
+            <span>
+              
+                <a role="button" class="ui compact mini button preview-link" href="/records/23032384/preview/jevbench_paper_Khosla_2026_v1.1.pdf?include_deleted=0" target="preview-iframe" data-file-key="jevbench_paper_Khosla_2026_v1.1.pdf">
+                  <i class="eye icon" aria-hidden="true"></i>Preview
+                </a>
+              <a role="button" class="ui compact mini button" href="/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf?download=1">
+                <i class="download icon" aria-hidden="true"></i>Download
+              </a>
+            </span>
+          </td>
+        </tr>
+      
+    
+      
+        
+        
+        <tr>
+          <td class="ten wide">
+            <div>
+              <a href="/records/23032384/files/jevbench_paper_source_v1.1.zip?download=1">jevbench_paper_source_v1.1.zip</a>
+            </div>
+            <small class="ui text-muted font-tiny">md5:37151a8db3a35171d4f4a1d8093ea42f
+            <div class="ui icon inline-block" data-tooltip="This is the file fingerprint (checksum), which can be used to verify the file integrity.">
+              <i class="question circle checksum icon"></i>
+            </div>
+            </small>
+          </td>
+	  <td>421.3 kB</td>
+          <td class="right aligned">
+            <span>
+              
+                <a role="button" class="ui compact mini button preview-link" href="/records/23032384/preview/jevbench_paper_source_v1.1.zip?include_deleted=0" target="preview-iframe" data-file-key="jevbench_paper_source_v1.1.zip">
+                  <i class="eye icon" aria-hidden="true"></i>Preview
+                </a>
+              <a role="button" class="ui compact mini button" href="/records/23032384/files/jevbench_paper_source_v1.1.zip?download=1">
+                <i class="download icon" aria-hidden="true"></i>Download
+              </a>
+            </span>
+          </td>
+        </tr>
+      
+    
+    </tbody>
+  </table>
+      </div>
+    </div>
+  </div>
+
+    </section>
+              
+
+  <section id="additional-details" class="rel-mt-2" aria-label="Additional record details">
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="record-details-heading">Additional details</h2>
+
+  <div class="ui divider"></div>
+
+  
+
+  
+
+  
+    
+      <div class="ui grid">
+        <div class="sixteen wide mobile four wide tablet three wide computer column">
+          <h3 class="ui header">Related works</h3>
+        </div>
+        <div class="sixteen wide mobile twelve wide tablet thirteen wide computer column">
+          
+  <dl class="details-list">
+      <dt class="ui tiny header">Is supplemented by</dt>
+      
+  
+    <dd>
+      
+        Software:
+      
+
+      
+      
+      
+        <a href="https://github.com/GautamTalksDev/jevbench" target="_blank" title="Opens in new tab">
+          https://github.com/GautamTalksDev/jevbench
+        </a>
+      
+
+      
+         (URL)
+      
+    </dd>
+  
+
+      <dt class="ui tiny header">References</dt>
+      
+  
+    <dd>
+      
+        Preprint:
+      
+
+      
+      
+      
+        <a href="https://doi.org/10.5281/zenodo.22971413" target="_blank" title="Opens in new tab">
+          10.5281/zenodo.22971413
+        </a>
+      
+
+      
+         (DOI)
+      
+    </dd>
+  
+    <dd>
+      
+        Conference paper:
+      
+
+      
+      
+      
+        <a href="https://doi.org/10.18653/v1/2020.emnlp-main.734" target="_blank" title="Opens in new tab">
+          10.18653/v1/2020.emnlp-main.734
+        </a>
+      
+
+      
+         (DOI)
+      
+    </dd>
+  
+
+  </dl>
+
+        </div>
+      </div>
+    
+    <div class="ui divider"></div>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+  </section>
+    
+    <section
+      id="citations-search"
+      data-record-pids='{"doi": {"client": "datacite", "identifier": "10.5281/zenodo.23032384", "provider": "datacite"}, "oai": {"identifier": "oai:zenodo.org:23032384", "provider": "oai"}}'
+      data-record-parent-pids='{"doi": {"client": "datacite", "identifier": "10.5281/zenodo.22971491", "provider": "datacite"}}'
+      data-citations-endpoint="https://zenodo-broker.web.cern.ch/api/relationships"
+      aria-label="Record citations"
+      class="rel-mb-1"
+    >
+    </section>
+  
+        </article>
+
+        
+        <aside class="sixteen wide tablet five wide computer column sidebar"
+               aria-label="Record details">
+          
+
+
+
+
+<section id="metrics" aria-label="Metrics" class="ui segment rdm-sidebar sidebar-container">
+
+
+<div class="ui tiny two statistics rel-mt-1">
+  
+  
+
+  <div class="ui statistic">
+    <div class="value">419</div>
+    <div class="label">
+      <i aria-hidden="true" class="eye icon"></i>
+      Views
+    </div>
+  </div>
+
+  <div class="ui statistic">
+    <div class="value">44</div>
+    <div class="label">
+      <i aria-hidden="true" class="download icon"></i>
+      Downloads
+    </div>
+  </div>
+</div>
+
+<div class="ui accordion rel-mt-1 centered">
+  <div class="title trigger" tabindex="0">
+    <i class="caret right icon" aria-hidden="true"></i>
+    <span
+      data-open-text="Show more details"
+      data-close-text="Show less details"
+    >
+      Show more details
+    </span>
+  </div>
+
+  <div class="content">
+    <table id="record-statistics" class="ui definition table fluid">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="right aligned">All versions</th>
+          <th class="right aligned">This version</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            Views
+            <i
+              tabindex="0"
+              role="button"
+              style="position:relative"
+              class="popup-trigger question circle small icon"
+              aria-expanded="false"
+              aria-label="More info"
+              data-variation="mini inverted"
+            >
+            </i>
+            <p role="tooltip" class="popup-content ui flowing popup transition hidden">
+              Total views
+            </p>
+          </td>
+          <td data-label="All versions" class="right aligned">
+  
+    419
+  
+</td>
+          <td data-label="This version" class="right aligned">
+  
+    38
+  
+</td>
+        </tr>
+        <tr>
+          <td>
+            Downloads
+            <i
+              tabindex="0"
+              role="button"
+              style="position:relative"
+              class="popup-trigger question circle small icon"
+              aria-expanded="false"
+              aria-label="More info"
+              data-variation="mini inverted"
+            >
+            </i>
+            <p role="tooltip" class="popup-content ui flowing popup transition hidden">
+              Total downloads
+            </p>
+          </td>
+          <td data-label="All versions" class="right aligned">
+  
+    44
+  
+</td>
+          <td data-label="This version" class="right aligned">
+  
+    16
+  
+</td>
+        </tr>
+        <tr>
+          <td>
+            Data volume
+            <i
+              tabindex="0"
+              role="button"
+              style="position:relative"
+              class="popup-trigger question circle small icon"
+              aria-expanded="false"
+              aria-label="More info"
+              data-variation="mini inverted"
+            >
+            </i>
+            <p role="tooltip" class="popup-content ui flowing popup transition hidden">
+              Total data volume
+            </p>
+          </td>
+
+          <td data-label="All versions" class="right aligned">9.3 MB</td>
+          <td data-label="This version" class="right aligned">2.9 MB</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="text-align-center rel-mt-1">
+      <small>
+        <a href="https://zenodo.org/help/statistics">More info on how stats are collected....</a>
+      </small>
+    </p>
+  </div>
+
+</div>
+
+</section>
+
+<div class="sidebar-container">
+  <h2 class="ui medium top attached header mt-0">Versions</h2>
+  <div id="record-versions" class="ui segment rdm-sidebar bottom attached pl-0 pr-0 pt-0">
+    <div class="versions">
+      <div id="recordVersions" data-record='{"access": {"embargo": {"active": false, "reason": null}, "files": "public", "record": "public", "status": "open"}, "created": "2026-09-29T06:50:55.029369+00:00", "custom_fields": {}, "deletion_status": {"is_deleted": false, "status": "P"}, "expanded": {"parent": {"access": {"owned_by": {"active": null, "blocked_at": null, "confirmed_at": null, "email": "", "id": "1843276", "is_current_user": false, "links": {"avatar": "https://zenodo.org/api/users/1843276/avatar.svg", "records_html": "https://zenodo.org/search?q=parent.access.owned_by.user:1843276", "self": "https://zenodo.org/api/users/1843276"}, "profile": {"affiliations": "University of Ottawa", "full_name": "Gautam Khosla"}, "username": "GautamTalksDev", "verified_at": null}}}}, "files": {"count": 6, "default_preview": "jevbench_paper_Khosla_2026_v1.1.pdf", "enabled": true, "entries": {"exp1_raw_SHA256.txt": {"access": {"hidden": false}, "checksum": "md5:b025a89e255d082a94eec7a692431df4", "ext": "txt", "id": "c493a8a7-5c4e-435b-baf5-49e923aca470", "key": "exp1_raw_SHA256.txt", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt"}, "metadata": {}, "mimetype": "text/plain", "size": 274, "storage_class": "L"}, "exp1_raw_SHA256.txt.ots": {"access": {"hidden": false}, "checksum": "md5:d9f188ab3e24915d93fa7b70f8b608ed", "ext": "ots", "id": "f953c32b-7368-4b68-8bc1-57db8d5b7f0a", "key": "exp1_raw_SHA256.txt.ots", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt.ots/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt.ots"}, "metadata": {}, "mimetype": "application/octet-stream", "size": 3913, "storage_class": "L"}, "exp1_raw_final_SHA256.txt": {"access": {"hidden": false}, "checksum": "md5:00f020fd484d87c5fa02940e6db896d1", "ext": "txt", "id": "f6347f30-c1e2-4337-afb4-e3d0e190010c", "key": "exp1_raw_final_SHA256.txt", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt"}, "metadata": {}, "mimetype": "text/plain", "size": 274, "storage_class": "L"}, "exp1_raw_final_SHA256.txt.ots": {"access": {"hidden": false}, "checksum": "md5:61e89433d7e6bff138b7fd0954d07072", "ext": "ots", "id": "8a946173-d3a5-4bf3-b89c-84f953b1d226", "key": "exp1_raw_final_SHA256.txt.ots", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt.ots/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt.ots"}, "metadata": {}, "mimetype": "application/octet-stream", "size": 5055, "storage_class": "L"}, "jevbench_paper_Khosla_2026_v1.1.pdf": {"access": {"hidden": false}, "checksum": "md5:a0c2f36644a67bbd85e011209b7e23f8", "ext": "pdf", "id": "f9597680-7e7a-4125-a699-48e0ea1d96d1", "key": "jevbench_paper_Khosla_2026_v1.1.pdf", "links": {"content": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf/content", "iiif_api": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/full/0/default.png", "iiif_base": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf", "iiif_canvas": "https://zenodo.org/api/iiif/record:23032384/canvas/jevbench_paper_Khosla_2026_v1.1.pdf", "iiif_info": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/info.json", "self": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf"}, "metadata": {"height": 842, "width": 595}, "mimetype": "application/pdf", "size": 316700, "storage_class": "L"}, "jevbench_paper_source_v1.1.zip": {"access": {"hidden": false}, "checksum": "md5:37151a8db3a35171d4f4a1d8093ea42f", "ext": "zip", "id": "6a8e092c-aa4f-4277-8adf-ec52a42b042a", "key": "jevbench_paper_source_v1.1.zip", "links": {"container": "https://zenodo.org/api/records/23032384/files/jevbench_paper_source_v1.1.zip/container", "content": "https://zenodo.org/api/records/23032384/files/jevbench_paper_source_v1.1.zip/content", "self": "https://zenodo.org/api/records/23032384/files/jevbench_paper_source_v1.1.zip"}, "metadata": {}, "mimetype": "application/zip", "size": 421335, "storage_class": "L"}}, "order": [], "total_bytes": 747551}, "id": "23032384", "is_draft": false, "is_published": true, "links": {"access": "https://zenodo.org/api/records/23032384/access", "access_grants": "https://zenodo.org/api/records/23032384/access/grants", "access_links": "https://zenodo.org/api/records/23032384/access/links", "access_request": "https://zenodo.org/api/records/23032384/access/request", "access_users": "https://zenodo.org/api/records/23032384/access/users", "archive": "https://zenodo.org/api/records/23032384/files-archive", "archive_media": "https://zenodo.org/api/records/23032384/media-files-archive", "communities": "https://zenodo.org/api/records/23032384/communities", "communities-suggestions": "https://zenodo.org/api/records/23032384/communities-suggestions", "doi": "https://doi.org/10.5281/zenodo.23032384", "draft": "https://zenodo.org/api/records/23032384/draft", "file_modification": "https://zenodo.org/api/records/23032384/file-modification", "files": "https://zenodo.org/api/records/23032384/files", "latest": "https://zenodo.org/api/records/23032384/versions/latest", "latest_html": "https://zenodo.org/records/23032384/latest", "media_files": "https://zenodo.org/api/records/23032384/media-files", "parent": "https://zenodo.org/api/records/22971491", "parent_doi": "https://doi.org/10.5281/zenodo.22971491", "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.22971491", "parent_html": "https://zenodo.org/records/22971491", "preview_html": "https://zenodo.org/records/23032384?preview=1", "quota_increase": "https://zenodo.org/api/records/23032384/quota-increase", "request_deletion": "https://zenodo.org/api/records/23032384/request-deletion", "requests": "https://zenodo.org/api/records/23032384/requests", "reserve_doi": "https://zenodo.org/api/records/23032384/draft/pids/doi", "self": "https://zenodo.org/api/records/23032384", "self_doi": "https://doi.org/10.5281/zenodo.23032384", "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23032384", "self_html": "https://zenodo.org/records/23032384", "self_iiif_manifest": "https://zenodo.org/api/iiif/record:23032384/manifest", "self_iiif_sequence": "https://zenodo.org/api/iiif/record:23032384/sequence/default", "thumbnails": {"10": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E10,/0/default.jpg", "100": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E100,/0/default.jpg", "1200": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E1200,/0/default.jpg", "250": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E250,/0/default.jpg", "50": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E50,/0/default.jpg", "750": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E750,/0/default.jpg"}, "versions": "https://zenodo.org/api/records/23032384/versions"}, "media_files": {"count": 1, "enabled": true, "entries": {"jevbench_paper_Khosla_2026_v1.1.pdf.ptif": {"access": {"hidden": true}, "ext": "ptif", "id": "229f1144-6fcf-4423-bd7b-afc2cc5cd536", "key": "jevbench_paper_Khosla_2026_v1.1.pdf.ptif", "links": {"content": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf.ptif/content", "self": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf.ptif"}, "metadata": null, "mimetype": "application/octet-stream", "processor": {"source_file_id": "f9597680-7e7a-4125-a699-48e0ea1d96d1", "status": "finished", "type": "image-tiles"}, "size": 0, "storage_class": "L"}}, "order": [], "total_bytes": 0}, "metadata": {"copyright": "Copyright (C) 2026 Gautam Khosla. Paper: CC BY 4.0. Build script: MIT.", "creators": [{"person_or_org": {"family_name": "Khosla", "given_name": "Gautam", "identifiers": [{"identifier": "0009-0006-7404-8877", "scheme": "orcid"}], "name": "Khosla, Gautam", "type": "personal"}, "role": {"id": "researcher", "title": {"de": "WissenschaftlerIn", "en": "Researcher"}}}], "description": "\u003cp\u003eIndependent study. Not affiliated with or endorsed by TypeSafe AI.\u003c/p\u003e\n\u003cp\u003eJev (jev-1.13.0), a \"System One\" decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model\u0027s label.\u003c/p\u003e\n\u003cp\u003eResults. For Jev\u0027s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected \u0026Delta;ECE 0.264, 95% interval 0.244 to 0.278, p \u0026le; 1/2001), meeting the preregistered \"tracks\" criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected \u0026Delta;ECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev\u0027s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model\u0027s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection.\u003c/p\u003e\n\u003cp\u003eFiles: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study\u0027s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis).\u003c/p\u003e\n\u003cp\u003ePreregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491.\u003c/p\u003e\n\u003cp\u003eVersion history\u003cbr\u003ev1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Br\u0026ouml;cker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.\u003cbr\u003ev1.0 (26 Sep 2026): first release.\u003c/p\u003e", "languages": [{"id": "eng", "title": {"en": "English"}}], "publication_date": "2026-09-29", "publisher": "Zenodo", "related_identifiers": [{"identifier": "10.5281/zenodo.22971413", "relation_type": {"id": "references", "title": {"de": "Referenziert", "en": "References"}}, "resource_type": {"id": "publication-preprint", "title": {"de": "Preprint", "en": "Preprint"}}, "scheme": "doi"}, {"identifier": "https://github.com/GautamTalksDev/jevbench", "relation_type": {"id": "issupplementedby", "title": {"de": "Wird erg\u00e4nzt durch", "en": "Is supplemented by"}}, "resource_type": {"id": "software", "title": {"de": "Software", "en": "Software"}}, "scheme": "url"}, {"identifier": "10.18653/v1/2020.emnlp-main.734", "relation_type": {"id": "references", "title": {"de": "Referenziert", "en": "References"}}, "resource_type": {"id": "publication-conferencepaper", "title": {"de": "Konferenzbeitrag", "en": "Conference paper"}}, "scheme": "doi"}], "resource_type": {"id": "publication-preprint", "title": {"de": "Preprint", "en": "Preprint"}}, "rights": [{"description": {"en": "The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited."}, "icon": "cc-by-icon", "id": "cc-by-4.0", "props": {"scheme": "spdx", "url": "https://creativecommons.org/licenses/by/4.0/legalcode"}, "title": {"en": "Creative Commons Attribution 4.0 International"}}, {"description": {"en": "A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code."}, "id": "mit", "props": {"scheme": "spdx", "url": "https://opensource.org/licenses/MIT"}, "title": {"en": "MIT License"}}], "subjects": [{"subject": "calibration"}, {"subject": "expected calibration error"}, {"subject": "ChaosNLI"}, {"subject": "human label variation"}, {"subject": "natural language inference"}, {"subject": "preregistration"}, {"subject": "Jev"}, {"subject": "uncertainty"}], "title": "Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI\u0027s Jev lowers its confidence when humans disagree, on ChaosNLI", "version": "v1.1"}, "parent": {"access": {"owned_by": {"user": "1843276"}, "settings": {"accept_conditions_text": null, "allow_guest_requests": false, "allow_user_requests": false, "secret_link_expiration": 0}}, "communities": {}, "id": "22971491", "pids": {"doi": {"client": "datacite", "identifier": "10.5281/zenodo.22971491", "provider": "datacite"}}}, "pids": {"doi": {"client": "datacite", "identifier": "10.5281/zenodo.23032384", "provider": "datacite"}, "oai": {"identifier": "oai:zenodo.org:23032384", "provider": "oai"}}, "revision_id": 3, "stats": {"all_versions": {"data_volume": 9344535.0, "downloads": 44, "unique_downloads": 44, "unique_views": 419, "views": 434}, "this_version": {"data_volume": 2866537.0, "downloads": 16, "unique_downloads": 16, "unique_views": 38, "views": 43}}, "status": "published", "swh": {}, "ui": {"access_status": {"description_l10n": "The record and files are publicly accessible.", "embargo_date_l10n": null, "icon": "unlock", "id": "open", "message_class": "", "title_l10n": "Open"}, "created_date_l10n_long": "September 29, 2026", "creators": {"affiliations": [], "creators": [{"person_or_org": {"family_name": "Khosla", "given_name": "Gautam", "identifiers": [{"identifier": "0009-0006-7404-8877", "scheme": "orcid"}], "name": "Khosla, Gautam", "type": "personal"}, "role": {"id": "researcher", "title": "Researcher"}}]}, "custom_fields": {}, "description_stripped": "Independent study. Not affiliated with or endorsed by TypeSafe AI.\n\nJev (jev-1.13.0), a \"System One\" decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model\u0027s label.\n\nResults. For Jev\u0027s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected \u0394ECE 0.264, 95% interval 0.244 to 0.278, p \u2264 1/2001), meeting the preregistered \"tracks\" criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected \u0394ECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev\u0027s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model\u0027s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection.\n\nFiles: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study\u0027s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis).\n\nPreregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491.\n\nVersion historyv1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Br\u00f6cker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.v1.0 (26 Sep 2026): first release.", "is_draft": false, "languages": [{"id": "eng", "title_l10n": "English"}], "publication_date_l10n_long": "September 29, 2026", "publication_date_l10n_medium": "Sep 29, 2026", "related_identifiers": [{"identifier": "10.5281/zenodo.22971413", "relation_type": {"id": "references", "title_l10n": "References"}, "resource_type": {"id": "publication-preprint", "title_l10n": "Preprint"}, "scheme": "doi"}, {"identifier": "https://github.com/GautamTalksDev/jevbench", "relation_type": {"id": "issupplementedby", "title_l10n": "Is supplemented by"}, "resource_type": {"id": "software", "title_l10n": "Software"}, "scheme": "url"}, {"identifier": "10.18653/v1/2020.emnlp-main.734", "relation_type": {"id": "references", "title_l10n": "References"}, "resource_type": {"id": "publication-conferencepaper", "title_l10n": "Conference paper"}, "scheme": "doi"}], "resource_type": {"id": "publication-preprint", "title_l10n": "Preprint"}, "rights": [{"description_l10n": "The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited.", "icon": "cc-by-icon", "id": "cc-by-4.0", "props": {"scheme": "spdx", "url": "https://creativecommons.org/licenses/by/4.0/legalcode"}, "title_l10n": "Creative Commons Attribution 4.0 International"}, {"description_l10n": "A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.", "id": "mit", "props": {"scheme": "spdx", "url": "https://opensource.org/licenses/MIT"}, "title_l10n": "MIT License"}], "updated_date_l10n_long": "September 29, 2026", "version": "v1.1"}, "updated": "2026-09-29T06:50:55.528211+00:00", "versions": {"index": 2, "is_latest": true}}' data-preview='false'>
+        <div class="rel-p-1"></div>
+        <div class="ui fluid placeholder rel-mr-1 rel-ml-1"></div>
+        <div class="header">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><div class="sidebar-container">
+  <h2 class="ui small top attached header">External resources</h2>
+  <dl id="external-resource" aria-label="External resources" class="ui bottom attached segment rdm-sidebar external resource details-list">
+
+    <dt class="ui tiny header">Indexed in</dt>
+      <ul class="ui list no-bullet m-0">
+              <li class="item flex align-items-center">
+
+                
+                  <img class="ui image" src="/static/images/openaire.svg" alt="" width="32">
+                
+
+                <div class="content">
+                  <a
+                    class="header"
+                    href="https://explore.openaire.eu/search/result?pid=10.5281/zenodo.23032384"
+                    target="_blank"
+                    rel="noreferrer"
+                  >OpenAIRE
+                  </a>
+
+                  </div>
+              </li></ul></dl>
+</div>
+<div
+  id="sidebar-communities-manage"
+  data-user-communities-memberships='{}'
+  data-record-community-endpoint='https://zenodo.org/api/records/23032384/communities'
+  data-record-community-search-endpoint='https://zenodo.org/api/records/23032384/communities-suggestions'
+  data-record-community-search-config='{"aggs": [{"aggName": "type", "field": "type", "title": "Type"}, {"aggName": "funder", "field": "metadata.funding.funder", "title": "Funders"}, {"aggName": "organization", "field": "metadata.organizations", "title": "Organizations"}], "appId": "InvenioAppRdm.RecordCommunitiesSuggestions", "defaultSortingOnEmptyQueryString": [{"sortBy": "newest"}], "initialQueryState": {"filters": [], "hiddenParams": null, "layout": "list", "page": 1, "size": 10, "sortBy": "bestmatch"}, "layoutOptions": {"gridView": false, "listView": true}, "paginationOptions": {"defaultValue": 10, "maxTotalResults": 10000, "resultsPerPage": [{"text": "10", "value": 10}, {"text": "20", "value": 20}]}, "searchApi": {"axios": {"headers": {"Accept": "application/vnd.inveniordm.v1+json"}, "url": "https://zenodo.org/api/records/23032384/communities-suggestions", "withCredentials": true}, "invenio": {"requestSerializer": "InvenioRecordsResourcesRequestSerializer"}}, "sortOptions": [{"sortBy": "bestmatch", "text": "Best match"}, {"sortBy": "newest", "text": "Newest"}, {"sortBy": "oldest", "text": "Oldest"}], "sortOrderDisabled": true}'
+  data-record-user-community-search-endpoint=''
+  data-record-user-community-search-config='{"aggs": [{"aggName": "type", "field": "type", "title": "Type"}, {"aggName": "funder", "field": "metadata.funding.funder", "title": "Funders"}, {"aggName": "organization", "field": "metadata.organizations", "title": "Organizations"}], "appId": "InvenioAppRdm.RecordUserCommunitiesSuggestions", "defaultSortingOnEmptyQueryString": [{"sortBy": "newest"}], "initialQueryState": {"filters": [], "hiddenParams": [["membership", "true"]], "layout": "list", "page": 1, "size": 10, "sortBy": "bestmatch"}, "layoutOptions": {"gridView": false, "listView": true}, "paginationOptions": {"defaultValue": 10, "maxTotalResults": 10000, "resultsPerPage": [{"text": "10", "value": 10}, {"text": "20", "value": 20}]}, "searchApi": {"axios": {"headers": {"Accept": "application/vnd.inveniordm.v1+json"}, "url": "https://zenodo.org/api/records/23032384/communities-suggestions", "withCredentials": true}, "invenio": {"requestSerializer": "InvenioRecordsResourcesRequestSerializer"}}, "sortOptions": [{"sortBy": "bestmatch", "text": "Best match"}, {"sortBy": "newest", "text": "Newest"}, {"sortBy": "oldest", "text": "Oldest"}], "sortOrderDisabled": true}'
+  data-pending-communities-search-config='{"aggs": [{"aggName": "type", "field": "type", "title": "Type"}, {"aggName": "status", "field": "status", "title": "Status"}], "appId": "InvenioAppRdm.RecordRequests", "defaultSortingOnEmptyQueryString": [{"sortBy": "newest"}], "initialQueryState": {"filters": [], "hiddenParams": [["expand", "1"], ["is_open", "true"], ["type", "community-inclusion"], ["type", "community-submission"]], "layout": "list", "page": 1, "size": 10, "sortBy": "bestmatch"}, "layoutOptions": {"gridView": false, "listView": true}, "paginationOptions": {"defaultValue": 10, "maxTotalResults": 10000, "resultsPerPage": [{"text": "10", "value": 10}, {"text": "20", "value": 20}, {"text": "50", "value": 50}]}, "searchApi": {"axios": {"headers": {"Accept": "application/json"}, "url": "https://zenodo.org/api/records/23032384/requests", "withCredentials": true}, "invenio": {"requestSerializer": "InvenioRecordsResourcesRequestSerializer"}}, "sortOptions": [{"sortBy": "bestmatch", "text": "Best match"}, {"sortBy": "newest", "text": "Newest"}, {"sortBy": "oldest", "text": "Oldest"}, {"sortBy": "newestactivity", "text": "Newest activity"}, {"sortBy": "oldestactivity", "text": "Oldest activity"}], "sortOrderDisabled": true}'
+  data-permissions='{"can_edit": false, "can_immediately_delete": false, "can_manage": false, "can_media_read_files": true, "can_moderate": false, "can_new_version": false, "can_read_files": true, "can_remove_community_from_record": false, "can_request_deletion": false, "can_review": false, "can_update_draft": false, "can_view": false, "removable_community_ids": []}'
+  data-record='{"access": {"embargo": {"active": false, "reason": null}, "files": "public", "record": "public", "status": "open"}, "created": "2026-09-29T06:50:55.029369+00:00", "custom_fields": {}, "deletion_status": {"is_deleted": false, "status": "P"}, "expanded": {"parent": {"access": {"owned_by": {"active": null, "blocked_at": null, "confirmed_at": null, "email": "", "id": "1843276", "is_current_user": false, "links": {"avatar": "https://zenodo.org/api/users/1843276/avatar.svg", "records_html": "https://zenodo.org/search?q=parent.access.owned_by.user:1843276", "self": "https://zenodo.org/api/users/1843276"}, "profile": {"affiliations": "University of Ottawa", "full_name": "Gautam Khosla"}, "username": "GautamTalksDev", "verified_at": null}}}}, "files": {"count": 6, "default_preview": "jevbench_paper_Khosla_2026_v1.1.pdf", "enabled": true, "entries": {"exp1_raw_SHA256.txt": {"access": {"hidden": false}, "checksum": "md5:b025a89e255d082a94eec7a692431df4", "ext": "txt", "id": "c493a8a7-5c4e-435b-baf5-49e923aca470", "key": "exp1_raw_SHA256.txt", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt"}, "metadata": {}, "mimetype": "text/plain", "size": 274, "storage_class": "L"}, "exp1_raw_SHA256.txt.ots": {"access": {"hidden": false}, "checksum": "md5:d9f188ab3e24915d93fa7b70f8b608ed", "ext": "ots", "id": "f953c32b-7368-4b68-8bc1-57db8d5b7f0a", "key": "exp1_raw_SHA256.txt.ots", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt.ots/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_SHA256.txt.ots"}, "metadata": {}, "mimetype": "application/octet-stream", "size": 3913, "storage_class": "L"}, "exp1_raw_final_SHA256.txt": {"access": {"hidden": false}, "checksum": "md5:00f020fd484d87c5fa02940e6db896d1", "ext": "txt", "id": "f6347f30-c1e2-4337-afb4-e3d0e190010c", "key": "exp1_raw_final_SHA256.txt", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt"}, "metadata": {}, "mimetype": "text/plain", "size": 274, "storage_class": "L"}, "exp1_raw_final_SHA256.txt.ots": {"access": {"hidden": false}, "checksum": "md5:61e89433d7e6bff138b7fd0954d07072", "ext": "ots", "id": "8a946173-d3a5-4bf3-b89c-84f953b1d226", "key": "exp1_raw_final_SHA256.txt.ots", "links": {"content": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt.ots/content", "self": "https://zenodo.org/api/records/23032384/files/exp1_raw_final_SHA256.txt.ots"}, "metadata": {}, "mimetype": "application/octet-stream", "size": 5055, "storage_class": "L"}, "jevbench_paper_Khosla_2026_v1.1.pdf": {"access": {"hidden": false}, "checksum": "md5:a0c2f36644a67bbd85e011209b7e23f8", "ext": "pdf", "id": "f9597680-7e7a-4125-a699-48e0ea1d96d1", "key": "jevbench_paper_Khosla_2026_v1.1.pdf", "links": {"content": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf/content", "iiif_api": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/full/0/default.png", "iiif_base": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf", "iiif_canvas": "https://zenodo.org/api/iiif/record:23032384/canvas/jevbench_paper_Khosla_2026_v1.1.pdf", "iiif_info": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/info.json", "self": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf"}, "metadata": {"height": 842, "width": 595}, "mimetype": "application/pdf", "size": 316700, "storage_class": "L"}, "jevbench_paper_source_v1.1.zip": {"access": {"hidden": false}, "checksum": "md5:37151a8db3a35171d4f4a1d8093ea42f", "ext": "zip", "id": "6a8e092c-aa4f-4277-8adf-ec52a42b042a", "key": "jevbench_paper_source_v1.1.zip", "links": {"container": "https://zenodo.org/api/records/23032384/files/jevbench_paper_source_v1.1.zip/container", "content": "https://zenodo.org/api/records/23032384/files/jevbench_paper_source_v1.1.zip/content", "self": "https://zenodo.org/api/records/23032384/files/jevbench_paper_source_v1.1.zip"}, "metadata": {}, "mimetype": "application/zip", "size": 421335, "storage_class": "L"}}, "order": [], "total_bytes": 747551}, "id": "23032384", "is_draft": false, "is_published": true, "links": {"access": "https://zenodo.org/api/records/23032384/access", "access_grants": "https://zenodo.org/api/records/23032384/access/grants", "access_links": "https://zenodo.org/api/records/23032384/access/links", "access_request": "https://zenodo.org/api/records/23032384/access/request", "access_users": "https://zenodo.org/api/records/23032384/access/users", "archive": "https://zenodo.org/api/records/23032384/files-archive", "archive_media": "https://zenodo.org/api/records/23032384/media-files-archive", "communities": "https://zenodo.org/api/records/23032384/communities", "communities-suggestions": "https://zenodo.org/api/records/23032384/communities-suggestions", "doi": "https://doi.org/10.5281/zenodo.23032384", "draft": "https://zenodo.org/api/records/23032384/draft", "file_modification": "https://zenodo.org/api/records/23032384/file-modification", "files": "https://zenodo.org/api/records/23032384/files", "latest": "https://zenodo.org/api/records/23032384/versions/latest", "latest_html": "https://zenodo.org/records/23032384/latest", "media_files": "https://zenodo.org/api/records/23032384/media-files", "parent": "https://zenodo.org/api/records/22971491", "parent_doi": "https://doi.org/10.5281/zenodo.22971491", "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.22971491", "parent_html": "https://zenodo.org/records/22971491", "preview_html": "https://zenodo.org/records/23032384?preview=1", "quota_increase": "https://zenodo.org/api/records/23032384/quota-increase", "request_deletion": "https://zenodo.org/api/records/23032384/request-deletion", "requests": "https://zenodo.org/api/records/23032384/requests", "reserve_doi": "https://zenodo.org/api/records/23032384/draft/pids/doi", "self": "https://zenodo.org/api/records/23032384", "self_doi": "https://doi.org/10.5281/zenodo.23032384", "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23032384", "self_html": "https://zenodo.org/records/23032384", "self_iiif_manifest": "https://zenodo.org/api/iiif/record:23032384/manifest", "self_iiif_sequence": "https://zenodo.org/api/iiif/record:23032384/sequence/default", "thumbnails": {"10": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E10,/0/default.jpg", "100": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E100,/0/default.jpg", "1200": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E1200,/0/default.jpg", "250": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E250,/0/default.jpg", "50": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E50,/0/default.jpg", "750": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E750,/0/default.jpg"}, "versions": "https://zenodo.org/api/records/23032384/versions"}, "media_files": {"count": 1, "enabled": true, "entries": {"jevbench_paper_Khosla_2026_v1.1.pdf.ptif": {"access": {"hidden": true}, "ext": "ptif", "id": "229f1144-6fcf-4423-bd7b-afc2cc5cd536", "key": "jevbench_paper_Khosla_2026_v1.1.pdf.ptif", "links": {"content": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf.ptif/content", "self": "https://zenodo.org/api/records/23032384/files/jevbench_paper_Khosla_2026_v1.1.pdf.ptif"}, "metadata": null, "mimetype": "application/octet-stream", "processor": {"source_file_id": "f9597680-7e7a-4125-a699-48e0ea1d96d1", "status": "finished", "type": "image-tiles"}, "size": 0, "storage_class": "L"}}, "order": [], "total_bytes": 0}, "metadata": {"copyright": "Copyright (C) 2026 Gautam Khosla. Paper: CC BY 4.0. Build script: MIT.", "creators": [{"person_or_org": {"family_name": "Khosla", "given_name": "Gautam", "identifiers": [{"identifier": "0009-0006-7404-8877", "scheme": "orcid"}], "name": "Khosla, Gautam", "type": "personal"}, "role": {"id": "researcher", "title": {"de": "WissenschaftlerIn", "en": "Researcher"}}}], "description": "\u003cp\u003eIndependent study. Not affiliated with or endorsed by TypeSafe AI.\u003c/p\u003e\n\u003cp\u003eJev (jev-1.13.0), a \"System One\" decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model\u0027s label.\u003c/p\u003e\n\u003cp\u003eResults. For Jev\u0027s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected \u0026Delta;ECE 0.264, 95% interval 0.244 to 0.278, p \u0026le; 1/2001), meeting the preregistered \"tracks\" criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected \u0026Delta;ECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev\u0027s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model\u0027s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection.\u003c/p\u003e\n\u003cp\u003eFiles: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study\u0027s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis).\u003c/p\u003e\n\u003cp\u003ePreregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491.\u003c/p\u003e\n\u003cp\u003eVersion history\u003cbr\u003ev1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Br\u0026ouml;cker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.\u003cbr\u003ev1.0 (26 Sep 2026): first release.\u003c/p\u003e", "languages": [{"id": "eng", "title": {"en": "English"}}], "publication_date": "2026-09-29", "publisher": "Zenodo", "related_identifiers": [{"identifier": "10.5281/zenodo.22971413", "relation_type": {"id": "references", "title": {"de": "Referenziert", "en": "References"}}, "resource_type": {"id": "publication-preprint", "title": {"de": "Preprint", "en": "Preprint"}}, "scheme": "doi"}, {"identifier": "https://github.com/GautamTalksDev/jevbench", "relation_type": {"id": "issupplementedby", "title": {"de": "Wird erg\u00e4nzt durch", "en": "Is supplemented by"}}, "resource_type": {"id": "software", "title": {"de": "Software", "en": "Software"}}, "scheme": "url"}, {"identifier": "10.18653/v1/2020.emnlp-main.734", "relation_type": {"id": "references", "title": {"de": "Referenziert", "en": "References"}}, "resource_type": {"id": "publication-conferencepaper", "title": {"de": "Konferenzbeitrag", "en": "Conference paper"}}, "scheme": "doi"}], "resource_type": {"id": "publication-preprint", "title": {"de": "Preprint", "en": "Preprint"}}, "rights": [{"description": {"en": "The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited."}, "icon": "cc-by-icon", "id": "cc-by-4.0", "props": {"scheme": "spdx", "url": "https://creativecommons.org/licenses/by/4.0/legalcode"}, "title": {"en": "Creative Commons Attribution 4.0 International"}}, {"description": {"en": "A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code."}, "id": "mit", "props": {"scheme": "spdx", "url": "https://opensource.org/licenses/MIT"}, "title": {"en": "MIT License"}}], "subjects": [{"subject": "calibration"}, {"subject": "expected calibration error"}, {"subject": "ChaosNLI"}, {"subject": "human label variation"}, {"subject": "natural language inference"}, {"subject": "preregistration"}, {"subject": "Jev"}, {"subject": "uncertainty"}], "title": "Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI\u0027s Jev lowers its confidence when humans disagree, on ChaosNLI", "version": "v1.1"}, "parent": {"access": {"owned_by": {"user": "1843276"}, "settings": {"accept_conditions_text": null, "allow_guest_requests": false, "allow_user_requests": false, "secret_link_expiration": 0}}, "communities": {}, "id": "22971491", "pids": {"doi": {"client": "datacite", "identifier": "10.5281/zenodo.22971491", "provider": "datacite"}}}, "pids": {"doi": {"client": "datacite", "identifier": "10.5281/zenodo.23032384", "provider": "datacite"}, "oai": {"identifier": "oai:zenodo.org:23032384", "provider": "oai"}}, "revision_id": 3, "stats": {"all_versions": {"data_volume": 9344535.0, "downloads": 44, "unique_downloads": 44, "unique_views": 419, "views": 434}, "this_version": {"data_volume": 2866537.0, "downloads": 16, "unique_downloads": 16, "unique_views": 38, "views": 43}}, "status": "published", "swh": {}, "ui": {"access_status": {"description_l10n": "The record and files are publicly accessible.", "embargo_date_l10n": null, "icon": "unlock", "id": "open", "message_class": "", "title_l10n": "Open"}, "created_date_l10n_long": "September 29, 2026", "creators": {"affiliations": [], "creators": [{"person_or_org": {"family_name": "Khosla", "given_name": "Gautam", "identifiers": [{"identifier": "0009-0006-7404-8877", "scheme": "orcid"}], "name": "Khosla, Gautam", "type": "personal"}, "role": {"id": "researcher", "title": "Researcher"}}]}, "custom_fields": {}, "description_stripped": "Independent study. Not affiliated with or endorsed by TypeSafe AI.\n\nJev (jev-1.13.0), a \"System One\" decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model\u0027s label.\n\nResults. For Jev\u0027s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected \u0394ECE 0.264, 95% interval 0.244 to 0.278, p \u2264 1/2001), meeting the preregistered \"tracks\" criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected \u0394ECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev\u0027s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model\u0027s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection.\n\nFiles: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study\u0027s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis).\n\nPreregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491.\n\nVersion historyv1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Br\u00f6cker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.v1.0 (26 Sep 2026): first release.", "is_draft": false, "languages": [{"id": "eng", "title_l10n": "English"}], "publication_date_l10n_long": "September 29, 2026", "publication_date_l10n_medium": "Sep 29, 2026", "related_identifiers": [{"identifier": "10.5281/zenodo.22971413", "relation_type": {"id": "references", "title_l10n": "References"}, "resource_type": {"id": "publication-preprint", "title_l10n": "Preprint"}, "scheme": "doi"}, {"identifier": "https://github.com/GautamTalksDev/jevbench", "relation_type": {"id": "issupplementedby", "title_l10n": "Is supplemented by"}, "resource_type": {"id": "software", "title_l10n": "Software"}, "scheme": "url"}, {"identifier": "10.18653/v1/2020.emnlp-main.734", "relation_type": {"id": "references", "title_l10n": "References"}, "resource_type": {"id": "publication-conferencepaper", "title_l10n": "Conference paper"}, "scheme": "doi"}], "resource_type": {"id": "publication-preprint", "title_l10n": "Preprint"}, "rights": [{"description_l10n": "The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited.", "icon": "cc-by-icon", "id": "cc-by-4.0", "props": {"scheme": "spdx", "url": "https://creativecommons.org/licenses/by/4.0/legalcode"}, "title_l10n": "Creative Commons Attribution 4.0 International"}, {"description_l10n": "A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.", "id": "mit", "props": {"scheme": "spdx", "url": "https://opensource.org/licenses/MIT"}, "title_l10n": "MIT License"}], "updated_date_l10n_long": "September 29, 2026", "version": "v1.1"}, "updated": "2026-09-29T06:50:55.528211+00:00", "versions": {"index": 2, "is_latest": true}}'
+  data-record-requests='{}'
+  class='sidebar-container'
+>
+
+  <h2 class="ui medium top attached header">Communities</h2>
+
+  <div class="ui segment bottom attached rdm-sidebar">
+    <div class="ui fluid placeholder">
+      <div class="image header">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div class="image header">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div class="image header">
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="sidebar-container">
+    <h2 class="ui medium top attached header mt-0">Keywords and subjects</h2>
+    <div id="keywords-and-subjects" aria-label="Keywords and subjects"
+            class="ui segment bottom attached rdm-sidebar">
+  
+  
+  <h3 class="hidden">Keywords</h3>
+  <ul class="ui horizontal list no-bullets subjects">
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22calibration%22"
+          class="subject"
+          title="Search results for calibration"
+      >
+        calibration
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22expected+calibration+error%22"
+          class="subject"
+          title="Search results for expected calibration error"
+      >
+        expected calibration error
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22ChaosNLI%22"
+          class="subject"
+          title="Search results for ChaosNLI"
+      >
+        ChaosNLI
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22human+label+variation%22"
+          class="subject"
+          title="Search results for human label variation"
+      >
+        human label variation
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22natural+language+inference%22"
+          class="subject"
+          title="Search results for natural language inference"
+      >
+        natural language inference
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22preregistration%22"
+          class="subject"
+          title="Search results for preregistration"
+      >
+        preregistration
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22Jev%22"
+          class="subject"
+          title="Search results for Jev"
+      >
+        Jev
+      </a>
+    </li>
+    <li class="item">
+      <a href="/search?q=metadata.subjects.subject:%22uncertainty%22"
+          class="subject"
+          title="Search results for uncertainty"
+      >
+        uncertainty
+      </a>
+    </li>
+  </ul>
+  
+
+    </div>
+  </div>
+
+
+<div class="sidebar-container">
+  <h2 class="ui medium top attached header mt-0">Details</h2>
+  <div id="record-details" class="ui segment bottom attached rdm-sidebar">
+
+    <dl class="details-list">
+      
+
+ 
+  <dt class="ui tiny header">DOI
+    
+  </dt>
+  <dd>
+    <span class="get-badge details-doi-section" data-toggle="tooltip" data-placement="bottom">
+      <img id='record-doi-badge' data-target="[data-modal='10.5281/zenodo.23032384']" title="Get the DOI badge!"
+        src="/badge/DOI/10.5281/zenodo.23032384.svg" alt="10.5281/zenodo.23032384" />
+      <div id="copy-button-record-doi-badge" class="copy-doi-button" data-value=https://doi.org/10.5281/zenodo.23032384 data-size="mini"></div>
+    </span>
+
+    <div id="doi-modal" class="ui modal fade badge-modal" data-modal="10.5281/zenodo.23032384">
+      <div class="header">DOI Badge</div>
+      <div class="content">
+        <h4>
+          <small>DOI</small>
+        </h4>
+        <h4>
+          <pre>10.5281/zenodo.23032384</pre>
+        </h4>
+        
+        
+
+    <h3 class="ui small header">
+      Markdown
+    </h3>
+    <div class="ui message code">
+      <pre>[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23032384.svg)](https://doi.org/10.5281/zenodo.23032384)</pre>
+    </div>
+
+    <h3 class="ui small header">
+      reStructuredText
+    </h3>
+      <div class="ui message code">
+        <pre>.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.23032384.svg
+  :target: https://doi.org/10.5281/zenodo.23032384</pre>
+      </div>
+
+    <h3 class="ui small header">
+      HTML
+    </h3>
+    <div class="ui message code">
+      <pre>&lt;a href="https://doi.org/10.5281/zenodo.23032384"&gt;&lt;img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23032384.svg" alt="DOI"&gt;&lt;/a&gt;</pre>
+    </div>
+
+    <h3 class="ui small header">
+      Image URL
+    </h3>
+    <div class="ui message code">
+      <pre>https://zenodo.org/badge/DOI/10.5281/zenodo.23032384.svg</pre>
+    </div>
+
+    <h3 class="ui small header">
+    Target URL
+    </h3>
+    <div class="ui message code">
+      <pre>https://doi.org/10.5281/zenodo.23032384</pre>
+    </div>
+      </div>
+    </div>
+  </dd>
+
+      
+      
+  <dt class="ui tiny header">Resource type</dt>
+  <dd>Preprint</dd>
+      
+      
+  <dt class="ui tiny header">Publisher</dt>
+  <dd>Zenodo</dd>
+      
+      
+      
+      
+      
+  <dt class="ui tiny header">Languages</dt>
+  <dd>
+  
+    English
+  
+</dd>
+      
+      
+    </dl>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+  <div class="sidebar-container">
+    <h2 class="ui medium top attached header mt-0">Rights</h2>
+    <div id="licenses" class="ui segment bottom attached rdm-sidebar">
+      <dl class="details-list">
+      
+        <dt class="ui tiny header">License</dt><dd id="license-cc-by-4.0-1" class="has-popup">
+              <div id="title-cc-by-4.0-1"
+                   class="license clickable"
+                   tabindex="0"
+                   aria-haspopup="dialog"
+                   aria-expanded="false"
+                   role="button"
+                   aria-label="Creative Commons Attribution 4.0 International"
+              >
+                
+                  
+                  <span class="icon-wrap">
+                  <img class="icon" src="/static/icons/licenses/cc-by-icon.svg"
+                       alt="cc-by-4.0 icon"/>
+                </span>
+                
+                <span class="title-text">
+                Creative Commons Attribution 4.0 International
+              </span>
+              </div>
+              <div id="description-cc-by-4.0-1"
+                   class="licenses-description ui flowing popup transition hidden"
+                   role="dialog"
+                   aria-labelledby="title-cc-by-4.0-1"
+              >
+                <i role="button" tabindex="0" class="close icon text-muted"
+                   aria-label="Close"></i>
+                <div id="license-description-1" class="description">
+                <span class="text-muted">
+                  The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited.
+                </span>
+                  
+  
+    <a class="license-link" href="https://creativecommons.org/licenses/by/4.0/legalcode" target="_blank"
+       title="Opens in new tab">Read more</a>
+  
+
+                </div>
+              </div>
+            </dd>
+          <dd id="license-mit-2" class="has-popup">
+              <div id="title-mit-2"
+                   class="license clickable"
+                   tabindex="0"
+                   aria-haspopup="dialog"
+                   aria-expanded="false"
+                   role="button"
+                   aria-label="MIT License"
+              >
+                
+                <span class="title-text">
+                MIT License
+              </span>
+              </div>
+              <div id="description-mit-2"
+                   class="licenses-description ui flowing popup transition hidden"
+                   role="dialog"
+                   aria-labelledby="title-mit-2"
+              >
+                <i role="button" tabindex="0" class="close icon text-muted"
+                   aria-label="Close"></i>
+                <div id="license-description-2" class="description">
+                <span class="text-muted">
+                  A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+                </span>
+                  
+  
+    <a class="license-link" href="https://opensource.org/licenses/MIT" target="_blank"
+       title="Opens in new tab">Read more</a>
+  
+
+                </div>
+              </div>
+            </dd>
+          
+      
+      
+        <dt class="ui tiny header">Copyright</dt>
+        <dd id="copyrights">
+          Copyright (C) 2026 Gautam Khosla. Paper: CC BY 4.0. Build script: MIT.
+        </dd>
+      
+      </dl>
+    </div>
+  </div>
+
+<div class="sidebar-container">
+  <h2 class="ui medium top attached header mt-0">Citation</h2>
+  <div id="citation" class="ui segment bottom attached rdm-sidebar">
+
+<div id="recordCitation" data-record-links='{"access": "https://zenodo.org/api/records/23032384/access", "access_grants": "https://zenodo.org/api/records/23032384/access/grants", "access_links": "https://zenodo.org/api/records/23032384/access/links", "access_request": "https://zenodo.org/api/records/23032384/access/request", "access_users": "https://zenodo.org/api/records/23032384/access/users", "archive": "https://zenodo.org/api/records/23032384/files-archive", "archive_media": "https://zenodo.org/api/records/23032384/media-files-archive", "communities": "https://zenodo.org/api/records/23032384/communities", "communities-suggestions": "https://zenodo.org/api/records/23032384/communities-suggestions", "doi": "https://doi.org/10.5281/zenodo.23032384", "draft": "https://zenodo.org/api/records/23032384/draft", "file_modification": "https://zenodo.org/api/records/23032384/file-modification", "files": "https://zenodo.org/api/records/23032384/files", "latest": "https://zenodo.org/api/records/23032384/versions/latest", "latest_html": "https://zenodo.org/records/23032384/latest", "media_files": "https://zenodo.org/api/records/23032384/media-files", "parent": "https://zenodo.org/api/records/22971491", "parent_doi": "https://doi.org/10.5281/zenodo.22971491", "parent_doi_html": "https://zenodo.org/doi/10.5281/zenodo.22971491", "parent_html": "https://zenodo.org/records/22971491", "preview_html": "https://zenodo.org/records/23032384?preview=1", "quota_increase": "https://zenodo.org/api/records/23032384/quota-increase", "request_deletion": "https://zenodo.org/api/records/23032384/request-deletion", "requests": "https://zenodo.org/api/records/23032384/requests", "reserve_doi": "https://zenodo.org/api/records/23032384/draft/pids/doi", "self": "https://zenodo.org/api/records/23032384", "self_doi": "https://doi.org/10.5281/zenodo.23032384", "self_doi_html": "https://zenodo.org/doi/10.5281/zenodo.23032384", "self_html": "https://zenodo.org/records/23032384", "self_iiif_manifest": "https://zenodo.org/api/iiif/record:23032384/manifest", "self_iiif_sequence": "https://zenodo.org/api/iiif/record:23032384/sequence/default", "thumbnails": {"10": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E10,/0/default.jpg", "100": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E100,/0/default.jpg", "1200": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E1200,/0/default.jpg", "250": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E250,/0/default.jpg", "50": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E50,/0/default.jpg", "750": "https://zenodo.org/api/iiif/record:23032384:jevbench_paper_Khosla_2026_v1.1.pdf/full/%5E750,/0/default.jpg"}, "versions": "https://zenodo.org/api/records/23032384/versions"}'
+  data-styles='[["apa", "APA"], ["harvard-cite-them-right", "Harvard"], ["modern-language-association", "MLA"], ["nlm-citation-sequence", "Vancouver"], ["chicago-notes-bibliography", "Chicago"], ["ieee", "IEEE"]]'
+  data-defaultstyle='"apa"'
+  data-include-deleted='false'>
+</div>
+  </div>
+</div>
+  <div class="sidebar-container">
+    <h2 class="ui medium top attached header mt-0">Export</h2>
+    <div id="export-record" class="ui segment bottom attached exports rdm-sidebar">
+
+      
+      
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        <div id="recordExportDownload" data-formats='[{"export_url": "/records/23032384/export/json", "name": "JSON"}, {"export_url": "/records/23032384/export/json-ld", "name": "JSON-LD"}, {"export_url": "/records/23032384/export/csl", "name": "CSL"}, {"export_url": "/records/23032384/export/datacite-json", "name": "DataCite JSON"}, {"export_url": "/records/23032384/export/datacite-xml", "name": "DataCite XML"}, {"export_url": "/records/23032384/export/dublincore", "name": "Dublin Core XML"}, {"export_url": "/records/23032384/export/marcxml", "name": "MARCXML"}, {"export_url": "/records/23032384/export/bibtex", "name": "BibTeX"}, {"export_url": "/records/23032384/export/geojson", "name": "GeoJSON"}, {"export_url": "/records/23032384/export/dcat-ap", "name": "DCAT"}, {"export_url": "/records/23032384/export/codemeta", "name": "Codemeta"}, {"export_url": "/records/23032384/export/cff", "name": "Citation File Format"}, {"export_url": "/records/23032384/export/datapackage", "name": "Data Package JSON"}]'></div>
+    </div>
+  </div>
+
+<section
+  id="upload-info"
+  role="note"
+  aria-label="Upload information"
+  class="sidebar-container ui segment rdm-sidebar text-muted"
+>
+  <h2 class="ui small header text-muted p-0 mb-5"><small>Technical metadata</small></h2>
+  <dl class="m-0">
+    <dt class="inline"><small>Created</small></dt>
+    <dd class="inline">
+      <small>September 29, 2026</small>
+    </dd>
+    <div>
+      <dt class="rel-mt-1 inline"><small>Modified</small></dt>
+      <dd class="inline">
+        <small>September 29, 2026</small>
+      </dd>
+    </div>
+  </dl>
+</section>
+          
+        </aside>
+      </div>
+    </div>
+
+    <div class="ui container">
+      <div class="ui relaxed grid">
+        <div class="two column row">
+          <div class="sixteen wide tablet eleven wide computer column">
+            <div class="ui grid">
+                <div class="centered row rel-mt-1">
+                  <button id="jump-btn" class="jump-to-top ui button labeled icon"
+                          aria-label="Jump to top of page">
+                    <i class="arrow alternate circle up outline icon"></i>
+                    Jump up
+                  </button>
+                </div>
+              </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+  </main>
+    <footer id="rdm-footer-element">
+        
+
+  <div class="footer-top">
+    <div class="ui container app-rdm-footer">
+<div class="ui equal width stackable grid zenodo-footer">
+  <div class="column">
+    <h2 class="ui inverted tiny header">About</h2>
+    <ul class="ui inverted link list">
+      <li class="item">
+        <a href="https://about.zenodo.org">About</a>
+      </li>
+      <li class="item">
+        <a href="https://about.zenodo.org/policies">Policies</a>
+      </li>
+      <li class="item">
+        <a href="https://about.zenodo.org/infrastructure">Infrastructure</a>
+      </li>
+      <li class="item">
+        <a href="https://about.zenodo.org/principles">Principles</a>
+      </li>
+      <li class="item">
+        <a href="https://about.zenodo.org/projects/">Projects</a>
+      </li>
+      <li class="item">
+        <a href="https://about.zenodo.org/roadmap/">Roadmap</a>
+      </li>
+      <li class="item">
+        <a href="https://about.zenodo.org/contact">Contact</a>
+      </li>
+    </ul>
+  </div>
+  <div class="column">
+    <h2 class="ui inverted tiny header">Blog</h2>
+    <ul class="ui inverted link list">
+      <li class="item">
+        <a href="https://blog.zenodo.org">Blog</a>
+      </li>
+    </ul>
+  </div>
+  <div class="column">
+    <h2 class="ui inverted tiny header">Support</h2>
+    <ul class="ui inverted link list">
+      <li class="item">
+        <a href="https://help.zenodo.org/">Help</a>
+      </li>
+      <li class="item">
+        <a href="https://support.zenodo.org/help/">FAQ</a>
+      </li>
+    </ul>
+  </div>
+  <div class="column">
+    <h2 class="ui inverted tiny header">Developers</h2>
+    <ul class="ui inverted link list">
+      <li class="item">
+        <a href="https://developers.zenodo.org">REST API</a>
+      </li>
+      <li class="item">
+        <a href="https://developers.zenodo.org#oai-pmh">OAI-PMH</a>
+      </li>
+    </ul>
+  </div>
+  <div class="column">
+    <h2 class="ui inverted tiny header">Contribute</h2>
+    <ul class="ui inverted link list">
+      <li class="item">
+        <a href="https://github.com/zenodo/zenodo-rdm">
+          <i class="icon external" aria-hidden="true"></i>
+          GitHub
+        </a>
+      </li>
+      <li class="item">
+        <a href="/donate">
+          <i class="icon external" aria-hidden="true"></i>
+          Donate
+        </a>
+      </li>
+    </ul>
+  </div>
+      <div class="six wide column right aligned">
+  <h2 class="ui inverted tiny header">Funded by</h2>
+  <ul class="ui horizontal link list">
+    <li class="item">
+      <a href="https://home.cern" aria-label="CERN">
+        <img src="/static/images/cern.png" width="60" height="60" alt="" />
+      </a>
+    </li>
+    <li class="item">
+      <a href="https://www.openaire.eu" aria-label="OpenAIRE">
+        <img src="/static/images/openaire.png" width="60" height="60" alt="" />
+      </a>
+    </li>
+    <li class="item">
+      <a href="https://commission.europa.eu/index_en" aria-label="European Commission">
+        <img src="/static/images/eu.png" width="88" height="60" alt="" />
+      </a>
+    </li>
+  </ul>
+      </div>
+      </div>
+    </div>
+
+  </div>
+        
+<div class="footer-bottom">
+  <div class="ui inverted container">
+    <div class="ui grid">
+      <div class="eight wide column left middle aligned">
+        <p class="m-0">
+          Powered by
+          <a href="https://home.cern/science/computing/data-centre">CERN Data Centre</a> & <a href="https://inveniordm.docs.cern.ch/">InvenioRDM</a>
+        </p>
+      </div>
+      <div class="eight wide column right aligned">
+        <ul class="ui inverted horizontal link list">
+          <li class="item">
+            <a href="https://stats.uptimerobot.com/vlYOVuWgM/">Status</a>
+          </li>
+          <li class="item">
+            <a href="https://about.zenodo.org/privacy-policy">Privacy policy</a>
+          </li>
+          <li class="item">
+            <a href="https://about.zenodo.org/cookie-policy">Cookie policy</a>
+          </li>
+          <li class="item">
+            <a href="https://about.zenodo.org/terms">Terms of Use</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+    </footer>
+  
+  
+    
+
+        
+          <script type="text/javascript">
+            window.MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true // Allows escaping $ signs if needed
+              }
+            };
+          </script>
+          <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+<script src="/static/dist/js/manifest.74af14a633682ed0.js"></script>
+<script src="/static/dist/js/2210.927045c5842e144f.js"></script>
+<script src="/static/dist/js/6874.62964fb23ef06a36.js"></script>
+<script src="/static/dist/js/theme.baaff2a62f570ec3.js"></script>
+<script src="/static/dist/js/9516.bc0a99f010b76af1.js"></script>
+<script src="/static/dist/js/4993.9b6c5ad959265314.js"></script>
+<script src="/static/dist/js/2766.1b99024cbed716f7.js"></script>
+<script src="/static/dist/js/1514.21769a54699f6711.js"></script>
+<script src="/static/dist/js/2129.447d2fbedd1ee9c8.js"></script>
+<script src="/static/dist/js/6555.29e4b8a5876fdd5d.js"></script>
+<script src="/static/dist/js/2028.06cef4fb71d62607.js"></script>
+<script src="/static/dist/js/8357.57c5c846196d7762.js"></script>
+<script src="/static/dist/js/240.a771ab8d945631f9.js"></script>
+<script src="/static/dist/js/1242.e6c7a37fd9c1d834.js"></script>
+<script src="/static/dist/js/1930.a74559fb3ee11c3d.js"></script>
+<script src="/static/dist/js/700.9df83bd2e46c12ab.js"></script>
+<script src="/static/dist/js/8532.4c319e0b8377b195.js"></script>
+<script src="/static/dist/js/1246.b396fa28f0972a35.js"></script>
+<script src="/static/dist/js/2620.cf785df0e2426647.js"></script>
+<script src="/static/dist/js/7954.70fdbe77932d6bf9.js"></script>
+<script src="/static/dist/js/base-theme-rdm.aefaeeadffed1a17.js"></script>
+<script src="/static/dist/js/i18n_app.1236e0b632f0b16b.js"></script>
+<script src="/static/dist/js/1273.0e9a1e369533175f.js"></script>
+<script src="/static/dist/js/1947.988c4158df45a81f.js"></script>
+<script src="/static/dist/js/5250.40ef85abdffada44.js"></script>
+<script src="/static/dist/js/overridable-registry.547d03a537181eef.js"></script>
+  
+    
+      <script type='application/ld+json'>{"@context": "http://schema.org", "@id": "https://doi.org/10.5281/zenodo.23032384", "@type": "https://schema.org/ScholarlyArticle", "author": [{"@id": "https://orcid.org/0009-0006-7404-8877", "@type": "Person", "familyName": "Khosla", "givenName": "Gautam", "name": "Khosla, Gautam"}], "citation": [{"@id": "https://doi.org/10.5281/zenodo.22971413", "@type": "ScholarlyArticle"}, {"@id": "https://doi.org/10.18653/v1/2020.emnlp-main.734", "@type": "ScholarlyArticle"}], "contentSize": "730.03 KB", "creator": [{"@id": "https://orcid.org/0009-0006-7404-8877", "@type": "Person", "familyName": "Khosla", "givenName": "Gautam", "name": "Khosla, Gautam"}], "dateCreated": "2026-09-29T06:50:55.029369+00:00", "dateModified": "2026-09-29T06:50:55.528211+00:00", "datePublished": "2026-09-29", "description": "\u003cp\u003eIndependent study. Not affiliated with or endorsed by TypeSafe AI.\u003c/p\u003e\n\u003cp\u003eJev (jev-1.13.0), a \"System One\" decision model released by TypeSafe AI on 15 September 2026, returns typed answers with probabilities its developer describes as calibrated. This preregistered study asks whether those probabilities reflect human disagreement. Using ChaosNLI (100 annotations per item), we compared 750 items from the lowest quartile of annotator entropy with 750 from the highest. The primary endpoint was the bias-corrected difference in top-label expected calibration error, scored against the share of annotators who chose the model\u0027s label.\u003c/p\u003e\n\u003cp\u003eResults. For Jev\u0027s Choice probabilities, calibration error rose from 0.076 to 0.339 (bias-corrected \u0026Delta;ECE 0.264, 95% interval 0.244 to 0.278, p \u0026le; 1/2001), meeting the preregistered \"tracks\" criterion. The error is overconfidence: on hard items mean confidence was 0.807 while mean annotator agreement was 0.468. Normalised Noul probabilities from the same calls degraded less (corrected \u0026Delta;ECE 0.076, interval 0.060 to 0.090; verdict inconclusive). Jev\u0027s confidence still ranks ambiguity well (AUROC 0.744), a supervised in-domain NLI model shows the same pattern with larger errors, and a single temperature cannot fix both strata. These results support the view that a single predictive distribution cannot serve both as a model\u0027s confidence and as a representation of human label variation (Baan et al., 2024). All deviations are reported, including a baseline implementation bug and a secondary-analysis search limit corrected after data collection.\u003c/p\u003e\n\u003cp\u003eFiles: the paper (PDF); its LaTeX source, with the script that generates every number and figure from the study\u0027s result files; and SHA-256 seals of the raw model responses with OpenTimestamps proofs (Jev responses sealed 2026-09-25 13:39:03 UTC before analysis; full file 21:24:48 UTC before the final analysis).\u003c/p\u003e\n\u003cp\u003ePreregistration: 10.5281/zenodo.22971413. Code: https://github.com/GautamTalksDev/jevbench. Cite all versions: 10.5281/zenodo.22971491.\u003c/p\u003e\n\u003cp\u003eVersion history\u003cbr\u003ev1.1 (29 Sep 2026): adds missing related work (Baan et al. 2024; Lee et al. 2023; Zhou et al. 2022; Zhang and de Marneffe 2021; Desai and Durrett 2020) and credits consistency resampling (Br\u0026ouml;cker and Smith 2007; Vaicenavicius et al. 2019) as the basis of the bias correction. No data, numbers or conclusions changed.\u003cbr\u003ev1.0 (26 Sep 2026): first release.\u003c/p\u003e", "identifier": "https://doi.org/10.5281/zenodo.23032384", "inLanguage": {"@type": "Language", "alternateName": "eng", "name": "English"}, "keywords": "calibration, expected calibration error, ChaosNLI, human label variation, natural language inference, preregistration, Jev, uncertainty", "license": "https://creativecommons.org/licenses/by/4.0/legalcode", "name": "Confident Where People Disagree: A preregistered, bias-corrected test of whether TypeSafe AI\u0027s Jev lowers its confidence when humans disagree, on ChaosNLI", "publisher": {"@type": "Organization", "name": "Zenodo"}, "size": "730.03 KB", "url": "https://zenodo.org/records/23032384", "version": "v1.1"}</script>
+
+  <script src="/static/dist/js/invenio-app-rdm-landing-page-theme.d297449c9bc62233.js"></script>
+  <script src="/static/dist/js/4505.ab7a1eca17d759c0.js"></script>
+<script src="/static/dist/js/3536.86076ba3bc3b1b39.js"></script>
+<script src="/static/dist/js/2716.f8086db402b2cfd3.js"></script>
+<script src="/static/dist/js/8397.cfb5fcd1f9045cd0.js"></script>
+<script src="/static/dist/js/6437.71df7d82b290cac2.js"></script>
+<script src="/static/dist/js/9530.c929789152b8afde.js"></script>
+<script src="/static/dist/js/3646.f9960a96ae80e501.js"></script>
+<script src="/static/dist/js/8193.1d01fea3d1edd6f4.js"></script>
+<script src="/static/dist/js/5261.76aa1779083cb6e9.js"></script>
+<script src="/static/dist/js/8646.dfe1e38151199c86.js"></script>
+<script src="/static/dist/js/9150.a1df7bd0283c1788.js"></script>
+<script src="/static/dist/js/1030.2bd7ba0097a92ffb.js"></script>
+<script src="/static/dist/js/invenio-app-rdm-landing-page.ff224771cbfc1fbd.js"></script>
+  <script src="/static/dist/js/previewer_theme.acc158ceaae454a2.js"></script>
+  <script src="/static/dist/js/zenodo-rdm-citations.ea10f4c3b5878dd5.js"></script>
+  
+
+        <div class="ui container info message cookie-banner hidden">
+  <i class="close icon"></i>
+  <div>
+    <i aria-hidden="true" class="info icon"></i>
+    <p class="inline">This site uses cookies. Find out more on <a href="https://about.zenodo.org/cookie-policy">how we use cookies</a></p>
+  </div>
+  <div class="buttons">
+    <button class="ui button small primary" id="cookies-all">Accept all cookies</button>
+    <button class="ui button small" id="cookies-essential">Accept only essential cookies</button>
+  </div>
+</div>
+
+<script>
+  var _paq = window._paq = window._paq || [];
+  _paq.push(['requireCookieConsent']);
+
+  (function() {
+    var u="https://webanalytics.web.cern.ch/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '366']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+
+  const cookieConsent = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("cookie_consent="))
+    ?.split("=")[1];
+
+  if (cookieConsent) {
+    if (cookieConsent === "all") {
+      matomo();
+    }
+  } else {
+    document.querySelector(".cookie-banner").classList.remove("hidden")
+    _paq.push(['forgetConsentGiven']);
+  }
+
+  $('.cookie-banner .close')
+    .on('click', function () {
+      $(this)
+        .closest('.message')
+        .transition('fade');
+      setCookie("cookie_consent","essential");
+    });
+
+  $('#cookies-essential')
+    .on('click', function () {
+      $(this)
+        .closest('.message')
+        .transition('fade');
+      setCookie("cookie_consent","essential");
+    });
+
+  $('#cookies-all')
+    .on('click', function () {
+      $(this)
+        .closest('.message')
+        .transition('fade');
+      setCookie("cookie_consent","all");
+      _paq.push(['rememberCookieConsentGiven']);
+      matomo();
+    });
+
+  function matomo() {
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+  }
+
+  function setCookie(cname, cvalue) {
+    var d = new Date();
+    d.setTime(d.getTime() + (365 * 24 * 60 * 60 * 1000)); // one year
+    var expires = "expires=" + d.toUTCString();
+    var cookie = cname + "=" + cvalue + ";" + expires + ";"
+    cookie += "Domain=zenodo.org;Path=/;SameSite=None; Secure";
+    document.cookie = cookie;
+  }
+</script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "full_name": "tedliou/decision-model-playground",
+  "html_url": "https://github.com/tedliou/decision-model-playground",
+  "description": "A local playground for comparing Laya and Jev decision models with article recommendations.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-19T13:31:18Z",
+  "size": 117,
+  "stargazers_count": 1,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "195fdb98d517b146fa890c459836ceea94566a72"
+}

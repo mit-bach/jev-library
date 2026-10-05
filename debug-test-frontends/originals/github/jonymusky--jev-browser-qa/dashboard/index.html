@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Dashboard</title>
+<style>
+  :root {
+    --bg: #f6f5fa; --panel: #ffffff; --text: #1d1b2e; --muted: #6b6884; --line: #e6e3ef;
+    --pass: #1f8a5b; --pass-bg: #e4f5ec; --fail: #c8322f; --fail-bg: #fbe7e6; --skip: #8a7d1f; --skip-bg: #f7f2d9;
+    --accent: #4b2a99; --accent-bg: #ece6f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141220; --panel: #1d1a2c; --text: #ecebf3; --muted: #a29fb8; --line: #2e2a42;
+      --pass-bg: #163526; --fail-bg: #3c1a1a; --skip-bg: #33301a; --accent-bg: #2b2145;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; background: var(--bg); color: var(--text); }
+  header { padding: 16px 24px; border-bottom: 1px solid var(--line); background: var(--panel); display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 18px; }
+  header .meta { color: var(--muted); }
+  .layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 57px); }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } aside { border-right: 0; border-bottom: 1px solid var(--line); } }
+  aside { border-right: 1px solid var(--line); background: var(--panel); padding: 12px; overflow: auto; }
+  main { padding: 20px 24px; overflow: auto; }
+  .run { width: 100%; text-align: left; border: 1px solid var(--line); background: transparent; color: var(--text); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; cursor: pointer; }
+  .run.active { border-color: var(--accent); background: var(--accent-bg); }
+  .run .when { font-weight: 600; }
+  .run .sub { color: var(--muted); font-size: 12px; }
+  .bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; margin-top: 6px; background: var(--line); }
+  .bar i { display: block; height: 100%; }
+  .bar .p { background: var(--pass); } .bar .f { background: var(--fail); } .bar .s { background: var(--skip); }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .kpi .v { font-size: 22px; font-weight: 700; }
+  .kpi .l { color: var(--muted); font-size: 12px; }
+  .filters { display: flex; gap: 8px; margin-bottom: 12px; }
+  .filters button { border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+  .filters button.active { border-color: var(--accent); background: var(--accent-bg); }
+  .test { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+  .test summary { list-style: none; display: flex; align-items: center; gap: 12px; padding: 12px 16px; cursor: pointer; }
+  .test summary::-webkit-details-marker { display: none; }
+  .badge { font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; }
+  .badge.passed { color: var(--pass); background: var(--pass-bg); }
+  .badge.failed, .badge.timedOut, .badge.interrupted { color: var(--fail); background: var(--fail-bg); }
+  .badge.skipped { color: var(--skip); background: var(--skip-bg); }
+  .title { flex: 1; }
+  .title .file { color: var(--muted); font-size: 12px; }
+  .dur { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .body { border-top: 1px solid var(--line); padding: 14px 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 1100px) { .body { grid-template-columns: 1fr; } }
+  .error { color: var(--fail); background: var(--fail-bg); border-radius: 8px; padding: 8px 10px; font-family: ui-monospace, Menlo, monospace; font-size: 12px; white-space: pre-wrap; margin-bottom: 12px; }
+  video { width: 100%; border-radius: 8px; background: #000; }
+  h4 { margin: 0 0 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .judgment { display: grid; grid-template-columns: 56px 1fr; gap: 10px; align-items: start; padding: 8px 0; border-top: 1px solid var(--line); }
+  .judgment:first-of-type { border-top: 0; }
+  .prob { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .prob.ok { color: var(--pass); } .prob.ko { color: var(--fail); }
+  .meter { height: 4px; border-radius: 2px; background: var(--line); margin-top: 4px; }
+  .meter i { display: block; height: 100%; border-radius: 2px; background: currentColor; }
+  .claim small { color: var(--muted); display: block; }
+  .judgment img { width: 100%; max-width: 360px; border: 1px solid var(--line); border-radius: 6px; margin-top: 6px; cursor: zoom-in; }
+  .steps { margin: 0; padding-left: 18px; }
+  .steps li { margin: 2px 0; }
+  .links a { color: var(--accent); margin-right: 12px; }
+  .empty { color: var(--muted); padding: 40px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <h1>QA Dashboard</h1>
+  <span class="meta" id="header-meta"></span>
+  <select id="lang" aria-label="Language" style="margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:4px 8px;font:inherit;cursor:pointer">
+    <option value="en">English</option>
+    <option value="es">Español</option>
+    <option value="pt">Português</option>
+  </select>
+</header>
+<div class="layout">
+  <aside id="runs"></aside>
+  <main id="main"><div class="empty" id="empty-main"></div></main>
+</div>
+<script>
+  const MESSAGES = {
+    en: {
+      loading: 'Loading runs…', noRuns: 'No runs yet. Run <code>pnpm test</code> or <code>pnpm qa run &lt;flow.json&gt;</code>.', noRunsShort: 'No runs',
+      runs: (n) => `${n} run${n === 1 ? '' : 's'}`, last: 'last', passedOf: (p, t) => `${p}/${t} passed`,
+      passed: 'Passed', failed: 'Failed', totalDuration: 'Total duration', jevCalls: 'Jev calls', jevLatency: 'Mean Jev latency', inputTokens: 'Input tokens',
+      all: 'All', filterPassed: 'Passed', filterFailed: 'Failed', noMatch: 'No test matches the filter.',
+      noVideo: 'No video', downloadTrace: 'Download trace', failureShot: 'Failure screenshot', judgments: 'Jev judgments', noJudgments: 'No judgments recorded', goals: 'Goals',
+      threshold: 'threshold', webmHint: 'WebM recording: Safari cannot play it. Install ffmpeg (brew install ffmpeg) to get MP4 on the next runs, or open this panel in Chrome.',
+      status: { passed: 'passed', failed: 'failed', skipped: 'skipped', timedOut: 'timed out', interrupted: 'interrupted' },
+    },
+    es: {
+      loading: 'Cargando corridas…', noRuns: 'Sin corridas todavía. Ejecuta <code>pnpm test</code> o <code>pnpm qa run &lt;flow.json&gt;</code>.', noRunsShort: 'Sin corridas',
+      runs: (n) => `${n} corrida${n === 1 ? '' : 's'}`, last: 'última', passedOf: (p, t) => `${p}/${t} pasaron`,
+      passed: 'Pasaron', failed: 'Fallaron', totalDuration: 'Duración total', jevCalls: 'Llamadas a Jev', jevLatency: 'Latencia media Jev', inputTokens: 'Tokens de entrada',
+      all: 'Todos', filterPassed: 'Pasaron', filterFailed: 'Fallaron', noMatch: 'Ningún test coincide con el filtro.',
+      noVideo: 'Sin video', downloadTrace: 'Descargar trace', failureShot: 'Captura del fallo', judgments: 'Juicios de Jev', noJudgments: 'Sin juicios registrados', goals: 'Objetivos',
+      threshold: 'umbral', webmHint: 'Grabación WebM: Safari no la reproduce. Instala ffmpeg (brew install ffmpeg) para obtener MP4 en las próximas corridas, o abre el panel en Chrome.',
+      status: { passed: 'pasó', failed: 'falló', skipped: 'omitido', timedOut: 'tiempo agotado', interrupted: 'interrumpido' },
+    },
+    pt: {
+      loading: 'Carregando execuções…', noRuns: 'Nenhuma execução ainda. Rode <code>pnpm test</code> ou <code>pnpm qa run &lt;flow.json&gt;</code>.', noRunsShort: 'Sem execuções',
+      runs: (n) => `${n} execuç${n === 1 ? 'ão' : 'ões'}`, last: 'última', passedOf: (p, t) => `${p}/${t} passaram`,
+      passed: 'Passaram', failed: 'Falharam', totalDuration: 'Duração total', jevCalls: 'Chamadas ao Jev', jevLatency: 'Latência média Jev', inputTokens: 'Tokens de entrada',
+      all: 'Todos', filterPassed: 'Passaram', filterFailed: 'Falharam', noMatch: 'Nenhum teste corresponde ao filtro.',
+      noVideo: 'Sem vídeo', downloadTrace: 'Baixar trace', failureShot: 'Captura da falha', judgments: 'Julgamentos do Jev', noJudgments: 'Nenhum julgamento registrado', goals: 'Objetivos',
+      threshold: 'limiar', webmHint: 'Gravação WebM: o Safari não a reproduz. Instale o ffmpeg (brew install ffmpeg) para obter MP4 nas próximas execuções, ou abra este painel no Chrome.',
+      status: { passed: 'passou', failed: 'falhou', skipped: 'pulado', timedOut: 'tempo esgotado', interrupted: 'interrompido' },
+    },
+  };
+  const LOCALES = { en: 'en-US', es: 'es-AR', pt: 'pt-BR' };
+  function detectLang() {
+    try { const saved = localStorage.getItem('qa-dashboard-lang'); if (saved && MESSAGES[saved]) return saved; } catch {}
+    const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return MESSAGES[nav] ? nav : 'en';
+  }
+  const state = { runs: [], active: null, filter: 'all', lang: detectLang() };
+  const t = () => MESSAGES[state.lang];
+  const fmtDate = (iso) => new Date(iso).toLocaleString(LOCALES[state.lang], { dateStyle: 'short', timeStyle: 'medium' });
+  const fmtDur = (ms) => ms >= 1000 ? `${(ms / 1000).toFixed(1)} s` : `${ms} ms`;
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const file = (p) => `/files/${p.split('/').map(encodeURIComponent).join('/')}`;
+
+  async function load() {
+    const res = await fetch('/api/runs', { cache: 'no-store' });
+    state.runs = await res.json();
+    if (!state.active && state.runs[0]) state.active = state.runs[0].runId;
+    render();
+  }
+
+  function render() {
+    const total = state.runs.length;
+    document.documentElement.lang = state.lang;
+    document.getElementById('lang').value = state.lang;
+    document.getElementById('header-meta').textContent = total ? `${t().runs(total)} · ${t().last} ${fmtDate(state.runs[0].finishedAt)}` : t().noRunsShort;
+    const empty = document.getElementById('empty-main');
+    if (empty) empty.innerHTML = t().noRuns;
+    renderRuns();
+    renderMain();
+  }
+
+  function renderRuns() {
+    const el = document.getElementById('runs');
+    el.innerHTML = state.runs.map((r) => {
+      const { passed, failed, skipped, total } = r.counts;
+      const pct = (n) => total ? (n / total) * 100 : 0;
+      return `<button class="run ${r.runId === state.active ? 'active' : ''}" data-run="${esc(r.runId)}">
+        <div class="when">${fmtDate(r.finishedAt)}</div>
+        <div class="sub">${t().passedOf(passed, total)} · ${esc(r.baseUrl)}</div>
+        <div class="bar"><i class="p" style="width:${pct(passed)}%"></i><i class="f" style="width:${pct(failed)}%"></i><i class="s" style="width:${pct(skipped)}%"></i></div>
+      </button>`;
+    }).join('');
+    el.querySelectorAll('.run').forEach((b) => b.addEventListener('click', () => { state.active = b.dataset.run; render(); }));
+  }
+
+  function renderMain() {
+    const run = state.runs.find((r) => r.runId === state.active);
+    const main = document.getElementById('main');
+    if (!run) return;
+    const tests = run.tests.filter((t) => state.filter === 'all' || (state.filter === 'failed' ? t.status !== 'passed' && t.status !== 'skipped' : t.status === state.filter));
+    const durationMs = run.tests.reduce((a, t) => a + t.durationMs, 0);
+    main.innerHTML = `
+      <div class="kpis">
+        <div class="kpi"><div class="v">${run.counts.passed}</div><div class="l">${t().passed}</div></div>
+        <div class="kpi"><div class="v" style="color:${run.counts.failed ? 'var(--fail)' : 'inherit'}">${run.counts.failed}</div><div class="l">${t().failed}</div></div>
+        <div class="kpi"><div class="v">${fmtDur(durationMs)}</div><div class="l">${t().totalDuration}</div></div>
+        <div class="kpi"><div class="v">${run.jev.calls}</div><div class="l">${t().jevCalls}</div></div>
+        <div class="kpi"><div class="v">${run.jev.calls ? Math.round(run.jev.apiMs / run.jev.calls) : 0} ms</div><div class="l">${t().jevLatency}</div></div>
+        <div class="kpi"><div class="v">${run.jev.inputTokens.toLocaleString(LOCALES[state.lang])}</div><div class="l">${t().inputTokens}</div></div>
+      </div>
+      <div class="filters">
+        ${['all', 'passed', 'failed'].map((f) => `<button data-f="${f}" class="${state.filter === f ? 'active' : ''}">${{ all: t().all, passed: t().filterPassed, failed: t().filterFailed }[f]}</button>`).join('')}
+      </div>
+      ${tests.length ? tests.map(renderTest).join('') : `<div class="empty">${t().noMatch}</div>`}
+    `;
+    main.querySelectorAll('.filters button').forEach((b) => b.addEventListener('click', () => { state.filter = b.dataset.f; renderMain(); }));
+    main.querySelectorAll('.judgment img').forEach((img) => img.addEventListener('click', () => window.open(img.src, '_blank')));
+  }
+
+  function renderTest(test) {
+    const failed = test.status !== 'passed' && test.status !== 'skipped';
+    const judgments = test.judgments.map((j) => `
+      <div class="judgment">
+        <div class="prob ${j.passed ? 'ok' : 'ko'}">${(j.probability * 100).toFixed(0)}%<div class="meter"><i style="width:${j.probability * 100}%"></i></div></div>
+        <div class="claim">${esc(j.claim)}<small>${t().threshold} ${j.threshold}${j.apiMs ? ` · ${j.apiMs} ms` : ''}${j.inputTokens ? ` · ${j.inputTokens} tokens` : ''}</small>
+          ${j.screenshot ? `<img loading="lazy" src="${file(j.screenshot)}" alt="">` : ''}
+        </div>
+      </div>`).join('');
+    const goals = test.goals.map((g) => `
+      <div class="judgment"><div class="prob ${g.status === 'done' ? 'ok' : 'ko'}">${esc(g.status)}</div>
+        <div class="claim">${esc(g.goal)}<ol class="steps">${g.steps.map((s) => `<li>${esc(s.action)} <small>(p=${s.probability.toFixed(2)}, ${s.apiMs} ms)</small></li>`).join('')}</ol></div>
+      </div>`).join('');
+    return `<details class="test" ${failed ? 'open' : ''}>
+      <summary>
+        <span class="badge ${esc(test.status)}">${esc(t().status[test.status] ?? test.status)}</span>
+        <span class="title">${esc(test.title)}<div class="file">${esc(test.file)}</div></span>
+        <span class="dur">${fmtDur(test.durationMs)}</span>
+      </summary>
+      <div class="body">
+        <div>
+          ${test.error ? `<div class="error">${esc(test.error)}</div>` : ''}
+          ${test.video ? `<video controls preload="metadata" src="${file(test.video)}"></video>${test.video.endsWith('.webm') ? `<div class="claim"><small>${t().webmHint}</small></div>` : ''}` : `<div class="empty">${t().noVideo}</div>`}
+          <div class="links" style="margin-top:8px">
+            ${test.trace ? `<a href="${file(test.trace)}">${t().downloadTrace}</a>` : ''}
+            ${test.failureScreenshot ? `<a href="${file(test.failureScreenshot)}" target="_blank">${t().failureShot}</a>` : ''}
+          </div>
+        </div>
+        <div>
+          <h4>${t().judgments}</h4>
+          ${judgments || `<div class="empty" style="padding:12px">${t().noJudgments}</div>`}
+          ${goals ? `<h4 style="margin-top:12px">${t().goals}</h4>${goals}` : ''}
+        </div>
+      </div>
+    </details>`;
+  }
+
+  document.getElementById('lang').addEventListener('change', (e) => {
+    state.lang = e.target.value;
+    try { localStorage.setItem('qa-dashboard-lang', state.lang); } catch {}
+    render();
+  });
+  document.getElementById('header-meta').textContent = t().loading;
+  load();
+  setInterval(load, 5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "full_name": "sohithk10/jev-trace-evaluator",
+  "html_url": "https://github.com/sohithk10/jev-trace-evaluator",
+  "description": "CLI trace evaluation with JEV, LangChain integration, security checks, and confidence-based review",
+  "default_branch": "main",
+  "pushed_at": "2026-10-01T00:09:58Z",
+  "size": 161,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "3b06ba5edd103d86f560d4afd092b50e56575026"
+}

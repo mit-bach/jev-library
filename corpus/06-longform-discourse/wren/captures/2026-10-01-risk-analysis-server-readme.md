@@ -1,0 +1,206 @@
+author: Edward Irby and You.com
+handle: @edwardirby
+post id: none
+timestamp: retrieved 2026-10-01
+url: https://github.com/youdotcom-oss/risk-analysis-server
+engagement: not a post
+This is a saved document, not an official TypeSafe document, and not a social post.
+
+README of the repository named in Edward Irby's 1 October 2026 article. The article is the long writeup. This is the repository's own guide. Source code was not copied.
+
+# Risk Analysis Server
+
+A guide/cookbook MCP server demonstrating how You.com's **knowledge
+parameter** composes with an agentic risk pipeline. Define a risk profile —
+a topic, the geographic locations to watch, and the policy triggers that
+matter — and the server runs an agentic sweep:
+
+- **You.com search with `knowledge: "core"`** — alongside web results, the
+  sweep pulls licensed factual answers (e.g. financials from Fiscal.ai)
+  into the synthesis, verified end-to-end via `results.knowledge`
+- **Jev judgments** (TypeSafe AI) — `noul`/`score`/`choice` gates at every
+  stage: triage, query relevance, per-result scoring, severity
+- **Vercel AI SDK** — the agentic proposal loop runs on `generateText`
+  with tools, on OpenRouter (default `qwen/qwen3.8-27b`)
+
+The output is a source-linked Markdown briefing readable from any MCP
+client. Runs on Bun only (`bun:sqlite`, `Bun.cron`); no Node target.
+
+## Quickstart (Claude Desktop, Cursor, any stdio client)
+
+```sh
+bun install
+export YDC_API_KEY=... TYPESAFE_API_KEY=... OPENROUTER_API_KEY=...
+bun src/stdio.ts
+```
+
+Point your client at `bun src/stdio.ts` (or the published bin:
+`bunx @youdotcom-oss/risk-analysis-server`). SQLite lives at
+`~/.local/share/risk-analysis-server/risk.sqlite` by default.
+
+## First run
+
+Paste one of these into your client after connecting:
+
+1. > Create a risk profile "PNW data center buildout" watching Oregon, Washington, and California with these triggers: data center moratoriums and permitting pauses, power grid capacity constraints, electricity price today. Then run a manual sweep for it and summarize the report when done — note whether the report cites a live electricity price.
+2. > Create a risk profile "US AI lab operations" watching Taiwan and the United States with these triggers: TSMC revenue latest quarter, chip export policy changes, electricity price today, interest rate today. Then run a manual sweep for it and summarize the report when done.
+3. > Create a risk profile "Arabian Gulf AI infrastructure" watching Saudi Arabia with these triggers: crude oil price today, weather in Riyadh, Gulf shipping and infrastructure security, chip export policy changes. Then run a manual sweep for it and summarize the report when done.
+4. > Create a risk profile "Gulf AI infrastructure" watching the Texas Gulf Coast and Louisiana with these triggers: permitting delay, gas turbine shortage, grid interconnection queue. Then run a manual sweep for it and summarize the report when done.
+
+Example 4 reproduces the Gulf profile from the article's measured runs — paste it if you are following along with a write-up that used these profiles (and note it draws few licensed facts: news-shaped triggers like these are exactly the case where knowledge hits can be zero on a critical day).
+
+The tool descriptions carry the protocol (start → poll until
+`completed`/`failed`); expect ~2–3 minutes. The completed outcome includes
+`knowledgeHits` — the count of licensed knowledge facts that reached the
+briefing — plus `threatProbability` (the raw triage noul behind the
+escalation decision) and `usage` (per-sweep You.com call and Jev token
+counts), so you can verify knowledge and provider cost influenced the
+result. Every Stage-3 search runs
+with `knowledge: "core"`: fact-shaped queries (prices, rates, revenues,
+weather) return licensed answers in `results.knowledge` (Fiscal.ai, S&P
+Global, BLS, EIA, AccuWeather) that flow into the briefing **with
+provenance** — provider attribution and an `asOf` date, so the briefing
+can say what a fact was true as of; news-shaped
+queries simply omit the key. The second prompt is the most likely to
+show knowledge at work — TSMC revenue, electricity price, and interest
+rate are all verified to return licensed results (Fiscal.ai, BLS,
+Federal Reserve).
+
+## The tools
+
+| Tool | What it does |
+| --- | --- |
+| `list_risk_profiles` | List active profiles with ids. Call first — don't recreate. |
+| `set_risk_profile` | Create/update a profile: title, locations, triggers. |
+| `trigger_manual_sweep` | **Fire-and-poll**: call with `profileId` → instant `task_id`; call with `task_id` every ~20s until `completed`/`failed` (sweeps take 2–3 min). |
+| `get_risk_report` | Fetch the latest (or by-id) briefing as GFM Markdown, plus a `knowledge` array carrying each licensed fact's `attribution` and `asOf`. |
+| `set_sweep_schedule` | Attach a cron expression to a profile (or omit to clear). |
+
+The sweep pipeline: Stage 1 surface-search triage (Jev `noul`) → Stage 2
+agentic query proposal with a relevance gate inside the tool → Stage 3
+retrieval + per-result scoring → Stage 4 synthesis into a Markdown briefing.
+All payloads are budget-capped; results are stored durably in
+`sweep_tasks`/`risk_reports`.
+
+## Scheduling
+
+- **In conversation**: `set_sweep_schedule` with a cron expression
+  (`"0 9 * * 1"`) per profile. Runs while a server session is alive.
+- **Autonomous**: run the HTTP entry persistently —
+  `RISK_JWT_SECRET=... bun src/server.ts` with `RISK_CRON_SCHEDULE`.
+  Stored schedules apply at startup; reports accumulate in the DB and are
+  readable via `get_risk_report` from any client, any time. To keep
+  sweeping after you close the chat client, run it as a supervised local
+  service (launchd / systemd / Task Scheduler) — recipes in
+  [DEPLOY.md](./DEPLOY.md#running-the-http-entry-as-a-local-service).
+
+See [DEPLOY.md](./DEPLOY.md) for Docker/Fly/Railway and the full env-var table.
+
+## Resetting local state
+
+Reports, profiles, and sweep tasks live in one SQLite file. To start over:
+
+```sh
+sqlite3 ~/.local/share/risk-analysis-server/risk.sqlite \
+  "DELETE FROM risk_reports; DELETE FROM sweep_tasks; DELETE FROM risk_profiles; DELETE FROM source_utility;"
+```
+
+(Quitting the client first avoids WAL writer contention.)
+
+## Component topology
+
+Two transports (a chat client's stdio session and a supervised HTTP
+service) share one tool factory and one SQLite database — that's what lets
+a report be written by a cron fire while you were away and read by a
+session opened later.
+
+```mermaid
+flowchart TB
+  subgraph clients[" "]
+    S["Claude / Cursor<br/>stdio · session-scoped cron"] 
+    H["HTTP entry + Bun.cron<br/>durable cron · Bearer JWT"]
+  end
+  S --> MCP
+  H --> MCP
+  MCP["src/mcp.ts<br/>one tool factory · five tools"]
+  MCP --> DB[("src/db.ts SQLite<br/>WAL · busy_timeout")]
+  MCP --> SW["src/pipeline/<br/>sweep.ts → deep-dive.ts → report.ts"]
+  SW --> Y["src/services/you.ts<br/>You.com MCP client"]
+  SW --> J["src/services/jev.ts<br/>Jev gates (TypeSafe AI)"]
+  SW --> M["src/model.ts<br/>qwen/qwen3.8-27b via OpenRouter<br/>driven by Vercel AI SDK"]
+```
+
+## The sweep, stage by stage
+
+One sweep — manual or scheduled — runs four stages. Each pairs a data
+source (You.com) with a judgment gate (Jev, called like a programming
+primitive) or an LLM step (Qwen via OpenRouter through the Vercel AI SDK).
+All payloads are budget-capped; results persist in `sweep_tasks` and
+`risk_reports`.
+
+```mermaid
+flowchart TD
+  P["Profile"] --> S1["STAGE 1 · TRIAGE<br/>You.com search (highlights)<br/>Jev noul: threat probability"]
+  S1 -->|"&lt; threshold<br/>(default 0.50)"| CLEAN["persist low-severity<br/>clean-sweep report · STOP"]
+  S1 -->|"≥ threshold"| S2["STAGE 2 · QUERY PROPOSAL<br/>Vercel AI SDK generateText<br/>qwen + you-search tool, ≤5 steps"]
+  S2 --> G2["Gate 2 · Jev ranks all proposals<br/>in one batched call — geospatially<br/>precise queries score highest"]
+  G2 -->|"top RISK_MAX_QUERIES<br/>(default 8)"| S3["STAGE 3 · RETRIEVAL + SCORING<br/>code-invoked you-search per query<br/>knowledge=“core” → licensed facts<br/>(Fiscal.ai, BLS, EIA, FRED, AccuWeather)<br/>each with attribution + asOf"]
+  G2 -->|"the rest — never executed"| CUT["budgeted out"]
+  S3 --> G3["Jev score 0–2 per result<br/>vs the profile's triggers<br/>+1 provenance boost for knowledge"]
+  G3 --> R["topScored: 15 slots<br/>knowledge keeps reserved slots"]
+  R --> S3b["STAGE 3b · PAGE FETCH<br/>you-contents ≤10 URLs<br/>≤12k chars/page · ≤100k total"]
+  S3b --> S4["STAGE 4 · SYNTHESIS<br/>Jev choice: low | medium | critical<br/>qwen: Markdown briefing<br/>citing source links"]
+  S4 --> REP["formatReport appends<br/>'## Licensed data'<br/>provider + as-of per fact"]
+  REP --> DB
+```
+
+Why this shape: judgment gates are cheap, typed, and run *inside* the
+loop — a bad query is rejected at the tool boundary instead of polluting
+retrieval; the expensive agentic loop (Stage 2) only runs when Gate 1
+says the news actually matters; and everything the LLM touches is
+payload-budgeted so a burst of news can't blow the context window.
+
+## For developers
+
+This repo ships four ways to consume it, each with a skill that pins its
+contract. Install them into your AI coding agent with the Skills CLI:
+
+```sh
+bunx skills add youdotcom-oss/risk-analysis-server
+```
+
+or copy `skills/*/SKILL.md` into your agent's skills directory by hand:
+
+- **Run it as-is** → `skills/local-run`
+- **Run scheduled sweeps durably** (HTTP service + auth, fires with the chat client closed) → `skills/durable-local`
+- **Embed it in your Bun app** (your auth, your hosting) → `skills/import-integration`
+- **Fork and change behavior** (model, tools, report shape) → `skills/extend`
+- **Drive it from a chat client** (the poll protocol, report reading) → `skills/drive-sweeps`
+
+Development loop: `bun run check` (skills + biome + types), `bun test`,
+`bun run build`. `plan.md` (untracked) records design decisions and
+deviations; `AGENTS.md` holds repo conventions.
+
+## Environment
+
+Three API keys are required for sweeps: `YDC_API_KEY` (You.com search),
+`TYPESAFE_API_KEY` (Jev judgments), `OPENROUTER_API_KEY` (the model, default
+`qwen/qwen3.8-27b` — override with `RISK_MODEL`). The server starts and
+serves without them; missing keys are named in the startup warnings and
+sweeps fail with the specific auth error.
+
+`RISK_TRIAGE_THRESHOLD` (default `0.5`) sets the Gate 1 escalation cutoff:
+sweeps escalate only when the triage noul reaches it. Invalid values fail
+loudly at startup. `RISK_MAX_QUERIES` (default `8`) caps how many
+model-proposed queries execute after Gate 2 ranks them — the proposal loop
+itself never executes searches.
+
+`RISK_JUDGE` (`jev`, default, or `qwen`) selects the judgment engine that
+answers the four gate decisions — triage, query ranking, result scoring,
+severity. `qwen` swaps in the sweep model as the judge (same questions,
+answered in strict JSON): the ablation seam for comparing judgment engines
+under an identical pipeline.
+
+## License
+
+MIT

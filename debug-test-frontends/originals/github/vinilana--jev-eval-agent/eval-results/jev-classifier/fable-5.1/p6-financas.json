@@ -1,0 +1,277 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p6-financas",
+  "title": "Gastos por restaurante, checklist, PIX agendado e lembrete por local",
+  "tier": "complex",
+  "prompt": "Vê em quais restaurantes eu mais gastei esse mês e cria uma nota em formato checklist com os 3 lugares onde mais gastei. Agenda uma transferência de R$ 300 pra minha mãe pro dia 25 e me lembra de olhar a fatura do cartão quando eu chegar em casa.",
+  "sessionId": "wrun_01M2PVVCN4FNHJRGC82V0PGMJV",
+  "at": "2026-09-17T05:01:46.937Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 5,
+  "toolCalls": 4,
+  "failedToolCalls": 0,
+  "jevCalls": 5,
+  "idealToolCalls": 4,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "notes": 1,
+    "transfer": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 4,
+  "requiredTotal": 4,
+  "completion": 1,
+  "durationMs": 21276,
+  "usage": {
+    "inputTokens": 6988,
+    "outputTokens": 605,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.10013
+  },
+  "reasoningChars": 0,
+  "reply": "Pronto! Este mês seus maiores gastos em restaurantes foram Sushi Leblon (R$ 240), Bar do Momo (R$ 198) e Outback (R$ 190) — criei a nota em checklist \"Restaurantes onde mais gastei — setembro/2026\" com esses três lugares. Agendei a transferência de R$ 300 para sua mãe no dia 25/09 e criei um lembrete para olhar a fatura do cartão quando você chegar em casa.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "expenses_summary_by_merchant",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 746,
+      "top": [
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 1
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "flights_status",
+          "p": 0
+        },
+        {
+          "name": "health_log_workout",
+          "p": 0
+        },
+        {
+          "name": "notes_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary_by_merchant",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurantes"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "notes_create_checklist",
+      "confidence": 0.94,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 671,
+      "top": [
+        {
+          "name": "notes_create_checklist",
+          "p": 0.96
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.02
+        },
+        {
+          "name": "transfer_money_scheduled",
+          "p": 0.01
+        },
+        {
+          "name": "notes_create",
+          "p": 0.01
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "notes_create_checklist",
+      "detail": {
+        "title": "Restaurantes onde mais gastei — setembro/2026",
+        "items": [
+          "Sushi Leblon — R$ 240,00",
+          "Bar do Momo — R$ 198,00",
+          "Outback — R$ 190,00"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "transfer_money_scheduled",
+      "confidence": 0.87,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 298,
+      "top": [
+        {
+          "name": "transfer_money_scheduled",
+          "p": 0.88
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.07
+        },
+        {
+          "name": "transfer_money",
+          "p": 0.04
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.01
+        },
+        {
+          "name": "contacts_search_by_company",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "transfer_money_scheduled",
+      "detail": {
+        "to": "mãe",
+        "amount_brl": 300,
+        "date": "2026-09-25"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "reminder_create_location",
+      "confidence": 0.83,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 260,
+      "top": [
+        {
+          "name": "reminder_create_location",
+          "p": 0.85
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.13
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.02
+        },
+        {
+          "name": "task_complete",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "reminder_create_location",
+      "detail": {
+        "text": "Olhar a fatura do cartão",
+        "place": "home",
+        "trigger": "arrive"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.95,
+      "gated": false,
+      "latencyMs": 261,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "shopping_list_add",
+          "p": 0
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        },
+        {
+          "name": "order_place",
+          "p": 0
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 4,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Este mês seus maiores gastos em restaurantes foram Sushi Leblon (R$ 240), Bar do Momo (R$ 198) e Outback (R$ 190) — criei a nota em checklist \"Restaurantes onde mais gastei — setembro/2026\" com esses três lugares. Agendei a transferência de R$ 300 para sua mãe no dia 25/09 e criei um lembrete para olhar a fatura do cartão quando você chegar em casa."
+    }
+  ]
+}

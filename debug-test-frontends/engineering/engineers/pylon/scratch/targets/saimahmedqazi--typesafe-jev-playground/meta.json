@@ -1,0 +1,15 @@
+{
+  "full_name": "saimahmedqazi/typesafe-jev-playground",
+  "html_url": "https://github.com/saimahmedqazi/typesafe-jev-playground",
+  "description": "A BYOK playground for practicing TypeSafe's Jev \u2014 the first System One model \u2014 with your own LLM or native Jev API access. Experiment with Noul, Score, Choice, custom state, and structured decisions.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T07:38:55Z",
+  "size": 291,
+  "stargazers_count": 1,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "https://typesafe-jev-playground.vercel.app",
+  "language": "TypeScript",
+  "commit": "b6e6e316d0967a49bce07f61aa5c4292e785605f"
+}

@@ -1,0 +1,99 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PRNPVXNWSMEHZQNSRTE0E8",
+  "at": "2026-09-17T04:06:35.680Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 41852,
+  "usage": {
+    "inputTokens": 41295,
+    "outputTokens": 560,
+    "cacheReadTokens": 13824,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.010265129999999999
+  },
+  "reasoningChars": 605,
+  "reply": "\n\nSim, amanhã (17/09) às 10h você tem a reunião com Marina Costa sobre o roadmap Q4, via Google Meet.\n\nJá mandei o email de confirmação para marina.costa@example.com e criei o lembrete para 09:30 de amanhã, 30 minutos antes da reunião.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação: reunião roadmap Q4 amanhã 10h",
+        "body": "Oi, Marina!\n\nPassando para confirmar a nossa reunião de amanhã, quinta (17/09), às 10h, sobre o roadmap do Q4. Vai ser via Google Meet, tudo certo?\n\nAbraço,\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa (roadmap Q4) começa às 10h no Google Meet",
+        "date": "2026-09-17",
+        "time": "09:30"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "\n\nSim, amanhã (17/09) às 10h você tem a reunião com Marina Costa sobre o roadmap Q4, via Google Meet.\n\nJá mandei o email de confirmação para marina.costa@example.com e criei o lembrete para 09:30 de amanhã, 30 minutos antes da reunião."
+    }
+  ]
+}

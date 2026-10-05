@@ -1,0 +1,16 @@
+# Session transcripts are generated verbatim records — never reformat them.
+# They're tracked on purpose (see CLAUDE.md), so .gitignore doesn't cover them.
+.claude-logs/
+
+# pnpm writes its lockfile in its own style; reformatting it after every install
+# is churn, not a check.
+pnpm-lock.yaml
+
+# Kept verbatim: 8x's brief (archive), 8x's logging guide, and ROADMAP.md, which
+# only the user edits (ROADMAP Rule-0).
+docs/requirements.md
+docs/agent-session-logs-setup.md
+ROADMAP.md
+
+# Subagent-driven-development scratch workspace (git-ignored by its own .gitignore)
+.superpowers/

@@ -1,0 +1,15 @@
+{
+  "full_name": "ndolinschi/harnessjudge",
+  "html_url": "https://github.com/ndolinschi/harnessjudge",
+  "description": "Judge agent steps \u2014 ok / retry / escalate / stop via TypeSafe Jev",
+  "default_branch": "main",
+  "pushed_at": "2026-09-17T09:22:10Z",
+  "size": 19,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "https://harnessjudge.vercel.app",
+  "language": "TypeScript",
+  "commit": "bdd635beee798b0cb19b3319422d18faf30bfff8"
+}

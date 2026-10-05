@@ -1,0 +1,229 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PQ0S7JRNYEHP79K262R3YT",
+  "at": "2026-09-17T03:37:13.262Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 13782,
+  "usage": {
+    "inputTokens": 4606,
+    "outputTokens": 562,
+    "cacheReadTokens": 1664,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0020561999999999998
+  },
+  "reasoningChars": 0,
+  "reply": "Pronto! Resolvi tudo:\n\n- **Voo reservado:** GOL G31410, saindo do Santos Dumont (SDU) às **11:30** e chegando em Congonhas (CGH) às **12:35** na sexta-feira (18/09) — o mais barato da manhã, a **R$ 298**. Código de reserva: **ABC123**.\n- **Agenda:** o voo já está no seu calendário.\n\nVocê chega às 12:35, então sobram cerca de 1h30 até a reunião das 14h — dá tempo tranquilo, considerando o deslocamento de Congonhas.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 282,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "transactions_list",
+          "p": 0
+        },
+        {
+          "name": "email_draft",
+          "p": 0
+        },
+        {
+          "name": "notes_create",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_book",
+      "confidence": 0.97,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 292,
+      "top": [
+        {
+          "name": "flights_book",
+          "p": 0.97
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_event",
+      "confidence": 0.95,
+      "done": 0.07,
+      "gated": false,
+      "latencyMs": 282,
+      "top": [
+        {
+          "name": "calendar_create_event",
+          "p": 0.96
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.03
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.01
+        },
+        {
+          "name": "web_search",
+          "p": 0
+        },
+        {
+          "name": "weather_forecast",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 — Rio (SDU) → São Paulo (CGH)",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU)"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.95,
+      "done": 0.88,
+      "gated": false,
+      "latencyMs": 526,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.96
+        },
+        {
+          "name": "calendar_update_event",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.01
+        },
+        {
+          "name": "notes_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Resolvi tudo:\n\n- **Voo reservado:** GOL G31410, saindo do Santos Dumont (SDU) às **11:30** e chegando em Congonhas (CGH) às **12:35** na sexta-feira (18/09) — o mais barato da manhã, a **R$ 298**. Código de reserva: **ABC123**.\n- **Agenda:** o voo já está no seu calendário.\n\nVocê chega às 12:35, então sobram cerca de 1h30 até a reunião das 14h — dá tempo tranquilo, considerando o deslocame"
+    }
+  ]
+}

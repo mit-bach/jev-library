@@ -1,0 +1,116 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "opus-5",
+  "modelLabel": "Claude Opus 5",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PV19Y5HNGGYYDEMYMGYXS8",
+  "at": "2026-09-17T04:47:25.478Z",
+  "modelId": "openrouter/anthropic/claude-opus-5",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 4,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 2
+  },
+  "idealPath": false,
+  "efficiency": 0.75,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 14557,
+  "usage": {
+    "inputTokens": 71375,
+    "outputTokens": 775,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.37625
+  },
+  "reasoningChars": 284,
+  "reply": "Reservei o voo mais barato da manhã: GOL G31410, sexta 18/09, SDU 11:30 → CGH 12:35, R$ 298 (código ABC123). Ele chega com folga para a reunião com cliente às 14h na Av. Paulista, 1000. O voo já está na sua agenda de Trabalho.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "05:00",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 SDU→CGH (cód. ABC123)",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU)",
+        "calendar": "Trabalho"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reservei o voo mais barato da manhã: GOL G31410, sexta 18/09, SDU 11:30 → CGH 12:35, R$ 298 (código ABC123). Ele chega com folga para a reunião com cliente às 14h na Av. Paulista, 1000. O voo já está na sua agenda de Trabalho."
+    }
+  ]
+}

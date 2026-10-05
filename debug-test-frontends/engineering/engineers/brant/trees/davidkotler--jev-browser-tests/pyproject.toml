@@ -1,0 +1,17 @@
+[project]
+name = "jev-browser-tests"
+version = "0.1.0"
+description = "Prompt-driven browser tests: Jev executes, deterministic code verifies."
+requires-python = ">=3.12"
+dependencies = [
+    "jev-ultrafast @ git+https://github.com/browser-use/jev-ultrafast",
+    "python-dotenv",
+    "pytest",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

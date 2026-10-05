@@ -1,0 +1,138 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p6-financas",
+  "title": "Gastos por restaurante, checklist, PIX agendado e lembrete por local",
+  "tier": "complex",
+  "prompt": "Vê em quais restaurantes eu mais gastei esse mês e cria uma nota em formato checklist com os 3 lugares onde mais gastei. Agenda uma transferência de R$ 300 pra minha mãe pro dia 25 e me lembra de olhar a fatura do cartão quando eu chegar em casa.",
+  "sessionId": "wrun_01M2PVJ4YQ3S4JC9GXB9ZP4T4T",
+  "at": "2026-09-17T04:56:45.518Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 6,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 4,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "contacts": 1,
+    "notes": 1,
+    "transfer": 1,
+    "reminder": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8,
+  "requiredCovered": 4,
+  "requiredTotal": 4,
+  "completion": 1,
+  "durationMs": 20435,
+  "usage": {
+    "inputTokens": 31513,
+    "outputTokens": 309,
+    "cacheReadTokens": 30854,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.33058
+  },
+  "reasoningChars": 0,
+  "reply": "Criei uma nota em checklist com os 3 restaurantes onde você mais gastou neste mês: **Sushi Leblon (R$ 240,00), Bar do Momo (R$ 198,00) e Outback (R$ 190,00)**.\n\nAgendei a transferência de **R$ 300 para sua mãe, Regina, em 25/09/2026**. Também configurei um lembrete para olhar a fatura do cartão quando você chegar em casa.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary_by_merchant",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurantes"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "mãe"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "notes_create_checklist",
+      "detail": {
+        "title": "Restaurantes onde mais gastei — setembro de 2026",
+        "items": [
+          "Sushi Leblon — R$ 240,00",
+          "Bar do Momo — R$ 198,00",
+          "Outback — R$ 190,00"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "transfer_money_scheduled",
+      "detail": {
+        "to": "Mãe (Regina)",
+        "amount_brl": 300,
+        "date": "2026-09-25",
+        "description": "Transferência para minha mãe"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "reminder_create_location",
+      "detail": {
+        "text": "Olhar a fatura do cartão",
+        "place": "home",
+        "trigger": "arrive"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 5,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Criei uma nota em checklist com os 3 restaurantes onde você mais gastou neste mês: **Sushi Leblon (R$ 240,00), Bar do Momo (R$ 198,00) e Outback (R$ 190,00)**.\n\nAgendei a transferência de **R$ 300 para sua mãe, Regina, em 25/09/2026**. Também configurei um lembrete para olhar a fatura do cartão quando você chegar em casa."
+    }
+  ]
+}

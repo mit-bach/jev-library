@@ -1,0 +1,12 @@
+README.en.md
+README.md
+backend/main.py
+backend/media/红尘客栈.mp3
+frontend/index.html
+frontend/package-lock.json
+frontend/package.json
+frontend/src/main.jsx
+frontend/src/styles.css
+frontend/vite.config.js
+image.png
+pyproject.toml

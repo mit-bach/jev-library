@@ -1,0 +1,110 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PPPFPQS5RXK9ZKYEVQBXFJ",
+  "at": "2026-09-17T03:31:29.995Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 4,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "contacts": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.75,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 7738,
+  "usage": {
+    "inputTokens": 27552,
+    "outputTokens": 701,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.02329275
+  },
+  "reasoningChars": 229,
+  "reply": "Sim, você tem a reunião **\"Reunião com Marina Costa - roadmap Q4\"** amanhã (17/09), das 10:00 às 11:00.\n\nEnviei um e-mail para Marina confirmando o horário das 10:00 e criei um lembrete para você amanhã às 09:30 (30 minutos antes do encontro).",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Marina"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação de reunião - Roadmap Q4 (10h)",
+        "body": "Olá Marina, tudo bem?\n\nPassando para confirmar a nossa reunião de amanhã (17/09) às 10:00 sobre o roadmap de Q4.\n\nAté lá!\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa - roadmap Q4 em 30 minutos",
+        "date": "2026-09-17",
+        "time": "09:30",
+        "repeat": "none"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim, você tem a reunião **\"Reunião com Marina Costa - roadmap Q4\"** amanhã (17/09), das 10:00 às 11:00.\n\nEnviei um e-mail para Marina confirmando o horário das 10:00 e criei um lembrete para você amanhã às 09:30 (30 minutos antes do encontro)."
+    }
+  ]
+}

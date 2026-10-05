@@ -1,0 +1,225 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PPY5AFPQPY3X5F3MYAYP2V",
+  "at": "2026-09-17T03:35:39.403Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 5853,
+  "usage": {
+    "inputTokens": 2943,
+    "outputTokens": 420,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.00378225
+  },
+  "reasoningChars": 0,
+  "reply": "Você gastou **R$ 942,50** com restaurantes em setembro, ultrapassando o limite de R$ 800,00. Como solicitado, criei a tarefa **\"Revisar o orçamento\"** na sua lista e enviei uma mensagem com o resumo dos gastos para você.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "expenses_summary",
+      "confidence": 0.95,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 268,
+      "top": [
+        {
+          "name": "expenses_summary",
+          "p": 0.96
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0.04
+        },
+        {
+          "name": "home_set_alarm_system",
+          "p": 0
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "calendar_delete_event",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "task_create",
+      "confidence": 0.99,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 275,
+      "top": [
+        {
+          "name": "task_create",
+          "p": 1
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "transactions_list",
+          "p": 0
+        },
+        {
+          "name": "email_draft",
+          "p": 0
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar o orçamento",
+        "priority": "medium",
+        "notes": "Gastos com restaurante em setembro/2026 atingiram R$ 942,50, ultrapassando o teto de R$ 800,00."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.98,
+      "done": 0.1,
+      "gated": false,
+      "latencyMs": 295,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.98
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "budget_set",
+          "p": 0
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Resumo de Gastos (Setembro/2026): Você gastou R$ 942,50 com restaurante este mês, ultrapassando o limite de R$ 800,00. Já criei uma tarefa para você revisar o orçamento."
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.95,
+      "gated": false,
+      "latencyMs": 705,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "ride_request",
+          "p": 0
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0
+        },
+        {
+          "name": "reminder_create",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50** com restaurantes em setembro, ultrapassando o limite de R$ 800,00. Como solicitado, criei a tarefa **\"Revisar o orçamento\"** na sua lista e enviei uma mensagem com o resumo dos gastos para você."
+    }
+  ]
+}

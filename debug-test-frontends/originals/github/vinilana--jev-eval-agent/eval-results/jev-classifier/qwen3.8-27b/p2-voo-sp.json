@@ -1,0 +1,228 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PS3F09QNRZE6V7DGKSPDSJ",
+  "at": "2026-09-17T04:13:35.164Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 10674,
+  "usage": {
+    "inputTokens": 4608,
+    "outputTokens": 368,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.001924512
+  },
+  "reasoningChars": 0,
+  "reply": "Encontrei, reservei e agendei seu voo. Escolhi o mais barato saindo de manhã: **GOL G31410, sexta 18/09, SDU (Rio) → CGH (São Paulo), 11:30–12:35, por R$ 298** — código de reserva **ABC123**. Também coloquei o voo na sua agenda no mesmo dia/horário, então você estará em São Paulo com folga antes da reunião das 14h.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 300,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "flights_hold",
+          "p": 0
+        },
+        {
+          "name": "flights_status",
+          "p": 0
+        },
+        {
+          "name": "notes_create_checklist",
+          "p": 0
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_book",
+      "confidence": 0.98,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 291,
+      "top": [
+        {
+          "name": "flights_book",
+          "p": 0.98
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "home_lights_control",
+          "p": 0
+        },
+        {
+          "name": "message_send",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_event",
+      "confidence": 0.93,
+      "done": 0.07,
+      "gated": false,
+      "latencyMs": 272,
+      "top": [
+        {
+          "name": "calendar_create_event",
+          "p": 0.93
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.01
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 – Rio (SDU) → São Paulo (CGH)",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU)"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.71,
+      "done": 0.76,
+      "gated": false,
+      "latencyMs": 381,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.72
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.16
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.06
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_update_event",
+          "p": 0.02
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Encontrei, reservei e agendei seu voo. Escolhi o mais barato saindo de manhã: **GOL G31410, sexta 18/09, SDU (Rio) → CGH (São Paulo), 11:30–12:35, por R$ 298** — código de reserva **ABC123**. Também coloquei o voo na sua agenda no mesmo dia/horário, então você estará em São Paulo com folga antes da reunião das 14h."
+    }
+  ]
+}

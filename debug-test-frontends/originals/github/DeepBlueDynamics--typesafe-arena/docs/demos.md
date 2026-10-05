@@ -1,0 +1,12 @@
+<!-- source: https://docs.typesafe.ai/demos -->
+<!-- crawled: 2026-09-17 via grub-crawler -->
+
+# Demos
+
+Interactive examples showing what’s possible with TypeSafe.
+
+## Available demos
+
+- [Smart Home Assistant Demo](demos/smart-home.md)- Evaluate user smart home requests with speculative questions and LLM fallback.
+
+We’re always keen to learn how people are making use of our primitives. If you’ve found a killer use case you think should be mentioned here, feel free to drop us a note!

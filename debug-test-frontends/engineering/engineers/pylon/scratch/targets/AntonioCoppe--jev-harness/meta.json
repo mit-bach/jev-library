@@ -1,0 +1,15 @@
+{
+  "full_name": "AntonioCoppe/jev-harness",
+  "html_url": "https://github.com/AntonioCoppe/jev-harness",
+  "description": "Decision harness for TypeSafe Jev \u2014 confidence gates, shadow mode, recipes, and evals. Claude CLI 48.9s \u2192 Jev 1.3s on the same row-filter job.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-25T16:31:24Z",
+  "size": 8050,
+  "stargazers_count": 15,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://github.com/AntonioCoppe/jev-harness",
+  "language": "TypeScript",
+  "commit": "1a3dd4ae86de72f0df7d6e70b25feffc41ca3255"
+}

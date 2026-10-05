@@ -1,0 +1,15 @@
+{
+  "full_name": "PromtEngineer/jev-harness",
+  "html_url": "https://github.com/PromtEngineer/jev-harness",
+  "description": "A Pi agent harness built around TypeSafe's Jev (System One model): router, context picker, gate, verifier. Tested on Neon Postgres branches.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-24T22:00:50Z",
+  "size": 1498,
+  "stargazers_count": 7,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "9bd4f670a2866498aa570e4ce4654997b3dce190"
+}

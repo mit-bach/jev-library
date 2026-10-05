@@ -1,0 +1,15 @@
+{
+  "full_name": "souvikr/jev-test",
+  "html_url": "https://github.com/souvikr/jev-test",
+  "description": "Test harness + benchmark for TypeSafe's Jev decision model (noul/choice/score) via OpenRouter's Decisions API",
+  "default_branch": "main",
+  "pushed_at": "2026-09-19T09:45:01Z",
+  "size": 28,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "5721c26fee6bc26f9bdf6c0f75616bcde453310f"
+}

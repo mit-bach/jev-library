@@ -1,0 +1,228 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PPXZD1208JREMZ9EJC04F5",
+  "at": "2026-09-17T03:35:33.380Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 5884,
+  "usage": {
+    "inputTokens": 4585,
+    "outputTokens": 659,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.00591
+  },
+  "reasoningChars": 0,
+  "reply": "Reservei o voo mais barato para sexta-feira (18/09): voo GOL G3 1410, saindo do Santos Dumont (SDU) às 11:30 e chegando em Congonhas (CGH) às 12:35, no valor de R$ 298 (localizador: ABC123). O compromisso já foi adicionado à sua agenda das 11:30 às 12:35, garantindo que você chegue a tempo para a sua reunião das 14h.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 320,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "notes_get",
+          "p": 0
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0
+        },
+        {
+          "name": "health_log_workout",
+          "p": 0
+        },
+        {
+          "name": "flights_book",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_book",
+      "confidence": 0.97,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 286,
+      "top": [
+        {
+          "name": "flights_book",
+          "p": 0.98
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "budget_set",
+          "p": 0
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_event",
+      "confidence": 0.91,
+      "done": 0.07,
+      "gated": false,
+      "latencyMs": 274,
+      "top": [
+        {
+          "name": "calendar_create_event",
+          "p": 0.92
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.03
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo Rio - São Paulo (G3 1410)",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "SDU - CGH"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.65,
+      "done": 0.72,
+      "gated": false,
+      "latencyMs": 266,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.67
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.16
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.08
+        },
+        {
+          "name": "calendar_update_event",
+          "p": 0.06
+        },
+        {
+          "name": "calendar_delete_event",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reservei o voo mais barato para sexta-feira (18/09): voo GOL G3 1410, saindo do Santos Dumont (SDU) às 11:30 e chegando em Congonhas (CGH) às 12:35, no valor de R$ 298 (localizador: ABC123). O compromisso já foi adicionado à sua agenda das 11:30 às 12:35, garantindo que você chegue a tempo para a sua reunião das 14h."
+    }
+  ]
+}

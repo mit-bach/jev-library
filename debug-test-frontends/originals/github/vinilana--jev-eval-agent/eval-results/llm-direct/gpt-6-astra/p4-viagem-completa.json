@@ -1,0 +1,186 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PVGEP8FADKETZT2T9S3RC0",
+  "at": "2026-09-17T04:55:59.188Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 9,
+  "toolCalls": 8,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 6,
+  "extraToolCalls": 2,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "contacts": 1,
+    "calendar": 2,
+    "message": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.75,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 31898,
+  "usage": {
+    "inputTokens": 51562,
+    "outputTokens": 584,
+    "cacheReadTokens": 50160,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.54482
+  },
+  "reasoningChars": 0,
+  "reply": "Segurei sem pagar o voo mais barato da manhã de sexta (18/09): GOL SDU–Congonhas, **11h30–12h35, por R$ 298**; a reserva expira em **18/09 às 2h**.\nReservei o **Ibis Paulista**, a 1,1 km da reunião, por **R$ 260**, de 18 a 19/09.\nBloqueei sua agenda de trabalho das **8h às 18h** como “Viagem SP”.\nAvisei a Marina pelo WhatsApp que a viagem está confirmada, esclarecendo que o voo ainda está sem pagamento.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 0,
+        "earliest_departure": "00:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Marina"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "calendar_list_calendars",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 5,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_2",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 6,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00",
+        "calendar": "Trabalho"
+      },
+      "ok": true
+    },
+    {
+      "step": 7,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 7,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "+55 11 98888-1111",
+        "text": "Marina, a viagem a São Paulo de sexta (18/09) está confirmada para a reunião das 14h na Av. Paulista, 1000. Hotel reservado e agenda bloqueada das 8h às 18h. O voo GOL SDU–CGH, das 11h30 às 12h35, está segurado, ainda sem pagamento e sujeito à confirmação da compra.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 8,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 8,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Segurei sem pagar o voo mais barato da manhã de sexta (18/09): GOL SDU–Congonhas, **11h30–12h35, por R$ 298**; a reserva expira em **18/09 às 2h**.\nReservei o **Ibis Paulista**, a 1,1 km da reunião, por **R$ 260**, de 18 a 19/09.\nBloqueei sua agenda de trabalho das **8h às 18h** como “Viagem SP”.\nAvisei a Marina pelo WhatsApp que a viagem está confirmada, esclarecendo que o voo ainda está sem paga"
+    }
+  ]
+}

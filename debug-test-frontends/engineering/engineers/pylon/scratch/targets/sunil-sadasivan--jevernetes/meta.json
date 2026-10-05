@@ -1,0 +1,15 @@
+{
+  "full_name": "sunil-sadasivan/jevernetes",
+  "html_url": "https://github.com/sunil-sadasivan/jevernetes",
+  "description": "Live Kubernetes log analysis, contextual investigation, and agent handoff powered by Jev.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-28T04:47:59Z",
+  "size": 6916,
+  "stargazers_count": 14,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "3a08dcb1c3611c0014b000074006701ad767bfa2"
+}

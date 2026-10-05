@@ -1,0 +1,338 @@
+Build with Jev - Jev AI
+Jev AIPlaygroundDemosAPI & AgentPricingShowcaseSwitch languageToggle themeGet Started
+Developer documentation
+Build with Jev
+Start with one real decision: prepare state, define typed questions, and hand the probability-backed result to your code.
+Open the playground
+On this page
+Meet Jev
+Quickstart
+Prepare state
+Define questions
+Read the response
+API reference
+Agent usage
+Errors and retries
+Meet Jev
+A System One model for software
+Traditional LLMs mainly generate text for people to read. Jev focuses on decisions software can consume directly: send one state and typed questions, then get structured results your code can branch on, sort, and route.
+Typed results
+Parallel decisions
+Probability and confidence
+Quickstart
+Validate one decision in the playground
+The Playground is the fastest way to understand Jev’s inputs and outputs. Once the question is useful, create an API key and connect it to your product.
+1
+Open the playground
+Sign in, open the Jev AI playground, and enter a real piece of business state.
+2
+Prepare state
+Use text, a JSON object, or an array of text to provide the context the decision needs.
+3
+Add questions
+Choose choice, score, or noul. You can mix all three types in one request.
+4
+Connect your code
+Create an API key in your workspace and call the production endpoint with an SDK or REST.
+Input
+Give state the context the decision needs
+State is the content every question reads. Use a string for a simple case; use a JSON object when the decision needs a ticket, order, and policy together.
+text
+Natural language, a ticket, or a message
+object
+Structured records and nested fields
+array
+Context made of multiple text items
+Current input boundary: Jev accepts text, JSON objects, and arrays of text. Image, audio, and video inputs are not supported yet.
+Question types
+Compose decisions from small questions
+Each question should ask one specific, well-scoped thing. Multiple questions are evaluated in parallel against the same state, so you do not need to chain calls just to split a decision.
+TypeUse it forReturnsChoiceClassify or route from optionschoice · probabilities · confidenceScoreRate state on an ordered rubricscore · legend · probabilities · confidenceNoulJudge whether a statement is truenoul (yes probability)
+Shared fields and structure
+A Question is one of three types. All types include type and instructions, then add criteria according to the type. Instructions can be a string, object, or array; when a question needs extra context, put the question and data in a structured object and refer to the data by field name.
+type
+Required: noul, choice, or score.
+instructions
+Required: a string, object, or array describing the decision.
+criteria
+Type-specific: optional object for Noul, required map for Choice, required array for Score.
+{
+ "type": "noul",
+ "instructions": "Does this message convey urgency?",
+ "criteria": {
+ "true": "Explicitly needs immediate attention",
+ "false": "No urgency expressed"
+ }
+}
+Structured instructions are useful for longer questions or questions that reference extra data: put the question in one field, put context in the others, and refer to those fields by name.
+"instructions": {
+ "potential_duplicate": {
+ "name": "John Smith",
+ "location": "Oakland, California",
+ "last_employer": "Google"
+ },
+ "question": "Is the resume for the same person as `potential_duplicate`?"
+}
+Choice
+Use Choice to select one answer from predefined options. type must be choice, instructions describes the decision, and criteria must map options to descriptions; a Choice can have up to 255 options, with each description as a string, object, array, or null.
+{
+ "state": "Help! My payouts have been failing for 3 days.",
+ "model": "jev-latest",
+ "questions": {
+ "department": {
+ "type": "choice",
+ "instructions": "Which team should handle this?",
+ "criteria": {
+ "billing": "Payments, invoicing, refunds",
+ "technical": "Bugs, outages, integrations",
+ "sales": "Pricing, upgrades, new accounts"
+ }
+ }
+ }
+}
+Score
+Use Score for descriptive levels on a spectrum, such as severity or satisfaction. type must be score, instructions describes what to rate, and criteria is an ordered low-to-high array whose items can be strings, objects, or arrays; it needs at least 2 and at most 10 levels. The returned score is probability-weighted and can fall between levels.
+{
+ "state": "Help! My payouts have been failing for 3 days.",
+ "model": "jev-latest",
+ "questions": {
+ "frustration": {
+ "type": "score",
+ "instructions": "How frustrated is the customer?",
+ "criteria": ["Calm", "Frustrated", "Very angry"]
+ }
+ }
+}
+Noul
+Use Noul for a yes / no judgment. type must be noul and instructions is the question to evaluate; criteria is optional and uses true and false to describe yes and no, with each value allowed to be a string, object, or array. Noul is the probability that the answer is yes, not a second confidence field.
+{
+ "state": "Help! My payouts have been failing for 3 days.",
+ "model": "jev-latest",
+ "questions": {
+ "is_urgent": {
+ "type": "noul",
+ "instructions": "Does this convey urgency?",
+ "criteria": {
+ "true": "Explicitly time-sensitive",
+ "false": "No urgency expressed"
+ }
+ }
+ }
+}
+Output
+What the response gives your code
+result.answers uses the same question IDs you sent. Typed output guarantees the field shape, but your application should still set thresholds by risk and keep a human-review path where appropriate.
+answers: Choice returns the selected choice, probabilities, and confidence; Score returns score, legend, per-level probabilities, and confidence; Noul returns noul.
+usage: Includes input_tokens and output_tokens, and may include cost in USD.
+elapsedMs: Time from sending the request to receiving the result, including validation—not pure model inference time.
+Probability and confidence are signals for automation, not a guarantee of business accuracy. Use higher thresholds or human review for high-risk actions.
+Response fieldsmodelThe model that performed the evaluation; this project returns answers and usage inside result.answersOne Answer per question, keyed by the same question IDs from the request.usageContains input_tokens and output_tokens.elapsedAdditional request time returned by this project, in milliseconds.
+Response example
+{
+ "model": "jev-1.13.0",
+ "answers": {
+ "is_urgent": {
+ "type": "noul",
+ "noul": 0.95
+ }
+ },
+ "usage": { "input_tokens": 296, "output_tokens": 20 }
+}
+Answer types
+Every answer carries a type matching its question. Choice and Score answers also carry confidence from 0 to 1, derived from the answer probability distribution.
+Choice
+Returns the highest-probability choice, probabilities for every option, and confidence derived from the probability distribution.
+type
+Required; value is choice.
+choice
+Required string; the highest-probability option.
+probabilities
+Required map<string, number>; probabilities for all options sum to 1.
+confidence
+Required number; certainty derived from the probability distribution.
+{
+ "model": "jev-1.13.0",
+ "answers": {
+ "department": {
+ "type": "choice",
+ "choice": "billing",
+ "probabilities": { "billing": 0.88, "technical": 0.12, "sales": 0.0 },
+ "confidence": 0.81
+ }
+ },
+ "usage": { "input_tokens": 318, "output_tokens": 34 }
+}
+Score
+Returns a probability-weighted score, a legend for each level, per-level probabilities, and confidence. The score can land between levels.
+type
+Required; value is score.
+score
+Required number; the probability-weighted score across levels.
+legend
+Required map<string, string>; maps each level number back to its description.
+probabilities
+Required map<string, number>; each level and its probability sum to 1.
+confidence
+Required number; certainty derived from the probability distribution.
+{
+ "model": "jev-1.13.0",
+ "answers": {
+ "frustration": {
+ "type": "score",
+ "score": 1.05,
+ "legend": { "0": "Calm", "1": "Frustrated", "2": "Very angry" },
+ "probabilities": { "0": 0.0, "1": 0.95, "2": 0.05 },
+ "confidence": 0.92
+ }
+ },
+ "usage": { "input_tokens": 304, "output_tokens": 18 }
+}
+Noul
+Returns noul on a 0 to 1 scale, representing the probability that the answer is yes.
+type
+Required; value is noul.
+noul
+Required number; 0 means no and 1 means yes.
+{
+ "model": "jev-1.13.0",
+ "answers": {
+ "is_urgent": {
+ "type": "noul",
+ "noul": 0.95
+ }
+ },
+ "usage": { "input_tokens": 307, "output_tokens": 20 }
+}
+Usage fieldsinput_tokens
+integer · Number of input tokens used by the request.
+output_tokens
+integer · Number of output tokens generated by the request.
+API reference
+Evaluate state and return structured answers
+Full HTTP API reference: evaluate a state against typed questions and receive one structured answer for each question.
+Evaluation endpointPOST https://thejevai.com/v1/systemone
+Send an Authorization Bearer API key and an application/json content type with every request.
+Authorization: Bearer <API_KEY>
+Content-Type: application/json
+Request body
+Every request needs the following three top-level fields. Questions is a map whose keys you choose; those keys are reused in the response.
+statestring | object | array · required: the text or structured data to evaluate.modelstring · required: the model that handles the request. Use TypeSafe's flagship model, jev-latest.questionsmap<string, Question> · required: the questions to evaluate in parallel.
+You choose each key in questions; the matching Answer is returned under the same ID. The key is not sent to the underlying model and is not used in inference.
+Request example
+curl -X POST https://thejevai.com/v1/systemone \
+ -H "Authorization: Bearer <API_KEY>" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "model": "jev-latest",
+ "state": "Help! My payouts have been failing for 3 days.",
+ "questions": {
+ "is_urgent": {
+ "type": "noul",
+ "instructions": "Does this convey urgency?"
+ }
+ }
+ }'
+Request body example
+{
+ "state": "Help! My payouts have been failing for 3 days.",
+ "model": "jev-latest",
+ "questions": {
+ "is_urgent": {
+ "type": "noul",
+ "instructions": "Does this convey urgency?"
+ }
+ }
+}
+Keep your API key in a server-side environment variable. Never put it in browser code or commit it to your repository. This page includes the request fields, question types, response shape, error codes, and retry behavior.
+Create an API key
+Agent usage
+Use Jev inside a coding agent
+The Jev Agent Skill teaches Codex, Claude Code, Cursor, and other compatible agents how to call this API for bounded decisions while keeping execution and permissions in your application.
+Install and configure
+Install the Skill, create a Jev AI API key, and choose the language for onboarding and examples.
+Configure once
+Use environment variables so the API key stays out of source code, logs, and Agent transcripts.
+Ask a bounded question
+Tell the Agent what decision is needed; it should choose Choice, Score, or Noul and send the smallest useful state.
+Install and configure
+npx skills add jev-ai/jev-agent-skill
+export JEV_API_KEY="sk_your_key_here"
+export JEV_LANGUAGE="en-US"
+Create a key at https://thejevai.com/settings/apikeys. English (en-US) is the default; set JEV_LANGUAGE=zh-CN for Simplified Chinese guidance. Never paste a real key into source code or a public prompt.
+Five useful starting points
+Copy one of these prompts after installation. They show how an Agent can use Jev for decisions without giving Jev permission to execute the final action.
+1Route a support ticket
+Use Choice to select one approved team, then let application code route the ticket and send uncertain cases to review.
+Use the Jev Agent skill. Classify this support ticket into exactly one team: billing, technical, account, or sales. Return the selected team, probabilities, and confidence. Do not contact the customer or modify any ticket yet.
+Ticket: I was charged twice for my annual plan and need a refund.
+2Guard a tool call
+Use Noul to judge whether a proposed action needs approval, while deterministic permissions and policy remain authoritative.
+Use the Jev Agent skill before running this proposed tool call. Judge whether it is safe without human approval. Consider side effects, reversibility, scope, and policy. If risky or uncertain, do not execute it.
+Tool: delete_customer_records
+Arguments: {where: last_login < 2023-01-01}
+Policy: destructive database operations require a backup and human approval.
+3Route to an approved model
+Use Choice for the allowlisted candidates and a separate Noul question when no candidate is suitable.
+Use the Jev Agent skill to choose one approved model for this task. Optimize for quality first, then context capacity and cost. Return the selected model, probabilities, and whether to escalate. Do not call any model yet.
+Task: review a 100k-token customer dispute.
+Candidates: fast-model (32k, low cost), reasoning-model (200k, high cost), fallback-model (128k, medium cost).
+4Verify research evidence
+Use Noul to assess whether evidence is sufficient before an Agent publishes or cites a claim.
+Use the Jev Agent skill to check whether the evidence is sufficient to publish this claim. Consider source quality, freshness, direct support, and contradictions. Return a yes probability and the missing verification work. Do not publish yet.
+Claim: Our API reduced median processing time by 40%.
+Evidence: an internal benchmark from last month with 120 cases; no production traffic data; an older report showing a 12% improvement.
+5Review task completion
+Use Choice or Score to decide whether the work is complete, needs verification, or is incomplete before reporting success.
+Use the Jev Agent skill to review whether this task is complete. Return one of complete, verify_more, or incomplete. Consider the objective, files changed, tests run, known gaps, and target-environment verification.
+Objective: add API-key authentication to the production endpoint.
+Completed: added the Authorization check and API-key lookup.
+Verification: unit tests pass; production request and rate-limit behavior were not tested.
+The Skill teaches an Agent when and how to ask Jev for a judgment. It does not create a tool, grant authority, intercept shell calls, or replace your permissions, deterministic rules, or human approval boundaries.
+Error handling
+Errors and retries
+The endpoint uses standard HTTP status codes with a JSON response describing the error.
+StatusMeaning401Unauthorized: the API key is missing or invalid. Check the Authorization header.422Unprocessable Entity: the request body failed validation, such as a missing field or malformed question; the response identifies the offending field.429Too Many Requests: you exceeded the rate limit. Wait and retry.529Overloaded: the service is temporarily overloaded. Wait and retry.
+When you receive a 429 or 529, retry with exponential backoff instead of sending the same request immediately. SDKs with their default retry policy can handle these retries automatically.
+What to do next
+Start with one low-risk, well-scoped decision. Then connect it to routing, queues, guardrails, or an agent workflow as you learn where the signal is useful.
+View plans and usageContact support
+Jev AI
+Jev AI Model Online, Free, No Waitlist
+Product
+Jev AI playground
+Workflows
+Laya AI Playground
+API
+Pricing
+Documentation
+Blog
+GitHub
+Demos
+All demos
+Flight search
+Wiki link race
+Support triage
+Grocery cart
+Invoice review
+Security alert
+Guide
+Jev model
+Laya Model
+Jev-Omni
+Jev vs djev
+Jev vs Laya
+Jev vs OpenJev
+Jev vs OpenAI
+Jev vs Decisions API
+OpenAI Decisions API guide
+Jev vs SemIf
+Jev vs AnyJev
+Jev vs Kev
+Jev vs Julia 1
+Support
+About us
+Privacy Policy
+Terms of Service
+Refund Policy
+English© 2026 Jev AI. All rights reserved.
+Jev AI is an independently operated product and is not affiliated with, operated by, or endorsed by TypeSafe.

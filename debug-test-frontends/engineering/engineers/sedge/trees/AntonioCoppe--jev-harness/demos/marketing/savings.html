@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Savings gallery — jev-harness</title>
+<style>
+:root{--bg:#06080c;--border:#243044;--text:#f1f5fb;--muted:#8b9bb2;--accent:#5eead4;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:"Inter",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--sans);color:var(--text);background:
+ radial-gradient(1000px 500px at 0% 0%,#14304a 0%,transparent 50%),var(--bg)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 22px 48px}
+h1{margin:0 0 8px;font-size:28px;letter-spacing:-.03em}
+p{color:var(--muted);line-height:1.5;max-width:760px}
+.eqrule{margin:16px 0;padding:14px 16px;border-radius:14px;border:1px solid var(--border);background:#0b1018;
+ font:650 14px var(--mono);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.tile{display:block;text-decoration:none;color:inherit;background:linear-gradient(180deg,#131b27,#0c1119);
+ border:1px solid var(--border);border-radius:18px;padding:16px}
+.tile:hover{border-color:rgba(94,234,212,.4)}
+.k{font:700 10px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tile h2{margin:6px 0 10px;font-size:17px}
+.proof{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.proof div{background:#0a0e15;border:1px solid var(--border);border-radius:10px;padding:10px}
+.proof .t{border-color:rgba(96,165,250,.35)}
+.proof .c{border-color:rgba(52,211,153,.35)}
+.proof b{display:block;font-size:22px;letter-spacing:-.02em}
+.proof .t b{color:#93c5fd}
+.proof .c b{color:#34d399}
+.proof span{font:10px var(--mono);color:var(--muted)}
+.eqmini{font:12px var(--mono);color:var(--muted);margin-top:8px}
+.note{margin-top:18px;font:12px var(--mono);color:var(--muted)}
+</style></head><body>
+<div class="wrap">
+  <h1>Decision savings gallery</h1>
+  <p>Proof is <strong>OUR demo-run wall time + $</strong> on each card (measured in-page). Not someone else’s blog numbers. Repo link is footer only.</p>
+  <div class="eqrule">&lt;painful resource&gt; = &lt;$ savings&gt; + &lt;speed&gt; &nbsp;·&nbsp; hero = THIS DEMO RUN</div>
+  <div class="grid">
+  <a class="tile" href="cards/tool-retain.html">
+    <div class="k">compaction-adjacent · keep/delete · never rewrite</div>
+    <h2>Which tool results still matter?</h2>
+    <div class="proof">
+      <div class="t"><span>Wall · open card to measure</span><b>ms</b></div>
+      <div class="c"><span>Demo meter $</span><b>$</b></div>
+    </div>
+    <div class="eqmini">Context tokens = $ savings + TTFT/speed</div>
+  </a>
+  <a class="tile" href="cards/model-router.html">
+    <div class="k">confidence-front-door · model-router</div>
+    <h2>Stop paying frontier for FAQ</h2>
+    <div class="proof">
+      <div class="t"><span>Wall · open card to measure</span><b>ms</b></div>
+      <div class="c"><span>Demo meter $</span><b>$</b></div>
+    </div>
+    <div class="eqmini">Always-frontier $ = waste; smart route = $ + latency</div>
+  </a>
+  <a class="tile" href="cards/ship-gate.html">
+    <div class="k">verify-gate · llm-verifier</div>
+    <h2>Ship gate before the incident</h2>
+    <div class="proof">
+      <div class="t"><span>Wall · open card to measure</span><b>ms</b></div>
+      <div class="c"><span>Demo meter $</span><b>$</b></div>
+    </div>
+    <div class="eqmini">Ungated ship = incident $; gate = fewer bad deploys + faster catch</div>
+  </a>
+  <a class="tile" href="cards/alert-fp.html">
+    <div class="k">confidence-front-door · alert-gate</div>
+    <h2>Pager burn → sleep</h2>
+    <div class="proof">
+      <div class="t"><span>Wall · open card to measure</span><b>ms</b></div>
+      <div class="c"><span>Demo meter $</span><b>$</b></div>
+    </div>
+    <div class="eqmini">Alert flood = pager burn; gate = eng-hours $ + sleep</div>
+  </a>
+  <a class="tile" href="cards/row-filter.html">
+    <div class="k">row-judgment · NL predicate</div>
+    <h2>Semantic WHERE without embeddings</h2>
+    <div class="proof">
+      <div class="t"><span>Wall · open card to measure</span><b>ms</b></div>
+      <div class="c"><span>Demo meter $</span><b>$</b></div>
+    </div>
+    <div class="eqmini">LLM-per-row = $ + wallclock; Jev batch demo = ¢ + ms</div>
+  </a>
+  <a class="tile" href="cards/ui-action.html">
+    <div class="k">candidate-action-selection</div>
+    <h2>Click without a vision agent</h2>
+    <div class="proof">
+      <div class="t"><span>Wall · open card to measure</span><b>ms</b></div>
+      <div class="c"><span>Demo meter $</span><b>$</b></div>
+    </div>
+    <div class="eqmini">Vision-agent loop = $ + seconds; candidate Choice = ms + ¢</div>
+  </a>
+  </div>
+  <p class="note">Open each card — it runs a canned decision loop, paints performance.now() wall + calls×DEMO_RATE. Contrast “before” columns are illustrative classes, not third-party benchmarks.
+  Complementary Claude Code /compact specialist: fast-jev-compaction (we don’t claim their numbers).</p>
+</div>
+</body></html>

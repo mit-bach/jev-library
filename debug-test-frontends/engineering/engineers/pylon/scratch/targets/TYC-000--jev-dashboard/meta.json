@@ -1,0 +1,15 @@
+{
+  "full_name": "TYC-000/jev-dashboard",
+  "html_url": "https://github.com/TYC-000/jev-dashboard",
+  "description": "Jev API usage dashboard \u2014 built with Streamlit",
+  "default_branch": "main",
+  "pushed_at": "2026-09-25T07:42:32Z",
+  "size": 7,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "65014cc8a665698d10ccf7ba1941ee1b0d596b96"
+}

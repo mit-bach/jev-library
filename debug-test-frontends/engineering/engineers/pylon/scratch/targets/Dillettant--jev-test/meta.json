@@ -1,0 +1,15 @@
+{
+  "full_name": "Dillettant/jev-test",
+  "html_url": "https://github.com/Dillettant/jev-test",
+  "description": "Playground for TypeSafe's Jev System One model (Next.js)",
+  "default_branch": "main",
+  "pushed_at": "2026-09-19T17:59:46Z",
+  "size": 70,
+  "stargazers_count": 0,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "110c2051ec10ee48ac6aebeb63ee66db59c586b2"
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "Hangzhi/diffusion-jev-sglang",
+  "html_url": "https://github.com/Hangzhi/diffusion-jev-sglang",
+  "description": "A Jev-like decision engine powered by DiffusionGemma and SGLang. Jev with eyes. ",
+  "default_branch": "main",
+  "pushed_at": "2026-09-23T17:15:58Z",
+  "size": 15858,
+  "stargazers_count": 6,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://diffusion-jev-sglang.vercel.app/#doodle",
+  "language": "Python",
+  "commit": "a6dce88a2fc9c11b1df44d03033f1ebafd75c504"
+}

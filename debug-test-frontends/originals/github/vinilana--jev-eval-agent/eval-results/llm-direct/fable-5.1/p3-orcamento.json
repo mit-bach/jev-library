@@ -1,0 +1,97 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PV5CB96A9RJSGW8610GR3X",
+  "at": "2026-09-17T04:49:38.195Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 13752,
+  "usage": {
+    "inputTokens": 51764,
+    "outputTokens": 573,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.54629
+  },
+  "reasoningChars": 0,
+  "reply": "Pronto! Este mês você gastou **R$ 942,50** com restaurante, ultrapassando o orçamento de R$ 800 em R$ 142,50. Criei a tarefa \"Revisar orçamento de restaurante\" (prazo: sexta, 18/09) e te enviei o resumo por WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurante",
+        "due_date": "2026-09-18",
+        "priority": "medium",
+        "notes": "Gasto em setembro/2026: R$ 942,50 (orçamento: R$ 800 — excedido em R$ 142,50)."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Resumo de gastos — Restaurante (setembro/2026): R$ 942,50. Orçamento: R$ 800,00 → excedido em R$ 142,50 (118% do limite). Criei a tarefa \"Revisar orçamento de restaurante\" para você."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Este mês você gastou **R$ 942,50** com restaurante, ultrapassando o orçamento de R$ 800 em R$ 142,50. Criei a tarefa \"Revisar orçamento de restaurante\" (prazo: sexta, 18/09) e te enviei o resumo por WhatsApp."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "jkudish/jev-browser",
+  "html_url": "https://github.com/jkudish/jev-browser",
+  "description": "Browser use using Typesafe's Jev model",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T20:20:34Z",
+  "size": 10453,
+  "stargazers_count": 303,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "1f0726cc8bc4483b96439504b594a01596d8e347"
+}

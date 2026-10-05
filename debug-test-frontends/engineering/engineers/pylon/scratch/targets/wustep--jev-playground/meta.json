@@ -1,0 +1,15 @@
+{
+  "full_name": "wustep/jev-playground",
+  "html_url": "https://github.com/wustep/jev-playground",
+  "description": "Can a System One model steer music? Jev picks the plan (enums only); code renders sheet, audio and MIDI.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-26T06:44:56Z",
+  "size": 1051,
+  "stargazers_count": 2,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jev-playground.vercel.app",
+  "language": "TypeScript",
+  "commit": "4f38b140e91f68da1288fbc91f867bf4a29f478f"
+}

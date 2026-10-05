@@ -1,0 +1,230 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PVQW63KGZDRMRY61DJ58B1",
+  "at": "2026-09-17T04:59:54.253Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 23755,
+  "usage": {
+    "inputTokens": 6239,
+    "outputTokens": 684,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.09659
+  },
+  "reasoningChars": 245,
+  "reply": "Pronto! Reservei o voo mais barato da manhã de sexta (18/09): GOL G31404, saindo do Santos Dumont às 08:00 e chegando em Congonhas às 09:05, por R$ 312 — código da reserva ABC123. Você chega com folga para a reunião das 14h. O voo já está na sua agenda.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 306,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "task_complete",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "directions_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "06:00",
+        "latest_departure": "11:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_book",
+      "confidence": 0.97,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 740,
+      "top": [
+        {
+          "name": "flights_book",
+          "p": 0.97
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_2",
+        "passenger_name": "Vinícius",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_event",
+      "confidence": 0.92,
+      "done": 0.07,
+      "gated": false,
+      "latencyMs": 770,
+      "top": [
+        {
+          "name": "calendar_create_event",
+          "p": 0.93
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.03
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.03
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        },
+        {
+          "name": "shopping_list_add",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31404 Rio (SDU) → São Paulo (CGH) — reserva ABC123",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "09:05",
+        "location": "Aeroporto Santos Dumont (SDU)"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.61,
+      "done": 0.71,
+      "gated": false,
+      "latencyMs": 876,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.62
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.27
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.04
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.03
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.02
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Reservei o voo mais barato da manhã de sexta (18/09): GOL G31404, saindo do Santos Dumont às 08:00 e chegando em Congonhas às 09:05, por R$ 312 — código da reserva ABC123. Você chega com folga para a reunião das 14h. O voo já está na sua agenda."
+    }
+  ]
+}

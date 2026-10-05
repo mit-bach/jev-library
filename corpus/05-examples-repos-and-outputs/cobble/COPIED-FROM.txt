@@ -1,0 +1,1 @@
+Copied 2026-10-01 from engineering/engineers/cobble/ after STOP.md existed. EXAMPLES.md paths are relative to this directory. Placeholder key strings in READMEs are the repos' own examples, not live credentials.

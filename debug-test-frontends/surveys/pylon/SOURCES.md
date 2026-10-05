@@ -1,0 +1,352 @@
+# Sources
+
+Every catalog URL and every target URL opened for the 2026-10-02 wide-net survey. A commit is the default-branch HEAD returned by the GitHub API at fetch time, unless noted. List commits were resolved in a second call. No live Jev request was sent.
+
+## Catalog repositories
+
+READMEs were fetched with `gh api repos/<name>/readme`. Awesome-lists were not cloned.
+
+- https://github.com/AbdelStark/awesome-typesafe-jev
+  - Commit `af429b407cfabd0f6bd9086d12e14efcb0ce20c2` on `main`. Pushed 2026-10-02T08:26:42Z. License MIT. Stars 554.
+- https://github.com/Amal-David/awesome-jev
+  - Commit `58608cfbeb81816bfb98473701a50f8045cbedc3` on `main`. Pushed 2026-10-02T14:49:03Z. License CC0-1.0. Stars 228.
+- https://github.com/Anil-matcha/awesome-jev-by-typesafe
+  - Commit `68d934eb0b2f2e1c37ea1e701ffcfb4cc5221e7f` on `main`. Pushed 2026-09-23T18:02:05Z. License MIT. Stars 895.
+- https://github.com/AnotiaWang/awesome-decision-models
+  - Commit `35fd1cb280be008b9cbd2ce3b8e43d300d317c4d` on `main`. Pushed 2026-10-02T02:25:48Z. License CC0-1.0. Stars 600.
+- https://github.com/OmniJev/awesome-jev-gallery
+  - Commit `0eb81bc0a5ba9fd86ac2e04637a676bf1e576016` on `main`. Pushed 2026-10-02T09:50:23Z. License NOASSERTION. Stars 488.
+- https://github.com/cobanov/awesome-jev
+  - Commit `e6d99fc3d9dc16183014250fecf8d581300616b4` on `main`. Pushed 2026-10-01T09:25:56Z. License CC0-1.0. Stars 493.
+- https://github.com/daftAI2026/awesome-jev
+  - Commit `391a4ce145f4df160bea166ecd2362fab618709d` on `main`. Pushed 2026-10-02T20:10:10Z. License NONE. Stars 10.
+- https://github.com/heyjunpenn/awesome-jev
+  - Commit `0e7175ea30684e7d4c6a5857d0ee3de66ad695df` on `main`. Pushed 2026-09-30T02:38:38Z. License MIT. Stars 915.
+- https://github.com/kraayenjon/awesome-jev
+  - Commit `ea358b03743c8c7a26ff4467fc8fc99516a67c46` on `main`. Pushed 2026-09-27T05:07:54Z. License NOASSERTION. Stars 166.
+- https://github.com/kydlikebtc/awesome-jev
+  - Commit `6ab258b20eb3052521e7570ae6e7a3175e2f74ab` on `main`. Pushed 2026-09-30T12:25:34Z. License NOASSERTION. Stars 591.
+- https://github.com/logicrw/awesome-jev-projects
+  - Commit `ed230ecd862dc1042600a552d6922728bca3c21d` on `main`. Pushed 2026-10-02T11:11:55Z. License MIT. Stars 644.
+- https://github.com/robokrunch/awesome-jev
+  - Commit `a36180a51662a8ecec1ac29bafce0118b063d02a` on `main`. Pushed 2026-10-02T19:29:35Z. License CC0-1.0. Stars 3.
+- https://github.com/townie/awesome-system-one
+  - Commit `585396ede823019f3817876c5e0ad9736f0c4e28` on `main`. Pushed 2026-10-02T18:37:12Z. License CC0-1.0. Stars 5.
+- https://github.com/v-modal/awesome-jev-tools
+  - Commit `8a2e0e0f9772329172553d616f9297f55e6e0244` on `main`. Pushed 2026-10-02T03:56:49Z. License NONE. Stars 736.
+- https://github.com/walidboulanouar/awesome-jev-use-cases
+  - Commit `c70ef53c2cc80c21cf0d9ba06018195df60f6a27` on `main`. Pushed 2026-09-26T20:11:29Z. License CC0-1.0. Stars 377.
+- https://github.com/yibie/awesome-jev
+  - Commit `052d7a7d426ed9c5e99c7e3e3ae3c8a4db9ad442` on `main`. Pushed 2026-10-02T19:20:00Z. License NONE. Stars 2081.
+
+Raw README recovery, because the readme API cut two files at 512000 bytes:
+
+- https://raw.githubusercontent.com/logicrw/awesome-jev-projects/main/README.md (525646 bytes)
+- https://raw.githubusercontent.com/robokrunch/awesome-jev/main/README.md (556616 bytes)
+
+`AnotiaWang/awesome-jev` resolves to `AnotiaWang/awesome-decision-models`. It is one repository.
+
+## Sites
+
+- https://jevlibrary.dev — curl HTML, 2026-10-02. Not an empty shell.
+- https://jevlibrary.dev/api/projects — JSON, two submissions, neither a debug tool.
+- https://jevhunt.com/ — curl HTML, page 1 of 338, 20 of 6759 cards.
+- https://jevhunt.com/?q=playground — 140 hits, page 1 opened.
+- https://jevhunt.com/?q=dashboard — 54 hits, page 1 opened.
+- https://jevhunt.com/?q=debugger — 3 hits, page opened.
+- https://jevhunt.com/?q=inspector — 4 hits, page opened.
+- https://jevhunt.com/?q=eval — 51 hits, page 1 opened.
+- https://jevhunt.com/?q=harness — 209 hits, page 1 opened.
+- https://jevhunt.com/?q=trace — 15 hits, page opened.
+- https://jevhunt.com/?category=demos — 74 hits, page 1 opened.
+- https://jevhunt.com/?category=browser — 304 hits, page 1 opened.
+- https://jevhunt.com/assets/js/data.js?v=442a3e084a — UI metadata, not the project table.
+- https://jevhunt.com/catalog-audit.json — source audit, not project rows.
+- https://jevhunt.com/data.js — HTTP 404.
+- https://evals.typesafe.ai — curl HTML. Official workflow dashboard. No commit.
+- https://console.typesafe.ai/playground — curl HTTP 403. Not opened.
+- https://api.typesafe.ai/v1/systemone — official door. Not called.
+
+Local lead file, mined, not copied: `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/corpus/06-longform-discourse/madewithjev-resources-urls.txt`. In-scope URLs from it were `https://evals.typesafe.ai`, the awesome-list GitHub URLs, and harness articles. The articles were not kept.
+
+## Target repositories
+
+README opened for each row that has a commit. A grade in FIELD-INDEX.md means a non-README file was also opened. `itani404/jev-explained` 404'd.
+
+- https://github.com/itani404/jev-explained — not opened. gh: Not Found (HTTP 404)
+- https://github.com/24601/Augustus
+  - Commit `4e0440eb6301fb27ed5630ce7f58e632d3a8c2db`. Branch `main`. Pushed 2026-09-28T15:51:18Z. License MIT. Size 20944 KB. Stars 11.
+- https://github.com/4esv/jev-eval
+  - Commit `4050562fe17f783479c2f58ee8cbc345fab6fada`. Branch `main`. Pushed 2026-09-23T18:03:53Z. License None. Size 4227 KB. Stars 1.
+- https://github.com/a742987/JevLens
+  - Commit `ae1ff103d185197bc5a753c8aa21f6420cf1e0eb`. Branch `main`. Pushed 2026-09-26T13:58:23Z. License MIT. Size 125 KB. Stars 1.
+- https://github.com/AbdelStark/jev-benchmarks
+  - Commit `0d610cc53e79bcbec691312b0c4adb4a0e371642`. Branch `main`. Pushed 2026-09-17T07:55:14Z. License Apache-2.0. Size 489 KB. Stars 22.
+- https://github.com/Adityakk9031/jev-fast-playwright
+  - Commit `169573f737e5025c921ddf6c194c2bf7b5ce8a8c`. Branch `master`. Pushed 2026-09-29T09:13:03Z. License None. Size 6710 KB. Stars 0.
+- https://github.com/ado11231/jevqa
+  - Commit `1490a1f3ba89eae3cef7fbe59cadda2470a0d37a`. Branch `main`. Pushed 2026-10-01T03:22:01Z. License None. Size 458 KB. Stars 2.
+- https://github.com/Ahmar004/jev-playground
+  - Commit `961141bfdbfa05932678406f03189daecb1ccd07`. Branch `main`. Pushed 2026-10-02T17:53:16Z. License None. Size 1661 KB. Stars 0.
+- https://github.com/ali-master/usejev
+  - Commit `89e6b80fcc5e18bbf690c0af38b9e0c054d4ec3d`. Branch `master`. Pushed 2026-09-30T12:40:23Z. License None. Size 589 KB. Stars 12.
+- https://github.com/allebee/pytest-jev
+  - Commit `aa163e448706477ec69998c1784fa6ccef157e84`. Branch `main`. Pushed 2026-09-21T18:41:12Z. License MIT. Size 338 KB. Stars 2.
+- https://github.com/andududu/jeview
+  - Commit `495a4e43e9d67e495a66ab0d9e55ac1c5c4040d6`. Branch `main`. Pushed 2026-09-21T21:52:51Z. License MIT. Size 873 KB. Stars 61.
+- https://github.com/AntonioCoppe/jev-harness
+  - Commit `1a3dd4ae86de72f0df7d6e70b25feffc41ca3255`. Branch `main`. Pushed 2026-09-25T16:31:24Z. License MIT. Size 8050 KB. Stars 15.
+- https://github.com/arthurfiorette/jev-playwright
+  - Commit `96bdcc6bdf2dd0a9194c302e84eb6c87abb4f398`. Branch `main`. Pushed 2026-10-01T21:49:44Z. License MIT. Size 3200 KB. Stars 6.
+- https://github.com/baibizhe/jev-decision-benchmarks
+  - Commit `32705c33920b710c11593c8ef99e557d450f933b`. Branch `main`. Pushed 2026-09-19T16:15:09Z. License None. Size 418 KB. Stars 1.
+- https://github.com/Bald0Wang/jev-playground
+  - Commit `7eabcf65afd327dec7526135de335f5c98c15bd3`. Branch `main`. Pushed 2026-09-23T09:22:58Z. License None. Size 1533 KB. Stars 1.
+- https://github.com/bitnovus/jev-spam-eval
+  - Commit `a3757a1b3412177a686c1b4d95227b50a8f73537`. Branch `main`. Pushed 2026-09-18T15:21:10Z. License MIT. Size 6416 KB. Stars 2.
+- https://github.com/bradAGI/ruling
+  - Commit `0d4750e1796d96415e267c4cee88fd5f8e1c05ad`. Branch `main`. Pushed 2026-09-23T00:43:46Z. License MIT. Size 1670 KB. Stars 8.
+- https://github.com/BrendanH18/jev_fsd
+  - Commit `bbc9012331dfb175a555c76c50487467ce93fb40`. Branch `main`. Pushed 2026-10-01T03:09:47Z. License MIT. Size 6838 KB. Stars 4.
+- https://github.com/butada/draft-jev-evaluator
+  - Commit `1c6433d6bc35f2fa68e8af0d80802f4f3422bfef`. Branch `main`. Pushed 2026-09-27T00:46:33Z. License MIT. Size 1714 KB. Stars 0.
+- https://github.com/cephalization/jev-triage
+  - Commit `b11928eb5856a16fef722d51caff43990c123b78`. Branch `main`. Pushed 2026-09-29T16:30:04Z. License MIT. Size 1503 KB. Stars 4.
+- https://github.com/Chandler-Sun/chat2jev
+  - Commit `fef7b1f734ad272477d0f71894c74c0d03cb306d`. Branch `main`. Pushed 2026-09-23T02:45:29Z. License MIT. Size 2145 KB. Stars 2.
+- https://github.com/chepyle/jev-test
+  - Commit `231645b206242fbbdc80f8a3b45c1a7509e8db54`. Branch `main`. Pushed 2026-10-02T12:34:19Z. License Apache-2.0. Size 464 KB. Stars 0.
+- https://github.com/Chunky83/jev-workbench
+  - Commit `dc92a689dee36963ede90970837d62c876d1e066`. Branch `main`. Pushed 2026-09-28T13:15:58Z. License MIT. Size 21173 KB. Stars 0.
+- https://github.com/chy4pro/jev-for-chrome
+  - Commit `d5c24de556ade0f0a9c7a4c6ebb9dab305e4209e`. Branch `main`. Pushed 2026-10-01T07:58:21Z. License MIT. Size 8968 KB. Stars 36.
+- https://github.com/Codercise/jev-in-practice
+  - Commit `02be666a30ad39d4e9000199f7e8e2c612abfb4f`. Branch `main`. Pushed 2026-09-21T17:48:48Z. License MIT. Size 307 KB. Stars 1.
+- https://github.com/davila7/jev-explained
+  - Commit `5cbe35e04609112be77b1bd447bd79b3bde7980b`. Branch `main`. Pushed 2026-09-20T16:53:26Z. License MIT. Size 1180 KB. Stars 33.
+- https://github.com/dayhaysoos/jevals
+  - Commit `af6fecc0776dd5d97d5dc89fc0a72cae5e3e2580`. Branch `main`. Pushed 2026-09-18T14:51:10Z. License MIT. Size 362 KB. Stars 1.
+- https://github.com/deepdave98/jev-playground
+  - Commit `29f0fb44eff41237bc6aeb90d5ed7e5e08da82b5`. Branch `main`. Pushed 2026-09-29T17:16:52Z. License None. Size 528 KB. Stars 0.
+- https://github.com/DevMortimer/pi-typesafe
+  - Commit `3a498ea1ba90c041c52e7632e8f292c1d706ac52`. Branch `main`. Pushed 2026-09-30T23:24:22Z. License MIT. Size 494 KB. Stars 47.
+- https://github.com/Dillettant/jev-test
+  - Commit `110c2051ec10ee48ac6aebeb63ee66db59c586b2`. Branch `main`. Pushed 2026-09-19T17:59:46Z. License None. Size 70 KB. Stars 0.
+- https://github.com/DonaldMurillo/system-one-playground
+  - Commit `888a033725e67e76fca7f4440ffd9b239a19db1c`. Branch `main`. Pushed 2026-09-23T01:51:19Z. License MIT. Size 7046 KB. Stars 1.
+- https://github.com/droidrun/mobile-jev
+  - Commit `395fc222beac4f059f9a0beb337d114a2b066e99`. Branch `main`. Pushed 2026-09-17T12:55:20Z. License MIT. Size 28148 KB. Stars 431.
+- https://github.com/FBddcz/embodied-jev
+  - Commit `f08de2e4e20d6cd69fea9c57ac1062c3ef510f1e`. Branch `main`. Pushed 2026-09-22T11:18:00Z. License MIT. Size 99876 KB. Stars 253.
+- https://github.com/frederico-kluser/jev-playground
+  - Commit `4edca2814216a7558f600e5ebc731410fffa19e7`. Branch `main`. Pushed 2026-09-29T00:11:14Z. License MIT. Size 291 KB. Stars 0.
+- https://github.com/fstandhartinger/jevbench
+  - Commit `bb05a335bc809e61b20c0f745d25499a82b326fc`. Branch `main`. Pushed 2026-09-29T11:25:01Z. License MIT. Size 48804 KB. Stars 199.
+- https://github.com/gaebalai/jev-playground
+  - Commit `201849f836c754d9aff360cc0e9f0ff287a5593f`. Branch `main`. Pushed 2026-09-30T17:24:07Z. License None. Size 2705 KB. Stars 0.
+- https://github.com/galinauskas/jev-harness
+  - Commit `33a2c7b3017fd7851f00e4d51eff631e0418e9f7`. Branch `main`. Pushed 2026-10-02T12:32:18Z. License None. Size 3767 KB. Stars 0.
+- https://github.com/gbesse/jev-trace
+  - Commit `f04b606b088d4e3f6f2cde49ccc1d699fd1f36ad`. Branch `main`. Pushed 2026-10-02T14:58:22Z. License MIT. Size 11 KB. Stars 0.
+- https://github.com/getainode/jebadiah
+  - Commit `cc904344061e4ee71d2cb8297eafd2ce1c798f99`. Branch `main`. Pushed 2026-09-29T19:10:27Z. License Apache-2.0. Size 1317 KB. Stars 3.
+- https://github.com/goodboybeau/system-one-playground
+  - Commit `304c528f1e83ca4412f99a9d5943688929404c3a`. Branch `main`. Pushed 2026-09-27T22:43:17Z. License MIT. Size 2889 KB. Stars 0.
+- https://github.com/grandaha/jev-playground
+  - Commit `e4827651dba502f26b9848195d738b28289baba5`. Branch `main`. Pushed 2026-10-01T00:30:07Z. License MIT. Size 3851 KB. Stars 0.
+- https://github.com/Hangzhi/diffusion-jev-sglang
+  - Commit `a6dce88a2fc9c11b1df44d03033f1ebafd75c504`. Branch `main`. Pushed 2026-09-23T17:15:58Z. License MIT. Size 15858 KB. Stars 6.
+- https://github.com/HarnessRouter/SystemOneHarness
+  - Commit `ab8e8f08b4a6268c0633a474423d556599ee06a4`. Branch `main`. Pushed 2026-09-21T11:01:24Z. License Apache-2.0. Size 10393 KB. Stars 191.
+- https://github.com/hegargarcia/jev-playground
+  - Commit `c144bb6d99600eb506dc29133fe780cc88eb5645`. Branch `main`. Pushed 2026-09-17T15:27:20Z. License None. Size 97 KB. Stars 1.
+- https://github.com/Heman10x-NGU/Verdict-open-jev
+  - Commit `30f15564821626ca5c1ad5b2638c4eb7078787dd`. Branch `main`. Pushed 2026-09-28T00:30:31Z. License NOASSERTION. Size 8031 KB. Stars 110.
+- https://github.com/hugo-alves/jev-router-playground
+  - Commit `c2eb6ccf68b793d4ad99fb0ff1cc29edf11d9a93`. Branch `main`. Pushed 2026-09-18T01:25:54Z. License MIT. Size 259 KB. Stars 2.
+- https://github.com/ickma2311/jev-baselines-eval
+  - Commit `3b828cb68992c00835b3f126a3d13534da875277`. Branch `main`. Pushed 2026-09-25T21:28:04Z. License MIT. Size 739 KB. Stars 5.
+- https://github.com/imom39a/jev-playground
+  - Commit `f6ebdf22ca4875f191096eb54c835de4b2ffdeb6`. Branch `main`. Pushed 2026-09-28T09:46:38Z. License Apache-2.0. Size 13424 KB. Stars 0.
+- https://github.com/ismaelsoilet/jev-harness
+  - Commit `6a7df76de2a36bf21e7a3116e1f10c7a3a7cb71d`. Branch `main`. Pushed 2026-09-30T16:55:37Z. License MIT. Size 1760 KB. Stars 10.
+- https://github.com/jbt95/jev-toolkit
+  - Commit `6ebd9ceb6fa6633b88efe7f8e61db898a57e5362`. Branch `main`. Pushed 2026-09-23T09:21:42Z. License MIT. Size 711 KB. Stars 1.
+- https://github.com/jeiel85/jevscope
+  - Commit `d39ab43e88af20be7142b4335c84fbf69c740e0e`. Branch `main`. Pushed 2026-09-18T15:29:27Z. License MIT. Size 209 KB. Stars 0.
+- https://github.com/jgridifier/jev-research-eval
+  - Commit `6a4e9bbd9454cc96300ee3724ac613bc52d21351`. Branch `main`. Pushed 2026-09-17T14:43:56Z. License NOASSERTION. Size 133 KB. Stars 2.
+- https://github.com/jkudish/jev-browser
+  - Commit `1f0726cc8bc4483b96439504b594a01596d8e347`. Branch `main`. Pushed 2026-10-02T20:20:34Z. License MIT. Size 10453 KB. Stars 303.
+- https://github.com/jleifeld/maclaya
+  - Commit `351e045a1967007920a4590f258fff3664223205`. Branch `main`. Pushed 2026-09-29T08:15:24Z. License Apache-2.0. Size 633 KB. Stars 0.
+- https://github.com/JYeswak/jev_playground
+  - Commit `57458dd93e3c35b38fd11778d3e39a040f9cd977`. Branch `main`. Pushed 2026-10-02T20:24:58Z. License MIT. Size 64084 KB. Stars 1.
+- https://github.com/k3a/jev-playground
+  - Commit `73eae15d3cbcd11a4a72bae4b147258777934c46`. Branch `main`. Pushed 2026-09-28T14:30:44Z. License None. Size 504 KB. Stars 0.
+- https://github.com/kavehmz/typesafe-playground
+  - Commit `3e1bd368e81750415199d3ee44f2a8dc4ffee072`. Branch `main`. Pushed 2026-09-29T07:11:22Z. License None. Size 28156 KB. Stars 13.
+- https://github.com/kierandotai/jev-scout
+  - Commit `81b1b9d9ebe84c01b8786fb4c391bbab401017ac`. Branch `main`. Pushed 2026-09-21T14:28:23Z. License None. Size 240 KB. Stars 0.
+- https://github.com/kobashi/jev-playground
+  - Commit `ce66832f9098b5f1a5416b7ddb73f8ed151c9ab8`. Branch `main`. Pushed 2026-09-30T00:52:19Z. License MIT. Size 124 KB. Stars 0.
+- https://github.com/kylemclaren/jevql
+  - Commit `274532af852e8edfb7715ec6dca1113e589cb191`. Branch `main`. Pushed 2026-09-19T11:12:03Z. License MIT. Size 4152 KB. Stars 14.
+- https://github.com/Laaaaksh/jev-playground
+  - Commit `9a0d9ba518b611d1b24defefc8e6c3f6ac9708e6`. Branch `main`. Pushed 2026-09-27T11:45:07Z. License MIT. Size 17 KB. Stars 0.
+- https://github.com/legostin/jev-mcp
+  - Commit `606e948996f808d806e547fab902ed996339baa6`. Branch `main`. Pushed 2026-09-24T11:16:17Z. License MIT. Size 2402 KB. Stars 2.
+- https://github.com/little-planet-labs/jev-playground
+  - Commit `418b723779569b1cb1f21a4f7f34c546d44c7e34`. Branch `main`. Pushed 2026-09-17T13:56:22Z. License None. Size 447 KB. Stars 1.
+- https://github.com/lutvek/jev-playground
+  - Commit `14f43edebdb8f201bb72f03aed97881e43be3858`. Branch `main`. Pushed 2026-10-01T12:20:44Z. License None. Size 0 KB. Stars 0.
+- https://github.com/m-g-n/wp-update-vrt
+  - Commit `8315a8dc40208182c2ec683f3db6bd6d4d94c13a`. Branch `main`. Pushed 2026-10-02T10:08:20Z. License None. Size 243 KB. Stars 0.
+- https://github.com/markjaquith/typesafe-ai-playground
+  - Commit `cca499aebace85f8745466b0cc255d49cd5f3149`. Branch `main`. Pushed 2026-09-22T21:23:21Z. License MIT. Size 308 KB. Stars 4.
+- https://github.com/MashiroKai/jev-playground
+  - Commit `148e4f927d7c9ec83a37492cb65099410143e459`. Branch `main`. Pushed 2026-09-29T00:14:34Z. License MIT. Size 54 KB. Stars 1.
+- https://github.com/minkhant1996/system-one-playground
+  - Commit `a8c4c3202287993f5202ff90e79356520dce3acb`. Branch `main`. Pushed 2026-09-29T07:59:46Z. License MIT. Size 478 KB. Stars 1.
+- https://github.com/mizchi/jev-playground
+  - Commit `79fc189ee6edd8caf96a170227676d7c5c143848`. Branch `main`. Pushed 2026-09-26T16:19:10Z. License None. Size 13499 KB. Stars 72.
+- https://github.com/mohitmail85/jev-playground
+  - Commit `263a20be0113f9f03180929551df5fbff2693dc5`. Branch `main`. Pushed 2026-09-27T15:01:49Z. License MIT. Size 14 KB. Stars 0.
+- https://github.com/mohsen1/llm-debugger-vscode-extension
+  - Commit `17522a386e16bbe21952345c9fc1bc1ba84ad418`. Branch `main`. Pushed 2026-09-21T19:50:11Z. License MIT. Size 3917 KB. Stars 361.
+- https://github.com/molis-ai/jev-workbench
+  - Commit `75aeda4d92588b80ddfdcac527011ec14f197c3e`. Branch `main`. Pushed 2026-09-22T14:42:37Z. License MIT. Size 2428 KB. Stars 2.
+- https://github.com/MoonStruckHorrors/jev-playground
+  - Commit `c140a7def67e39f3ce38b4d2ad190b3ec1c45971`. Branch `main`. Pushed 2026-09-28T20:15:34Z. License None. Size 193 KB. Stars 0.
+- https://github.com/Nainish-Rai/jev-frontend-qa
+  - Commit `5ca1988eadc9b66dee0b34d791560e1049ab54cc`. Branch `main`. Pushed 2026-09-28T12:45:09Z. License MIT. Size 811 KB. Stars 5.
+- https://github.com/ndolinschi/harnessjudge
+  - Commit `bdd635beee798b0cb19b3319422d18faf30bfff8`. Branch `main`. Pushed 2026-09-17T09:22:10Z. License None. Size 19 KB. Stars 0.
+- https://github.com/nicobailon/surf-cli
+  - Commit `701dd824046310680c36301beb488cbc876ef302`. Branch `main`. Pushed 2026-09-29T21:36:02Z. License MIT. Size 3997 KB. Stars 631.
+- https://github.com/nikhil1raghav/jev-playground
+  - Commit `67043996a299fbf8ad44ec1cd4929381c752a415`. Branch `main`. Pushed 2026-09-22T05:04:01Z. License None. Size 206 KB. Stars 1.
+- https://github.com/NorbertBodziony/guard-jev
+  - Commit `86e7dba193fc94d458f36e225379c12596ddef0c`. Branch `main`. Pushed 2026-09-17T09:07:15Z. License None. Size 65 KB. Stars 1.
+- https://github.com/nssmd/jev-bot
+  - Commit `4695a4e92fca03751dd86619612379576228bfda`. Branch `main`. Pushed 2026-09-22T08:20:28Z. License MIT. Size 64 KB. Stars 6.
+- https://github.com/nwadmark/jev-decision-lab
+  - Commit `7a9b59742c08bb059704fdc6eb1632f545841973`. Branch `main`. Pushed 2026-09-30T05:10:20Z. License MIT. Size 96 KB. Stars 0.
+- https://github.com/olivier-motium/jev-doom
+  - Commit `13589d2b97d18940423933262834aa3e376ffcdc`. Branch `main`. Pushed 2026-09-21T12:33:03Z. License MIT. Size 70 KB. Stars 2.
+- https://github.com/openlayer-ai/jevals
+  - Commit `0a8f895a0428b89c865f953d5295b6b516e4018c`. Branch `main`. Pushed 2026-10-01T16:48:21Z. License MIT. Size 422 KB. Stars 102.
+- https://github.com/patryckalves/jev-no-enem
+  - Commit `7f85f787e3d13ce75da5bbc8d578038af73cc077`. Branch `main`. Pushed 2026-09-21T11:59:18Z. License None. Size 116 KB. Stars 0.
+- https://github.com/phyous/tsai-sc
+  - Commit `6046ecc60156c4a3c04d384b41821a4ff08501b7`. Branch `main`. Pushed 2026-09-16T06:40:58Z. License MIT. Size 732 KB. Stars 28.
+- https://github.com/poisson-labs/jev-replay
+  - Commit `ecc958fb627250538d7c71e62566feab1cff8166`. Branch `main`. Pushed 2026-09-23T16:49:06Z. License MIT. Size 6884 KB. Stars 0.
+- https://github.com/PromtEngineer/jev-harness
+  - Commit `9bd4f670a2866498aa570e4ce4654997b3dce190`. Branch `main`. Pushed 2026-09-24T22:00:50Z. License MIT. Size 1498 KB. Stars 7.
+- https://github.com/pst2154/Nemotron_Jev
+  - Commit `1b7ce4641102a1cfd31bad05460b13de60d7c8ca`. Branch `perf/nemotron-diffusion-8b`. Pushed 2026-09-25T05:08:12Z. License MIT. Size 2853 KB. Stars 13.
+- https://github.com/reachjalil/jevlogs
+  - Commit `217d2b70bfb327a0038b21851c1c9c143eb80469`. Branch `main`. Pushed 2026-09-22T03:35:36Z. License MIT. Size 3387 KB. Stars 17.
+- https://github.com/Resadan-dev/jev-zork
+  - Commit `981451ba8adc076fd4058d20a37c8bef2739c0ae`. Branch `main`. Pushed 2026-09-21T12:18:31Z. License MIT. Size 195 KB. Stars 1.
+- https://github.com/rockomatthews/jev-dashboard
+  - Commit `7441d6ffec1064becd66f66160a09b3b1f27977d`. Branch `main`. Pushed 2026-10-02T20:30:56Z. License None. Size 7721 KB. Stars 0.
+- https://github.com/sa-ha/jev-playground
+  - Commit `562fb8eb39dc2669f647d916d32cce8ad9aefe7b`. Branch `main`. Pushed 2026-09-28T15:40:45Z. License MIT. Size 61 KB. Stars 0.
+- https://github.com/saimahmedqazi/typesafe-jev-playground
+  - Commit `b6e6e316d0967a49bce07f61aa5c4292e785605f`. Branch `main`. Pushed 2026-10-02T07:38:55Z. License None. Size 291 KB. Stars 1.
+- https://github.com/shivanathd/jev-playground
+  - Commit `20574a96ab5ac3d39b945b290ff0daafec5eca39`. Branch `main`. Pushed 2026-09-19T03:48:55Z. License MIT. Size 93 KB. Stars 0.
+- https://github.com/Shoaib-Asghar/jev-probe
+  - Commit `b14d935b487ecde6959f1d71170548f0d30688ba`. Branch `main`. Pushed 2026-09-28T18:11:59Z. License None. Size 617 KB. Stars 0.
+- https://github.com/sohithk10/jev-trace-evaluator
+  - Commit `3b06ba5edd103d86f560d4afd092b50e56575026`. Branch `main`. Pushed 2026-10-01T00:09:58Z. License None. Size 161 KB. Stars 0.
+- https://github.com/souvikr/jev-test
+  - Commit `5721c26fee6bc26f9bdf6c0f75616bcde453310f`. Branch `main`. Pushed 2026-09-19T09:45:01Z. License None. Size 28 KB. Stars 0.
+- https://github.com/STiFLeR7/Jev-LLM-Playground
+  - Commit `23c78486ab38db6caed07efa45788a2f46107c1d`. Branch `main`. Pushed 2026-09-25T10:34:07Z. License MIT. Size 841 KB. Stars 0.
+- https://github.com/sunil-sadasivan/jevernetes
+  - Commit `3a08dcb1c3611c0014b000074006701ad767bfa2`. Branch `main`. Pushed 2026-09-28T04:47:59Z. License MIT. Size 6916 KB. Stars 14.
+- https://github.com/SuperInstance/jev-harness
+  - Commit `a5f09486b3453dced58ad252ab4e5972affc3b46`. Branch `main`. Pushed 2026-09-30T23:05:50Z. License MIT. Size 14 KB. Stars 0.
+- https://github.com/takafumikobayashi/jev-snap-lab
+  - Commit `1dbfdfa03b296dcb7d88a64cf9a2d4525cc81cab`. Branch `main`. Pushed 2026-09-22T01:36:19Z. License MIT. Size 2891 KB. Stars 0.
+- https://github.com/tedliou/decision-model-playground
+  - Commit `195fdb98d517b146fa890c459836ceea94566a72`. Branch `main`. Pushed 2026-09-19T13:31:18Z. License None. Size 117 KB. Stars 1.
+- https://github.com/thijmenkam/jev-benchmarks
+  - Commit `980be52a890b14867699f83342347dd574af6ab0`. Branch `main`. Pushed 2026-09-18T07:27:28Z. License None. Size 83 KB. Stars 1.
+- https://github.com/Tomdachs/jev-replay-lab
+  - Commit `d59cd353b6e19422c5d16f6be1dc6f74dc224754`. Branch `main`. Pushed 2026-09-21T00:07:20Z. License MIT. Size 263 KB. Stars 0.
+- https://github.com/TYC-000/jev-dashboard
+  - Commit `65014cc8a665698d10ccf7ba1941ee1b0d596b96`. Branch `main`. Pushed 2026-09-25T07:42:32Z. License None. Size 7 KB. Stars 0.
+- https://github.com/wagnerjt/jev-playground
+  - Commit `2d09ec1c1e504f7ec4386a2b9d4edc5fe6069dbc`. Branch `main`. Pushed 2026-09-30T22:37:10Z. License MIT. Size 234 KB. Stars 1.
+- https://github.com/wondertwins/jev-benchmark
+  - Commit `1c2509ac7d5508b8a7ce00ae4df6d7652d05de8b`. Branch `main`. Pushed 2026-09-16T23:03:49Z. License MIT. Size 27667 KB. Stars 6.
+- https://github.com/wustep/jev-playground
+  - Commit `4f38b140e91f68da1288fbc91f867bf4a29f478f`. Branch `main`. Pushed 2026-09-26T06:44:56Z. License None. Size 1051 KB. Stars 2.
+- https://github.com/xhongc/jev-music-tag
+  - Commit `8a031efc6b5069b42404e2942aa4a00426aec200`. Branch `main`. Pushed 2026-09-23T10:33:31Z. License None. Size 8863 KB. Stars 5.
+- https://github.com/xiezhr/jev-workbench
+  - Commit `e2f80e3600df05a1dcebdf8811fc1969bd82f0ef`. Branch `master`. Pushed 2026-09-22T14:48:51Z. License None. Size 24 KB. Stars 0.
+- https://github.com/yAntPower/jev-decision-lab
+  - Commit `b60ce057c70499802ad9d56a92ab78007d183be6`. Branch `main`. Pushed 2026-09-25T01:38:58Z. License MIT. Size 107 KB. Stars 0.
+- https://github.com/yfe404/jev-harness
+  - Commit `de4b645e22ab8aff30e161a35fa5485a88ec0c2d`. Branch `master`. Pushed 2026-10-02T16:55:15Z. License MIT. Size 391 KB. Stars 0.
+- https://github.com/YidiDev/jev-benchmark
+  - Commit `9bbc7ab560db1a2acc24c7c42e06205032169ff3`. Branch `main`. Pushed 2026-09-28T20:07:21Z. License MIT. Size 9250 KB. Stars 3.
+- https://github.com/YUUM321/jev-klondike-benchmark
+  - Commit `7b3eb45519f45258dacec94d57a2e76e9b23aae2`. Branch `main`. Pushed 2026-09-25T10:07:42Z. License MIT. Size 134 KB. Stars 0.
+- https://github.com/zhuyansen/jev-search-rerank-eval
+  - Commit `c896f14e944182e17a002dd7546f06ba3788d586`. Branch `main`. Pushed 2026-09-18T09:00:15Z. License MIT. Size 6231 KB. Stars 10.
+- https://github.com/ZihuaEvan/GUI_JEV
+  - Commit `f27dde3e4d7eeca2fdc3e6e100f9a664abbfb884`. Branch `main`. Pushed 2026-09-28T02:09:35Z. License MIT. Size 299 KB. Stars 3.
+- https://github.com/zsavage8/padflow-jev-evals
+  - Commit `0511166626064bca87ff38beae6a4e9ec4d19e2b`. Branch `main`. Pushed 2026-09-17T01:34:38Z. License MIT. Size 16 KB. Stars 1.
+
+## Parent clones already present
+
+Read-only. HEAD from `git rev-parse HEAD` in the existing clone. Not cloned again. Not written.
+
+- https://github.com/DeepBlueDynamics/typesafe-arena
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/DeepBlueDynamics--typesafe-arena`. HEAD `c057cfbb892a0b39d7c882fc591be0b4285e8d9e`.
+- https://github.com/ElshinQ/jevaluate
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/ElshinQ--jevaluate`. HEAD `9f1b9272a9ac797fae6bfba54d141d2953a62991`.
+- https://github.com/KiritoKing/midscene-jev-runner
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/KiritoKing--midscene-jev-runner`. HEAD `f07d22fd682697e874faf2f5a062d30272b92900`.
+- https://github.com/PenglongHuang/jev-demo
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/PenglongHuang--jev-demo`. HEAD `def34f2c3c996554d05a124fcdd67acad9ff41fa`.
+- https://github.com/TypeSafeAI/jev-harness
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/TypeSafeAI--jev-harness`. HEAD `1239b23052b701e690727755cf17ea90c92654ff`.
+- https://github.com/TypeSafeAI/typesafe-playground
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/TypeSafeAI--typesafe-playground`. HEAD `0fbc9ef9d99157a2f86631fa3b385ef88ca79a10`.
+- https://github.com/TypeSafeAI/typesafe-ui
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/TypeSafeAI--typesafe-ui`. HEAD `61e5e9e30face27cf03da0035c79cde408240cca`.
+- https://github.com/adyoi/jev-system-one-playground
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/adyoi--jev-system-one-playground`. HEAD `b133e6b41fbc0638cfb11f413cd6544f7b1cf1e2`.
+- https://github.com/browser-use/jev-ultrafast
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/browser-use--jev-ultrafast`. HEAD `1231850a0bf1a0c0341fe408ef1668dbbfdfac46`.
+- https://github.com/comoc/jev-minesweeper
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/comoc--jev-minesweeper`. HEAD `5cbc361b1260cdfef6e9383639797bf483c064e0`.
+- https://github.com/devagrawal09/jev-review
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/devagrawal09--jev-review`. HEAD `31f89602797fb7bea007f8a480bf368bf564954e`.
+- https://github.com/jonymusky/jev-browser-qa
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/jonymusky--jev-browser-qa`. HEAD `ca6d5a2d46623f9f8606aabc10f1143afd070090`.
+- https://github.com/little-planet-labs/jev-playground
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/little-planet-labs--jev-playground`. HEAD `418b723779569b1cb1f21a4f7f34c546d44c7e34`.
+- https://github.com/nickthompson480/typesafe-ai-playground
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/nickthompson480--typesafe-ai-playground`. HEAD `8ee3d0b36d0c2dd46987131f0b7b14c084d81e65`.
+- https://github.com/sugarforever/tryjev
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/sugarforever--tryjev`. HEAD `52770fc2166b929ede98c6a1599cc03dea33af9c`.
+- https://github.com/terryds/jevplayground
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/terryds--jevplayground`. HEAD `02c20a09b37cca2fbdd586394f2bee82db6a5dae`.
+- https://github.com/vinilana/jev-browser
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/vinilana--jev-browser`. HEAD `7d608732aa586465dc612c1d54c8b83b6ddc7625`.
+- https://github.com/vinilana/jev-eval-agent
+  - Existing clone `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/debug-test-frontends/originals/github/vinilana--jev-eval-agent`. HEAD `037de1120c84b4b63cdf748e2acf258ff66d7731`.
+
+## Already in the 2026-10-01 library, not opened again
+
+- `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/originals/github/WillKelly-jev-evaluation`
+- `/Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/originals/github/system-one-adapter-python`

@@ -1,0 +1,15 @@
+{
+  "full_name": "MashiroKai/jev-playground",
+  "html_url": "https://github.com/MashiroKai/jev-playground",
+  "description": "a minimal JeV tester: type a state, add typed questions, and read the answers with confidence.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T00:14:34Z",
+  "size": 54,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "JavaScript",
+  "commit": "148e4f927d7c9ec83a37492cb65099410143e459"
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "zsavage8/padflow-jev-evals",
+  "html_url": "https://github.com/zsavage8/padflow-jev-evals",
+  "description": "Typed-decision benchmark from PadFlow (land development SaaS): schemas, anonymized labeled rows, and a runner for confidence-calibrated models like TypeSafe Jev.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-17T01:34:38Z",
+  "size": 16,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "0511166626064bca87ff38beae6a4e9ec4d19e2b"
+}

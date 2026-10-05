@@ -1,0 +1,131 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PRQ00095YKVQ0KVGVPDKDN",
+  "at": "2026-09-17T04:07:52.982Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 5,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 2,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 3,
+    "flights": 2
+  },
+  "idealPath": false,
+  "efficiency": 0.6,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 77085,
+  "usage": {
+    "inputTokens": 77662,
+    "outputTokens": 3610,
+    "cacheReadTokens": 31488,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.025825168000000003
+  },
+  "reasoningChars": 9316,
+  "reply": "\n\nTudo pronto! ✅\n\n- **Voo reservado:** GOL G31410 (o mais barato da manhã), R$ 298, saindo de **SDU às 11h30** e chegando em **CGH às 12h35** — 18/09. Código do embarque: **ABC123**.\n- **Agenda:** adicionei o voo no seu calendário de Trabalho.\n- **Reunião:** confirmada às 14h na Av. Paulista, 1000.\n\nChegando às 12h35, você terá ~1h25 antes da reunião — folga razoável, mas já fique de olho no trânsito saindo de Congonhas até a Paulista. Se preferir mais margem de segurança, há o GOL G31404 (R$ 312) que chega às 9h05; é só me avisar que eu troco.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_search_events",
+      "detail": {
+        "query": "reunião São Paulo 14h"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "06:00",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-18",
+        "end_date": "2026-09-18"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius",
+        "seat_preference": "window"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 · Rio (SDU) → São Paulo (CGH) · Loc. ABC123",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU) → Congonhas (CGH)",
+        "calendar": "Trabalho"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 4,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "\n\nTudo pronto! ✅\n\n- **Voo reservado:** GOL G31410 (o mais barato da manhã), R$ 298, saindo de **SDU às 11h30** e chegando em **CGH às 12h35** — 18/09. Código do embarque: **ABC123**.\n- **Agenda:** adicionei o voo no seu calendário de Trabalho.\n- **Reunião:** confirmada às 14h na Av. Paulista, 1000.\n\nChegando às 12h35, você terá ~1h25 antes da reunião — folga razoável, mas já fique de olho no trâns"
+    }
+  ]
+}

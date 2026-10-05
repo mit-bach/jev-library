@@ -1,0 +1,18 @@
+{
+  "repository": "TypeSafeAI/typesafe-ui",
+  "description": "Unofficial React component workspace and interface patterns for TypeSafe AI projects using Next.js, shadcn/ui, Base UI, Tailwind CSS, and Turborepo.",
+  "topics": [
+    "typesafe-ai",
+    "react",
+    "typescript",
+    "nextjs",
+    "shadcn-ui",
+    "base-ui",
+    "tailwindcss",
+    "component-library",
+    "design-system",
+    "turborepo"
+  ],
+  "status": "proposed-not-applied",
+  "note": "Capability-focused discovery metadata. Committing this file does not itself change GitHub repository settings."
+}

@@ -1,0 +1,281 @@
+==============================================================================
+calibration.json bytes=152269
+dict keys=['dataset', 'n', 'source', 'source_sha256', 'definition', 'bins', 'ece', 'predictions'] n=8
+  dataset: str 'MMLU baseline'
+  n: int 1200
+  source: str 'bench_results.jsonl'
+  source_sha256: str '68a40a98ed23c336e85150f916e6b006abcbace8add46dca8ea056a1c1999d43'
+  definition: str 'Confidence = rounded returned probability of chosen answer. Ten equal-width bins [0.0,0.1), ... [0.9,1.0]; floating artifacts rounded to 2 decimals before binning. Empty bins omit...
+  bins: list n=7
+    [0]: dict keys=['low', 'high', 'n', 'accuracy', 'meanProbability', 'wilsonLow', 'wilsonHigh'] n=7
+    [-1]: dict keys=['low', 'high', 'n', 'accuracy', 'meanProbability', 'wilsonLow', 'wilsonHigh'] n=7
+  ece: float 0.031324999999999964
+  predictions: list n=1200
+    [0]: dict keys=['id', 'subject', 'probability', 'correct'] n=4
+    [-1]: dict keys=['id', 'subject', 'probability', 'correct'] n=4
+--- head 400 ---
+{   "dataset": "MMLU baseline",   "n": 1200,   "source": "bench_results.jsonl",   "source_sha256": "68a40a98ed23c336e85150f916e6b006abcbace8add46dca8ea056a1c1999d43",   "definition": "Confidence = rounded returned probability of chosen answer. Ten equal-width bins [0.0,0.1), ... [0.9,1.0]; floating artifacts rounded to 2 decimals before binning. Empty bins omitted. ECE = sum n_bin/N * abs(accuracy
+==============================================================================
+context-limit.json bytes=16999
+dict keys=['meta', 'trials'] n=2
+  meta: dict keys=['schema', 'model', 'concurrency', 'padding', 'server_ms_header', 'docs_check'] n=6
+    schema: str 'jev-context-limit.v1'
+    model: str 'jev-1.13.0'
+    concurrency: int 1
+    padding: str 'space-separated random digits (random.Random seeds: state 7, question i 1000+i)'
+    server_ms_header: str 'x-envoy-upstream-service-time'
+    docs_check: str 'docs.typesafe.ai/llms-full.txt (2026-09-17): no stated context/token limit; error table lists 401/422/429/529 only, no 400 max_tokens_exceeded'
+  trials: list n=35
+    [0]: dict keys=['index', 'label', 'state_digits', 'n_q', 'instr_digits', 'long_q', 'ts', 'payload_bytes', 'status', 'attempts', 'wall_ms', 'server_ms', 'request_id', 'in_tok', 'out_tok', 'body'] n=16
+    [-1]: dict keys=['index', 'label', 'state_digits', 'n_q', 'instr_digits', 'long_q', 'ts', 'payload_bytes', 'status', 'attempts', 'wall_ms', 'server_ms', 'request_id', 'in_tok', 'out_tok', 'body'] n=16
+--- head 400 ---
+{  "meta": {   "schema": "jev-context-limit.v1",   "model": "jev-1.13.0",   "concurrency": 1,   "padding": "space-separated random digits (random.Random seeds: state 7, question i 1000+i)",   "server_ms_header": "x-envoy-upstream-service-time",   "docs_check": "docs.typesafe.ai/llms-full.txt (2026-09-17): no stated context/token limit; error table lists 401/422/429/529 only, no 400 max_tokens_exce
+==============================================================================
+evidence.json bytes=70157
+dict keys=['schema', 'metadata', 'questionIsolation', 'optionVisibility', 'iia', 'outputAccounting', 'tokenAccounting', 'stateLength', 'questionCount', 'benchmarks', 'freshMath', 'tokenizer', 'confidence', 'sources', 'provenance', 'optionOrder', 'noise', 'tokenizerDiagnostics'] n=18
+  schema: str 'jev-public-evidence.v1'
+  metadata: dict keys=['date', 'model', 'probeLogRecords', 'benchmarkRecords', 'sourceDirectory', 'notes'] n=6
+    date: str '2026-09-17'
+    model: str 'jev-1.13.0'
+    probeLogRecords: int 1029
+    benchmarkRecords: int 6800
+    sourceDirectory: str 'jev_recon/'
+    notes: list n=5
+  questionIsolation: dict keys=['source', 'sampleUnit', 'question', 'caveat', 'conditions'] n=5
+    source: dict keys=['script', 'function', 'line', 'log', 'tag'] n=5
+    sampleUnit: str 'API request; five requests per condition'
+    question: str 'Which secret code is mentioned by another question in this request?'
+    caveat: str 'The wording asks about another question even when the code is moved to state; the positive control therefore demonstrates retrieval despite that mismatch. Learned instruction boun...
+    conditions: list n=3
+  optionVisibility: dict keys=['source', 'sampleUnit', 'instructions', 'options', 'caveat', 'conditions'] n=6
+    source: dict keys=['script', 'function', 'line', 'log', 'tag'] n=5
+    sampleUnit: str 'API request; four requests per condition'
+    instructions: str 'Exactly one option below is correct according to its own description. Which one?'
+    options: dict keys=['alphaWithSecret', 'alphaControl', 'beta', 'gamma'] n=4
+    caveat: str 'Beta itself names the code in every condition. Gamma therefore creates a semantic ambiguity even in the nominal no-secret control. This measures order-dependent behaviour, not a r...
+    conditions: list n=6
+  iia: dict keys=['source', 'sampleUnit', 'addedOption', 'interpretation', 'conditions'] n=5
+    source: dict keys=['script', 'function', 'line', 'log', 'tag'] n=5
+    sampleUnit: str 'Three API requests per condition, each with forty identical questions. Duplicates within a request are not independent experimental replicates. Conditions were blocked, not interl...
+    addedOption: dict keys=['weather'] n=1
+    interpretation: str 'Changes to pairwise odds conflict with a simple independent fixed-score model followed only by softmax. They do not uniquely imply a final-position readout: list-dependent tempera...
+    conditions: list n=3
+  outputAccounting: dict keys=['source', 'longId', 'choice255', 'interpretation'] n=4
+    source: dict keys=['script', 'log'] n=2
+    longId: dict keys=['short', 'long'] n=2
+    choice255: list n=3
+    interpretation: str 'The output token field changes for an ID outside the apparent model input. It therefore cannot be treated as a count of generated model tokens. Public statements, rather than this...
+  tokenAccounting: dict keys=['source', 'rows'] n=2
+    source: dict keys=['script', 'log', 'tag'] n=3
+    rows: list n=17
+  stateLength: dict keys=['source', 'metric', 'caveat', 'rows'] n=4
+    source: dict keys=['script', 'log', 'tag'] n=3
+    metric: str 'Server response header x-envoy-upstream-service-time, milliseconds'
+    caveat: str 'Shared service load, queueing and scheduling are uncontrolled. A minimum is the smallest observation, not a verified uncontended time. No parameter count or GPU throughput can be ...
+    rows: list n=8
+  questionCount: dict keys=['source', 'metric', 'caveat', 'rows'] n=4
+    source: dict keys=['script', 'log', 'tag'] n=3
+    metric: str 'Server response header x-envoy-upstream-service-time, milliseconds'
+    caveat: str 'Shared service load, queueing and scheduling are uncontrolled. A minimum is the smallest observation, not a verified uncontended time. No parameter count or GPU throughput can be ...
+    rows: list n=10
+  benchmarks: dict keys=['sources', 'sampleUnit', 'metric', 'caveat', 'rows'] n=5
+    sources: list n=2
+    sampleUnit: str 'One benchmark item per request; shuffled MMLU conditions reuse the same underlying 1200 items.'
+    metric: str 'Accuracy and mean probability of the chosen answer; Noul uses max(p,1-p).'
+    caveat: str 'Equality of these two aggregate values does not establish calibration within probability bands, subgroups or a deployment distribution. No ECE is included because the original sum...
+    rows: list n=9
+  freshMath: dict keys=['source', 'caveat', 'rows'] n=3
+    source: str 'fresh_math_results.json'
+    caveat: str 'Newly generated instances reduce exact-item reuse concerns; they do not prove absence of related training examples. Small, different task families cannot by themselves diagnose be...
+    rows: list n=8
+  tokenizer: dict keys=['sources', 'candidateNames', 'candidateCount', 'shortProbeSerializationModes', 'shortProbeResultRows', 'exactMatchesOnAllShortProbes', 'longProbeCandidateCount', 'exactMatchesOnAllLongProbes', 'additionalTiktokenTests', 'caveat'] n=10
+    sources: list n=4
+    candidateNames: list n=125
+    candidateCount: int 125
+    shortProbeSerializationModes: list n=4
+    shortProbeResultRows: int 500
+    exactMatchesOnAllShortProbes: int 0
+    longProbeCandidateCount: int 125
+    exactMatchesOnAllLongProbes: int 0
+    additionalTiktokenTests: str 'The source note reports four further tiktoken encodings; their results are not retained in these JSON files, so that count is not independently verified here.'
+    caveat: str '125 model-repository tokenizer candidates, not necessarily 125 distinct tokenizer algorithms. A mismatch supports a different tokenizer or input/accounting path; it does not estab...
+  confidence: dict keys=['source', 'choiceFormula', 'scoreFormula', 'interpretation'] n=4
+    source: str 'https://github.com/typesafe-ai/system-one-adapter-python/blob/main/src/system_one_adapter/_utils/confidence_metrics.py'
+    choiceFormula: str 'First normalize p to sum to 1. For K>1: (max(p)-1/K)/(1-1/K). K=1 returns 1.'
+    scoreFormula: str 'max(0, 1 - sum_i p_i*abs(i-mode(p)) / mean_i abs(i-(K-1)/2)), using normalized p. K=1 returns 1.'
+    interpretation: str 'Public adapter code; the production API is not open source. Formula agreement supports the interpretation, but rounded API probabilities can prevent exact reconstruction.'
+  sources: list n=3
+    [0]: dict keys=['title', 'url', 'verifiedQuote'] n=3
+    [-1]: dict keys=['title', 'url'] n=2
+  provenance: dict keys=['method', 'verificationScript', 'sourceSha256'] n=3
+    method: str 'SHA-256 over original source bytes. Hashes identify the inputs used by this audit; they do not authenticate the remote API.'
+    verificationScript: str 'scripts/jev/audit-original-evidence.py'
+    sourceSha256: dict keys=['probe.py', 'batch_c.py', 'calls.jsonl', 'bench.py', 'bench2.py', 'bench_results.jsonl', 'bench2_results.jsonl', 'fresh_math.py', 'fresh_math_results.json', 'fingerprint.py', 'fingerprint2.py', 'fingerprint_results.json', 'fingerprint2_results.json'] n=13
+  optionOrder: dict keys=['source', 'sampleUnit', 'conditions'] n=3
+    source: dict keys=['script', 'function', 'tag', 'log'] n=4
+    sampleUnit: str 'One API request; three repeats for each listed order.'
+    conditions: list n=3
+  noise: dict keys=['sources', 'caveat', 'repeatNoulQuestions', 'duplicateRequests', 'determinism', 'choiceProbabilityKeyOrders'] n=6
+    sources: dict keys=['script', 'log', 'tags'] n=3
+    caveat: str 'These observed differences do not identify randomness, numerical precision, batch scheduling or worker count.'
+    repeatNoulQuestions: list n=24
+    duplicateRequests: list n=18
+    determinism: list n=15
+    choiceProbabilityKeyOrders: dict keys=['nAnswers', 'distinctOrders', 'orders'] n=3
+  tokenizerDiagnostics: dict keys=['source', 'baseline', 'interpretation', 'rows'] n=4
+    source: dict keys=['script', 'function', 'log', 'tag'] n=4
+    baseline: str 'State is the string x; all shown probes use the same question scaffolding.'
+    interpretation: str 'The 100-digit string adds 99 input tokens relative to x. If x is one token and wrapper effects are unchanged, that is 100 digit tokens. The repeated whitespace counts are similarl...
+    rows: list n=6
+--- head 400 ---
+{   "schema": "jev-public-evidence.v1",   "metadata": {     "date": "2026-09-17",     "model": "jev-1.13.0",     "probeLogRecords": 1029,     "benchmarkRecords": 6800,     "sourceDirectory": "jev_recon/",     "notes": [       "One date, region, early-access account and model version. Observations do not uniquely identify an implementation.",       "API service-time numbers are x-envoy-upstream-ser
+==============================================================================
+followup-summary.json bytes=15296
+dict keys=['schema', 'nAttempted', 'nSucceeded', 'source', 'sampleUnit', 'relational', 'odds', 'pairedEffects'] n=8
+  schema: str 'jev-followup-summary.v1'
+  nAttempted: int 146
+  nSucceeded: int 146
+  source: str 'followup-trials.json'
+  sampleUnit: str 'One question per API request; two repeats per exact relational condition, ten randomized request blocks for odds interventions.'
+  relational: list n=12
+    [0]: dict keys=['placement', 'order', 'n', 'accuracy', 'meanPCorrect', 'pCorrect', 'trialIndices'] n=7
+    [-1]: dict keys=['placement', 'order', 'n', 'accuracy', 'meanPCorrect', 'pCorrect', 'trialIndices'] n=7
+  odds: list n=10
+    [0]: dict keys=['variant', 'numerator', 'denominator', 'n', 'meanLogOdds', 'logOddsByBlock'] n=6
+    [-1]: dict keys=['variant', 'numerator', 'denominator', 'n', 'meanLogOdds', 'logOddsByBlock'] n=6
+  pairedEffects: list n=8
+    [0]: dict keys=['treatment', 'control', 'denominator', 'nBlocks', 'meanLogOddsChange', 'blockChanges', 'standardErrorAcrossBlocks'] n=7
+    [-1]: dict keys=['treatment', 'control', 'denominator', 'nBlocks', 'meanLogOddsChange', 'blockChanges', 'standardErrorAcrossBlocks'] n=7
+--- head 400 ---
+{   "schema": "jev-followup-summary.v1",   "nAttempted": 146,   "nSucceeded": 146,   "source": "followup-trials.json",   "sampleUnit": "One question per API request; two repeats per exact relational condition, ten randomized request blocks for odds interventions.",   "relational": [     {       "placement": "option",       "order": [         "alpha",         "beta",         "gamma"       ],       
+==============================================================================
+followup-trials.json bytes=222083
+dict keys=['schema', 'date', 'seed', 'plannedRequests', 'script', 'notes', 'trials'] n=7
+  schema: str 'jev-followup-trials.v1'
+  date: str '2026-09-17T04:04:46.348585+00:00'
+  seed: int 2026091702
+  plannedRequests: int 146
+  script: str 'scripts/jev/followup-probes.py'
+  notes: list n=5
+    [0]: str 'Synthetic public-safe payloads. No credentials, request identifiers or private headers are stored.'
+    [-1]: str 'A relational order effect would not uniquely identify a causal mask. A null result would not establish bidirectionality.'
+  trials: list n=146
+    [0]: dict keys=['experiment', 'task', 'attribute', 'value', 'placement', 'order', 'repeat', 'expected', 'payload', 'index', 'response'] n=11
+    [-1]: dict keys=['experiment', 'block', 'variant', 'payload', 'index', 'response'] n=6
+--- head 400 ---
+{   "schema": "jev-followup-trials.v1",   "date": "2026-09-17T04:04:46.348585+00:00",   "seed": 2026091702,   "plannedRequests": 146,   "script": "scripts/jev/followup-probes.py",   "notes": [     "Synthetic public-safe payloads. No credentials, request identifiers or private headers are stored.",     "Question criteria preserve insertion order. Relational trials are globally randomized; odds vari
+==============================================================================
+latency-rerun.json bytes=48958
+dict keys=['meta', 'trials'] n=2
+  meta: dict keys=['model', 'date', 'seed', 'concurrency', 'reps', 'context_state_chars', 'question_counts', 'short_state_chars'] n=8
+    model: str 'jev-1.13.0'
+    date: str '2026-09-17'
+    seed: int 20260917
+    concurrency: int 1
+    reps: int 8
+    context_state_chars: list n=8
+    question_counts: list n=16
+    short_state_chars: int 1200
+  trials: list n=192
+    [0]: dict keys=['index', 'sweep', 'x', 'rep', 'input_tokens', 'output_tokens', 'server_ms', 'wall_ms', 'status', 'attempts', 'request_id', 'ts'] n=12
+    [-1]: dict keys=['index', 'sweep', 'x', 'rep', 'input_tokens', 'output_tokens', 'server_ms', 'wall_ms', 'status', 'attempts', 'request_id', 'ts'] n=12
+--- head 400 ---
+{"meta": {"model": "jev-1.13.0", "date": "2026-09-17", "seed": 20260917, "concurrency": 1, "reps": 8, "context_state_chars": [400, 8000, 24000, 48000, 72000, 96000, 120000, 138000], "question_counts": [1, 25, 50, 100, 175, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375, 1500], "short_state_chars": 1200}, "trials": [{"index": 0, "sweep": "context", "x": 48000, "rep": 6, "input_tokens": 9796, 
+==============================================================================
+option-count-latency.json bytes=1575375
+dict keys=['main', 'followup'] n=2
+  main: dict keys=['meta', 'trials'] n=2
+    meta: dict keys=['schema', 'state', 'reps', 'workers', 'server_ms_header'] n=5
+    trials: list n=128
+  followup: dict keys=['meta', 'trials'] n=2
+    meta: dict keys=['schema'] n=1
+    trials: list n=20
+--- head 400 ---
+{"main": {"meta": {"schema": "jev-option-count-latency.v1", "state": "Customer message: my card was charged twice for the same order and I would like the duplicate refunded.", "reps": 8, "workers": 4, "server_ms_header": "x-envoy-upstream-service-time"}, "trials": [{"index": 0, "n_q": 20, "n_opt": 200, "labels": "short", "rep": 7, "payload": "reconstruct via payload(params)", "status": 200, "attem
+==============================================================================
+option-injection.json bytes=127175
+dict keys=['meta', 'phases', 'summary'] n=3
+  meta: dict keys=['model', 'workers', 'state', 'instructions'] n=4
+    model: str 'jev-1.13.0'
+    workers: int 3
+    state: str 'Reference status: indigo.'
+    instructions: str 'Select the option whose condition matches the reference status.'
+  phases: dict keys=['pilot', 'main', 'ambig_pilot', 'ambig_pilot2', 'ambig_a5'] n=5
+    pilot: dict keys=['started', 'api_calls', 'trials'] n=3
+    main: dict keys=['started', 'api_calls', 'trials'] n=3
+    ambig_pilot: dict keys=['started', 'api_calls', 'trials'] n=3
+    ambig_pilot2: dict keys=['started', 'api_calls', 'trials'] n=3
+    ambig_a5: dict keys=['started', 'api_calls', 'trials'] n=3
+  summary: list n=37
+    [0]: dict keys=['cond', 'n', 'mean_p', 'containing', 'correct_o3', 'next_after_o3_o4', 'sd_o3', 'in_tok', 'choices'] n=9
+    [-1]: dict keys=['cond', 'n', 'mean_p', 'containing', 'correct_o3', 'next_after_o3_o4', 'sd_o3', 'in_tok', 'choices'] n=9
+--- head 400 ---
+{  "meta": {   "model": "jev-1.13.0",   "workers": 3,   "state": "Reference status: indigo.",   "instructions": "Select the option whose condition matches the reference status."  },  "phases": {   "pilot": {    "started": 1789642053.012267,    "api_calls": 6,    "trials": [     {      "index": 0,      "cond": "neutral|baseline",      "keys": "neutral",      "fmt": "none",      "host": 2,      "fak
+==============================================================================
+option-position.json bytes=156163
+dict keys=['meta', 'phases'] n=2
+  meta: dict keys=['model', 'workers', 'server_ms_header'] n=3
+    model: str 'jev-1.13.0'
+    workers: int 4
+    server_ms_header: str 'x-envoy-upstream-service-time'
+  phases: dict keys=['cap', 'pilot', 'main', 'labels', 'near_pilot', 'binding_pilot', 'crossn'] n=7
+    cap: dict keys=['started', 'api_calls', 'trials'] n=3
+    pilot: dict keys=['started', 'api_calls', 'trials'] n=3
+    main: dict keys=['started', 'api_calls', 'trials'] n=3
+    labels: dict keys=['started', 'api_calls', 'trials'] n=3
+    near_pilot: dict keys=['started', 'api_calls', 'trials'] n=3
+    binding_pilot: dict keys=['started', 'api_calls', 'trials'] n=3
+    crossn: dict keys=['started', 'api_calls', 'trials'] n=3
+--- head 400 ---
+{"meta": {"model": "jev-1.13.0", "workers": 4, "server_ms_header": "x-envoy-upstream-service-time"}, "phases": {"cap": {"started": 1789639332.5043662, "api_calls": 7, "trials": [{"index": 0, "template": "cap", "n": 255, "position": 0, "correct_key": "o1", "status": 200, "attempts": [200], "server_ms": 142.0, "wall_ms": 949.0, "in_tok": 2472, "out_tok": 2460, "request_id": "req_01a0aed115b97cfeba70
+==============================================================================
+output-token-accounting.json bytes=321176
+dict keys=['description', 'questionIds', 'batches', 'states', 'words', 'inputVersusOutput'] n=6
+  description: str 'Output- and input-token accounting probes, 17 September 2026. Question IDs, batch sizes, state difficulty, word IDs and matched state/ID strings.'
+  questionIds: dict keys=['schema', 'created_utc', 'seed', 'planned_requests', 'notes', 'trials'] n=6
+    schema: str 'jev-output-token-trials.v1'
+    created_utc: str '2026-09-17T07:51:04.642194+00:00'
+    seed: int 2026091703
+    planned_requests: int 122
+    notes: list n=3
+    trials: list n=122
+  batches: dict keys=['schema', 'created_utc', 'planned_requests', 'notes', 'trials'] n=5
+    schema: str 'jev-output-token-batches.v1'
+    created_utc: str '2026-09-17T07:54:57.758761+00:00'
+    planned_requests: int 46
+    notes: list n=2
+    trials: list n=46
+  states: dict keys=['schema', 'created_utc', 'planned_requests', 'notes', 'trials'] n=5
+    schema: str 'jev-output-token-states.v1'
+    created_utc: str '2026-09-17T08:08:32.725699+00:00'
+    planned_requests: int 40
+    notes: list n=3
+    trials: list n=40
+  words: dict keys=['schema', 'created_utc', 'planned_requests', 'notes', 'trials'] n=5
+    schema: str 'jev-output-token-words.v1'
+    created_utc: str '2026-09-17T08:02:59.923826+00:00'
+    planned_requests: int 47
+    notes: list n=2
+    trials: list n=47
+  inputVersusOutput: dict keys=['schema', 'created_utc', 'planned_requests', 'notes', 'trials'] n=5
+    schema: str 'jev-input-output-token-trials.v1'
+    created_utc: str '2026-09-17T08:16:27.060531+00:00'
+    planned_requests: int 56
+    notes: list n=2
+    trials: list n=56
+--- head 400 ---
+{"description": "Output- and input-token accounting probes, 17 September 2026. Question IDs, batch sizes, state difficulty, word IDs and matched state/ID strings.", "questionIds": {"schema": "jev-output-token-trials.v1", "created_utc": "2026-09-17T07:51:04.642194+00:00", "seed": 2026091703, "planned_requests": 122, "notes": ["Only question ID and JSON wire escaping vary; state and question stay fi
+==============================================================================
+tokenizer-fingerprint.json bytes=279399
+dict keys=['meta', 'trials'] n=2
+  meta: dict keys=['schema', 'model', 'question', 'empty_state_input_tokens_pilot', 'note'] n=5
+    schema: str 'jev-tokenizer-fingerprint.v1'
+    model: str 'jev-1.13.0'
+    question: dict keys=['n1'] n=1
+    empty_state_input_tokens_pilot: int 267
+    note: str 'tokens(S) = input_tokens - input_tokens(state="")'
+  trials: list n=421
+    [0]: dict keys=['index', 'family', 'label', 'state', 'payload', 'status', 'attempts', 'wall_ms', 'server_ms', 'request_id', 'in_tok', 'out_tok', 'body'] n=13
+    [-1]: dict keys=['index', 'family', 'label', 'state', 'payload', 'status', 'attempts', 'wall_ms', 'server_ms', 'request_id', 'in_tok', 'out_tok', 'body'] n=13
+--- head 400 ---
+{  "meta": {   "schema": "jev-tokenizer-fingerprint.v1",   "model": "jev-1.13.0",   "question": {    "n1": {     "type": "noul",     "instructions": "x"    }   },   "empty_state_input_tokens_pilot": 267,   "note": "tokens(S) = input_tokens - input_tokens(state=\"\")"  },  "trials": [   {    "index": 0,    "family": "run",    "label": "run['e']x64",    "state": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee

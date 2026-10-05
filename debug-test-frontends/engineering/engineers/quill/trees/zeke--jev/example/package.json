@@ -1,0 +1,7 @@
+{
+  "name": "jev-test",
+  "private": true,
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

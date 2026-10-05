@@ -1,0 +1,228 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PVX25TWWB46A866K9GZMVG",
+  "at": "2026-09-17T05:03:48.252Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 87772,
+  "usage": {
+    "inputTokens": 2403,
+    "outputTokens": 237,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.03588
+  },
+  "reasoningChars": 0,
+  "reply": "Você gastou **R$ 942,50 com restaurantes neste mês**, R$ 142,50 acima dos R$ 800,00. Criei a tarefa “Revisar orçamento de restaurantes” e enviei um resumo pelo WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "expenses_summary",
+      "confidence": 0.96,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 813,
+      "top": [
+        {
+          "name": "expenses_summary",
+          "p": 0.96
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0.04
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "hotels_search",
+          "p": 0
+        },
+        {
+          "name": "transfer_money",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "task_create",
+      "confidence": 0.99,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 778,
+      "top": [
+        {
+          "name": "task_create",
+          "p": 1
+        },
+        {
+          "name": "flights_hold",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_calendars",
+          "p": 0
+        },
+        {
+          "name": "medication_reminder_set",
+          "p": 0
+        },
+        {
+          "name": "notes_delete",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurantes",
+        "due_date": "",
+        "priority": "medium",
+        "list": "",
+        "notes": "Em setembro de 2026, os gastos com restaurante somam R$ 942,50, excedendo o limite de R$ 800,00 em R$ 142,50. Revisar o orçamento."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.96,
+      "done": 0.13,
+      "gated": false,
+      "latencyMs": 287,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.97
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.03
+        },
+        {
+          "name": "task_complete",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Seus gastos com restaurante em setembro somam R$ 942,50 — R$ 142,50 acima do limite de R$ 800,00. Criei a tarefa “Revisar orçamento de restaurantes” para você revisar o orçamento.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.95,
+      "gated": false,
+      "latencyMs": 328,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "message_read_recent",
+          "p": 0
+        },
+        {
+          "name": "transfer_money",
+          "p": 0
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50 com restaurantes neste mês**, R$ 142,50 acima dos R$ 800,00. Criei a tarefa “Revisar orçamento de restaurantes” e enviei um resumo pelo WhatsApp."
+    }
+  ]
+}

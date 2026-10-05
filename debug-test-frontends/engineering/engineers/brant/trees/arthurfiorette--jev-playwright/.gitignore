@@ -1,0 +1,15 @@
+node_modules
+.env
+.env.*
+!.env.example
+dist
+test-results
+coverage
+*.log
+/.oclif
+oclif.manifest.json
+parity.md
+docs/
+schema.json
+bench/results/
+bench/generated/

@@ -1,0 +1,129 @@
+#!/usr/bin/env node
+import { createInterface } from 'node:readline';
+import { once } from 'node:events';
+import { JevBrowser } from './browser.js';
+import { parseCommand, executeCommand, commandSchemas } from './commands.js';
+import { BrowserError, publicError } from './errors.js';
+import { startMcpStdio } from './stdio.js';
+import { openSession, sendSession, listSessions, hasSession } from './sessions.js';
+import { parseCLI, commandFromCLI, positive, readJSON } from './cli-options.js';
+import { installBrowser } from './install.js';
+import { requireCapability } from './capabilities.js';
+import { version } from './version.js';
+const help = `jev-browser — grounded Jev decisions and native Playwright, one SDK / CLI / MCP core
+
+  jev-browser open https://example.com --session work
+  jev-browser snapshot --session work
+  jev-browser click REF_OR_SELECTOR --session work
+  jev-browser fill REF_OR_SELECTOR 'literal text' --session work
+  jev-browser act 'Click Save' --session work
+  jev-browser extract 'Read title' --fields '{"title":"string"}' --session work
+  jev-browser semantic_locate --args '{\"description\":\"The current plan control\"}' --session work\n  jev-browser semantic_compare --args '{\"actual\":{\"description\":\"Current plan\"},\"expected\":\"Professional annual plan\",\"minConfidence\":0.8}' --session work\n  jev-browser semantic_assert --args '{\"actual\":{\"description\":\"Billing status\"},\"expected\":\"Paid\",\"minConfidence\":0.9}' --session work\n  jev-browser assert --args '{"target":"h1","property":"text","expected":"Saved"}' --session work
+  jev-browser resume CONTINUATION_ID --values '{"membershipCode":"MEM-42"}' --session work
+  jev-browser close --session work
+  jev-browser sessions                  List sessions for this working directory
+  jev-browser session                   JSONL stdin commands, one browser
+  jev-browser mcp                       Official MCP stdio server
+  jev-browser install [BROWSER]         Install the browser build the resolved playwright-core needs
+
+All native commands accept --args JSON. 'call COMMAND --args JSON' is equivalent.
+Aliases: open, fill, press, select, uncheck, back, forward, upload, screenshot-file.
+Commands: ${Object.keys(commandSchemas).join(', ')}
+
+Options:
+  --session NAME / -s NAME    Persistent session; open defaults to 'default'
+  --url URL                  One-shot initial URL (fresh browser without --session)
+  --args JSON                Exact command arguments; '-' reads JSON from stdin
+  --values JSON              Named AI input bindings (literal values stay local)
+  --fields JSON              Scalar extraction fields
+  --schema JSON              JSON Schema for nested objects / arrays
+  --records-scope CSS        Repeated record roots for array extraction
+  --scope CSS  --frame N     Bound observation or select a native frame
+  --plan-id ID  --max-steps N  --timeout-ms N
+  --max-elements N  --max-texts N  --max-candidates N
+                             Session defaults at open; per-call limits on observing commands
+  --exclude CSS (repeatable)  Leave matching subtrees out of this command's observation
+  --browser chromium|firefox|webkit  --headed
+  --cdp-endpoint URL  --ws-endpoint URL  --user-data-dir DIR
+  --storage-state FILE  --output-dir DIR
+  --file-root DIR            Upload read root (repeatable); uploads are refused without one.
+                             --file-root . allows the working directory
+  --caps LIST                Enable opt-in tools, comma-separated: storage (cookies, storage,
+                             storage_state), network (route), trace, evaluate (evaluate,
+                             init_script). Fixed when a session opens
+  --viewport WxH  --reduced-motion  --color-scheme light|dark|no-preference  --locale TAG
+  --options-file FILE        JSON launch/context options; explicit flags win
+  --allow-evaluate           Same as --caps evaluate: trusted page JS, never Node code
+  --screen-only              Immutable session mode: screen pixels/physical inputs and close only
+  --screen-follow-popups     With --screen-only: a new tab the page opens becomes the observed page
+  --model NAME  --idle-timeout-ms N  --help  --version
+  --vision-base-url URL  --vision-model NAME
+                             Opt-in screen_decide: an OpenAI-compatible Chat Completions
+                             endpoint (https, or http to loopback) and image-capable model.
+                             Screenshots go there only when screen_decide runs. Key from
+                             JEV_VISION_API_KEY only. Fixed when a session opens
+
+Native operations, snapshots and assertions need no API key. AI operations use
+JEV_API_KEY (or TYPESAFE_API_KEY) for hosted Jev, or a compatible JEV_BASE_URL,
+which never receives hosted keys: set JEV_ENDPOINT_API_KEY if it needs one.
+Sessions and continuation IDs are local to the current directory and running
+browser core.
+Exit codes: 0 succeeded, 1 error, 2 stopped/unverified run or pending dialog.
+Mutation failures are never automatically retried. Input values may appear on the page.
+`;
+async function write(value: unknown): Promise<void> {
+  if (!process.stdout.write(`${JSON.stringify(value)}\n`)) await once(process.stdout, 'drain');
+}
+async function main(): Promise<void> {
+  const { values, positionals, options, capabilities } = parseCLI();
+  if (values.version) { process.stdout.write(`${version}\n`); return; }
+  if (values.help || !positionals.length) { process.stdout.write(help); return; }
+  let [name, ...words] = positionals;
+  if (name === 'install') { process.exitCode = await installBrowser(words[0] ?? options.browser!, values['dry-run']); return; }
+  if (name === 'mcp') { startMcpStdio(options, values.url, capabilities); return; }
+  if (name === 'sessions') { await write({ ok: true, result: await listSessions() }); return; }
+  if (name === 'open') {
+    const result = await openSession(values.session ?? 'default', options, words[0] ?? values.url, positive(values['idle-timeout-ms'], '--idle-timeout-ms'), capabilities);
+    await write({ ok: true, result }); return;
+  }
+  if (name === 'call') { name = words.shift(); if (!name) throw new BrowserError('INVALID_ARGUMENT', 'call requires a command name.'); }
+  const request = name === 'session' ? undefined : commandFromCLI(name!, words, values);
+  const session = values.session ?? (name === 'close' || !values.url && await hasSession('default') ? 'default' : undefined);
+  const abort = new AbortController();
+  const interrupt = () => { abort.abort(); process.exitCode = 130; };
+  process.once('SIGINT', interrupt); process.once('SIGTERM', interrupt);
+  const browser = session ? undefined : await JevBrowser.launch(options);
+  const execute = (request: ReturnType<typeof parseCommand>) => {
+    const signal = AbortSignal.any([abort.signal, AbortSignal.timeout(options.timeoutMs ?? 300_000)]);
+    // A named session enforces the capabilities fixed when it was opened.
+    if (session) return sendSession(session, request, signal);
+    if (!browser!.screenOnly) requireCapability(capabilities, request.command);
+    return executeCommand(browser!, request, signal);
+  };
+  try {
+    if (values.url && !['goto', 'navigate'].includes(name!)) {
+      // Fresh launch URL is trusted setup; named-session commands remain restricted.
+      if (browser?.screenOnly) await browser.goto(values.url);
+      else await execute(parseCommand({ command: 'goto', url: values.url }));
+    }
+    if (name === 'session') {
+      const lines = createInterface({ input: process.stdin, crlfDelay: Infinity });
+      for await (const line of lines) {
+        if (!line.trim()) continue;
+        let id: unknown;
+        try {
+          const raw = readJSON(line, 'Session command');
+          if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) throw new BrowserError('INVALID_ARGUMENT', 'Session command must be an object.');
+          const { id: requestId, ...input } = raw as Record<string, unknown>; id = requestId;
+          await write({ ...(id !== undefined ? { id } : {}), ok: true, result: await execute(parseCommand(input)) });
+        } catch (error) { process.exitCode = 1; await write({ ...(id !== undefined ? { id } : {}), ok: false, error: publicError(error) }); }
+      }
+    } else {
+      const result = await execute(request!); await write({ ok: true, result });
+      if ('status' in result && ['stopped', 'unverified', 'dialog'].includes(String(result.status))) process.exitCode = 2;
+    }
+  } finally {
+    process.off('SIGINT', interrupt); process.off('SIGTERM', interrupt); await browser?.close();
+  }
+}
+main().catch(async error => { process.exitCode = 1; await write({ ok: false, error: publicError(error) }); });

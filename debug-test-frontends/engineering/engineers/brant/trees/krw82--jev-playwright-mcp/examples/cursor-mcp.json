@@ -1,0 +1,19 @@
+// Cursor — save as .cursor/mcp.json in your project (or ~/.cursor/mcp.json for global).
+// Cursor's mcp.json is JSONC, so these comments are fine.
+// Replace /absolute/path/to/jev-playwright-mcp with your checkout path.
+// "--headless" is an upstream Playwright MCP flag and is optional.
+{
+  "mcpServers": {
+    "jev-playwright": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/jev-playwright-mcp/cli.js",
+        "--jev-mode=all",
+        "--headless"
+      ],
+      "env": {
+        "TYPESAFE_API_KEY": "tsk_YOUR_KEY_HERE"
+      }
+    }
+  }
+}

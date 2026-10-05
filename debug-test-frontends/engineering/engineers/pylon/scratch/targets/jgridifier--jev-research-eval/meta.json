@@ -1,0 +1,15 @@
+{
+  "full_name": "jgridifier/jev-research-eval",
+  "html_url": "https://github.com/jgridifier/jev-research-eval",
+  "description": "Reproducible Jev Ultrafast research-browser eval harness + field note (QC\u2019d cases, suite runner, report generator). Not investment advice.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-17T14:43:56Z",
+  "size": 133,
+  "stargazers_count": 2,
+  "license": "NOASSERTION",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "HTML",
+  "commit": "6a4e9bbd9454cc96300ee3724ac613bc52d21351"
+}

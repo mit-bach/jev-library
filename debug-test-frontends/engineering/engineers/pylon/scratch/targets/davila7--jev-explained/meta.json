@@ -1,0 +1,15 @@
+{
+  "full_name": "davila7/jev-explained",
+  "html_url": "https://github.com/davila7/jev-explained",
+  "description": "Jev Explained",
+  "default_branch": "main",
+  "pushed_at": "2026-09-20T16:53:26Z",
+  "size": 1180,
+  "stargazers_count": 33,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jev-explained-drab.vercel.app",
+  "language": "TypeScript",
+  "commit": "5cbe35e04609112be77b1bd447bd79b3bde7980b"
+}

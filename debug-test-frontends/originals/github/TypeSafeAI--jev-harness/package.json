@@ -1,0 +1,40 @@
+{
+  "name": "jev-harness",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A custom coding harness for TypeSafe AI's Jev: an LLM proposes, Jev answers narrow questions, code decides, every step leaves a receipt.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "prepare": "git config core.hooksPath .githooks || true",
+    "check:secrets": "node scripts/check-secrets.mjs --all",
+    "bench:routing": "tsx scripts/bench-routing.ts",
+    "bench:review": "tsx scripts/bench-review.ts",
+    "experiment:routing": "tsx scripts/experiment-routing.ts",
+    "experiment:review": "tsx scripts/experiment-review.ts",
+    "demo": "pnpm dev",
+    "dev": "next dev --webpack --hostname 127.0.0.1 --port 4173",
+    "build": "next build --webpack",
+    "start": "next start --hostname 127.0.0.1 --port 4173"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "dependencies": {
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.5"
+  }
+}

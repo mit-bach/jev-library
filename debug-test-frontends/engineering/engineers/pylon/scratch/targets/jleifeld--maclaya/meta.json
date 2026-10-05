@@ -1,0 +1,15 @@
+{
+  "full_name": "jleifeld/maclaya",
+  "html_url": "https://github.com/jleifeld/maclaya",
+  "description": "Run Laya typed-decision models locally with one command on Apple Silicon behind a Jev-compatible API, with a dashboard and playground",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T08:15:24Z",
+  "size": 633,
+  "stargazers_count": 0,
+  "license": "Apache-2.0",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "TypeScript",
+  "commit": "351e045a1967007920a4590f258fff3664223205"
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 215 44" width="215" height="44">
+  <g transform="translate(0, 6)" fill="none" stroke="#FFFFFF">
+    <rect x="8" y="8" width="24" height="24" stroke-width="1"></rect>
+    <rect x="4" y="4" width="24" height="24" stroke-width="1.5"></rect>
+    <rect x="0" y="0" width="24" height="24" stroke-width="2"></rect>
+  </g>
+
+  <g font-family="Geist, Inter, ui-sans-serif, system-ui, sans-serif" letter-spacing="-0.6">
+    <text x="44" y="28" font-size="18" font-weight="600" fill="#FFFFFF">AI Coders <tspan font-weight="300" fill="#A1A1AA">Academy</tspan></text>
+  </g>
+</svg>

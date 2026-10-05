@@ -1,0 +1,15 @@
+{
+  "full_name": "grandaha/jev-playground",
+  "html_url": "https://github.com/grandaha/jev-playground",
+  "description": "Experiments with Jev, a decision model. First: customer record matching with explained decisions.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-01T00:30:07Z",
+  "size": 3851,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "HTML",
+  "commit": "e4827651dba502f26b9848195d738b28289baba5"
+}

@@ -1,0 +1,373 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PVS8VNKYK81A1SER4WY4Y5",
+  "at": "2026-09-17T05:01:00.292Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 7,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 7,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 44058,
+  "usage": {
+    "inputTokens": 15853,
+    "outputTokens": 1380,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.22753
+  },
+  "reasoningChars": 301,
+  "reply": "Tudo pronto para sexta (18/09):\n\n- **Voo segurado (sem pagamento):** GOL G31410, SDU→CGH, 11:30–12:35, R$ 298 — o mais barato da manhã. Código da reserva: HLD-4471, válida até 18/09 às 02:00. Atenção: a chegada às 12:35 deixa pouca folga para a reunião das 14h; se preferir mais margem, o GOL das 8:00 custa R$ 312.\n- **Hotel reservado:** Hotel Paulista Plaza (0,6 km da reunião, nota 4,4), R$ 420/noite, check-in 18/09 e check-out 19/09. Confirmação: HTL-7781.\n- **Agenda:** bloqueio \"Viagem SP\" criado das 8h às 18h de sexta.\n- **Marina** foi avisada por WhatsApp que a viagem está confirmada.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.01,
+      "gated": false,
+      "latencyMs": 716,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "hotels_book",
+          "p": 0
+        },
+        {
+          "name": "shopping_list_add",
+          "p": 0
+        },
+        {
+          "name": "budget_get",
+          "p": 0
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "05:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_hold",
+      "confidence": 0.97,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 654,
+      "top": [
+        {
+          "name": "flights_hold",
+          "p": 0.98
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.01
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0
+        },
+        {
+          "name": "ride_estimate",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "hotels_search_nearby",
+      "confidence": 0.55,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 680,
+      "top": [
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.57
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.36
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.03
+        },
+        {
+          "name": "flights_book",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "hotels_book",
+      "confidence": 0.93,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 892,
+      "top": [
+        {
+          "name": "hotels_book",
+          "p": 0.94
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.03
+        },
+        {
+          "name": "flights_book",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "message_search",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_1",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "calendar_block_time",
+      "confidence": 0.96,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 490,
+      "top": [
+        {
+          "name": "calendar_block_time",
+          "p": 0.97
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.01
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.81,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 484,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.82
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.15
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_list_calendars",
+          "p": 0
+        },
+        {
+          "name": "weather_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 5,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "Oi Marina! A viagem para São Paulo na sexta (18/09) está confirmada: voo GOL G31410 SDU→CGH às 11:30 (reservado), hotel Paulista Plaza a 600 m da reunião das 14h na Av. Paulista, 1000, e agenda bloqueada das 8h às 18h. Abraço, Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 6,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.97,
+      "done": 0.7,
+      "gated": false,
+      "latencyMs": 965,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.98
+        },
+        {
+          "name": "flights_book",
+          "p": 0.02
+        },
+        {
+          "name": "contacts_search_by_company",
+          "p": 0
+        },
+        {
+          "name": "home_set_thermostat",
+          "p": 0
+        },
+        {
+          "name": "weather_forecast",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 6,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo pronto para sexta (18/09):\n\n- **Voo segurado (sem pagamento):** GOL G31410, SDU→CGH, 11:30–12:35, R$ 298 — o mais barato da manhã. Código da reserva: HLD-4471, válida até 18/09 às 02:00. Atenção: a chegada às 12:35 deixa pouca folga para a reunião das 14h; se preferir mais margem, o GOL das 8:00 custa R$ 312.\n- **Hotel reservado:** Hotel Paulista Plaza (0,6 km da reunião, nota 4,4), R$ 420/no"
+    }
+  ]
+}

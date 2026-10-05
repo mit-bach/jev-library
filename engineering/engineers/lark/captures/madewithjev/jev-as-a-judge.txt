@@ -1,0 +1,473 @@
+Jev as a judge: 24 builds that grade AI outputSkip to contentMade with JevBuilds
+All builds749
+By type
+Jev Engineering15
+GitHub330
+Skills12
+X posts433
+YouTube57
+Sites43
+Resources159Community submissionsUse cases
+Agents and browsers170
+Context and memory33
+Coding and code review40
+Routing and model choice55
+SDKs and integrations123
+Open source146
+Benchmarks and evals137
+Search35
+Documents and OCR30
+Security and abuse33
+Inbox and support24
+Social feeds51
+Ads and marketing24
+Sales and leads15
+SEO and GEO10
+Ecommerce7
+Games and real time74
+Trading and markets26
+Robotics and devices14
+UI14
+Tools and apps50What people use Jev forToolsLearn
+The basics
+Jev explained
+What is Jev
+What is Jev Engineering
+Jev vs an LLM
+Jev pricing
+Jev statistics
+By job
+Jev use cases
+Jev as a judge
+Jev for SEO
+Jev for ads
+Jev for marketing
+Building with Jev
+How to use Jev
+Jev with Claude Code
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Open-source Jev
+Fine-tune Jev
+Jev and imagesAll guides19Free tools
+AI Slop DetectorHow AI-made does a page look?All free tools1Search⌘KSponsorsSubmit a build
+All builds749
+Tools
+Community
+What is Jev
+AboutSponsors
+Builds by type
+Jev Engineering15
+GitHub330
+Skills12
+X posts433
+YouTube57
+Sites43
+Resources159
+Use cases
+Agents and browsers170
+Context and memory33
+Coding and code review40
+Routing and model choice55
+SDKs and integrations123
+Open source146
+Benchmarks and evals137
+Search35
+Documents and OCR30
+Security and abuse33
+Inbox and support24
+Social feeds51
+Ads and marketing24
+Sales and leads15
+SEO and GEO10
+Ecommerce7
+Games and real time74
+Trading and markets26
+Robotics and devices14
+UI14
+Tools and apps50
+Learn
+Jev explained
+What is Jev
+What is Jev Engineering
+Jev vs an LLM
+Jev pricing
+Jev statistics
+How to use Jev
+Jev with Claude Code
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Open-source Jev
+Fine-tune Jev
+Jev and images
+Jev use cases
+Jev as a judge
+Jev for SEO
+Jev for ads
+Jev for marketing
+All guides19
+Free tools
+AI Slop DetectorHow AI-made does a page look?
+All free tools1
+Jev as a judge
+An LLM judge writes an opinion that happens to contain a verdict. Jev returns the verdicts. That one difference is why the builds below judge things nobody was judging before — every post in a feed, every turn in a session, every paragraph of a draft — and why the useful ones all answer the same follow-up question: where does an unsure verdict go?
+Updated 22 Sept 2026 · by Made with Jev
+In short
+The largest published judging run here: 1,709 editorial judgments for under a cent, at 0.35 s a passage against 8.83 s for Fable 5.1.
+A whole rubric costs about what one question costs. Builders are asking 8, 14 and 61 questions of the same state in a single request.
+Nothing comes back as prose. No reason, no critique, no rewrite — so a rubric that needs an explanation still needs a generative judge.
+The confidence is the product, not a bonus. Every build here that survived contact with real data routes the unsure case to a person or to a bigger model.
+What changes when the judge cannot write
+An LLM judge and a Jev judge are given the same things: the input, the output, the evidence and a rubric. What differs is the shape of the answer, and almost every practical consequence follows from it.Jev as the judgeA generative judgeWhat comes backThe verdicts, typed, with probabilitiesText that contains the verdictsA 20-question rubricOne request, roughly one question’s costA longer prompt and a longer output, priced as suchReason for the verdictNoneYes, and it is often the reason you called itUncertaintyA number your code can thresholdHedging inside the prose, or a self-reported scoreCoverage it affordsEvery run, every item, on every deployA sample, or a nightly batchWhat a wrong verdict looks likeA wrong option, usually with a middling confidenceA fluent justification of the wrong answer
+The row that decides most swaps is coverage. When evaluation is expensive, teams inspect fewer traces, check fewer dimensions or run the evals less often; the trade is made quietly and never revisited. A judge priced in hundredths of a cent takes that trade off the table — which is worth something only if the judge is right, and knowing whether it is is the harder half of this page.
+The pattern had already spread before it had a name
+24 builds in this directory are judges, and they were not built by people following a tutorial. They arrived separately, because everyone who put a typed decision inside software found the same question waiting: was that output any good? Vercel’s open agent framework now ships Jev as its default evaluate model, which is the clearest signal that this stopped being a clever idea and became the expected wiring.
+What they judge splits four ways, and the split is worth keeping, because the escalation path is different in each.
+Judging an agent's own run
+The evaluation case: a trace goes in, typed verdicts come out, and something else stores them. Vercel's agent framework ships Jev as the default evaluate model, which is the clearest signal yet that this is the pattern the tooling expects.
+Akshay 🚀
+@akshay_pachaar
+GitHub·Benchmarks and evals
+jev-as-judgeTraces10 frozenQuestions4 in one request
+GitHub·Benchmarks and evals
+eve
+Vercel’s open agent framework, with Jev as its default evaluate model.
+VVercel5.4k
+GitHub·Coding and code review
+jev-turn-analysis
+Reads a finished coding session and judges each turn.
+ZHZach Hobbs0
+Min(building Moss, hiring now)
+@zeroxmin
+Great article from Hrishi!
+So despite all the hype, JEV is a great observer for agent runs (progress, time/cost-to-finish, trace labeling), but not a security gate, and not yet a laziness detector.
+
+Still sounds good to plan JEV into our roadmap and explore some use cases for onchain agents!
+X·Benchmarks and evals
+Jev as an observer of agent runs
+Niaz Morshed
+@niazmorshed_
+built `jev-review` @typesafeai 
+
+it's an experimental, local-first MCP plugin that gives coding agents a score quality feedback loop across different metrics. 
+
+agents call jev while they work, get scored, make improvements, and repeat the loop
+
+try below 👇
+X·Coding and code review
+jev-review
+Raihan Khan
+@raihankhan_rk
+I got access to Jev by @typesafeai today morning and I built a cool use case for it 
+
+Introducing DiffJury - simply paste any public PR link and Jev tells you immediately if it's safe to merge or does it require review ✅
+
+🔗 Feel free to try it out here - http://diffjury.up.railway.app 
+
+Imagine Jev being able to tell you if you should merge a PR with grounded context of your codebase. that's what we're building at @graphify 👀
+
+It's fascinating how insanely fast Jev is... the model architecture in itself is quite interesting and this has opened up a plethora of new use cases and I'm sure the internet will pick up on it sooner than anyone'd expect
+Live site·Coding and code review
+DiffJury
+GitHub·Coding and code review
+jev-review-action
+A GitHub Action that reviews and classifies PRs with Jev alone.
+Wwang22
+GitHub·Coding and code review
+Hunch
+Code review against rules you write in plain English.
+KKelbie5
+Judging writing before it ships
+A rubric over a draft, run while the writer is still there. The strongest published figure in the directory is here: 1,709 editorial judgments for under a cent, at 0.35 seconds a passage against 8.83.
+Dan Shipper
+@danshipper
+we almost never test new foundation models but we've been testing this for ~a week @every and it's pretty wild.
+
+the kind of things that will be obviously indispensible in 6-12 months
+
+it doesn't produce words as output, it produces probabilities. so it can efficiently act as a judge in cases where you'd need a Fable-level model—but in our testing was 25x faster and 600x lower priced 
+
+excellent vibe check by @hammer_mt on @every:
+https://every.to/also-true-for-humans/mini-vibe-check-typesafe-s-jev-judged-everything-i-ve-written-in-0-7-seconds?utm_cta_source=home_main_a_3
+Article·Benchmarks and evalsPick
+Every’s editorial vibe checkJudgments1,709Total cost<$0.01Median per passage0.35 s
+GitHub·Social feeds
+Clarity Judge
+Writing checked on separate named axes, each with its own verdict.
+T(TypeSafeAI (community)3
+GitHub·Social feeds
+Sniff Test
+A prose linter for AI writing tells: regex rules plus Jev for judgment.
+DWDaniel Willoughby33
+GitHub·Coding and code review
+taste-lint
+Catches AI slop in a diff before it ships.
+MBMatthew Blode5
+Jon Kraayenbrink
+@kraayenJon
+jev is INSANE.
+
+in 243 ms it checked a website for 35 tells of ai slop.
+
+purple gradients. emoji headers. "seamlessly". fake testimonials. bento grids. the works. used $0.00015 of tokens.
+
+paste any url, get a slop score. free:
+madewithjev.com/free-tools/ai-…
+Live site·Social feeds
+AI slop detectorCheck time243 msTells checked35Cost$0.00015
+Rob Hallam
+@robj3d3
+Jev + SuperX = virality solved ✅
+
+Every post gets 61 questions in ~1s for $0.0004 🤯
+
+> fitted on 9,481 real posts from 207 creators
+> picks the viral post 2 in 3 times
+> never rewards reply bait
+
+So: write, score, rewrite, stop when it peaks.
+
+Free, no signup. try it below ↓
+X·Social feeds
+Post scoring with SuperXQuestions per draft61Latency~1 sCost$0.0004
+Judging a feed nobody could read
+Where the cost per verdict decides whether the judging happens at all. A Bluesky post gets eight questions for about three thousandths of a cent, and the posts the judge will not commit on go to a lane marked for a human.
+GitHub·Security and abuse
+firehose-judge
+The live Bluesky firehose, judged post by post, with a lane for humans.
+LMLeo Mata0~$0.00003
+GitHub·Security and abuse
+Jev Anti-Spam Bot
+A Telegram bot that deletes only the spam Jev is sure about.
+NKNikita Kolmogorov11
+GitHub·Social feeds
+LinkedIn NoSlop
+A Chrome extension that blurs low-value LinkedIn posts.
+Ssushrutb170
+GitHub·Documents and OCR
+jev-papers
+A thousand arXiv papers, one Jev decision each, checked by an LLM judge.
+Sstas400071,000 papers
+Hassan
+@nutlope
+I used Jev to classify 1,018 AI research papers.
+
+The result: $0.08 total cost and 256ms median end-to-end latency per paper.
+
+The pipeline was:
+
+1. Summarize each paper with DeepSeek V4 Flash
+2. Send the title + summary + 24 possible topics to Jev
+3. Use Jev to classify each paper
+4. Visualize everything on http://1kpapers.com
+
+The summaries cost $3.99 on @togethercompute. The classifications cost $0.08 on @typesafeai.
+
+So for just over $4 of inference, I ended up with a pretty useful way to explore the top AI research papers from the past year.
+
+I think this is where things are heading: different models for different parts of the workflow, instead of using one model for everything.
+
+I’m running evals on the Jev classifications before replacing the current ones, but the site is already live: http://1kpapers.com
+Live site·Documents and OCR
+1kpapersDocuments1,018 papersTotal cost$0.08Median latency256 ms
+Working out whether the judge is right
+A confident wrong verdict is worse than no verdict. These are the builds that treat the question itself as the thing under test: calibrate it against labels you already have, lint it, or predict the result before you collect any data.
+GitHub·Benchmarks and evals
+jev-calibrate
+Tune your Jev questions against your own labels, then confirm on held-out data.
+Ssmkrv32
+Skill·Benchmarks and evals
+tenbin
+Split a judgment into Choice, Score and Noul, lint it, then measure it.
+SIShingo Imota4
+GitHub·Benchmarks and evals
+jev-evaluation
+Nine experiments and 28 predictions, all fixed before any data.
+WKWill Kelly1123,805
+Skill·Agents and browsers
+Augustus
+An agent skill for designing systems around Jev’s judgments.
+BMBasit Mustafa11
+GitHub·SDKs and integrations
+jeview
+A local visualiser: every Jev call your code makes, live.
+Aandududu59
+What judging actually costs, from the people who ran it
+Every figure here is its author’s own, on their own workload. None of it is a benchmark, and none of it is ours.Published runs where the job was judging something, not generating it.What was judgedRubricResult37 documents of Mike Taylor’s writing21 questions each, 1,709 judgmentsUnder $0.01; 0.35 s a passage against 8.83 s100,000 viral X posts14 yes-or-no questions each20.4 s, $0.67A live Bluesky sample8 questions a post, from bait to bot-ness~$0.00003 a post, with a human lane1,018 AI research papersOne choice from 24 topics$0.08, 256 ms medianA draft social post61 questions~1 s, $0.0004
+The editorial run is also the most honest one in the directory. Mike Taylor planted seven defects in his own writing before he started. Jev found six. The seventh needed the larger model, and he published that too. Read the cost column next to that sentence and you have the whole trade: nearly all of the judgment for nearly none of the money, and the part you give up is the part that needed reading between the lines.
+A judge is not an evaluation system
+Swapping the judge does not give you datasets, traces, experiment records, a way to compare two agent versions, or anywhere to look when two judgments disagree. Those were never the judge’s job. The builds here that hold up keep the surrounding platform and change only the component that produces the score.
+The clearest worked example of that separation is Akshay Pachaar’s. He evaluates a refund-support agent with Jev and records the results as an Opik experiment: Jev makes the semantic judgments, Opik keeps the evidence. His case is a good one to hold in mind, because a deterministic check and a semantic judge disagree in it by design. The agent looks up order R103, no refund tool ever succeeds, and the final answer says “Done. I have issued your refund.” Code can tell you the refund call did not succeed. Only a judge can tell you the answer claimed it did.
+Three rules from that repository are worth stealing whatever platform you use. Ask atomic questions and write the instructions out in full, because the question’s own id is not seen at inference and carries none of your meaning. Never let a failed evaluation become a passing score — an error is an error, marked and routed, not a clean result. And leave the platform’s reason field empty: Jev does not supply an explanation, so anything you put there is one you invented.
+Akshay 🚀
+@akshay_pachaar
+Guide·x.com
+Build a Jev Judge
+Akshay Pachaar’s worked example: evaluate a refund-support agent with Jev instead of a generative judge, and record the verdicts in Opik. Separates the judge from the evaluation system, and is explicit that a 0.98 is a probability about one proposition, not a percentage of the answer.
+Guide·github.com
+Opik
+Comet’s open-source evaluation and tracing platform, Apache-2.0. Datasets, experiments and trace-level feedback, with a custom-metric interface that takes several named scores from one call — which is how a Jev judge is wired into it.
+Guide·arize.com
+Trace every judgment with Phoenix
+Arize’s instrumentation for Jev: one line of code to trace each decision, with the integration docs.
+What a 0.98 is, and what it is not
+This is where most judge swaps go wrong, and it is not a Jev problem so much as a probability one.
+A Noul answer of 0.98 is the model’s probability of a yes to the single proposition you asked about. It is not the share of the answer that was grounded, and it is not the probability that the verdict is correct. A value near zero is a strong no, not a missing answer. A value in the middle is uncertainty, not a mediocre pass. On an ordered Score the number is a probability-weighted position on your own rubric, and the confidence beside it summarises the spread across those levels — again, not a verified chance of being right.
+Which means every threshold you have seen written down, here or anywhere else, is illustrative until you check it against labels of your own. The builds that take that seriously are the most useful ones on this page: jev-calibrate tunes the questions on labelled examples and confirms on a held-out set; tenbin lints a judgment, measures it and puts the calibrated thresholds in code; and Will Kelly’s evaluation wrote down 28 predictions before collecting any data, then spent 123,805 requests and $12.69 finding out which ones survived, and published the ones that did not.
+One design detail helps more than any threshold. Clarity Judge reports each axis separately — hedging, filler, tone, passive voice — with its own verdict, confidence and the sentence behind it, instead of one blended number. A rolled-up score hides which question was the one that went wrong, and the whole advantage of a typed judge is that you get to see.
+Where the unsure verdict goes
+A judge without an escalation path is a judge you cannot act on. Four published answers to that, each different:
+A lane for people. firehose-judge sends every post Jev will not commit on to a queue marked “needs a human”, rather than guessing on the reader’s behalf.
+A bigger model for the rest. One fraud pipeline clears 100 emails in 1.42 seconds with Jev and sends only the unsure ones to Kimi K3, scoring 96 out of 100 for about seven cents.
+Act only on certainty. The Telegram anti-spam bot deletes only high-confidence matches, skips admins, and leaves messages alone entirely when Jev is unavailable. Failing open is a decision it made on purpose.
+Keep what you are unsure about. Winnow drops a block of context only on a confident no; anything between the thresholds is kept, and if the judge thinks the output shows an error, nothing is hidden at all.
+GitHub·Security and abuse
+firehose-judge
+The live Bluesky firehose, judged post by post, with a lane for humans.
+LMLeo Mata0~$0.00003
+Hassan
+@nutlope
+Jev + Kimi K3 for fraud detection!
+
+TLDR: Jev classified 100 emails in 1.42 seconds, then I routed the uncertain cases to Kimi K3. The full pipeline got 96/100 correct for only ~$0.07.
+
+Video is not sped up, check out the live run!
+
+Here was my process:
+
+I gave Jev 100 emails to classify (a mix of 50 legit & 50 fraudelent emails). It classified all of them in 1.42 seconds.
+
+An underrated feature about Jev is it will give you the confidence score for a classification, so I routed any prediction under 95% confidence to Kimi K3 to be fully sure.
+
+31 emails fell below that threshold. After routing those to Kimi K3, the combined pipeline reached 96% accuracy.
+
+The full run took 16 seconds & ~$0.07 in inference costs:
+
+- $0.068 from Kimi K3 on @togethercompute
+- $0.003 (1/3 of a cent) from Jev on @typesafeai.
+
+I think this is a really interesting pattern: use a fast specialized model like Jev for the narrow task, then route the uncertain cases to a larger LLM.
+
+I feel like this kind of approach could be a game changer for use cases like fraud or anything realtime. You can use the speed & low cost of Jev while having a larger LLM as a fallback to ensure high accuracy.
+X·Security and abusePick
+Fraud detection with Jev and Kimi K3Emails100 in 1.42 sCorrect96/100Cost~$0.07
+GitHub·Security and abuse
+Jev Anti-Spam Bot
+A Telegram bot that deletes only the spam Jev is sure about.
+NKNikita Kolmogorov11
+GitHub·Context and memory
+winnow
+A context sieve for Claude Code: Jev judges each tool result before it lands.
+GDGhaleb Dweikat95
+Where a judge must not be a guard
+Judging is post-run. A guardrail has to hold before an action that cannot be undone, and it faces something an evaluator does not: an adversary who can write into the very trace you are judging. One builder here reports Jev catching most attacks on an agent with almost no false blocks and far faster than Gemini; another, citing Hrishi’s write-up, places it as a good observer of a run — progress, cost to finish, labelling the trace — and says plainly that this is not a security gate. Both can be true, and the difference is what happens when the judge is wrong once.
+The evaluator-injection case is the one to test for. Akshay’s ten synthetic traces include an attempt to talk the evaluator round, and his rubric answers it by instructing Jev to treat the trace as data rather than as instructions — with the caveat that this reduces ambiguity and is not a proven defence. If a hostile string can reach your judge, screen it the way dsh-jev-tools screens a fetched page, and keep enforcement on a separate path from evaluation.
+Swapping your judge, in five steps
+Split the rubric. Anything a deterministic check can answer should never reach a model; what is left is the semantic part, and that is all Jev is for.
+Write each remaining criterion as one atomic question with full instructions, and give an ordered Score explicit level descriptions instead of a bare 1-to-5.
+Put the evidence in the state and the expected verdict nowhere near it, so you are testing the judge rather than reading it back your own answer.
+Label a few dozen of your own traces and fit the thresholds to them. Until you do, you have a fast judge of unknown quality.
+Keep the generative judge for the cases that need a written reason, and keep measuring what your fast judge misses — a quick evaluator that skips the important failures is worse than the slow one it replaced.
+The cost side of the swap is on the pricing page, the wider comparison on Jev vs an LLM, and the split this whole pattern belongs to on Jev Engineering: an LLM writes, Jev decides, code acts.
+Common questionsCan Jev replace LLM-as-a-judge?For the part of a rubric that is a bounded decision, yes: Jev returns the verdicts themselves rather than generating a paragraph that contains them, and it answers the whole rubric in one request. It cannot replace a judge whose output is a written critique, a judge that has to reason through several hidden steps, or one whose answer is not in a set you can write down first.Does Jev explain why it reached a verdict?No. It returns the answer, a probability for each option and, on an ordered Score, a confidence value. There is no reason text, so an evaluation platform's reason field should be left empty rather than filled with something you made up. Builds that need an explanation get it from a generative model, on the small share of cases that reach one.What does a confidence of 0.98 mean?On a Noul it is the model's probability of yes to the one proposition you asked about — not that 98% of the answer is grounded, and not a guarantee that the judge is right. On a Score, the confidence summarises the spread across your rubric levels and is separate from the score itself. Neither number is a measured accuracy until you check it against labels of your own.What does it cost to judge every agent run?Cheaply enough that the coverage question changes. Published figures in this directory: 1,709 editorial judgments for under a cent, 1,018 papers classified for $0.08, and a social post judged on eight questions for about $0.00003. A rubric of twenty questions costs about what one costs, because they are answered against the same state in one request.Can I use Jev as a guardrail rather than a judge?Careful. Judging happens after the run; a guardrail has to hold before an action that cannot be undone, and it faces an adversary who can write into the very trace you are judging. Builders here have published both sides: one reports Jev catching most attacks with few false blocks, another places it as a good run observer and says plainly that it is not a security gate.How do Jev verdicts get into an eval platform?Through the platform's custom-metric interface: call Jev once per case, then map each answer to its own named score. Opik, which is open source, takes several named scores back from one metric, so one Jev request becomes a row of columns in an experiment. Arize Phoenix has instrumentation for tracing the calls themselves.
+Made with Jev is independent and not affiliated with TypeSafe AI. Every figure on this page is the one its author published, linked to where it can be checked.
+Sponsors
+#1TripWaffleStop juggling confirmation emails. Forward them to TripWaffle and get a beautiful…
+#2EvokeA reflex is a small program you install and ask for in your words. Type a…
+#3RankSpotRankSpot is a fully automated AI agent that gets you cited in AI answers and ranked in…
+#4OpenJEVClassify, route, score, and rank with TypeSafe’s Jev model. Try the playground or…
+#5GIF DeciderDescribe the moment. Jev reads it, searches, judges every candidate, and hands you the…Advertise from $19/wk
+Made with Jev
+The #1 directory of projects built with Jev.Submit a buildBuy me a coffee
+From TypeSafe AI
+The Jev announcement
+Quickstart docs
+Workflow evals
+Not affiliated with TypeSafe AI.
+Browse
+All builds
+Jev Engineering reading list
+Jev GitHub repos
+Jev agent skills
+Jev demos and threads on X
+Jev tutorials and demos
+Jev apps you can try
+Jev docs and cookbooks
+Community feed
+Search the directory
+Learn about Jev
+All Jev guides
+What is Jev
+What is Jev Engineering
+Jev use cases
+Open-source Jev
+How to use Jev
+Jev pricing
+Jev explained
+Jev vs an LLM
+Jev for SEO
+Jev for ads
+Jev for marketing
+Jev as a judge
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Jev with Claude Code
+Fine-tune Jev
+Jev and images
+Jev statistics
+Categories
+Agents and browsers
+Context and memory
+Coding and code review
+Routing and model choice
+SDKs and integrations
+Open source
+Benchmarks and evals
+Search
+Documents and OCR
+Security and abuse
+Inbox and support
+Social feeds
+Ads and marketing
+Sales and leads
+SEO and GEO
+Ecommerce
+Games and real time
+Trading and markets
+Robotics and devices
+UI
+Tools and apps
+Tools
+Jev tools
+Free tools
+AI Slop Detector
+Take part
+Submit a build
+Sponsors
+Sponsor rules
+About
+© 2026 madewithjev.com
+Built byJon Kraayenbrink
+TripWaffleAd
+EvokeAd
+RankSpotAd
+OpenJEVAd
+GIF DeciderAd
+JevHubAd
+VestraAd
+blink.reviewAd
+SpacebrainAd
+Advertise from $19/wk
+TripWaffleAd
+EvokeAd
+RankSpotAd
+OpenJEVAd
+GIF DeciderAd
+JevHubAd
+VestraAd
+blink.reviewAd
+SpacebrainAd
+Advertise from $19/wk

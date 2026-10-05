@@ -1,0 +1,31 @@
+{
+  "arm": "B",
+  "mode": "jev_who_speaks_gate",
+  "agents": 3,
+  "rounds": 6,
+  "planned_wakes": 6,
+  "actual_wakes_sent": 0,
+  "wakes_via_parent": true,
+  "wake_protocol": "Parent SendToAgent on WAKE <serverId> <role>",
+  "jev_selector_ms_p50": 216,
+  "jev_selector_ms_samples": [
+    596,
+    490,
+    193,
+    167,
+    216,
+    261
+  ],
+  "jev_agent_picks": 6,
+  "fallback_selections": 0,
+  "vs_arm_a_wake_reduction": {
+    "arm_a_planned_wakes": 18,
+    "arm_b_planned_wakes": 6,
+    "absolute_reduction": 12,
+    "pct_reduction": 66.7
+  },
+  "wasted_speaker_estimate": 0,
+  "wasted_speaker_estimate_pct": 0,
+  "wasted_speaker_note": "Gated one speaker/round vs Arm A 3×6=18. Waste≈0 redundant wakes.",
+  "finished_et": "9/17/2026, 10:06:02 PM ET"
+}

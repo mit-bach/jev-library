@@ -1,0 +1,15 @@
+{
+  "full_name": "markjaquith/typesafe-ai-playground",
+  "html_url": "https://github.com/markjaquith/typesafe-ai-playground",
+  "description": "A playground for experiments around Jev, TypeSafe's System One model.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T21:23:21Z",
+  "size": 308,
+  "stargazers_count": 4,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Rust",
+  "commit": "cca499aebace85f8745466b0cc255d49cd5f3149"
+}

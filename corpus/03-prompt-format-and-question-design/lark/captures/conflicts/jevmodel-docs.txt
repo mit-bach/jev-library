@@ -1,0 +1,185 @@
+ Jev API Documentation: Endpoint, Request Body, and Response Fields × jevmodel.org account 
+Sign in for 100,000 free input tokens 
+About 500 Jev requests in the playground or from your own code with an API key. Packs start at $9.90 when you need more. No card required.
+ Email Password Sign in with email Verify email Verify email Resend code Password Confirm password Create account 
+ Create an account 
+ 
+ Forgot password? 
+ 
+or
+ 
+ By signing in you agree to our terms. We only use your email for your account. jev/model Playground Batch Agentsnew Use cases Evaluation & quality LLM as a JudgeAI Agent Evaluation Data matching Entity Matching Retrieval & knowledge RAG EvaluationLive Web ContextContext Compaction Routing & decisions LLM RouterSupport TriageTool-Call Guardrails All use cases → Models J JevSystem One decisions for text and JSON L LayaBetaShort-text models, coming soon O OpenAI DecisionsPreviewOpenAI’s new decision API, compared with Jev ? How to use JevSetup, request shape, and examples Docs API Pricing50% off Guides Jev builds ↗ English English简体中文繁體中文日本語한국어DeutschEspañolFrançaisPortuguêsItalianoPolski Sign in 0 tokens Sign out Try Jev free → Jev playground Batch Agentsnew Use cases What is Jev How to use Jev Jev API Docs Pricing · from $9.9050% off Jev pricing Get Jev access Jev API is open Guides Jev builds ↗ Account & API keys Sign out TypeSafe AI ↗ English简体中文繁體中文日本語한국어DeutschEspañolFrançaisPortuguêsItalianoPolski × Jev Model · Developer reference 
+Jev API documentation 
+Call the hosted Jev decision API with one state and a set of typed questions — get back a choice, a score, and yes/no probabilities your code can branch on. This reference covers the wire format, response fields, billing, failure handling, and the remote MCP server for agents.
+ + New key → Try the playground → Base URL https://jevmodel.org Evaluation POST /v1/systemone · POST /mcp On this page Start here OverviewAuthenticationHTTP endpoint Decision API Request bodyQuestion typesResponse JSONBilling Reference Models and limitsErrors and retries Agents MCP serverPlayground to API 
+Overview 
+Jev evaluates one state — a support ticket, a chat log, a tool call, any text or JSON you pass — against a set of typed questions, and returns structured answers your code can branch on. It does not generate text.
+ 
+One request can ask up to 8 questions; they are evaluated together and share the state input cost. The request body is the same shape TypeSafe’s SystemOne API accepts — to move a working integration, swap the base URL and the Bearer key.
+ 
+POST https://jevmodel.org/v1/systemone — the single decision endpoint.
+CORS is open (access-control-allow-origin: *), so the endpoint answers from any origin. Keep your key on a server anyway.
+The playground sends the identical request shape through your browser session — what you preview there is what you send.
+ 
+Authentication 
+Every API call needs a jevmodel.org API key. Create one in Dashboard → API keys; keys start with sk- and are shown once at creation. Store it as an environment variable, for example JEVMODEL_API_KEY.
+ Authorization headerCopy 
+Authorization: Bearer $JEVMODEL_API_KEY
+ 
+Keys belong to your account’s token balance and can be revoked from the dashboard. Never ship a key in client-side code or commit it to a repository — if a key leaks, revoke it and mint a new one. The playground authenticates with your signed-in browser session instead and does not need a key.
+ 
+HTTP endpoint 
+Send a JSON body to the evaluation endpoint with Bearer authentication:
+ HTTP requestCopy 
+POST /v1/systemone HTTP/1.1
+Host: jevmodel.org
+Authorization: Bearer $JEVMODEL_API_KEY
+Content-Type: application/json
+Idempotency-Key: ticket-4821-run-1 # optional
+ 
+Idempotency-Key is optional (up to 100 characters). Retries sent with the same key reuse the original billing record, so a retried request cannot be charged twice for the same input.
+ Full cURL exampleCopy 
+curl -X POST https://jevmodel.org/v1/systemone \
+ -H "Authorization: Bearer $JEVMODEL_API_KEY" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "model": "jev-latest",
+ "state": "The customer has been billed twice and wants a refund today.",
+ "questions": {
+ "route": {
+ "type": "choice",
+ "instructions": "Which queue should own this ticket?",
+ "criteria": {
+ "billing": "Payments, refunds, invoices",
+ "technical": "Product errors and usage problems",
+ "sales": "Pricing, upgrades, new business"
+ }
+ },
+ "escalate": {
+ "type": "noul",
+ "instructions": "Does this need a human right now?"
+ },
+ "urgency": {
+ "type": "score",
+ "instructions": "How urgent is this for the customer?",
+ "criteria": ["routine", "soon", "urgent", "critical"]
+ }
+ }
+ }'
+ 
+Request body 
+One JSON object with a state and a map of questions:
+ Request bodyCopy 
+{
+ "model": "jev-latest",
+ "state": "The customer has been billed twice and wants a refund today.",
+ "questions": {
+ "route": {
+ "type": "choice",
+ "instructions": "Which queue should own this ticket?",
+ "criteria": {
+ "billing": "Payments, refunds, invoices",
+ "technical": "Product errors and usage problems",
+ "sales": "Pricing, upgrades, new business"
+ }
+ },
+ "escalate": {
+ "type": "noul",
+ "instructions": "Does this need a human right now?"
+ },
+ "urgency": {
+ "type": "score",
+ "instructions": "How urgent is this for the customer?",
+ "criteria": ["routine", "soon", "urgent", "critical"]
+ }
+ }
+}
+ FieldTypeNotes modelstringOptional; defaults to jev-latest.statestring, object, or arrayRequired. Serialized form is limited to 8,000 characters.questionsobjectRequired map of 1–8 question names to typed definitions. Names are identifiers: letters, digits, and _, at most 64 characters. 
+Each question needs a type and instructions (up to 1,800 characters) telling the model what to decide. criteria supplies the answer space — required for choice and score, optional for noul.
+ 
+Question types 
+Choose the answer shape your application can act on.
+ TypeCriteriaAnswer noulOptional true / false label descriptions.noul — the probability of yes, from 0 to 1.choiceObject of 2–20 option keys mapped to descriptions.Selected choice, a probabilities map, and confidence.scoreOrdered array of 2–10 levels.Numeric score (may be fractional) and confidence. 
+Serialized criteria are limited to 2,000 characters per question. Validation failures return 422 before any tokens are reserved — bad requests are never billed.
+ 
+Response JSON 
+A 200 response is the model output itself: the resolved model, one answer per question name, and usage. The values below are illustrative — run the request for real output.
+ Illustrative 200 responseCopy 
+{
+ "model": "jev-latest",
+ "answers": {
+ "route": {
+ "type": "choice",
+ "choice": "billing",
+ "probabilities": { "billing": 0.93, "technical": 0.05, "sales": 0.02 },
+ "confidence": 0.93
+ },
+ "escalate": {
+ "type": "noul",
+ "noul": 0.12
+ },
+ "urgency": {
+ "type": "score",
+ "score": 1.4,
+ "confidence": 0.88
+ }
+ },
+ "usage": { "input_tokens": 136, "output_tokens": 18 }
+}
+ 
+answers is keyed by your question names — you read the fields you asked for.
+For choice, branch on the selected label and inspect probabilities when you need the full distribution.
+noul is P(yes) — your code picks the action threshold.
+usage.input_tokens is what this call actually billed; output tokens are free.
+ 
+Billing 
+The API bills input tokens only — output is free. Each call reserves an estimate up front, then settles to the actual usage.input_tokens the model reports. If Jev fails upstream, the reservation is fully refunded automatically.
+ 
+Sign in once and get 100,000 input tokens free; paid packs start at $9.90 and never expire.
+Insufficient balance returns 402 before Jev is called.
+X-Tokens-Remaining on every 200 response is your balance after settlement.
+Estimate it yourself: ceil(JSON.stringify({state, questions}).length / 4).
+ 
+Models and limits 
+jev-latest is the default and the model currently served — the model field is optional. Laya variants shown in the playground are upcoming and not yet exposed through this endpoint.
+ LimitValue Questions per request8Question nameIdentifier ≤ 64 charactersSerialized state8,000 charactersinstructions per question1,800 charactersChoice options / score levels2–20 options, 2–10 levelsSerialized criteria2,000 characters per questionRate limit120 requests / minute per key 
+These figures describe the API validator; the upstream model may have its own context limits.
+ 
+Errors and retries 
+Errors return a JSON envelope with a machine-readable type and a human message:
+ Error responseCopy 
+{
+ "error": {
+ "type": "invalid_request_error",
+ "message": "At most 8 questions per request."
+ }
+}
+ StatusTypeCauseCharged? 401authentication_errorMissing, invalid, or revoked key.No402insufficient_creditsEstimated input tokens exceed your balance.No422invalid_request_errorBody failed validation — see message.No429rate_limit_errorMore than 120 requests this minute.No502upstream_errorJev could not complete the call.No — refunded 
+Retry 429 and 502 with exponential backoff — the rate window is per minute, so short pauses are usually enough. Send an Idempotency-Key when retrying so a repeated request settles against the same billing record instead of charging twice.
+ 
+MCP server for agents 
+jevmodel.org also runs a remote MCP server over Streamable HTTP at https://jevmodel.org/mcp. It exposes four tools — jev_decide (the full state-plus-questions contract), jev_noul, jev_choice, and jev_score — so coding agents like Claude Code, Cursor, or Cline can call Jev without writing HTTP.
+ Claude CodeCopy 
+claude mcp add --transport http jev https://jevmodel.org/mcp \
+ --header "Authorization: Bearer $JEVMODEL_API_KEY"
+ 
+Same Authorization: Bearer sk-… key and the same token balance as this API — tools/call bills input tokens only.
+initialize, ping, and tools/list are unauthenticated; only tools/call uses your key.
+GET /mcp returns a JSON discovery card for agents and humans.
+ 
+Setup commands for Claude Code, Cursor, and the matching agent skill (judgment playbook) are on the agent tools page.
+ 
+Agent tools guide →
+ 
+Playground to API 
+Build the scenario in the playground first — the request preview shows the exact JSON body your application should send, and Copy API example gives you the matching cURL. When the answers look right, create a key in the dashboard and swap the browser session for Bearer authentication.
+ 
+More reading: How to use Jev walks through a first call end to end, and Jev API examples has production patterns for each question type.
+ API keys 
+Call Jev with your key. 
+Send state plus typed questions to the local Jev endpoint. Successful requests charge input tokens. Add an Idempotency-Key header when retrying.
+ + New key → jev/model 
+Independent notes for TypeSafe AI’s Jev System One model. Not affiliated with TypeSafe.
+ Support [email protected] Learn What is Jev AI? Is Jev open source? How to get Jev access Jev API is open Jev vs Laya What is Laya Jev vs GPT Jev vs Claude OpenAI Decisions API Build Jev playground Playground & API credits How to use Jev Jev API examples API documentation Jev pricing Jev benchmarks JevBench leaderboard Jev agent tools Jev alternatives Jev use cases Disclosure 
+Jev Model Guide is independent and is not affiliated with, endorsed by, or operated by TypeSafe AI.
+ Terms Updated September 24, 2026TypeSafe AI ↗ 

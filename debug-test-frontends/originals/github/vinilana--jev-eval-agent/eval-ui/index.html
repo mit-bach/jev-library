@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eval · Jev vs LLM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0e1116; --surface: #151922; --surface-2: #1c2130; --border: #262d3b; --border-strong: #35405a;
+    --text: #eef0f5; --text-2: #b6bdcc; --text-3: #8a93a6; --lime: #c8f53a; --lime-soft: rgba(200,245,58,.14); --lime-ink: #0e1116; --grid: #232a38;
+    --mode-direct: #3987e5; --mode-jev: #d95926;
+    --m1: #199e70; --m2: #c98500; --m3: #d55181; --m4: #9085e9; --m5: #e66767; --m6: #3987e5;
+    --good: #0ca30c; --warn: #fab219; --crit: #d03b3b;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  code { font: 13px var(--mono); background: var(--surface-2); padding: 1px 5px; border-radius: 4px; color: var(--text); }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
+  .top { border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(14,17,22,.92); backdrop-filter: blur(8px); z-index: 5; }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; white-space: nowrap; }
+  .brand { display: flex; align-items: center; text-decoration: none; flex: 0 0 auto; } .brand svg { display: block; height: 30px; width: auto; }
+  .nav { display: flex; gap: 16px; font-size: 13.5px; color: var(--text-2); overflow: hidden; }
+  .nav a { text-decoration: none; } .nav a:hover { color: var(--text); }
+  .live { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-3); flex: 0 0 auto; }
+  @media (max-width: 1240px) { .live #stamp, .live .dot { display: none; } }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); display: inline-block; }
+  .btn { background: transparent; color: var(--text); border: 1px solid var(--border-strong); border-radius: 999px; padding: 6px 14px; font: 500 13px var(--sans); cursor: pointer; }
+  .btn:hover { border-color: var(--text-2); }
+  .btn.lang { padding: 6px 9px; font-family: var(--mono); font-size: 12px; color: var(--text-3); } .btn.lang.on { color: var(--lime); border-color: var(--lime); }
+  .prompt-en { color: var(--text-3); font-style: italic; font-size: 13px; margin: 4px 0 0; } .prompt-en b { font-style: normal; font-family: var(--mono); font-size: 11px; margin-right: 6px; }
+  /* controls */
+  .controls { position: sticky; top: 60px; z-index: 4; background: rgba(14,17,22,.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 12px 0; }
+  .controls .wrap { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; font-size: 13px; color: var(--text-3); }
+  .group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--border-strong); border-radius: 999px; padding: 5px 12px; cursor: pointer; user-select: none; color: var(--text-2); background: transparent; font: 500 13px var(--sans); display: inline-flex; align-items: center; gap: 7px; }
+  .chip i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; background: var(--c, var(--text-3)); }
+  .chip.on { color: var(--text); border-color: var(--text-2); background: var(--surface-2); } .chip.on.lime { color: var(--lime-ink); background: var(--lime); border-color: var(--lime); }
+  .chip.hl { box-shadow: 0 0 0 2px var(--lime) inset; }
+  .hint-hl { color: var(--text-3); }
+  h2 { font-size: 22px; letter-spacing: -.01em; margin: 40px 0 4px; font-weight: 700; } h2 small { color: var(--text-3); font-size: 13px; font-weight: 400; margin-left: 10px; }
+  .sub { color: var(--text-2); margin: 0 0 16px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; }
+  .grid.two { grid-template-columns: repeat(auto-fit, minmax(520px, 1fr)); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .card.full { grid-column: 1 / -1; }
+  .card .hd { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; padding: 12px 18px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-3); }
+  .card .hd .t { color: var(--text); font-weight: 600; font-size: 15px; flex: 1; } .card .hd .tag { color: var(--text-3); font-size: 12px; }
+  .card .hd .tabs { display: flex; gap: 4px; flex-wrap: wrap; flex-basis: 100%; order: 3; padding-top: 2px; }
+  .tab { border: 1px solid var(--border-strong); background: transparent; color: var(--text-2); border-radius: 6px; padding: 3px 10px; font: 500 12.5px var(--sans); cursor: pointer; } .tab.on { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }
+  .card .bd { padding: 16px 18px 18px; }
+  .card .hint { color: var(--text-3); font-size: 13px; margin-bottom: 10px; }
+  .focus-btn { border: 1px solid var(--border-strong); background: transparent; color: var(--text-2); border-radius: 6px; width: 28px; height: 24px; font-size: 14px; cursor: pointer; line-height: 1; }
+  .focus-btn:hover { color: var(--text); border-color: var(--text-2); }
+  #focus { position: fixed; inset: 0; background: var(--bg); z-index: 50; display: none; overflow: auto; padding: 20px 32px 40px; }
+  #focus.on { display: block; }
+  .focus-bar { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-3); max-width: 1400px; margin: 0 auto 14px; }
+  .focus-bar .t { flex: 1; color: var(--text); font-weight: 600; font-size: 15px; }
+  .focus-bar button { border: 1px solid var(--border-strong); background: transparent; color: var(--text-2); border-radius: 999px; padding: 6px 14px; font: 500 13px var(--sans); cursor: pointer; }
+  .focus-bar button:hover { color: var(--text); border-color: var(--text-2); }
+  #focus .card { max-width: 1400px; margin: 0 auto; }
+  #focus .card .bd { padding: 24px 28px; }
+  #focus svg text { font-size: 13px; }
+  #focus .legend { font-size: 14px; }
+  #focus table { font-size: 15px; }
+  #focus .cell { min-width: 130px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-2); margin: 2px 0 12px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; } .legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; background: var(--c); }
+  .legend i.hatch { background: repeating-linear-gradient(45deg, var(--text-2) 0 2px, transparent 2px 5px); border: 1px solid var(--text-2); }
+  svg { display: block; } svg text { fill: var(--text-2); font-family: var(--sans); font-size: 12.5px; } svg text.val { fill: var(--text); }
+  svg .grid line { stroke: var(--grid); } svg .axis line { stroke: var(--border-strong); } svg .ideal { stroke: var(--text-3); stroke-dasharray: 3 3; }
+  svg rect.bar, svg circle.pt { cursor: pointer; }
+  /* leaderboard */
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { color: var(--text-3); font-weight: 500; font-size: 12px; cursor: pointer; user-select: none; position: sticky; top: 0; background: var(--surface); }
+  th.on { color: var(--text); } th .arrow { font-size: 9px; margin-left: 3px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.015); }
+  tr.dim { opacity: .35; } tr.row { cursor: pointer; } tr.row:hover { background: var(--surface-2); }
+  .cell { position: relative; min-width: 96px; } .cell i { position: absolute; left: 0; top: 7px; bottom: 7px; border-radius: 3px; opacity: .22; background: var(--c); } .cell b { position: relative; font-weight: 500; }
+  .sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 9px; vertical-align: -1px; background: var(--c); }
+  .sw.hatch { background: repeating-linear-gradient(45deg, var(--c) 0 2px, transparent 2px 4px); border: 1px solid var(--c); }
+  .rank { color: var(--text-3); width: 28px; }
+  /* executions */
+  details.exec { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); margin-bottom: 12px; }
+  details.exec summary { cursor: pointer; padding: 12px 18px; font-size: 14px; color: var(--text-2); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  details.exec summary b { color: var(--text); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 14px; padding: 14px 18px 18px; }
+  .col { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .col h4 { margin: 0 0 10px; font-size: 14px; font-weight: 600; }
+  .metrics { display: flex; flex-wrap: wrap; gap: 4px 14px; color: var(--text-2); font-size: 13px; margin-bottom: 10px; } .metrics b { color: var(--text); font-weight: 600; }
+  .tl { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .tl li { display: flex; gap: 12px; align-items: flex-start; font-size: 13.5px; } .tl .k { flex: 0 0 84px; color: var(--text-3); font-size: 12.5px; padding-top: 2px; }
+  .tok { display: inline-block; padding: 2px 9px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--surface-2); font: 12.5px var(--mono); color: var(--text); }
+  .tok.jev { border-color: var(--mode-jev); } .tok.wrong { border-color: var(--crit); color: #ff9c9c; } .tok.fail { border-color: var(--crit); }
+  .conf { color: var(--text-3); font-size: 12.5px; }
+  details.args { margin-top: 3px; } details.args summary { cursor: pointer; color: var(--text-3); font-size: 12.5px; }
+  pre { white-space: pre-wrap; word-break: break-word; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; font: 12.5px var(--mono); margin: 6px 0 0; color: var(--text-2); }
+  .reply { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--lime); color: var(--text-2); font-size: 13.5px; white-space: pre-wrap; background: var(--surface-2); border-radius: 0 8px 8px 0; }
+  .q { color: var(--text-2); font-size: 13.5px; padding: 0 18px 8px; } .q b { color: var(--lime); font-family: var(--mono); font-size: 12.5px; }
+  .task { display: flex; flex-direction: column; gap: 10px; }
+  .task .id { display: inline-flex; align-items: center; gap: 8px; font: 500 12.5px var(--mono); color: var(--text-3); }
+  .task .id b { color: var(--lime); }
+  .task .tier { border: 1px solid var(--border-strong); border-radius: 999px; padding: 1px 9px; font: 500 11.5px var(--sans); color: var(--text-2); }
+  .task .tier.complex { border-color: var(--mode-jev); color: #f0a07e; }
+  .task h3 { margin: 0; font-size: 16px; font-weight: 600; }
+  .task .prompt { margin: 0; padding: 12px 14px; background: var(--surface-2); border-left: 3px solid var(--lime); border-radius: 0 8px 8px 0; color: var(--text); font-size: 14.5px; line-height: 1.55; }
+  .task .prompt::before { content: "user> "; font: 12.5px var(--mono); color: var(--lime); }
+  .task .meta { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; font-size: 12.5px; color: var(--text-3); }
+  .task .step { border: 1px solid var(--border); background: var(--surface-2); border-radius: 6px; padding: 2px 8px; font: 12px var(--mono); color: var(--text-2); }
+  .task .step.bad { border-color: rgba(208,59,59,.5); color: #ff9c9c; }
+  .task .meta .lbl { color: var(--text-3); margin-right: 2px; }
+  .empty { padding: 40px; text-align: center; color: var(--text-3); border: 1px dashed var(--border-strong); border-radius: 12px; font-size: 14px; }
+  .tooltip { position: fixed; pointer-events: none; background: #1c2130; border: 1px solid var(--border-strong); border-radius: 8px; padding: 8px 10px; font-size: 13px; color: var(--text); display: none; z-index: 60; max-width: 360px; white-space: pre-line; box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  footer { margin: 60px 0 30px; color: var(--text-3); font-size: 13px; border-top: 1px solid var(--border); padding-top: 16px; }
+  @media (max-width: 980px) { .nav { display: none; } .grid.two { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="defs"></div>
+<div class="top"><div class="wrap">
+  <a class="brand" href="/" aria-label="AI Coders Academy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 215 44" width="150" height="31"> <g transform="translate(0, 6)" fill="none" stroke="#FFFFFF"> <rect x="8" y="8" width="24" height="24" stroke-width="1"></rect> <rect x="4" y="4" width="24" height="24" stroke-width="1.5"></rect> <rect x="0" y="0" width="24" height="24" stroke-width="2"></rect> </g> <g font-family="Geist, Inter, ui-sans-serif, system-ui, sans-serif" letter-spacing="-0.6"> <text x="44" y="28" font-size="18" font-weight="600" fill="#FFFFFF">AI Coders <tspan font-weight="300" fill="#A1A1AA">Academy</tspan></text> </g> </svg></a>
+  <nav class="nav" id="nav"></nav>
+  <div class="live"><span class="dot"></span><span id="stamp">loading_</span><span id="langs"></span><button class="btn" id="refresh">refresh</button><button class="btn" id="export" title="download this page as a single HTML file with the data embedded">export HTML</button></div>
+</div></div>
+
+<main>
+  <div class="controls"><div class="wrap" id="controls"></div></div>
+  <div class="wrap" id="app"></div>
+  <div class="wrap"><footer id="footer"></footer></div>
+</main>
+<div id="focus"></div>
+<div class="tooltip" id="tooltip"></div>
+
+<script src="charts.js"></script>
+<script>
+const STR = {
+  en: {
+    modeDirect: "LLM direct", modeDirectShort: "direct", modeJev: "Jev classifier", modeJevShort: "jev",
+    navSlides: "slides", navTasks: "tasks", navHighlights: "highlights", navCompare: "direct → jev", navPerTask: "per task", navLeaderboard: "leaderboard", navRuns: "runs",
+    loading: "loading_", updated: "updated ", refresh: "refresh", exportHtml: "export HTML", exportTitle: "download this page as a single HTML file with the data embedded",
+    footer: "eval-results/<mode>/<model>/<task>.json · eve evals harness · cost estimated with OpenRouter public pricing · hatched bars = jev mode",
+    mEfficiency: "efficiency", mCompletion: "completion", mSteps: "model steps", mTools: "tool calls", mExtra: "calls beyond ideal", mWrong: "wrong tool", mTokensIn: "input tokens", mTokensOut: "output tokens", mCost: "estimated cost", mDuration: "duration",
+    uPerTask: "per task", uTotal: "total", uCost: "US$ · 6 tasks", uSecs: "s per task",
+    focusTitle: "analyze in fullscreen", hatchedLegend: "hatched = jev mode",
+    tierComplex: "complex", tierBasic: "basic", idealPath: "· ideal path: {n} tools", requiredSteps: "required steps", distractors: "distractors (wrong tool)", or: " or ", enLabel: "EN ·",
+    rankEfficiency: "Efficiency index", higherBetter: "higher = better", effHint: "completion × ideal ÷ calls × ½ if a wrong tool was called · average over tasks",
+    rankCost: "Estimated cost", lowerBetter: "lower = better", costHint: "US$ over the filtered tasks · OpenRouter public pricing",
+    rankTokensIn: "Input tokens per task", tokensInHint: "what the classifier removes from the context",
+    rankSteps: "Model steps per task", llmCalls: "LLM calls", stepsHint: "in jev mode: 1 tool per step + reply",
+    rankTools: "Tool calls per task", toolsHint: "average ideal: ",
+    rankCompletion: "Completion", requiredTag: "required steps", completionHint: "fraction of the steps covered by a tool of the right family",
+    ideal: "ideal",
+    scatterTitle: "Efficiency × cost", scatterX: "cost (US$, filtered tasks)", scatterY: "efficiency", scatterTag: "top-left = most attractive", scatterHint: "dashed lines = averages of the visible series",
+    dumbbellTitle: "Direct → Jev (same model, same tasks)", directSolid: "direct (solid)", jevHatched: "jev (hatched)", delta: "Δ = relative change", needBoth: "needs both modes for the same model",
+    heatTitle: "Per task", lightBetter: "light = better", lightBetterLow: "light = better (lower)", tipTools: "tools", tipSteps: "steps", tipWrong: "wrong tool: ",
+    colSeries: "series", colEff: "eff.", colCompletion: "completion", colSteps: "steps", colTools: "tools", colExtra: "extra", colWrong: "wrong", colTokensIn: "tokens in", colTokensOut: "tokens out", colCost: "cost", colDuration: "duration", colJevLat: "jev latency",
+    noRun: "no run", wrongTool: "✗ wrong tool", failed: " · failed", noReply: "(no final reply)",
+    tlSteps: "steps", tlTools: "tools", tlJev: "jev", tlWrong: "wrong", tlCompletion: "completion", tlTokens: "tokens",
+    model: "model:", user: "user&gt;",
+    models: "models", mode: "mode", tasks: "tasks", all: "all", basic: "basic", complex: "complex",
+    highlight: "highlight: ", clear: "clear", clickHint: "click a bar, point or row to highlight",
+    noResults: "No results. Run <code>npm run eval:all</code>.",
+    hTasks: "Tasks", hTasksSmall: "{n} prompts · same text for every series",
+    tasksSub: "The initial prompt of each task, the ideal path and the similarly named tools that count as errors. Each step accepts any tool of the family (hover to see the alternatives). Prompts are sent to the agent in Portuguese: the benchmark persona is a Brazilian user.",
+    hHighlights: "Highlights", hHighlightsSmall: "{s} series · {t} tasks", highlightsSub: "Rankings per metric. Color = model; hatched = jev mode.",
+    hCompare: "Compare", compareSub: "Efficiency × cost trade-off and the classifier's effect within each model.",
+    hPerTask: "Per task", perTaskSub: "Where each series gets it right or stumbles. Hover to see tools, steps and wrong tool.",
+    hLeaderboard: "Leaderboard", leaderboardSub: "Click a header to sort. Bars inside the cells are proportional to the column maximum.", leaderboardTitle: "Leaderboard · all series", leaderboardTag: "average per task · cost and counts summed",
+    hRuns: "Runs", runsSub: "Step-by-step timeline: Jev decision (confidence, done, gate, top-3), model call, tool and arguments, final reply.",
+    focusBar: "fullscreen analysis · {i}/{n}", focusKeys: "← → switch chart · Esc close", prev: "← previous", next: "next →", close: "close ✕",
+    loadError: "Could not load /results.json ({e}). Run <code>npm run ui</code>.",
+  },
+  pt: {
+    modeDirect: "LLM direto", modeDirectShort: "direto", modeJev: "Jev classificador", modeJevShort: "jev",
+    navSlides: "slides", navTasks: "tarefas", navHighlights: "destaques", navCompare: "direto → jev", navPerTask: "por tarefa", navLeaderboard: "leaderboard", navRuns: "execuções",
+    loading: "carregando_", updated: "atualizado ", refresh: "atualizar", exportHtml: "exportar HTML", exportTitle: "baixa esta página como um HTML único, com os dados embutidos",
+    footer: "eval-results/<modo>/<modelo>/<tarefa>.json · harness de evals do eve · custo estimado com preço público do OpenRouter · barras hachuradas = modo jev",
+    mEfficiency: "eficiência", mCompletion: "conclusão", mSteps: "passos do modelo", mTools: "chamadas de tool", mExtra: "chamadas além do ideal", mWrong: "tool errada", mTokensIn: "tokens de entrada", mTokensOut: "tokens de saída", mCost: "custo estimado", mDuration: "duração",
+    uPerTask: "por tarefa", uTotal: "total", uCost: "US$ · 6 tarefas", uSecs: "s por tarefa",
+    focusTitle: "analisar em tela cheia", hatchedLegend: "hachurado = modo jev",
+    tierComplex: "complexa", tierBasic: "básica", idealPath: "· caminho ideal: {n} tools", requiredSteps: "etapas obrigatórias", distractors: "distratoras (tool errada)", or: " ou ", enLabel: "EN ·",
+    rankEfficiency: "Índice de eficiência", higherBetter: "maior = melhor", effHint: "conclusão × ideal ÷ chamadas × ½ se chamou tool errada · média das tarefas",
+    rankCost: "Custo estimado", lowerBetter: "menor = melhor", costHint: "US$ nas tarefas filtradas · preço público do OpenRouter",
+    rankTokensIn: "Tokens de entrada por tarefa", tokensInHint: "o que o classificador tira do contexto",
+    rankSteps: "Passos do modelo por tarefa", llmCalls: "chamadas ao LLM", stepsHint: "no modo jev: 1 tool por passo + resposta",
+    rankTools: "Chamadas de tool por tarefa", toolsHint: "ideal médio: ",
+    rankCompletion: "Conclusão", requiredTag: "etapas obrigatórias", completionHint: "fração das etapas cobertas por uma tool da família certa",
+    ideal: "ideal",
+    scatterTitle: "Eficiência × custo", scatterX: "custo (US$, tarefas filtradas)", scatterY: "eficiência", scatterTag: "cima-esquerda = mais atraente", scatterHint: "linhas tracejadas = médias das séries visíveis",
+    dumbbellTitle: "Direto → Jev (mesmo modelo, mesmas tarefas)", directSolid: "direto (sólido)", jevHatched: "jev (hachurado)", delta: "Δ = variação relativa", needBoth: "precisa das duas branches para o mesmo modelo",
+    heatTitle: "Por tarefa", lightBetter: "claro = melhor", lightBetterLow: "claro = melhor (menor)", tipTools: "tools", tipSteps: "passos", tipWrong: "tool errada: ",
+    colSeries: "série", colEff: "efic.", colCompletion: "conclusão", colSteps: "passos", colTools: "tools", colExtra: "extras", colWrong: "erradas", colTokensIn: "tokens in", colTokensOut: "tokens out", colCost: "custo", colDuration: "duração", colJevLat: "latência jev",
+    noRun: "sem execução", wrongTool: "✗ tool errada", failed: " · falhou", noReply: "(sem resposta final)",
+    tlSteps: "passos", tlTools: "tools", tlJev: "jev", tlWrong: "erradas", tlCompletion: "conclusão", tlTokens: "tokens",
+    model: "modelo:", user: "user&gt;",
+    models: "modelos", mode: "modo", tasks: "tarefas", all: "todas", basic: "básicas", complex: "complexas",
+    highlight: "destaque: ", clear: "limpar", clickHint: "clique numa barra, ponto ou linha para destacar",
+    noResults: "Nenhum resultado. Rode <code>npm run eval:all</code>.",
+    hTasks: "Tarefas", hTasksSmall: "{n} prompts · mesmo texto para todas as séries",
+    tasksSub: "O prompt inicial de cada tarefa, o caminho ideal e as tools de nome parecido que contam como erro. Cada etapa aceita qualquer tool da família (passe o mouse para ver as alternativas).",
+    hHighlights: "Destaques", hHighlightsSmall: "{s} séries · {t} tarefas", highlightsSub: "Rankings por métrica. Cor = modelo; hachurado = modo jev.",
+    hCompare: "Comparar", compareSub: "Trade-off eficiência × custo e o efeito do classificador dentro de cada modelo.",
+    hPerTask: "Por tarefa", perTaskSub: "Onde cada série acerta ou tropeça. Passe o mouse para ver tools, passos e tool errada.",
+    hLeaderboard: "Leaderboard", leaderboardSub: "Clique no cabeçalho para ordenar. Barras dentro das células são proporcionais ao máximo da coluna.", leaderboardTitle: "Leaderboard · todas as séries", leaderboardTag: "média por tarefa · custo e contagens somados",
+    hRuns: "Execuções", runsSub: "Linha do tempo passo a passo: decisão do Jev (confiança, done, gate, top-3), chamada ao modelo, tool e argumentos, resposta final.",
+    focusBar: "análise em tela cheia · {i}/{n}", focusKeys: "← → trocar gráfico · Esc fechar", prev: "← anterior", next: "próximo →", close: "fechar ✕",
+    loadError: "Não consegui carregar /results.json ({e}). Rode <code>npm run ui</code>.",
+  },
+};
+const T = dict(STR);
+const tf = (key, vars) => String(T[key]).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
+// MODES is read through getters so labels follow the current language.
+const MODES = [
+  { key: "llm-direct", get label() { return T.modeDirect; }, get short() { return T.modeDirectShort; } },
+  { key: "jev-classifier", get label() { return T.modeJev; }, get short() { return T.modeJevShort; } },
+];
+const MODEL_ORDER = ["gemini-3.8-flash", "deepseek-v4.1-flash", "gpt-5.6-luna", "gpt-5.6-sol", "opus-5", "fable-5.1", "gpt-6-astra", "qwen3.8-27b"];
+const MODEL_HEX = ["#199e70", "#c98500", "#d55181", "#9085e9", "#e66767", "#3987e5", "#b5703a", "#c06ad9"]; // validated on #151922 (dataviz)
+const PROMPT_ORDER = ["p1-marina", "p2-voo-sp", "p3-orcamento", "p4-viagem-completa", "p5-reuniao-time", "p6-financas"];
+const short = (p) => p.split("-")[0];
+const BLUES = ["#0d366b", "#184f95", "#256abf", "#3987e5", "#6da7ec", "#9ec5f4"]; // sequential, dark→light = low→high
+
+// metric definitions: id, label, agg over run list, better, formatter
+const metric = (labelKey, unitKey, def) => ({ get label() { return T[labelKey]; }, get unit() { return typeof unitKey === "string" && unitKey in STR.en ? T[unitKey] : unitKey; }, ...def });
+const METRICS = {
+  efficiency: metric("mEfficiency", "0–100", { agg: (l) => avg(l, (r) => r.efficiency) * 100, better: "high", fmt: (v) => fmt(v) }),
+  completion: metric("mCompletion", "%", { agg: (l) => avg(l, (r) => r.completion) * 100, better: "high", fmt: (v) => fmt(v) + "%" }),
+  steps: metric("mSteps", "uPerTask", { agg: (l) => avg(l, (r) => r.modelSteps), better: "low", fmt: (v) => fmt(v, 1) }),
+  tools: metric("mTools", "uPerTask", { agg: (l) => avg(l, (r) => r.toolCalls), better: "low", fmt: (v) => fmt(v, 1) }),
+  extra: metric("mExtra", "uTotal", { agg: (l) => sum(l, (r) => r.extraToolCalls), better: "low", fmt: (v) => fmt(v) }),
+  wrong: metric("mWrong", "uTotal", { agg: (l) => sum(l, (r) => r.distractorCalls), better: "low", fmt: (v) => fmt(v) }),
+  tokensIn: metric("mTokensIn", "uPerTask", { agg: (l) => avg(l, (r) => r.usage.inputTokens), better: "low", fmt: compact }),
+  tokensOut: metric("mTokensOut", "uPerTask", { agg: (l) => avg(l, (r) => r.usage.outputTokens), better: "low", fmt: compact }),
+  cost: metric("mCost", "uCost", { agg: (l) => sum(l, (r) => r.usage.estimatedCostUsd), better: "low", fmt: usd }),
+  duration: metric("mDuration", "uSecs", { agg: (l) => avg(l, (r) => r.durationMs) / 1000, better: "low", fmt: (v) => fmt(v, 1) + "s" }),
+};
+
+const state = { data: null, models: new Set(), branches: new Set(MODES.map((m) => m.key)), tier: "all", highlight: new Set(), dumbbellMetric: "tokensIn", heatMetric: "efficiency", sort: { key: "efficiency", dir: -1 }, execModel: null, focus: null };
+let modelKeys = [];
+const mi = (k) => Math.max(0, modelKeys.indexOf(k)) % MODEL_HEX.length;
+const modelColor = (k) => MODEL_HEX[mi(k)];
+const modelLabel = (k) => { for (const s of Object.values(state.data.series)) if (s.modelKey === k) { const r = Object.values(s.runs)[0]; if (r?.modelLabel) return r.modelLabel; } return k; };
+const promptSpec = (id) => (state.data?.prompts ?? []).find((p) => p.id === id);
+const titleOf = (id, fallback) => { const p = promptSpec(id); return (LANG === "pt" ? p?.titlePt ?? p?.title : p?.title) ?? fallback ?? id; };
+const promptHtml = (p) => `<p class="prompt">${esc(p?.prompt ?? "")}</p>${LANG !== "pt" && p?.promptEn ? `<p class="prompt-en"><b>${T.enLabel}</b>${esc(p.promptEn)}</p>` : ""}`;
+const prompts = () => PROMPT_ORDER.filter((p) => state.tier === "all" || Object.values(state.data.series).some((s) => s.runs[p]?.tier === state.tier));
+
+function buildSeries() {
+  return Object.values(state.data.series)
+    .filter((s) => state.models.has(s.modelKey) && state.branches.has(s.mode))
+    .map((s) => {
+      const mode = MODES.find((m) => m.key === s.mode) ?? { key: s.mode, label: s.mode, short: s.mode };
+      const list = prompts().map((p) => s.runs[p]).filter(Boolean);
+      const jev = s.mode === "jev-classifier";
+      return { ...s, key: `${s.modelKey}|${s.mode}`, modeObj: mode, jev, label: `${modelLabel(s.modelKey)} · ${mode.short}`, list, color: modelColor(s.modelKey), ci: mi(s.modelKey), fill: jev ? `url(#hatch-${mi(s.modelKey)})` : modelColor(s.modelKey), stroke: modelColor(s.modelKey) };
+    })
+    .filter((s) => s.list.length)
+    .sort((a, b) => modelKeys.indexOf(a.modelKey) - modelKeys.indexOf(b.modelKey) || a.mode.localeCompare(b.mode));
+}
+const hl = () => state.highlight;
+let BIG = false;                       // true while building the fullscreen (focus) view
+const CARD_BUILDERS = {};              // id -> () => html, registered on every render
+const CARD_ORDER = [];
+function buildCard(id, fn) { CARD_BUILDERS[id] = fn; if (!CARD_ORDER.includes(id)) CARD_ORDER.push(id); return fn(); }
+const card = (title, body, { tag = "", hint = "", cls = "", tabs = "", id = "" } = {}) => `<div class="card ${cls}" data-card="${id}"><div class="hd"><span class="t">${esc(title)}</span>${tabs}<span class="tag">${esc(tag)}</span>${id && !BIG ? `<button class="focus-btn" data-focus="${id}" title="${esc(T.focusTitle)}">⤢</button>` : ""}</div><div class="bd">${hint ? `<div class="hint">${esc(hint)}</div>` : ""}${body}</div></div>`;
+const legendSeries = () => `<div class="legend">${modelKeys.filter((k) => state.models.has(k)).map((k) => `<span><i style="--c:${modelColor(k)}"></i>${esc(modelLabel(k))}</span>`).join("")}<span><i class="hatch"></i>${T.hatchedLegend}</span></div>`;
+
+// ---------- sections ----------------------------------------------------------
+function tasksSection() {
+  const ps = prompts();
+  const list = (state.data.prompts ?? []).filter((p) => ps.includes(p.id));
+  if (!list.length) return "";
+  return `<div class="grid">${list.map((p) => `<div class="card"><div class="bd task">
+      <span class="id"><b>${esc(p.id)}</b><span class="tier ${p.tier}">${p.tier === "complex" ? T.tierComplex : T.tierBasic}</span><span>${tf("idealPath", { n: p.idealToolCalls })}</span></span>
+      <h3>${esc(titleOf(p.id, p.title))}</h3>
+      ${promptHtml(p)}
+      <div class="meta"><span class="lbl">${T.requiredSteps}</span>${p.required.map((f) => `<span class="step" title="${esc(f.join(T.or))}">${esc(f[0])}${f.length > 1 ? ` <span style="color:var(--text-3)">+${f.length - 1}</span>` : ""}</span>`).join("")}</div>
+      <div class="meta"><span class="lbl">${T.distractors}</span>${p.distractors.map((d) => `<span class="step bad">${esc(d)}</span>`).join("")}</div>
+    </div></div>`).join("")}</div>`;
+}
+
+function ranked(series, id, opts = {}) {
+  const m = METRICS[id];
+  const rows = series.map((s) => ({ key: s.key, label: s.label, value: m.agg(s.list), fill: s.fill, sub: opts.sub ? opts.sub(s) : undefined })).filter((r) => r.value != null && !Number.isNaN(r.value));
+  rows.sort((a, b) => (m.better === "high" ? b.value - a.value : a.value - b.value));
+  return rankedBars({ rows, fmtV: m.fmt, highlight: hl(), labelW: BIG ? 280 : 190, W: BIG ? 1200 : 420, rowH: BIG ? 40 : 27, max: id === "efficiency" || id === "completion" ? 100 : null });
+}
+
+function highlights(series) {
+  const defs = [
+    ["rank-efficiency", T.rankEfficiency, () => ranked(series, "efficiency", { sub: (s) => `${sum(s.list, (r) => r.idealPath ? 1 : 0)}/${s.list.length} ${T.ideal}` }), { tag: T.higherBetter, hint: T.effHint }],
+    ["rank-cost", T.rankCost, () => ranked(series, "cost"), { tag: T.lowerBetter, hint: T.costHint }],
+    ["rank-tokensIn", T.rankTokensIn, () => ranked(series, "tokensIn"), { tag: T.lowerBetter, hint: T.tokensInHint }],
+    ["rank-steps", T.rankSteps, () => ranked(series, "steps"), { tag: T.llmCalls, hint: T.stepsHint }],
+    ["rank-tools", T.rankTools, () => ranked(series, "tools"), { tag: T.lowerBetter, hint: T.toolsHint + fmt(avg(series.flatMap((s) => s.list), (r) => r.idealToolCalls), 1) }],
+    ["rank-completion", T.rankCompletion, () => ranked(series, "completion"), { tag: T.requiredTag, hint: T.completionHint }],
+  ];
+  return `<div class="grid">${defs.map(([id, title, body, opts]) => buildCard(id, () => card(title, (BIG ? legendSeries() : "") + body(), { ...opts, id }))).join("")}</div>`;
+}
+
+function scatterCard(series) {
+  const pts = series.map((s) => ({ key: s.key, label: s.label, x: METRICS.cost.agg(s.list), y: METRICS.efficiency.agg(s.list), color: s.color, fill: s.fill }));
+  return buildCard("scatter", () => card(T.scatterTitle, legendSeries() + quadrantScatter({ pts, xLabel: T.scatterX, yLabel: T.scatterY, fmtX: (v) => "$" + v.toFixed(2), highlight: hl(), W: BIG ? 1200 : 640, H: BIG ? 620 : 380 }), { tag: T.scatterTag, hint: T.scatterHint, id: "scatter" }));
+}
+
+function dumbbellCard() {
+  const m = METRICS[state.dumbbellMetric];
+  const rows = modelKeys.filter((k) => state.models.has(k)).map((k) => {
+    const d = Object.values(state.data.series).find((s) => s.modelKey === k && s.mode === "llm-direct"), j = Object.values(state.data.series).find((s) => s.modelKey === k && s.mode === "jev-classifier");
+    const ids = prompts().filter((p) => d?.runs[p] && j?.runs[p]);
+    if (!ids.length) return null;
+    return { key: k, label: modelLabel(k), a: m.agg(ids.map((p) => d.runs[p])), b: m.agg(ids.map((p) => j.runs[p])), color: modelColor(k), ci: mi(k) };
+  }).filter(Boolean);
+  const hlModels = new Set([...hl()].map((k) => k.split("|")[0]));
+  const tabs = `<div class="tabs">${["tokensIn", "cost", "steps", "tools", "completion", "efficiency", "duration"].map((id) => `<button class="tab ${id === state.dumbbellMetric ? "on" : ""}" data-dumbbell="${id}">${METRICS[id].label}</button>`).join("")}</div>`;
+  return buildCard("dumbbell", () => card(T.dumbbellTitle, `<div class="legend"><span><i style="--c:var(--text-2)"></i>${T.directSolid}</span><span><i class="hatch"></i>${T.jevHatched}</span><span>${T.delta}</span></div>` + (rows.length ? dumbbell({ rows, fmtV: m.fmt, highlight: hlModels.size ? hlModels : null, W: BIG ? 1200 : 620, rowH: BIG ? 48 : 34, labelW: BIG ? 240 : 180 }) : `<div class="empty">${T.needBoth}</div>`), { tag: `${m.label} · ${m.unit}`, tabs, id: "dumbbell" }));
+}
+
+function heatCard(series) {
+  const m = METRICS[state.heatMetric];
+  const ps = prompts();
+  const perRun = { efficiency: (r) => r.efficiency * 100, completion: (r) => r.completion * 100, steps: (r) => r.modelSteps, tools: (r) => r.toolCalls, tokensIn: (r) => r.usage.inputTokens, cost: (r) => r.usage.estimatedCostUsd, duration: (r) => r.durationMs / 1000, wrong: (r) => r.distractorCalls }[state.heatMetric];
+  const vals = series.flatMap((s) => s.list.map(perRun));
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const scale = (v) => { let t = hi === lo ? 1 : (v - lo) / (hi - lo); if (m.better === "low") t = 1 - t; return BLUES[Math.round(t * (BLUES.length - 1))]; };
+  const tabs = `<div class="tabs">${["efficiency", "completion", "steps", "tools", "tokensIn", "cost", "duration", "wrong"].map((id) => `<button class="tab ${id === state.heatMetric ? "on" : ""}" data-heat="${id}">${METRICS[id].label}</button>`).join("")}</div>`;
+  const body = heatmap({
+    rows: series.map((s) => ({ label: s.label, key: s.key })), cols: ps.map(short),
+    cell: (i, j) => { const r = series[i].runs[ps[j]]; if (!r) return null; const v = perRun(r); const t = hi === lo ? 1 : (v - lo) / (hi - lo); const bright = (m.better === "low" ? 1 - t : t) > 0.6; return { value: v, text: m.fmt(v), dark: bright, tip: `${series[i].label} · ${ps[j]}\n${m.label}: ${m.fmt(v)} · ${T.tipTools} ${r.toolCalls}/${r.idealToolCalls} · ${T.tipSteps} ${r.modelSteps}${r.distractorCalls ? " · " + T.tipWrong + r.distractorTools.join(", ") : ""}` }; },
+    scale, highlight: hl(), W: BIG ? 1200 : 760, labelW: BIG ? 280 : 220, rowH: BIG ? 46 : 30,
+  });
+  return card(T.heatTitle, `<div class="legend">${ps.map((p) => `<span><b style="color:var(--text)">${short(p)}</b> ${esc(p.slice(3))}</span>`).join("")}</div>` + body, { tag: `${m.label} · ${m.better === "high" ? T.lightBetter : T.lightBetterLow}`, tabs, cls: "full", id: "heatmap" });
+}
+
+function leaderboard(series) {
+  const cols = [["efficiency", T.colEff], ["completion", T.colCompletion], ["steps", T.colSteps], ["tools", T.colTools], ["extra", T.colExtra], ["wrong", T.colWrong], ["tokensIn", T.colTokensIn], ["tokensOut", T.colTokensOut], ["cost", T.colCost], ["duration", T.colDuration]];
+  const rows = series.map((s) => { const o = { s }; for (const [id] of cols) o[id] = METRICS[id].agg(s.list); o.jevLat = s.jev ? avg(s.list.flatMap((r) => r.timeline.filter((e) => e.kind === "jev" && e.latencyMs)), (e) => e.latencyMs) : null; return o; });
+  const { key, dir } = state.sort;
+  rows.sort((a, b) => key === "label" ? a.s.label.localeCompare(b.s.label) * dir : ((a[key] ?? -Infinity) - (b[key] ?? -Infinity)) * dir);
+  const max = Object.fromEntries(cols.map(([id]) => [id, Math.max(1e-9, ...rows.map((r) => r[id] ?? 0))]));
+  const th = (id, label) => `<th class="${state.sort.key === id ? "on" : ""}" data-sort="${id}">${label}<span class="arrow">${state.sort.key === id ? (state.sort.dir < 0 ? "▼" : "▲") : ""}</span></th>`;
+  const cellBar = (id, v, color) => { const m = METRICS[id]; const w = id === "efficiency" || id === "completion" ? v : (v / max[id]) * 100; return `<td class="num cell"><i style="--c:${color};width:${Math.max(0, Math.min(100, w))}%"></i><b>${m.fmt(v)}</b></td>`; };
+  return `<div class="tablewrap"><table><thead><tr><th class="rank">#</th>${th("label", T.colSeries)}${cols.map(([id, l]) => th(id, l)).join("")}<th data-sort="jevLat">${T.colJevLat}</th></tr></thead><tbody>
+    ${rows.map((r, i) => `<tr class="row ${hl().size && !hl().has(r.s.key) ? "dim" : ""}" data-key="${r.s.key}"><td class="rank">${i + 1}</td><td><span class="sw ${r.s.jev ? "hatch" : ""}" style="--c:${r.s.color}"></span>${esc(r.s.label)}</td>${cols.map(([id]) => cellBar(id, r[id], r.s.color)).join("")}<td class="num">${r.jevLat ? fmt(r.jevLat) + " ms" : "–"}</td></tr>`).join("")}
+  </tbody></table></div>`;
+}
+
+function timeline(run) {
+  if (!run) return `<div class="empty">${T.noRun}</div>`;
+  const wrong = new Set(run.distractorTools ?? []);
+  const items = run.timeline.map((e) => {
+    if (e.kind === "jev") { const top = (e.top ?? []).slice(0, 3).map((t) => `${t.name} ${fmt(t.p * 100)}%`).join(" · "); return `<li><span class="k">step ${e.step} · jev</span><span><span class="tok jev">${esc(e.name)}</span> <span class="conf">conf ${fmt(e.confidence * 100)}%${e.done != null ? ` · done ${fmt(e.done * 100)}%` : ""}${e.gated ? " · ⛔ gate" : ""} · ${e.latencyMs} ms</span><br><span class="conf">${esc(top)}</span></span></li>`; }
+    if (e.kind === "model") return `<li><span class="k">step ${e.step}</span><span class="conf">→ ${esc(e.name)}</span></li>`;
+    if (e.kind === "tool") return `<li><span class="k"></span><span><span class="tok ${wrong.has(e.name) ? "wrong" : ""} ${e.ok === false ? "fail" : ""}">${esc(e.name)}</span> <span class="conf">${wrong.has(e.name) ? T.wrongTool : ""}${e.ok === false ? T.failed : ""}</span><details class="args"><summary>args</summary><pre>${esc(JSON.stringify(e.detail, null, 1))}</pre></details></span></li>`;
+    if (e.kind === "message") return `<li><span class="k"></span><span class="conf">💬 ${esc(e.detail)}</span></li>`;
+    return "";
+  }).join("");
+  return `<div class="metrics"><span>${T.tlSteps} <b>${run.modelSteps}</b></span><span>${T.tlTools} <b>${run.toolCalls}</b>/${run.idealToolCalls}</span>${run.jevCalls ? `<span>${T.tlJev} <b>${run.jevCalls}</b></span>` : ""}<span>${T.tlWrong} <b>${run.distractorCalls}</b></span><span>${T.tlCompletion} <b>${fmt(run.completion * 100)}%</b></span><span>${T.tlTokens} <b>${compact(run.usage.inputTokens)}</b>/<b>${compact(run.usage.outputTokens)}</b></span><span>${usd(run.usage.estimatedCostUsd)}</span><span>${secs(run.durationMs)}</span><span>${run.succeeded ? "✅" : "❌"}</span></div><ul class="tl">${items}</ul><div class="reply">${esc(run.reply ?? T.noReply)}</div>`;
+}
+
+function executions() {
+  const k = state.execModel;
+  const sel = `<div class="group" style="margin-bottom:12px"><span class="conf">${T.model}</span>${modelKeys.filter((m) => state.models.has(m)).map((m) => `<button class="chip ${m === k ? "on lime" : ""}" data-exec="${m}"><i style="--c:${modelColor(m)}"></i>${esc(modelLabel(m))}</button>`).join("")}</div>`;
+  return sel + prompts().map((p) => {
+    const runs = MODES.map((m) => Object.values(state.data.series).find((s) => s.modelKey === k && s.mode === m.key)?.runs[p]);
+    const any = runs.find(Boolean) ?? Object.values(state.data.series).map((s) => s.runs[p]).find(Boolean);
+    const spec = promptSpec(p) ?? { prompt: any?.prompt ?? "" };
+    return `<details class="exec"><summary><b>${esc(titleOf(p, any?.title))}</b><span>${p}</span>${runs.map((r, i) => r ? `<span style="color:${i ? "var(--mode-jev)" : "var(--mode-direct)"}">${MODES[i].short}: ${r.toolCalls} ${T.tlTools} · ${r.modelSteps} ${T.tlSteps} · ${fmt(r.completion * 100)}%${r.distractorCalls ? " · ✗" : ""}</span>` : "").join("")}</summary>
+      <div class="q"><b>${T.user}</b> ${esc(spec.prompt)}${LANG !== "pt" && spec.promptEn ? `<div class="prompt-en"><b>${T.enLabel}</b>${esc(spec.promptEn)}</div>` : ""}</div>
+      <div class="cols">${MODES.map((m, i) => `<div class="col"><h4 style="color:${i ? "var(--mode-jev)" : "var(--mode-direct)"}">${m.label} · ${esc(modelLabel(k))}</h4>${timeline(runs[i])}</div>`).join("")}</div></details>`;
+  }).join("");
+}
+
+// ---------- render ------------------------------------------------------------
+function renderControls() {
+  const c = document.getElementById("controls");
+  c.innerHTML = `<span>${T.models}</span><div class="group">${modelKeys.map((k) => `<button class="chip ${state.models.has(k) ? "on" : ""} ${[...hl()].some((h) => h.startsWith(k + "|")) ? "hl" : ""}" data-model="${k}"><i style="--c:${modelColor(k)}"></i>${esc(modelLabel(k))}</button>`).join("")}</div>
+    <span>${T.mode}</span><div class="group">${MODES.map((m) => `<button class="chip ${state.branches.has(m.key) ? "on" : ""}" data-branch="${m.key}">${m.short}</button>`).join("")}</div>
+    <span>${T.tasks}</span><div class="group">${[["all", T.all], ["basic", T.basic], ["complex", T.complex]].map(([k, l]) => `<button class="chip ${state.tier === k ? "on lime" : ""}" data-tier="${k}">${l}</button>`).join("")}</div>
+    <span class="hint-hl">${hl().size ? `${T.highlight}${[...hl()].map((k) => k.replace("|", " · ").replace("llm-direct", T.modeDirectShort).replace("jev-classifier", T.modeJevShort)).join(", ")} <button class="chip" data-clear="1">${T.clear}</button>` : T.clickHint}</span>`;
+}
+
+// Top bar + footer: rendered from JS so they follow the language.
+function renderChrome() {
+  const nav = [["/slides.html", T.navSlides, "color:var(--lime)"], ["#tarefas-prompts", T.navTasks], ["#destaques", T.navHighlights], ["#comparar", T.navCompare], ["#tarefas", T.navPerTask], ["#leaderboard", T.navLeaderboard], ["#execucoes", T.navRuns]];
+  document.getElementById("nav").innerHTML = nav.filter(([h]) => !(EMBEDDED && h === "/slides.html")).map(([h, l, st]) => `<a href="${h}"${st ? ` style="${st}"` : ""}>[ ${esc(l)} ]</a>`).join("");
+  document.getElementById("langs").innerHTML = LANGS.map((l) => `<button class="btn lang ${l === LANG ? "on" : ""}" data-lang="${l}">${l.toUpperCase()}</button>`).join("");
+  const refresh = document.getElementById("refresh"), exp = document.getElementById("export");
+  refresh.textContent = T.refresh; exp.textContent = T.exportHtml; exp.title = T.exportTitle;
+  document.getElementById("footer").textContent = T.footer;
+}
+
+function render() {
+  const data = state.data;
+  modelKeys = [...new Set(Object.values(data.series).map((s) => s.modelKey))].sort((a, b) => (MODEL_ORDER.indexOf(a) + 1 || 99) - (MODEL_ORDER.indexOf(b) + 1 || 99));
+  if (!state.models.size || [...state.models].some((k) => !modelKeys.includes(k))) state.models = new Set(modelKeys);
+  if (!state.execModel || !state.models.has(state.execModel)) state.execModel = modelKeys.find((k) => state.models.has(k)) ?? null;
+  document.getElementById("defs").innerHTML = hatchDefs(MODEL_HEX);
+  document.getElementById("stamp").textContent = T.updated + new Date(data.generatedAt).toLocaleTimeString(LOCALE()) + "_";
+  renderChrome();
+  renderControls();
+  const app = document.getElementById("app");
+  const series = buildSeries();
+  if (!series.length) { app.innerHTML = `<div class="empty" style="margin-top:24px">${T.noResults}</div>`; return; }
+  app.innerHTML = `
+    <h2 id="tarefas-prompts">${T.hTasks}<small>${tf("hTasksSmall", { n: prompts().length })}</small></h2>
+    <p class="sub">${T.tasksSub}</p>
+    ${tasksSection()}
+    <h2 id="destaques">${T.hHighlights}<small>${tf("hHighlightsSmall", { s: series.length, t: prompts().length })}</small></h2>
+    <p class="sub">${T.highlightsSub}</p>
+    ${legendSeries()}
+    ${highlights(series)}
+    <h2 id="comparar">${T.hCompare}</h2>
+    <p class="sub">${T.compareSub}</p>
+    <div class="grid two">${scatterCard(series)}${dumbbellCard()}</div>
+    <h2 id="tarefas">${T.hPerTask}</h2>
+    <p class="sub">${T.perTaskSub}</p>
+    <div class="grid">${buildCard("heatmap", () => heatCard(series))}</div>
+    <h2 id="leaderboard">${T.hLeaderboard}</h2>
+    <p class="sub">${T.leaderboardSub}</p>
+    ${buildCard("leaderboard", () => card(T.leaderboardTitle, leaderboard(series), { tag: T.leaderboardTag, id: "leaderboard" }))}
+    <h2 id="execucoes">${T.hRuns}</h2>
+    <p class="sub">${T.runsSub}</p>
+    ${executions()}`;
+  renderFocus();
+}
+
+function renderFocus() {
+  const el = document.getElementById("focus");
+  const id = state.focus;
+  if (!id || !CARD_BUILDERS[id]) { el.classList.remove("on"); el.innerHTML = ""; document.body.style.overflow = ""; return; }
+  BIG = true;
+  const i = CARD_ORDER.indexOf(id);
+  el.innerHTML = `<div class="focus-bar"><span class="t">${tf("focusBar", { i: i + 1, n: CARD_ORDER.length })}</span><span>${T.focusKeys}</span><button data-focus-nav="-1">${T.prev}</button><button data-focus-nav="1">${T.next}</button><button data-focus-close="1">${T.close}</button></div>${CARD_BUILDERS[id]()}`;
+  BIG = false;
+  el.classList.add("on");
+  document.body.style.overflow = "hidden";
+}
+
+const EMBEDDED = typeof window.__RESULTS__ === "object" && window.__RESULTS__ !== null;
+async function load() {
+  const m = location.hash.match(/^#focus=([\w-]+)/); if (m) state.focus = m[1];
+  if (EMBEDDED) {
+    state.data = window.__RESULTS__;
+    const st = window.__STATE__ ?? {};
+    if (st.models) state.models = new Set(st.models); if (st.branches) state.branches = new Set(st.branches);
+    if (st.tier) state.tier = st.tier; if (st.highlight) state.highlight = new Set(st.highlight);
+    render(); return;
+  }
+  try { const res = await fetch("/results.json", { cache: "no-store" }); state.data = await res.json(); render(); }
+  catch (e) { document.getElementById("app").innerHTML = `<div class="empty">${tf("loadError", { e: esc(e.message) })}</div>`; }
+}
+document.addEventListener("click", (ev) => {
+  const t = ev.target.closest("[data-lang],[data-model],[data-branch],[data-tier],[data-clear],[data-dumbbell],[data-heat],[data-sort],[data-exec],[data-focus],[data-focus-close],[data-focus-nav],[data-key]");
+  if (!t) return;
+  const d = t.dataset;
+  if (d.lang) { setLang(d.lang); return; }
+  if (d.focus) state.focus = d.focus;
+  else if (d.focusClose) state.focus = null;
+  else if (d.focusNav) { const i = CARD_ORDER.indexOf(state.focus); state.focus = CARD_ORDER[(i + Number(d.focusNav) + CARD_ORDER.length) % CARD_ORDER.length]; }
+  else if (d.model) { state.models.has(d.model) ? state.models.delete(d.model) : state.models.add(d.model); if (!state.models.size) state.models.add(d.model); }
+  else if (d.branch) { state.branches.has(d.branch) ? state.branches.delete(d.branch) : state.branches.add(d.branch); if (!state.branches.size) state.branches.add(d.branch); }
+  else if (d.tier) state.tier = d.tier;
+  else if (d.clear) state.highlight.clear();
+  else if (d.dumbbell) state.dumbbellMetric = d.dumbbell;
+  else if (d.heat) state.heatMetric = d.heat;
+  else if (d.sort) { state.sort = state.sort.key === d.sort ? { key: d.sort, dir: -state.sort.dir } : { key: d.sort, dir: d.sort === "label" ? 1 : (METRICS[d.sort]?.better === "low" ? 1 : -1) }; }
+  else if (d.exec) state.execModel = d.exec;
+  else if (d.key) { if (ev.target.closest("details.exec")) return; state.highlight.has(d.key) ? state.highlight.delete(d.key) : state.highlight.add(d.key); }
+  const y = window.scrollY; render(); window.scrollTo(0, y);
+});
+const tip = document.getElementById("tooltip");
+document.addEventListener("mousemove", (ev) => {
+  const t = ev.target.closest && ev.target.closest("[data-tip]");
+  if (!t) { tip.style.display = "none"; return; }
+  tip.textContent = t.dataset.tip; tip.style.display = "block";
+  tip.style.left = Math.min(ev.clientX + 12, window.innerWidth - 350) + "px"; tip.style.top = ev.clientY + 12 + "px";
+});
+document.addEventListener("keydown", (e) => {
+  if (!state.focus) return;
+  if (e.key === "Escape") { state.focus = null; render(); }
+  else if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const i = CARD_ORDER.indexOf(state.focus); state.focus = CARD_ORDER[(i + (e.key === "ArrowRight" ? 1 : -1) + CARD_ORDER.length) % CARD_ORDER.length]; render(); }
+});
+document.getElementById("refresh").addEventListener("click", load);
+load();
+if (!EMBEDDED) setInterval(() => { if (!hl().size && !state.focus) load(); }, 10000);
+else { document.getElementById("refresh").style.display = "none"; document.getElementById("export").style.display = "none"; }
+
+// Build a single self-contained HTML file: page + charts.js + data + current filters.
+async function exportHtml() {
+  if (!state.data) return;
+  const [page, charts] = await Promise.all([fetch("/index.html").then((r) => r.text()), fetch("/charts.js").then((r) => r.text())]);
+  const safe = (o) => JSON.stringify(o).replace(/<\//g, "<\\/");
+  const snapshot = { models: [...state.models], branches: [...state.branches], tier: state.tier, highlight: [...state.highlight] };
+  const html = page
+    .replace('<script src="charts.js"><' + '/script>', `<script>window.__RESULTS__ = ${safe(state.data)};\nwindow.__STATE__ = ${safe(snapshot)};\nwindow.__LANG__ = ${JSON.stringify(LANG)};<\/script>\n<script>${charts.replace(new RegExp("<\\/(script)", "gi"), "<\\/$1")}<\/script>`)
+    .replace("<title>Eval · Jev vs LLM</title>", `<title>Eval · Jev vs LLM · ${new Date(state.data.generatedAt).toLocaleString(LOCALE())}</title>`);
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `jev-vs-llm-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}.html`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+document.getElementById("export").addEventListener("click", exportHtml);
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+probe_start 2026-10-01T21:18:34Z
+=== directory and site maps ===
+GET https://archerhume.com/research/jev/ -> 404 11318 text/html; charset=utf-8
+GET https://archerhume.com/research/jev -> 404 11318 text/html; charset=utf-8
+GET https://archerhume.com/robots.txt -> 200 773 text/plain; charset=utf-8
+GET https://archerhume.com/sitemap-index.xml -> 200 185 application/xml
+GET https://archerhume.com/sitemap-0.xml -> 200 430 application/xml
+GET https://archerhume.com/research/ -> 404 11318 text/html; charset=utf-8
+GET https://archerhume.com/research/jev/index.json -> 404 11318 text/html; charset=utf-8
+=== known and guessed names ===
+curl: (3) URL rejected: Malformed input to a URL function
+(eval):35: read-only variable: status

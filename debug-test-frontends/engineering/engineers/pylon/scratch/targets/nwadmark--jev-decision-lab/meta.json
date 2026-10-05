@@ -1,0 +1,15 @@
+{
+  "full_name": "nwadmark/jev-decision-lab",
+  "html_url": "https://github.com/nwadmark/jev-decision-lab",
+  "description": "A workbench for designing typed decisions to test in the TypeSafe Jev Playground",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T05:10:20Z",
+  "size": 96,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "7a9b59742c08bb059704fdc6eb1632f545841973"
+}

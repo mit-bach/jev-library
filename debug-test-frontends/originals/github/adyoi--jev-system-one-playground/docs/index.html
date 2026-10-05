@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jev System One - Visual Playground</title>
+<style>
+  :root {
+    --ink: #1f1f1f;
+    --paper: #faf6ec;
+    --paper-alt: #f1ead9;
+    --rule: #c9bfa3;
+    --accent: #b3542e;
+    --muted: #7a6f58;
+    --green: #2c6e49;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Courier New", "Nimbus Mono PS", monospace;
+    line-height: 1.7;
+    padding: 0 0 48px;
+  }
+  header {
+    border-bottom: 4px double var(--ink);
+    padding: 34px 28px 18px;
+    background: linear-gradient(180deg, #fffdf6 0%, var(--paper) 100%);
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  header .tagline { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  main { max-width: 860px; margin: 0 auto; padding: 8px 26px; }
+  h2 {
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 0 8px;
+    margin: 0 0 14px;
+    color: var(--accent);
+  }
+  h3 { color: var(--green); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+  p { font-size: 14px; }
+  a { color: var(--accent); }
+  a:hover { color: #7c361a; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  th, td {
+    border: 1px solid var(--rule);
+    padding: 8px 12px;
+    text-align: left;
+    background: var(--paper-alt);
+  }
+  th { background: #e7ddc6; color: var(--ink); text-transform: uppercase; letter-spacing: 0.5px; }
+  .card {
+    border: 1px solid var(--rule);
+    border-left: 5px solid var(--green);
+    background: var(--paper-alt);
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  .card .t { font-weight: bold; color: var(--accent); }
+  code {
+    background: #eae2cd;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+  .cmd {
+    border: 1px dashed var(--rule);
+    padding: 8px 12px;
+    background: #fffdf6;
+    margin: 6px 0;
+    font-size: 13px;
+  }
+  .cmd .prompt { color: var(--green); }
+  footer {
+    margin-top: 40px;
+    border-top: 2px double var(--ink);
+    padding: 16px 28px 0;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Jev System One &mdash; Visual Playground</h1>
+  <div class="tagline">A desktop playground for composing &amp; evaluating the TypeSafe primitives &mdash; Choice, Score and Noul.</div>
+</header>
+<main>
+  <h2>Overview</h2>
+  <p>
+    A WinForms (.NET 10) playground that evaluates <b>typed questions</b> against a <b>state</b> document
+    and renders the structured answers &mdash; visually and as raw JSON. Jev evaluates questions in parallel:
+    one request, one structured response, no text parsing.
+  </p>
+
+  <h2>Primitives</h2>
+  <table>
+    <tr><th>Type</th><th>Asks</th><th>Returns</th></tr>
+    <tr><td>choice</td><td>Which of these options?</td><td><code>choice</code>, <code>probabilities</code>, <code>confidence</code></td></tr>
+    <tr><td>score</td><td>Which level on a rubric?</td><td><code>score</code>, <code>legend</code>, <code>probabilities</code>, <code>confidence</code></td></tr>
+    <tr><td>noul</td><td>Is this statement true?</td><td><code>noul</code> (0&ndash;1)</td></tr>
+  </table>
+
+  <h2>Features</h2>
+  <div class="card"><span class="t">[3-PANE EDITOR]</span> &mdash; State context, typed questions and live results side-by-side.</div>
+  <div class="card"><span class="t">[VISUAL + RAW]</span> &mdash; Build with guided forms; inspect or edit the exact JSON payload in parallel tabs.</div>
+  <div class="card"><span class="t">[ADD + LIST]</span> &mdash; Add unlimited questions; each one appears in the Loaded Questions list with per-row delete.</div>
+  <div class="card"><span class="t">[LIVE EVALUATION]</span> &mdash; Token-based matching of state against every primitive.</div>
+  <div class="card"><span class="t">[PRESETS]</span> &mdash; Choice (Routing), Score (Rubric) and multi-question Noul (Yes/No) starter packs.</div>
+
+  <h2>Run</h2>
+  <div class="cmd"><span class="prompt">C:\&gt;</span> dotnet run --project JevSystemOnePlayground.csproj</div>
+  <div class="cmd"><span class="prompt">C:\&gt;</span> dotnet publish -c Release -p:PublishProfile=win-x64</div>
+
+  <h2>Source</h2>
+  <p>
+    GitHub: <a href="https://github.com/adyoi/jev-system-one-playground">adyoi/jev-system-one-playground</a>
+    &middot; C# / .NET 10 / Windows Forms / System.Text.Json
+  </p>
+</main>
+<footer>
+  &copy; 2026 Jev System One &middot; classic retro theme
+</footer>
+</body>
+</html>

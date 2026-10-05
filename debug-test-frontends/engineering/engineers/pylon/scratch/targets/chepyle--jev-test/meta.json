@@ -1,0 +1,15 @@
+{
+  "full_name": "chepyle/jev-test",
+  "html_url": "https://github.com/chepyle/jev-test",
+  "description": "Reproducible zero-shot Jev benchmark on all seven LexGLUE tasks",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T12:34:19Z",
+  "size": 464,
+  "stargazers_count": 0,
+  "license": "Apache-2.0",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "231645b206242fbbdc80f8a3b45c1a7509e8db54"
+}

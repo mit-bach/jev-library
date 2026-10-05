@@ -1,0 +1,15 @@
+{
+  "full_name": "Chunky83/jev-workbench",
+  "html_url": "https://github.com/Chunky83/jev-workbench",
+  "description": "Jev Workbench: a C++ desktop workspace with Python diagnostics and structured TypeSafe evaluations",
+  "default_branch": "main",
+  "pushed_at": "2026-09-28T13:15:58Z",
+  "size": 21173,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "Python",
+  "commit": "dc92a689dee36963ede90970837d62c876d1e066"
+}

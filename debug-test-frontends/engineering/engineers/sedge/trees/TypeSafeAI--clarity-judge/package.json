@@ -1,0 +1,42 @@
+{
+  "name": "clarity-judge",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx --yes only-allow pnpm",
+    "dev": "next dev",
+    "dev:1password": "node scripts/dev-1password.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepare": "node scripts/install-hooks.mjs",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "lucide-react": "1.46.0",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24.13.5",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^5.0.1"
+  },
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=10"
+  }
+}

@@ -1,0 +1,10 @@
+AGENTS.md
+LICENSE
+README.md
+lib/log.mjs
+lib/provider.mjs
+package.json
+public/index.html
+public/strings.js
+scripts/selfcheck.mjs
+server.mjs

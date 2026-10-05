@@ -1,0 +1,15 @@
+{
+  "full_name": "wondertwins/jev-benchmark",
+  "html_url": "https://github.com/wondertwins/jev-benchmark",
+  "description": "Benchmarks and a playground for TypeSafe's Jev (System One) model: chess, and who-is-the-player-talking-to for speech-to-text game NPCs",
+  "default_branch": "main",
+  "pushed_at": "2026-09-16T23:03:49Z",
+  "size": 27667,
+  "stargazers_count": 6,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "1c2509ac7d5508b8a7ce00ae4df6d7652d05de8b"
+}

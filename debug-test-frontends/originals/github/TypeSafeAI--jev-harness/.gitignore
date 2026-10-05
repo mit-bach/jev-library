@@ -1,0 +1,28 @@
+node_modules/
+coverage/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# pnpm-only: these would install a different tree than pnpm-lock.yaml describes.
+package-lock.json
+npm-shrinkwrap.json
+yarn.lock
+bun.lockb
+/.playwright-mcp
+/output/playwright
+
+# Generated browser modules.
+.demo/
+
+.next/
+next-env.d.ts
+
+# Local run artifact produced by `pnpm --silent bench:routing > routing-run.json`
+# (README, docs/routing.md). Link a run deliberately; do not commit the default file.
+/routing-run.json
+
+# Generated local/CI sharing images and provenance; publish evidence deliberately.
+/test-results/sharing/

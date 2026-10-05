@@ -1,0 +1,29 @@
+{
+  "name": "jev-browser",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A small Playwright browser harness with Jev decisions",
+  "scripts": {
+    "start": "tsx src/cli.ts",
+    "check": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "format": "prettier --write src test README.md README.pt-BR.md docs package.json tsconfig.json .prettierrc.json",
+    "format:check": "prettier --check src test README.md README.pt-BR.md docs package.json tsconfig.json .prettierrc.json",
+    "validate": "npm run check && npm run format:check && npm test",
+    "browser:install": "playwright install chromium"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@typesafe-ai/sdk": "^0.6.0",
+    "playwright": "^1.63.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.3",
+    "prettier": "^3.9.7",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}

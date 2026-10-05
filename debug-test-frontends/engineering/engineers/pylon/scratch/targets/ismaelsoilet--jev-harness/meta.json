@@ -1,0 +1,15 @@
+{
+  "full_name": "ismaelsoilet/jev-harness",
+  "html_url": "https://github.com/ismaelsoilet/jev-harness",
+  "description": "Zero-dependency System One decision harness: 5 semantic gates saving frontier AI agent tokens on trivial errors & doom loops. Python + TypeScript + Rust. MCP-compatible.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T16:55:37Z",
+  "size": 1760,
+  "stargazers_count": 10,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://pypi.org/project/jev-harness/",
+  "language": "Python",
+  "commit": "6a7df76de2a36bf21e7a3116e1f10c7a3a7cb71d"
+}

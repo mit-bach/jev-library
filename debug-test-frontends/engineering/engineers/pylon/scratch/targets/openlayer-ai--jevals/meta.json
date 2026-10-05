@@ -1,0 +1,15 @@
+{
+  "full_name": "openlayer-ai/jevals",
+  "html_url": "https://github.com/openlayer-ai/jevals",
+  "description": "Agent evals and guardrails as Jev decisions: one request per trace, a fraction of a cent, fast enough for the agent loop. Runs locally with Kev or Laya.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-01T16:48:21Z",
+  "size": 422,
+  "stargazers_count": 102,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://github.com/openlayer-ai/jevals",
+  "language": "Python",
+  "commit": "0a8f895a0428b89c865f953d5295b6b516e4018c"
+}

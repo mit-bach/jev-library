@@ -1,0 +1,15 @@
+{
+  "full_name": "arthurfiorette/jev-playwright",
+  "html_url": "https://github.com/arthurfiorette/jev-playwright",
+  "description": "Jev-powered Playwright test selection",
+  "default_branch": "main",
+  "pushed_at": "2026-10-01T21:49:44Z",
+  "size": 3200,
+  "stargazers_count": 6,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "TypeScript",
+  "commit": "96bdcc6bdf2dd0a9194c302e84eb6c87abb4f398"
+}

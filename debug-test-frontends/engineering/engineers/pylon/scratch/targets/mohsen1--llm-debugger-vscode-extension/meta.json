@@ -1,0 +1,15 @@
+{
+  "full_name": "mohsen1/llm-debugger-vscode-extension",
+  "html_url": "https://github.com/mohsen1/llm-debugger-vscode-extension",
+  "description": "VSCode extension that demonstrates the use of large language models (LLMs) for active debugging of programs",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T19:50:11Z",
+  "size": 3917,
+  "stargazers_count": 361,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "TypeScript",
+  "commit": "17522a386e16bbe21952345c9fc1bc1ba84ad418"
+}

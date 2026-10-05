@@ -1,0 +1,15 @@
+{
+  "full_name": "DonaldMurillo/system-one-playground",
+  "html_url": "https://github.com/DonaldMurillo/system-one-playground",
+  "description": "Readable scripting, semantic code checks, a Go System One client, and Studio.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-23T01:51:19Z",
+  "size": 7046,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://donaldmurillo.github.io/system-one-playground/",
+  "language": "Go",
+  "commit": "888a033725e67e76fca7f4440ffd9b239a19db1c"
+}

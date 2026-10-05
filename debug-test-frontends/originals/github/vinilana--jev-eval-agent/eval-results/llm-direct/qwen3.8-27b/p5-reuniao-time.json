@@ -1,0 +1,160 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PRVR1QK939WAXS3FBHX3KM",
+  "at": "2026-09-17T04:10:21.601Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 8,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "contacts": 2,
+    "calendar": 3,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.875,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 70007,
+  "usage": {
+    "inputTokens": 60832,
+    "outputTokens": 2749,
+    "cacheReadTokens": 48657,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.020027997999999998
+  },
+  "reasoningChars": 7081,
+  "reply": "\n\nTudo feito:\n\n- **Reunião marcada** amanhã (17/09) das **15h às 15h45** com Pedro Alves e Ana Beatriz (convites enviados para ambos, com link de vídeo) — foi o único período da tarde em que você está livre (seu almoço com Pedro termina às 13h30 e o restante da manhã estava ocupado).\n- **Subtarefa \"Preparar pauta\"** criada dentro de \"Revisar proposta comercial\".\n- **E-mail com a pauta agendado** para envio à Ana Beatriz amanhã às **8h**.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "13:30",
+        "latest": "18:30"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião – Revisão da proposta comercial",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "1. Revisão da proposta comercial – pontos em aberto e ajustes\\n2. Alinhamento de próximos passos e prazos"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta da reunião de amanhã (17/09) às 15h",
+        "body": "Olá Ana,\n\nSegue a pauta da nossa reunião de amanhã, quinta-feira (17/09), às 15h (45 min), com a presença do Pedro:\n\n1. Revisão da proposta comercial – pontos em aberto e ajustes\n2. Alinhamento de próximos passos e prazos\n\nQualquer ponto que queira adicionar, é só me avisar.\n\nAbraço,\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "\n\nTudo feito:\n\n- **Reunião marcada** amanhã (17/09) das **15h às 15h45** com Pedro Alves e Ana Beatriz (convites enviados para ambos, com link de vídeo) — foi o único período da tarde em que você está livre (seu almoço com Pedro termina às 13h30 e o restante da manhã estava ocupado).\n- **Subtarefa \"Preparar pauta\"** criada dentro de \"Revisar proposta comercial\".\n- **E-mail com a pauta agendado** p"
+    }
+  ]
+}

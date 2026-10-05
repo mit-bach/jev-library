@@ -1,0 +1,105 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PV4KBQDZVTM8JNHC6FQQZW",
+  "at": "2026-09-17T04:49:24.219Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 25355,
+  "usage": {
+    "inputTokens": 71101,
+    "outputTokens": 1068,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.76441
+  },
+  "reasoningChars": 406,
+  "reply": "Pronto! Reservei o voo **GOL G31404**, sexta-feira (18/09), saindo do Santos Dumont às **08:00** e chegando em Congonhas às **09:05**, por **R$ 312** (código de reserva **ABC123**). O voo já está na sua agenda.\n\nUma observação: havia um voo R$ 14 mais barato (G31410, R$ 298), mas ele só sai às 11:30 e chega às 12:35 — muito apertado para uma reunião às 14h em caso de atraso. Por isso escolhi o das 8h, que é o mais barato entre os que chegam com folga. Se preferir mesmo assim o das 11:30, me avisa que eu troco.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "05:00",
+        "latest_departure": "11:30"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_2",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31404 SDU → CGH (reserva ABC123)",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "09:05",
+        "location": "Aeroporto Santos Dumont (SDU)"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Reservei o voo **GOL G31404**, sexta-feira (18/09), saindo do Santos Dumont às **08:00** e chegando em Congonhas às **09:05**, por **R$ 312** (código de reserva **ABC123**). O voo já está na sua agenda.\n\nUma observação: havia um voo R$ 14 mais barato (G31410, R$ 298), mas ele só sai às 11:30 e chega às 12:35 — muito apertado para uma reunião às 14h em caso de atraso. Por isso escolhi o das"
+    }
+  ]
+}

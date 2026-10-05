@@ -1,0 +1,15 @@
+{
+  "full_name": "4esv/jev-eval",
+  "html_url": "https://github.com/4esv/jev-eval",
+  "description": "Benchmark TypeSafe Jev against any OpenRouter model on your own data.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-23T18:03:53Z",
+  "size": 4227,
+  "stargazers_count": 1,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "4050562fe17f783479c2f58ee8cbc345fab6fada"
+}

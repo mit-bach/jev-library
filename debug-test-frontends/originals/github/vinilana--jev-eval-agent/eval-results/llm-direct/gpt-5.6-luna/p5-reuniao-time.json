@@ -1,0 +1,156 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PPWMV3BYJ7EE5Z3WP0CYG1",
+  "at": "2026-09-17T03:34:58.362Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "contacts": 2,
+    "task": 2,
+    "calendar": 2,
+    "email": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 14445,
+  "usage": {
+    "inputTokens": 22431,
+    "outputTokens": 748,
+    "cacheReadTokens": 21247,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0053838
+  },
+  "reasoningChars": 805,
+  "reply": "Reunião marcada para amanhã, **17/09, das 15h às 15h45**, com Pedro Alves e Ana Beatriz; os convites foram enviados. Criei a subtarefa **“Preparar pauta”** dentro de **“Revisar proposta comercial”**. Também agendei o email para Ana, com a pauta e o link da reunião, para amanhã às **8h**.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {
+        "list": "",
+        "include_done": false,
+        "due_before": ""
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "13:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião com Pedro Alves e Ana Beatriz",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "Alinhamento e revisão da proposta comercial."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17",
+        "priority": "high"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta — reunião de amanhã às 15h",
+        "body": "Oi, Ana!\n\nSegue a pauta da nossa reunião de amanhã, 17/09, às 15h (45 min):\n\n1. Alinhamento sobre a proposta comercial;\n2. Revisão dos principais pontos;\n3. Próximos passos e responsáveis.\n\nLink da reunião: https://meet.example.com/abc-defg-hij\n\nAté lá!",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reunião marcada para amanhã, **17/09, das 15h às 15h45**, com Pedro Alves e Ana Beatriz; os convites foram enviados. Criei a subtarefa **“Preparar pauta”** dentro de **“Revisar proposta comercial”**. Também agendei o email para Ana, com a pauta e o link da reunião, para amanhã às **8h**."
+    }
+  ]
+}

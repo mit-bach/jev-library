@@ -1,0 +1,233 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PVWNHV07K076BF1GEZX04Y",
+  "at": "2026-09-17T05:02:20.203Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 12658,
+  "usage": {
+    "inputTokens": 3318,
+    "outputTokens": 281,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.04723
+  },
+  "reasoningChars": 0,
+  "reply": "Reservei o voo mais barato encontrado para sexta-feira, **18/09**: GOL G31410, de Santos Dumont (SDU) para Congonhas (CGH), **11h30–12h35**, por **R$ 298**. Localizador: **ABC123**.\n\nO voo já está na sua agenda. A chegada prevista deixa **1h25 até a reunião**, incluindo desembarque e deslocamento.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 1,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 299,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "health_log_workout",
+          "p": 0
+        },
+        {
+          "name": "contacts_search",
+          "p": 0
+        },
+        {
+          "name": "email_read",
+          "p": 0
+        },
+        {
+          "name": "home_lights_control",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 999999,
+        "earliest_departure": "00:00",
+        "latest_departure": "11:59"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_book",
+      "confidence": 0.95,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 365,
+      "top": [
+        {
+          "name": "flights_book",
+          "p": 0.97
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_event",
+      "confidence": 0.88,
+      "done": 0.07,
+      "gated": false,
+      "latencyMs": 368,
+      "top": [
+        {
+          "name": "calendar_create_event",
+          "p": 0.89
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.05
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.04
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.01
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 — SDU → CGH — Reserva ABC123",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU) → Aeroporto de Congonhas (CGH)",
+        "attendees": [],
+        "calendar": "primary"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.71,
+      "done": 0.64,
+      "gated": false,
+      "latencyMs": 572,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.72
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.14
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.06
+        },
+        {
+          "name": "calendar_update_event",
+          "p": 0.02
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.02
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reservei o voo mais barato encontrado para sexta-feira, **18/09**: GOL G31410, de Santos Dumont (SDU) para Congonhas (CGH), **11h30–12h35**, por **R$ 298**. Localizador: **ABC123**.\n\nO voo já está na sua agenda. A chegada prevista deixa **1h25 até a reunião**, incluindo desembarque e deslocamento."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# The TypeSafe SDK is the only thing here that is not standard web plumbing.
+typesafe-sdk[http2]>=0.7
+fastapi>=0.115
+uvicorn[standard]>=0.30
+httpx>=0.27
+pytest>=8.0

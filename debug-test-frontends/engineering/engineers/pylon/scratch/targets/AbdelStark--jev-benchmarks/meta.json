@@ -1,0 +1,15 @@
+{
+  "full_name": "AbdelStark/jev-benchmarks",
+  "html_url": "https://github.com/AbdelStark/jev-benchmarks",
+  "description": "Probability-aware evaluation for typed decision models: calibration, selective risk, latency, and reproducible benchmarks.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-17T07:55:14Z",
+  "size": 489,
+  "stargazers_count": 22,
+  "license": "Apache-2.0",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://github.com/AbdelStark/jev-benchmarks#readme",
+  "language": "Python",
+  "commit": "0d610cc53e79bcbec691312b0c4adb4a0e371642"
+}

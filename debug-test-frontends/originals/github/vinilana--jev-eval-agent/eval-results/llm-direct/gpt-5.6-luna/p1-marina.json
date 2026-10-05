@@ -1,0 +1,101 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PPVDYMF94MB9SVYSS0C482",
+  "at": "2026-09-17T03:34:11.703Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 7461,
+  "usage": {
+    "inputTokens": 15492,
+    "outputTokens": 295,
+    "cacheReadTokens": 14983,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0034524
+  },
+  "reasoningChars": 768,
+  "reply": "Sim. Você tem reunião com a Marina Costa amanhã, quinta-feira (17/09), das 10h às 11h, pelo Google Meet. Enviei um e-mail confirmando o horário e criei um lembrete para 9h30.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação da reunião de amanhã",
+        "body": "Oi, Marina!\n\nConfirmando nossa reunião de amanhã, quinta-feira (17/09), das 10h às 11h, pelo Google Meet.\n\nAté lá!\nVinícius",
+        "cc": []
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa - roadmap Q4",
+        "date": "2026-09-17",
+        "time": "09:30",
+        "repeat": "none"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim. Você tem reunião com a Marina Costa amanhã, quinta-feira (17/09), das 10h às 11h, pelo Google Meet. Enviei um e-mail confirmando o horário e criei um lembrete para 9h30."
+    }
+  ]
+}

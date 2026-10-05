@@ -1,0 +1,15 @@
+{
+  "full_name": "yfe404/jev-harness",
+  "html_url": "https://github.com/yfe404/jev-harness",
+  "description": "Auditable decision gates for Claude Code and Pi, with offline examples and compaction checks",
+  "default_branch": "master",
+  "pushed_at": "2026-10-02T16:55:15Z",
+  "size": 391,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "de4b645e22ab8aff30e161a35fa5485a88ec0c2d"
+}

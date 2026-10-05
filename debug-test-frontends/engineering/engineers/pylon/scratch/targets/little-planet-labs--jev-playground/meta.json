@@ -1,0 +1,15 @@
+{
+  "full_name": "little-planet-labs/jev-playground",
+  "html_url": "https://github.com/little-planet-labs/jev-playground",
+  "description": "A small Next.js app for experimenting with TypeSafe AI's Jev model (System One)",
+  "default_branch": "main",
+  "pushed_at": "2026-09-17T13:56:22Z",
+  "size": 447,
+  "stargazers_count": 1,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jev-playground-zeta.vercel.app",
+  "language": "TypeScript",
+  "commit": "418b723779569b1cb1f21a4f7f34c546d44c7e34"
+}

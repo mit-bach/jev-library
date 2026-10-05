@@ -1,0 +1,35 @@
+Jev Shadow notices
+==================
+
+This project is an independent, experimental spike. It is not affiliated with
+or endorsed by any of the vendors named below. It contains no vendor SDKs,
+service code, or credentials.
+
+Hermes (Nous Research)
+----------------------
+
+This harness is designed to run in-process inside Hermes and, in that mode,
+calls Hermes' own egress redactor rather than shipping a competing
+secret-pattern list. That dependency is on a *host-provided callable*, not on
+Hermes source code: the harness accepts any `Callable[[str], str]` via the
+`redactor` argument and never vendors or imports Hermes files itself. See
+`src/jev_shadow/redaction.py::resolve_redactor` for the injection contract and
+`vendor/VENDOR.md` in the Hermes plugin integration for the vendored copy.
+
+TypeSafe / Jev
+--------------
+
+Jev and TypeSafe are product names of their respective owners. This project
+calls the TypeSafe "System One" endpoint only when a caller explicitly opts in
+with a credential, and does not include their SDKs, service code, or
+credentials. No API key is ever committed, logged, or written to disk by this
+package.
+
+Note on this repository's own telemetry metric names
+----------------------------------------------------
+
+The metrics exported here (`jev_shadow_*`) share a namespace with the separate
+`ianlintner/jev-router` project, whose exporter already uses some of the same
+metric names with different label schemas. Both are intended to be scraped by
+one Prometheus. See the "Telemetry namespace collision" section of README.md
+before enabling both exporters on the same Prometheus instance.

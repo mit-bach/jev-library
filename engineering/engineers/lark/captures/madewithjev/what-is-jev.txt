@@ -1,0 +1,518 @@
+What is Jev? TypeSafe AI's 70 ms decision modelSkip to contentMade with JevBuilds
+All builds749
+By type
+Jev Engineering15
+GitHub330
+Skills12
+X posts433
+YouTube57
+Sites43
+Resources159Community submissionsUse cases
+Agents and browsers170
+Context and memory33
+Coding and code review40
+Routing and model choice55
+SDKs and integrations123
+Open source146
+Benchmarks and evals137
+Search35
+Documents and OCR30
+Security and abuse33
+Inbox and support24
+Social feeds51
+Ads and marketing24
+Sales and leads15
+SEO and GEO10
+Ecommerce7
+Games and real time74
+Trading and markets26
+Robotics and devices14
+UI14
+Tools and apps50What people use Jev forToolsLearn
+The basics
+Jev explained
+What is Jev
+What is Jev Engineering
+Jev vs an LLM
+Jev pricing
+Jev statistics
+By job
+Jev use cases
+Jev as a judge
+Jev for SEO
+Jev for ads
+Jev for marketing
+Building with Jev
+How to use Jev
+Jev with Claude Code
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Open-source Jev
+Fine-tune Jev
+Jev and imagesAll guides19Free tools
+AI Slop DetectorHow AI-made does a page look?All free tools1Search⌘KSponsorsSubmit a build
+All builds749
+Tools
+Community
+What is Jev
+AboutSponsors
+Builds by type
+Jev Engineering15
+GitHub330
+Skills12
+X posts433
+YouTube57
+Sites43
+Resources159
+Use cases
+Agents and browsers170
+Context and memory33
+Coding and code review40
+Routing and model choice55
+SDKs and integrations123
+Open source146
+Benchmarks and evals137
+Search35
+Documents and OCR30
+Security and abuse33
+Inbox and support24
+Social feeds51
+Ads and marketing24
+Sales and leads15
+SEO and GEO10
+Ecommerce7
+Games and real time74
+Trading and markets26
+Robotics and devices14
+UI14
+Tools and apps50
+Learn
+Jev explained
+What is Jev
+What is Jev Engineering
+Jev vs an LLM
+Jev pricing
+Jev statistics
+How to use Jev
+Jev with Claude Code
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Open-source Jev
+Fine-tune Jev
+Jev and images
+Jev use cases
+Jev as a judge
+Jev for SEO
+Jev for ads
+Jev for marketing
+All guides19
+Free tools
+AI Slop DetectorHow AI-made does a page look?
+All free tools1
+What is Jev?
+Jev is the first System One model from TypeSafe AI, released on 15 September 2026. You send it some text and typed questions about that text. It returns typed answers, a probability for each option, and a confidence score.
+Updated 19 Sep 2026 · by Made with Jev
+In short
+Jev makes decisions. It does not write text, code or explanations.
+You ask Choice, Score and Noul questions. Jev answers them all in parallel, in 70 to 500 ms.
+Input costs $0.042 per million tokens. Output is free.
+Each answer comes with a confidence. Your code decides what to do with the unsure ones.
+Diogo Almeida
+@CompleteSkeptic
+After co-inventing ChatGPT, I kept asking myself: why have superhuman chat models not led to AGI?
+
+I’ve spent the last 2 years in stealth building a new way to train models (RLCD), and a new type of frontier AI model that we are releasing today: Jev
+
+• 20-200x faster
+• 40-400x cheaper (w/ output tokens free)
+• Frontier composable intelligence optimized for decisions
+
+AFAICT the shortest path to AI-based economic revolution
+Sep 15, 2026 · 76.5K likesOpen on X
+How a call works
+A call has two parts: the state, which is the text to judge, and the questions about it. There are three question types, and one call can mix them. Jev answers all the questions in parallel against the same state, so 60 questions cost about the same as one.TypeAsksReturnsChoiceWhich of these options?The chosen option, a probability for each, and a confidenceScoreWhere on this scale?A level, a probability for each level, and a confidenceNoulIs this statement true?A probability between 0 and 1
+Here is a support ticket with two questions: which team gets it, and is it urgent.Request · POST /v1/systemone{
+ "state": "Hi, I've been trying to connect my Stripe account for 3 days and it keeps failing. I'm losing sales. Please help ASAP.",
+ "model": "jev-latest",
+ "questions": {
+ "department": {
+ "type": "choice",
+ "instructions": "Which team should handle this",
+ "criteria": {
+ "billing": "Payment or subscription issues",
+ "technical": "Bugs or integration problems",
+ "sales": "Pricing or account questions"
+ }
+ },
+ "is_urgent": {
+ "type": "noul",
+ "instructions": "The message conveys urgency or time-sensitivity"
+ }
+ }
+}Response, abridged{
+ "department": {
+ "choice": "billing",
+ "probabilities": { "billing": 0.84, "technical": 0.159, "sales": 0.001 },
+ "confidence": 0.596
+ },
+ "is_urgent": { "noul": 0.999 }
+}
+Abridged from TypeSafe’s quickstart.
+Read the department answer closely. Jev picked billing with a probability of 0.84, but its confidence is only 0.596, because technical also got some weight. The probabilities show which option Jev picked. The confidence shows how sure it is, and that is the number your code uses: act on the confident answers automatically, and send the rest to a person or to a larger model. Confidence docs
+One detail catches people out: the question ID, such as is_urgent, never reaches the model. Write the whole question in the instructions. Choice docs
+Speed, cost and accuracy
+Input costs $0.042 per million tokens. Output is free. Answers take 70 to 500 milliseconds. In TypeSafe's own workflow evals, Jev matches Sonnet 5 on accuracy (67.8%) at $0.0004 per case, against $0.1174 for Sonnet 5. What that works out to on real work is on the pricing page.Averages across four workflows, in workflow mode.ModelMean accuracyCost per caseTime per caseOpus 573.1%$0.176137.8 sTerra67.9%$0.030410.1 sSonnet 567.8%$0.117478.1 sJev67.8%$0.00040.4 sHaiku 4.553.6%$0.019512.5 s
+Source: TypeSafe workflow evals. The reference answers in these evals come from two large reasoning models, not from people. So 67.8% means Jev agrees with those two models 67.8% of the time.
+Time per case
+Lower is better. At this scale Jev’s bar is almost invisible.
+Sonnet 578.1 s
+Opus 537.8 s
+Haiku 4.512.5 s
+Terra10.1 s
+Jev0.4 s
+Cost per case
+Lower is better. Same four workflows.
+Opus 5$0.1761
+Sonnet 5$0.1174
+Terra$0.0304
+Haiku 4.5$0.0195
+Jev$0.0004
+Models and limitsModelJev 1.13 (jev-1.13.0). jev-latest points to it.Price$0.042 per million input tokens. Output is free.Rate limits250,000 tokens per second, 1,200 requests per minuteContext64k tokens per request; 32k for the state plus the longest questionInputText only: a string, a JSON object or a list of strings
+Source: TypeSafe models. The SDKs retry with backoff when a request goes over a limit.What is Jev infographic: Jev on one page. Save it or share it.
+Why it is called Jev
+Jev is named after the Jevons paradox, TypeSafe’s founder Diogo Almeida wrote in his launch thread. In 1865, William Stanley Jevons argued that as steam engines used coal more efficiently, Britain would burn more coal, not less. Make a decision cheap enough, and software starts making far more of them.
+“System One” comes from Daniel Kahneman’s Thinking, Fast and Slow: System 1 is fast and intuitive, System 2 slow and deliberate. Jev is built for the fast kind. System One docs
+darkzodchi
+@zodchiii
+Jev Founder (ex-OpenAI):
+
+"I believe JEV is the biggest breakthrough we've ever worked on
+
+This sounds too good to be true but it's beating everything"
+
+In 5 minutes, he breaks down why older LLMs were great at talking and terrible at deciding and building.
+
+Watch it and then read the guide below on how to use it at it's fullest 👇🏼
+Sep 19, 2026 · 469 likesOpen on XDiogo Almeida on models that are good at talking and bad at deciding
+What people build with it
+This site lists 749 builds. Most use Jev in one of a few ways: choosing the next action in an agent, sorting a queue into buckets, scoring every item in a large set, or stopping a risky step unless the confidence is high. In each case the system makes the same decision many times, so the speed and cost of each one add up.
+Agents and browsers170
+Open source146
+Benchmarks and evals137
+SDKs and integrations123
+Games and real time74
+Routing and model choice55
+Social feeds51
+Tools and apps50
+Coding and code review40
+Search35
+Context and memory33
+Security and abuse33
+Documents and OCR30
+Trading and markets26
+Inbox and support24
+Ads and marketing24
+Sales and leads15
+Robotics and devices14
+UI14
+SEO and GEO10
+Ecommerce7
+Diogo Almeida
+@CompleteSkeptic
+We love how this doomo doomonstrates real-time intelligence and what can be doone with code + AI!
+
+~10 calls/sec = ~$7/hour
+X·Games and real timePick
+Jev plays DoomRate~10 queries/sCost~$7/hour
+Gregor Zunic
+@gregpr07
+Breaking: Browser Use + Jev = Ultrafast ⚡
+
+Findings flights took 7s and cost only $0.0039 🤯
+
+> new action space every step
+> DOM state space
+> small LLM fallback to type
+
+(this video is at 1x speed btw)
+
+Built a tiny open source browser agent. try it below ↓
+X·SearchPick
+Flight search with Browser UseRun time~7 sCost~$0.004
+Hassan
+@nutlope
+I used Jev to classify 1,018 AI research papers.
+
+The result: $0.08 total cost and 256ms median end-to-end latency per paper.
+
+The pipeline was:
+
+1. Summarize each paper with DeepSeek V4 Flash
+2. Send the title + summary + 24 possible topics to Jev
+3. Use Jev to classify each paper
+4. Visualize everything on http://1kpapers.com
+
+The summaries cost $3.99 on @togethercompute. The classifications cost $0.08 on @typesafeai.
+
+So for just over $4 of inference, I ended up with a pretty useful way to explore the top AI research papers from the past year.
+
+I think this is where things are heading: different models for different parts of the workflow, instead of using one model for everything.
+
+I’m running evals on the Jev classifications before replacing the current ones, but the site is already live: http://1kpapers.com
+Live site·Documents and OCR
+1kpapersDocuments1,018 papersTotal cost$0.08Median latency256 ms
+tamara
+@tamarajtran
+found the perfect use case for @typesafeai Jev: 
+
+instant compaction
+
+in 2026, why is compaction still a summarization prompt?
+
+Jev can make it instant by scoring every tool call and dropping what’s irrelevant
+X·Context and memoryPick
+Instant compaction for Claude
+Grouped by the job Jev does rather than by taxonomy, they are on Jev use cases. The way these builds split the work, an LLM writes, Jev decides and code acts, now has a name: Jev Engineering. The code that holds it together is an agent harness, and the model itself cannot be fine-tuned — here is what people train instead.
+Where it does not fit
+It does not write text. Drafts, summaries and code still need an LLM.
+You define the possible answers. A Choice holds at most 255 options.
+Input is text only for now: strings, JSON objects and lists of strings. No images, audio or video. A picture has to be turned into text first — can Jev read images?
+“Cannot hallucinate” means the answer always has the right type. It can still be wrong. Test the confidence scores on your own data before you choose a threshold.
+Watch the founder explain it
+Codez
+@0xCodez
+Jev Founder, Diogo Almeida (ex-OpenAI):
+
+"The next era is not the Claude Code or Codex era, they are still part of the assistance era with human in the loop - JEV is what comes next for LLMs
+
+x200 faster, x400 cheaper, 0 hallucination, no human in the loop - that's JEV, this is how LLMs will look like"
+
+in 36-minute tech talk, Jev Founder explained why RLHF isn't a thing anymore and how modern LLMs will be built
+
+this talk is worth more than a Stanford Machine Learning degree
+
+watch today no matter what, then learn how to become a Jev Engineer in the article below
+Sep 19, 2026 · 2.3K likesOpen on XDiogo Almeida’s 36-minute talk, shared by Codez
+Start here
+The docs, the launch post, two plain explanations, our guide to Jev Engineering and the list that tracks the rest. Our own writing has an index of its own: all 19 Jev guides on one page, grouped by the question each one answers.
+Guide·docs.typesafe.ai
+Quickstart: state, questions, typed answers
+The three question types, Choice, Score and Noul, in one support-ticket example.
+Guide·typesafe.ai
+Introducing System One Models and Jev
+TypeSafe’s launch post: the model, the evals, and their caveats.
+Akshay 🚀
+@akshay_pachaar
+LLMs vs. Jev, clearly explained!
+
+TL;DR
+
+The key difference is not that Jev generates faster.
+
+Jev does not generate text at all.
+
+A traditional LLM receives context and produces an answer one token at a time. Even when the output is a small JSON object, every token depends on those generated before it.
+
+Jev receives the same context but evaluates predefined decisions directly. When those decisions are independent, it can evaluate all of them in parallel.
+
+Consider an agent handling a failed deployment. It may need to determine:
+
+→ Whether the incident is urgent
+→ Which team should handle it
+→ Whether the proposed command is risky
+→ Whether the task is complete
+
+An LLM generates a response containing these answers sequentially. The application then parses and validates it.
+
+With Jev, you define the questions and expected answer types upfront. It evaluates them together and returns typed answers with probabilities.
+
+Jev supports three decision primitives:
+
+1. **Choice** selects from known options, such as engineering, billing, or sales.
+
+2. **Score** places the input on an ordered scale, such as low, medium, or high risk.
+
+3. **Noul** evaluates a yes-or-no condition and returns the probability that it is true.
+
+The probabilities matter as much as the selected answers.
+
+If engineering receives 91% probability and billing receives 9%, automatic routing may be reasonable. If the probabilities are 52% and 48%, the system can escalate, gather more context, or call a stronger model.
+
+This keeps control inside ordinary software.
+
+Code owns the thresholds and consequences. Jev supplies the semantic judgment that a normal `if` statement cannot derive from unstructured text.
+
+It works best when the possible answers are known, the decision depends on meaning, and a careful person could judge the input quickly.
+
+It is not designed for writing, summarization, code generation, arithmetic, or decisions requiring several dependent reasoning steps. Independent questions can run in parallel, but decisions that depend on earlier results must remain sequential.
+
+Jev also cannot return an option outside the declared schema, but it can still select the wrong valid option. Type safety prevents malformed outputs, not incorrect judgments.
+
+The clean mental model is this:
+
+LLMs generate new language when the answer space is open.
+
+Jev evaluates known paths when the answer space is bounded.
+
+I wrote the full breakdown explaining Jev and where it fits.
+
+The article is quoted below.
+Guide·x.com
+LLMs vs. Jev, clearly explained
+Akshay Pachaar: Jev does not generate text at all. It answers Choice, Score and Noul questions in parallel, and your code owns the thresholds.
+Nathan Flurry 🔩
+@NathanFlurry
+hype-free explanation of jev:
+
+jev does not replace gpt / claude
+
+jev is just a *really* smart switch statement
+
+like if 2016 ml classifiers got 2026 levels of intelligence
+
+it's a new* type of tool that will make a lot of workloads insanely fast, cheap, and accurate
+
+* = and by new, i mean rebranded
+
+~~~
+
+it needs a predefined set of options and it will tell you which one to take
+
+it cannot:
+
+- write code
+- generate natural language
+- reason step by step / show its work
+- produce any output you didn't define in advance
+- pick from more than ~255 options in one shot
+
+but it can:
+
+- classify, route, score, rank
+- give confidence
+- pick the right branch, tool, model, or sub-agent
+- judge / verify / guardrail an llm's output
+- label tons and tons of rows
+
+~~~
+
+i'd imagine a lot of workflows that look like:
+
+llm proposes options → jev decides → code executes
+
+and i see this fitting *really* well with code mode and mcp
+
+~~~
+
+implying this will lead to agi seems incredibly far fetched to me, but i don't want to discount the types of applications that this will make possible
+Guide·x.com
+A hype-free explanation of Jev
+Nathan Flurry: Jev does not replace GPT or Claude. It works like a very smart switch statement.
+Our guide·madewithjev.com
+What is Jev Engineering?
+Our guide to the term: split an agent into an LLM that writes, Jev that decides and code that acts, with the rules the builds on this site have in common.
+Guide·github.com
+Awesome Jev
+The GitHub awesome list for Jev: use cases, projects, SDKs, tools and learning resources, with pricing, limits and a quick start.
+Common questionsWhat is a System One model?A type of model built for fast decisions that other software uses directly. The name comes from System 1, the fast, intuitive thinking in Daniel Kahneman’s Thinking, Fast and Slow. It does not write text, generate code or explain its reasoning.Can Jev hallucinate?It cannot return a value outside the type you asked for, so you never get broken JSON or an invented field. The answer can still be wrong. The confidence score tells you how far to trust it.What does Jev cost?Input costs $0.042 per million tokens. Output is free. A response takes 70 to 500 milliseconds.Does Jev replace an LLM?No. It handles small decisions that repeat, such as classify, route, score, filter or approve a tool call. A larger model still writes anything that needs writing.How do I call it?With one POST request to TypeSafe’s API, or through the Python or JavaScript SDK. You can try a question in the TypeSafe Playground first, without writing code.What is Jev Engineering?A way to build agents that took off on X three days after launch: an LLM writes, Jev makes the small decisions, and code acts on them.See the buildsRead the TypeSafe announcement
+Made with Jev is independent and not affiliated with TypeSafe AI.
+Sponsors
+#1TripWaffleStop juggling confirmation emails. Forward them to TripWaffle and get a beautiful…
+#2EvokeA reflex is a small program you install and ask for in your words. Type a…
+#3RankSpotRankSpot is a fully automated AI agent that gets you cited in AI answers and ranked in…
+#4OpenJEVClassify, route, score, and rank with TypeSafe’s Jev model. Try the playground or…
+#5GIF DeciderDescribe the moment. Jev reads it, searches, judges every candidate, and hands you the…Advertise from $19/wk
+Made with Jev
+The #1 directory of projects built with Jev.Submit a buildBuy me a coffee
+From TypeSafe AI
+The Jev announcement
+Quickstart docs
+Workflow evals
+Not affiliated with TypeSafe AI.
+Browse
+All builds
+Jev Engineering reading list
+Jev GitHub repos
+Jev agent skills
+Jev demos and threads on X
+Jev tutorials and demos
+Jev apps you can try
+Jev docs and cookbooks
+Community feed
+Search the directory
+Learn about Jev
+All Jev guides
+What is Jev
+What is Jev Engineering
+Jev use cases
+Open-source Jev
+How to use Jev
+Jev pricing
+Jev explained
+Jev vs an LLM
+Jev for SEO
+Jev for ads
+Jev for marketing
+Jev as a judge
+Jev MCP
+Jev agentic harness
+Jev orchestration
+Jev with Claude Code
+Fine-tune Jev
+Jev and images
+Jev statistics
+Categories
+Agents and browsers
+Context and memory
+Coding and code review
+Routing and model choice
+SDKs and integrations
+Open source
+Benchmarks and evals
+Search
+Documents and OCR
+Security and abuse
+Inbox and support
+Social feeds
+Ads and marketing
+Sales and leads
+SEO and GEO
+Ecommerce
+Games and real time
+Trading and markets
+Robotics and devices
+UI
+Tools and apps
+Tools
+Jev tools
+Free tools
+AI Slop Detector
+Take part
+Submit a build
+Sponsors
+Sponsor rules
+About
+© 2026 madewithjev.com
+Built byJon Kraayenbrink
+TripWaffleAd
+EvokeAd
+RankSpotAd
+OpenJEVAd
+GIF DeciderAd
+JevHubAd
+VestraAd
+blink.reviewAd
+SpacebrainAd
+Advertise from $19/wk
+TripWaffleAd
+EvokeAd
+RankSpotAd
+OpenJEVAd
+GIF DeciderAd
+JevHubAd
+VestraAd
+blink.reviewAd
+SpacebrainAd
+Advertise from $19/wk

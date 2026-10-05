@@ -1,0 +1,224 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PS3SN3KPSC1Z3ZSZCMG3M5",
+  "at": "2026-09-17T04:13:46.018Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 10637,
+  "usage": {
+    "inputTokens": 3481,
+    "outputTokens": 313,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.001543084
+  },
+  "reasoningChars": 0,
+  "reply": "Você gastou **R$ 942,50** com restaurante em setembro, acima do orçamento de R$ 800,00 (excedente de R$ 142,50). Criei a tarefa \"Revisar orçamento de restaurante\" (prioridade alta) e enviei o resumo por mensagem.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "expenses_summary",
+      "confidence": 0.95,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 753,
+      "top": [
+        {
+          "name": "expenses_summary",
+          "p": 0.95
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0.05
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "contacts_search_by_company",
+          "p": 0
+        },
+        {
+          "name": "calendar_set_out_of_office",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "task_create",
+      "confidence": 0.99,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 296,
+      "top": [
+        {
+          "name": "task_create",
+          "p": 1
+        },
+        {
+          "name": "flights_search",
+          "p": 0
+        },
+        {
+          "name": "hotels_book",
+          "p": 0
+        },
+        {
+          "name": "task_list",
+          "p": 0
+        },
+        {
+          "name": "email_label",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurante",
+        "priority": "high",
+        "notes": "Gasto de setembro com restaurante: R$ 942,50 (orçamento R$ 800,00). Estourou o orçamento em R$ 142,50."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.97,
+      "done": 0.12,
+      "gated": false,
+      "latencyMs": 315,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.98
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "calendar_set_out_of_office",
+          "p": 0
+        },
+        {
+          "name": "contacts_search_by_company",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "💰 Resumo de gastos com restaurante (setembro/2026): R$ 942,50 — orçamento era R$ 800,00, ou seja, você estourou em R$ 142,50. Criei a tarefa \"Revisar orçamento de restaurante\" (prioridade alta)."
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.96,
+      "gated": false,
+      "latencyMs": 297,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "directions_get",
+          "p": 0
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0
+        },
+        {
+          "name": "news_headlines",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50** com restaurante em setembro, acima do orçamento de R$ 800,00 (excedente de R$ 142,50). Criei a tarefa \"Revisar orçamento de restaurante\" (prioridade alta) e enviei o resumo por mensagem."
+    }
+  ]
+}

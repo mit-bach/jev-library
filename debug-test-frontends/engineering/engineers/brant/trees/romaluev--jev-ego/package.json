@@ -1,0 +1,49 @@
+{
+  "name": "jev-ego",
+  "version": "0.1.0",
+  "description": "TypeScript browser agent for ego lite: Jev Ultrafast indexed actions, TypeSafe Jev decisions, and a persistent observe/act stepper. No Chrome or Playwright.",
+  "keywords": [
+    "browser-agent",
+    "web-automation",
+    "ego-lite",
+    "ego-browser",
+    "typesafe",
+    "jev",
+    "jev-ultrafast",
+    "cdp",
+    "typescript",
+    "cli",
+    "ai-agent"
+  ],
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/romaluev/jev-ego",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romaluev/jev-ego.git"
+  },
+  "bugs": {
+    "url": "https://github.com/romaluev/jev-ego/issues"
+  },
+  "bin": {
+    "jev-ego": "./bin/jev-ego.mjs"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "vitest run",
+    "lint": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.14.0",
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

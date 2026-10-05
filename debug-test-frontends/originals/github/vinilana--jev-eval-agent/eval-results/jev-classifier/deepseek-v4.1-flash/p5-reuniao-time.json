@@ -1,0 +1,330 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PQ2CX65KD1E719MPH1E6RM",
+  "at": "2026-09-17T03:38:11.244Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 6,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 6,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8333333333333334,
+  "requiredCovered": 5,
+  "requiredTotal": 6,
+  "completion": 0.8333333333333334,
+  "durationMs": 18851,
+  "usage": {
+    "inputTokens": 7876,
+    "outputTokens": 907,
+    "cacheReadTokens": 2560,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0034511999999999998
+  },
+  "reasoningChars": 0,
+  "reply": "Pronto! Fiz tudo o que você pediu:\n\n1. **Reunião agendada**: \"Reunião com Pedro Alves e Ana Beatriz\" em 17/09 (amanhã) das 15h às 15h45 — primeiro horário livre à tarde — com convites enviados para os dois (link de vídeo incluído).\n2. **Subtarefa criada**: \"Preparar pauta\" dentro de \"Revisar proposta comercial\" (prioridade alta, vencimento 17/09).\n3. **Email agendado**: para Ana Beatriz, com a pauta da reunião, programado para 17/09 às 8h.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_find_free_slot",
+      "confidence": 0.46,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 271,
+      "top": [
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.48
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.34
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.14
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.04
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "13:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "calendar_create_meeting",
+      "confidence": 0.66,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 268,
+      "top": [
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.67
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.18
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.09
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.05
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião com Pedro Alves e Ana Beatriz",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.beatriz@example.com"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "task_list",
+      "confidence": 0.73,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 269,
+      "top": [
+        {
+          "name": "task_list",
+          "p": 0.75
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0.21
+        },
+        {
+          "name": "task_create",
+          "p": 0.03
+        },
+        {
+          "name": "email_send_later",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {
+        "include_done": true
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "task_create_subtask",
+      "confidence": 1,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 472,
+      "top": [
+        {
+          "name": "task_create_subtask",
+          "p": 1
+        },
+        {
+          "name": "email_label",
+          "p": 0
+        },
+        {
+          "name": "food_order",
+          "p": 0
+        },
+        {
+          "name": "shopping_list_add",
+          "p": 0
+        },
+        {
+          "name": "task_prioritize",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17",
+        "priority": "high"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "email_send_later",
+      "confidence": 0.85,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 487,
+      "top": [
+        {
+          "name": "email_send_later",
+          "p": 0.86
+        },
+        {
+          "name": "email_draft",
+          "p": 0.06
+        },
+        {
+          "name": "notes_create",
+          "p": 0.04
+        },
+        {
+          "name": "email_send",
+          "p": 0.04
+        },
+        {
+          "name": "calendar_set_out_of_office",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.beatriz@example.com"
+        ],
+        "subject": "Pauta da reunião de amanhã",
+        "body": "Olá, Ana!\n\nSegue a pauta da nossa reunião de 17/09 às 15h (com o Pedro Alves):\n\n1. Contexto e objetivos da proposta comercial\n2. Principais pontos de revisão do documento\n3. Pontos de atenção levantados pelo Pedro\n4. Próximos passos e responsáveis\n\nQualquer ajuste antes da reunião, me avise.\n\nAbraço,\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.9,
+      "gated": false,
+      "latencyMs": 498,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "budget_set",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 5,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Fiz tudo o que você pediu:\n\n1. **Reunião agendada**: \"Reunião com Pedro Alves e Ana Beatriz\" em 17/09 (amanhã) das 15h às 15h45 — primeiro horário livre à tarde — com convites enviados para os dois (link de vídeo incluído).\n2. **Subtarefa criada**: \"Preparar pauta\" dentro de \"Revisar proposta comercial\" (prioridade alta, vencimento 17/09).\n3. **Email agendado**: para Ana Beatriz, com a pau"
+    }
+  ]
+}

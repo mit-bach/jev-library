@@ -1,0 +1,122 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "fable-5.1",
+  "modelLabel": "Claude Fable 5.1",
+  "promptId": "p6-financas",
+  "title": "Gastos por restaurante, checklist, PIX agendado e lembrete por local",
+  "tier": "complex",
+  "prompt": "Vê em quais restaurantes eu mais gastei esse mês e cria uma nota em formato checklist com os 3 lugares onde mais gastei. Agenda uma transferência de R$ 300 pra minha mãe pro dia 25 e me lembra de olhar a fatura do cartão quando eu chegar em casa.",
+  "sessionId": "wrun_01M2PVE74WHFMYH2S9QCA43NKP",
+  "at": "2026-09-17T04:54:33.325Z",
+  "modelId": "openrouter/anthropic/claude-fable-5.1",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 4,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "contacts": 1,
+    "reminder": 1,
+    "notes": 1,
+    "transfer": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8,
+  "requiredCovered": 4,
+  "requiredTotal": 4,
+  "completion": 1,
+  "durationMs": 19289,
+  "usage": {
+    "inputTokens": 52803,
+    "outputTokens": 745,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.56528
+  },
+  "reasoningChars": 182,
+  "reply": "Tudo feito, Vinícius:\n\n- **Restaurantes onde mais gastou em setembro:** Sushi Leblon (R$ 240), Bar do Momo (R$ 198) e Outback (R$ 190). Criei a nota em checklist \"Top 3 restaurantes – setembro/2026\" com esses três lugares.\n- **Transferência de R$ 300 para sua mãe (Regina)** agendada para 25/09 — que, aliás, é o aniversário dela.\n- **Lembrete** configurado para \"Olhar a fatura do cartão\" quando você chegar em casa.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary_by_merchant",
+      "detail": {
+        "category": "restaurantes"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "mãe"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "reminder_create_location",
+      "detail": {
+        "text": "Olhar a fatura do cartão",
+        "place": "home",
+        "trigger": "arrive"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "notes_create_checklist",
+      "detail": {
+        "title": "Top 3 restaurantes – setembro/2026",
+        "items": [
+          "Sushi Leblon – R$ 240,00",
+          "Bar do Momo – R$ 198,00",
+          "Outback – R$ 190,00"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "transfer_money_scheduled",
+      "detail": {
+        "to": "Mãe (Regina)",
+        "amount_brl": 300,
+        "date": "2026-09-25",
+        "description": "Transferência para a mãe"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-fable-5.1"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo feito, Vinícius:\n\n- **Restaurantes onde mais gastou em setembro:** Sushi Leblon (R$ 240), Bar do Momo (R$ 198) e Outback (R$ 190). Criei a nota em checklist \"Top 3 restaurantes – setembro/2026\" com esses três lugares.\n- **Transferência de R$ 300 para sua mãe (Regina)** agendada para 25/09 — que, aliás, é o aniversário dela.\n- **Lembrete** configurado para \"Olhar a fatura do cartão\" quando voc"
+    }
+  ]
+}

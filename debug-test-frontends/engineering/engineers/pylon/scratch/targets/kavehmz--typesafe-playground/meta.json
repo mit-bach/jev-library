@@ -1,0 +1,15 @@
+{
+  "full_name": "kavehmz/typesafe-playground",
+  "html_url": "https://github.com/kavehmz/typesafe-playground",
+  "description": "Interactive experiments with TypeSafe Jev, from support routing to 3D driving simulations with real AI decisions and visible sensor inputs.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T07:11:22Z",
+  "size": 28156,
+  "stargazers_count": 13,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "3e1bd368e81750415199d3ee44f2a8dc4ffee072"
+}

@@ -1,0 +1,199 @@
+/* Site art direction. Reusable component colors remain in the shared tokens. */
+:root {
+  --studio-ink: #f5f6f7;
+  --studio-silver: #bac2cc;
+  --studio-graphite: #0c1015;
+  --studio-blush: #f386a1;
+  --studio-glass: #ffffff1a;
+}
+
+.library-intro {
+  position: relative;
+  isolation: isolate;
+  max-width: 1680px;
+  margin-inline: auto;
+  overflow: hidden;
+  color: var(--studio-ink);
+  background: var(--studio-graphite);
+}
+.intro-art {
+  object-fit: cover;
+  object-position: 70% 52%;
+}
+.intro-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #0c1015eb 0%,
+    #0c1015b3 34%,
+    #0c101500 72%
+  );
+}
+[dir="rtl"] .intro-art,
+[dir="rtl"] .intro-shade {
+  transform: scaleX(-1);
+}
+.intro-content {
+  position: relative;
+  padding: clamp(2.5rem, 4vw, 4rem) clamp(1.5rem, 5vw, 5rem) 2.5rem;
+  min-height: 400px;
+}
+.intro-label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font:
+    500 11px var(--font-mono),
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--studio-silver);
+  margin-bottom: 1.5rem;
+}
+.intro-label > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--studio-blush);
+  box-shadow: 0 0 16px var(--studio-blush);
+}
+.intro-content h1 {
+  font-size: clamp(2.6rem, 5vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 1.03;
+  text-wrap: balance;
+}
+.intro-description {
+  max-width: 24rem;
+  margin-block: 1rem 1.5rem;
+  color: var(--studio-silver);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.intro-content [data-slot="button"] {
+  --primary: var(--studio-blush);
+  --primary-foreground: var(--studio-graphite);
+  --ring: var(--studio-blush);
+}
+.intro-content .intro-secondary {
+  color: var(--studio-ink);
+  background: var(--studio-glass);
+  border-color: #ffffff40;
+  backdrop-filter: blur(16px);
+}
+.intro-content .intro-secondary:hover {
+  background: #ffffff26;
+}
+.intro-caption {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 clamp(1.5rem, 6vw, 6rem) 1.5rem;
+  font:
+    10px var(--font-mono),
+    monospace;
+  color: var(--studio-silver);
+}
+.intro-specs {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+  padding: 1.1rem clamp(1.5rem, 6vw, 6rem);
+  border-top: 1px solid var(--studio-glass);
+  background: #0c1015b3;
+  backdrop-filter: blur(20px);
+  font:
+    11px var(--font-mono),
+    monospace;
+  color: var(--studio-silver);
+}
+.intro-specs strong {
+  color: var(--studio-ink);
+  font-weight: 500;
+}
+.catalog-layout {
+  border-top: 1px solid var(--border);
+}
+.catalog-rail {
+  background: color-mix(in srgb, var(--background) 94%, transparent);
+}
+.preview-stage,
+.lab-console {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--surface-shadow);
+}
+.preview-stage {
+  background-image:
+    radial-gradient(
+      ellipse at 15% 0%,
+      color-mix(in srgb, var(--primary) 6%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse at 90% 100%,
+      color-mix(in srgb, var(--teal) 5%, transparent),
+      transparent 60%
+    );
+}
+.component-sheet {
+  box-shadow: var(--surface-shadow);
+  container-type: inline-size;
+}
+.component-workspace {
+  display: grid;
+  align-items: start;
+  gap: 1rem;
+}
+@container (min-width: 760px) {
+  .component-workspace {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+}
+.lab-console {
+  margin-inline: auto;
+  box-shadow: var(--surface-shadow);
+}
+.lab-stage {
+  background: color-mix(in srgb, var(--muted) 35%, var(--card));
+}
+.lab-stage [data-slot="card"] {
+  box-shadow: var(--surface-shadow);
+}
+@media (max-width: 639px) {
+  .intro-content {
+    min-height: 470px;
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+  }
+  .intro-art {
+    object-position: 65% 100%;
+  }
+  .intro-shade {
+    background: linear-gradient(
+      180deg,
+      #0c1015f5 0%,
+      #0c1015d9 43%,
+      #0c10151a 80%
+    );
+  }
+  .intro-description {
+    max-width: 21rem;
+  }
+  .intro-label {
+    font-size: 9px;
+    margin-bottom: 1.5rem;
+  }
+  .intro-specs {
+    gap: 0.8rem 1.5rem;
+    font-size: 10px;
+  }
+  .intro-caption {
+    font-size: 9px;
+  }
+}

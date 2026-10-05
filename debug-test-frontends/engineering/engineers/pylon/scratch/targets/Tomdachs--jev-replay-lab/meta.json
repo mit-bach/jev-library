@@ -1,0 +1,15 @@
+{
+  "full_name": "Tomdachs/jev-replay-lab",
+  "html_url": "https://github.com/Tomdachs/jev-replay-lab",
+  "description": "Local Jev evaluation workbench: datasets, typed questions, threshold simulation and run comparison",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T00:07:20Z",
+  "size": 263,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "d59cd353b6e19422c5d16f6be1dc6f74dc224754"
+}

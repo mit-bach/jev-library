@@ -1,0 +1,15 @@
+{
+  "full_name": "hugo-alves/jev-router-playground",
+  "html_url": "https://github.com/hugo-alves/jev-router-playground",
+  "description": "Interactive playground for testing Jev model-routing decisions against OpenRouter models",
+  "default_branch": "main",
+  "pushed_at": "2026-09-18T01:25:54Z",
+  "size": 259,
+  "stargazers_count": 2,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://kvhx37ziab90c.space.minimax.io",
+  "language": "JavaScript",
+  "commit": "c2eb6ccf68b793d4ad99fb0ff1cc29edf11d9a93"
+}

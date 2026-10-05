@@ -1,0 +1,228 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "opus-5",
+  "modelLabel": "Claude Opus 5",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PVM19Z2QY104ACN65SBC33",
+  "at": "2026-09-17T04:57:41.119Z",
+  "modelId": "openrouter/anthropic/claude-opus-5",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 16438,
+  "usage": {
+    "inputTokens": 5202,
+    "outputTokens": 813,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.046335
+  },
+  "reasoningChars": 0,
+  "reply": "Você gastou **R$ 942,50** com restaurante em setembro, ou seja, **R$ 142,50 acima** do seu orçamento de R$ 800 (118% do limite).\n\nComo passou de R$ 800, criei a tarefa **\"Revisar orçamento de restaurante\"** na lista Finanças, com prioridade alta e prazo para 20/09. Também te enviei o resumo completo por WhatsApp, com os valores e uma observação de que ainda faltam cerca de 14 dias no mês.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "expenses_summary",
+      "confidence": 0.95,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 715,
+      "top": [
+        {
+          "name": "expenses_summary",
+          "p": 0.96
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0.04
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        },
+        {
+          "name": "task_create",
+          "p": 0
+        },
+        {
+          "name": "email_send",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "task_create",
+      "confidence": 0.97,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 268,
+      "top": [
+        {
+          "name": "task_create",
+          "p": 0.98
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.02
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "message_send",
+          "p": 0
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurante",
+        "due_date": "2026-09-20",
+        "priority": "high",
+        "list": "Finanças",
+        "notes": "Gasto com restaurante em setembro/2026: R$ 942,50 — R$ 142,50 acima do orçamento de R$ 800. Revisar hábitos e ajustar limite ou reduzir saídas no restante do mês."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.97,
+      "done": 0.19,
+      "gated": false,
+      "latencyMs": 306,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.97
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.03
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0
+        },
+        {
+          "name": "email_list_unread",
+          "p": 0
+        },
+        {
+          "name": "flights_status",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "📊 Resumo — Restaurante (setembro/2026)\n\nGasto no mês: R$ 942,50\nOrçamento: R$ 800,00\nSituação: R$ 142,50 acima do limite (118% do orçamento) ⚠️\n\n✅ Tarefa criada: \"Revisar orçamento de restaurante\" — lista Finanças, prioridade alta, prazo 20/09/2026.\n\nDica: faltando ~14 dias no mês, vale segurar as saídas para não ampliar o estouro.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.95,
+      "gated": false,
+      "latencyMs": 249,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "reminder_list",
+          "p": 0
+        },
+        {
+          "name": "shopping_list_remove",
+          "p": 0
+        },
+        {
+          "name": "news_headlines",
+          "p": 0
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50** com restaurante em setembro, ou seja, **R$ 142,50 acima** do seu orçamento de R$ 800 (118% do limite).\n\nComo passou de R$ 800, criei a tarefa **\"Revisar orçamento de restaurante\"** na lista Finanças, com prioridade alta e prazo para 20/09. Também te enviei o resumo completo por WhatsApp, com os valores e uma observação de que ainda faltam cerca de 14 dias no mês."
+    }
+  ]
+}

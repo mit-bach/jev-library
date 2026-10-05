@@ -1,0 +1,4 @@
+d80f375621ad4b9306c6dff6941242925d7e2386
+source clone: /Users/dominikbach/olympus/GROK/GROK-ARCHIVES/JEV-library/originals/github/WillKelly-jev-evaluation
+git log -1: 2026-09-21 23:21:26 -0600 Do not mistake a closed keep-alive socket for backpressure
+run_meta model_alias=jev-latest api_url=https://api.typesafe.ai/v1/systemone run_id=full-20260919

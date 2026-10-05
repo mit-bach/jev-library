@@ -1,0 +1,15 @@
+{
+  "full_name": "chy4pro/jev-for-chrome",
+  "html_url": "https://github.com/chy4pro/jev-for-chrome",
+  "description": "Jev for Chrome: drives the tab you are looking at with TypeSafe Jev, a sub-second decision model. Community port of browser-use/jev-ultrafast, not affiliated with TypeSafe.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-01T07:58:21Z",
+  "size": 8968,
+  "stargazers_count": 36,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "d5c24de556ade0f0a9c7a4c6ebb9dab305e4209e"
+}

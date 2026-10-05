@@ -1,0 +1,399 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PS4TGR22857X0W1QGFDGFK",
+  "at": "2026-09-17T04:14:40.258Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 8,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 8,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8333333333333334,
+  "requiredCovered": 5,
+  "requiredTotal": 6,
+  "completion": 0.8333333333333334,
+  "durationMs": 31238,
+  "usage": {
+    "inputTokens": 10250,
+    "outputTokens": 642,
+    "cacheReadTokens": 2560,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0038306
+  },
+  "reasoningChars": 0,
+  "reply": "Tudo pronto!\n\n1. **Reunião criada** para amanhã (17/09) às 15h, duração 45 min, com Pedro Alves e Ana Beatriz — convites enviados aos dois. Optei pelo slot da tarde em que você está livre.\n2. **Subtarefa \"Preparar pauta\"** criada dentro de \"Revisar proposta comercial\".\n3. **E-mail agendado** para a Ana com a pauta da reunião, para ser enviado amanhã às 8h.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_find_free_slot",
+      "confidence": 0.44,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 358,
+      "top": [
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.45
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.33
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.15
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.06
+        },
+        {
+          "name": "calendar_list_calendars",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "12:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "calendar_create_meeting",
+      "confidence": 0.75,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 371,
+      "top": [
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.76
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.13
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.07
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.03
+        },
+        {
+          "name": "task_list",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "calendar_create_meeting",
+      "confidence": 0.73,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 358,
+      "top": [
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.75
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.1
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.09
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.02
+        },
+        {
+          "name": "task_list",
+          "p": 0.02
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião - Revisão de pauta",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@empresa.com",
+          "ana.beatriz@empresa.com"
+        ],
+        "agenda": "Alinhamento sobre pauta da reunião"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "task_list",
+      "confidence": 0.58,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 329,
+      "top": [
+        {
+          "name": "task_list",
+          "p": 0.6
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0.23
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.07
+        },
+        {
+          "name": "task_create",
+          "p": 0.04
+        },
+        {
+          "name": "email_send_later",
+          "p": 0.03
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "task_create_subtask",
+      "confidence": 0.97,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 340,
+      "top": [
+        {
+          "name": "task_create_subtask",
+          "p": 0.98
+        },
+        {
+          "name": "email_send_later",
+          "p": 0.01
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "contacts_search_by_company",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "email_send_later",
+      "confidence": 0.72,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 506,
+      "top": [
+        {
+          "name": "email_send_later",
+          "p": 0.74
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.08
+        },
+        {
+          "name": "email_send",
+          "p": 0.06
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.04
+        },
+        {
+          "name": "notes_create",
+          "p": 0.04
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 6,
+      "kind": "jev",
+      "name": "email_send_later",
+      "confidence": 0.89,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 495,
+      "top": [
+        {
+          "name": "email_send_later",
+          "p": 0.9
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.03
+        },
+        {
+          "name": "notes_create",
+          "p": 0.03
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.03
+        },
+        {
+          "name": "email_draft",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 6,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.beatriz@empresa.com"
+        ],
+        "subject": "Pauta da reunião de amanhã (17/09)",
+        "body": "Olá, Ana,\n\nSegue a pauta da nossa reunião de amanhã (quinta, 17/09), às 15h:\n\n1. Revisão da proposta comercial\n2. Próximos passos e responsáveis\n3. Dúvidas e alinhamentos finais\n\nLink de acesso: https://meet.example.com/abc-defg-hij\n\nAté lá!\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 7,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.99,
+      "done": 0.52,
+      "gated": false,
+      "latencyMs": 885,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "shopping_list_get",
+          "p": 0
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0
+        },
+        {
+          "name": "home_device_list",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 7,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo pronto!\n\n1. **Reunião criada** para amanhã (17/09) às 15h, duração 45 min, com Pedro Alves e Ana Beatriz — convites enviados aos dois. Optei pelo slot da tarde em que você está livre.\n2. **Subtarefa \"Preparar pauta\"** criada dentro de \"Revisar proposta comercial\".\n3. **E-mail agendado** para a Ana com a pauta da reunião, para ser enviado amanhã às 8h."
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PPYB6E1CXQ4JD7GP6Y636N",
+  "at": "2026-09-17T03:35:55.724Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 7,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 7,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 16158,
+  "usage": {
+    "inputTokens": 13477,
+    "outputTokens": 1567,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.015984
+  },
+  "reasoningChars": 346,
+  "reply": "Segurei o voo mais barato da manhã de sexta-feira (GOL G31410, saindo do SDU às 11:30 e chegando em Congonhas às 12:35 por R$ 298, código HLD-4471). Reservei uma diária no Hotel Paulista Plaza (a 600 metros da reunião, R$ 420, confirmação HTL-7781). Além disso, bloqueei sua agenda na sexta das 08h às 18h como \"Viagem SP\" e avisei a Marina por mensagem que a viagem está confirmada.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.01,
+      "gated": false,
+      "latencyMs": 254,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        },
+        {
+          "name": "home_play_music",
+          "p": 0
+        },
+        {
+          "name": "trip_itinerary_get",
+          "p": 0
+        },
+        {
+          "name": "email_send",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "earliest_departure": "05:00",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_hold",
+      "confidence": 0.98,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 273,
+      "top": [
+        {
+          "name": "flights_hold",
+          "p": 0.99
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.01
+        },
+        {
+          "name": "ride_request",
+          "p": 0
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "reminder_create",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "hotels_search_nearby",
+      "confidence": 0.59,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 290,
+      "top": [
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.6
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.37
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.01
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "flights_book",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "hotels_book",
+      "confidence": 0.94,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 462,
+      "top": [
+        {
+          "name": "hotels_book",
+          "p": 0.95
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.03
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.01
+        },
+        {
+          "name": "flights_book",
+          "p": 0.01
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_1",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "calendar_block_time",
+      "confidence": 0.97,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 500,
+      "top": [
+        {
+          "name": "calendar_block_time",
+          "p": 0.98
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.01
+        },
+        {
+          "name": "home_set_alarm_system",
+          "p": 0
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.88,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 666,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.89
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.1
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        },
+        {
+          "name": "ride_request",
+          "p": 0
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 5,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "Oi Marina, a viagem para São Paulo nesta sexta-feira está confirmada!",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 6,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.93,
+      "done": 0.55,
+      "gated": false,
+      "latencyMs": 507,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.94
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.03
+        },
+        {
+          "name": "flights_book",
+          "p": 0.02
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        },
+        {
+          "name": "trip_itinerary_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 6,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Segurei o voo mais barato da manhã de sexta-feira (GOL G31410, saindo do SDU às 11:30 e chegando em Congonhas às 12:35 por R$ 298, código HLD-4471). Reservei uma diária no Hotel Paulista Plaza (a 600 metros da reunião, R$ 420, confirmação HTL-7781). Além disso, bloqueei sua agenda na sexta das 08h às 18h como \"Viagem SP\" e avisei a Marina por mensagem que a viagem está confirmada."
+    }
+  ]
+}

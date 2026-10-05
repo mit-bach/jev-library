@@ -1,0 +1,15 @@
+{
+  "full_name": "Resadan-dev/jev-zork",
+  "html_url": "https://github.com/Resadan-dev/jev-zork",
+  "description": "Jev (TypeSafe System One) plays Zork I: one Choice per move over Jericho's valid actions, with its confidence on display. French dashboard.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T12:18:31Z",
+  "size": 195,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "981451ba8adc076fd4058d20a37c8bef2739c0ae"
+}

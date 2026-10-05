@@ -1,0 +1,15 @@
+{
+  "full_name": "cephalization/jev-triage",
+  "html_url": "https://github.com/cephalization/jev-triage",
+  "description": "Uses typesafe jev, zero sync to pull and sync large repositories for issue triage",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T16:30:04Z",
+  "size": 1503,
+  "stargazers_count": 4,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "TypeScript",
+  "commit": "b11928eb5856a16fef722d51caff43990c123b78"
+}

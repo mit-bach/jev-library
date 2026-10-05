@@ -1,0 +1,106 @@
+Jev/typesafe·PlaygroundIndependent Jev playground & developer toolsPlaygroundToolsGamesUse casesDevelop ▾Get JevAPI DocsIntegrationsAgent SkillPricing◎English中文日本語한국어DeutschEspañolGet API keySign in☰← Use cases
+The Jev API
+The Jev API is a single HTTP endpoint that turns a state plus typed questions into calibrated decisions — a choice, a score, or a yes/no probability — in one round trip. No prose to parse, no schema to validate. This is the whole surface on one page: endpoint, auth, a working call, the response, pricing and limits.
+Unlike a chat API, the Jev API doesn't generate text — it decides. You send the context (state) and the exact questions you want answered, each with a type, and you get back a typed value with a calibrated probability behind it. Because the shape is fixed by your request, the API physically cannot return a malformed response or an invalid type, so your code branches on the answer directly.
+The endpoint & auth
+There are two hosts, same request shape. The instant, self-serve route is our hosted gateway; the official route is TypeSafe's own API. Both authenticate with a Bearer key.
+# Hosted (instant jv_live_ key from this site):
+POST https://jevtypesafeai.com/api/v1/decide
+Authorization: Bearer jv_live_...
+# Official TypeSafe:
+POST https://api.typesafe.ai/v1/systemone
+Authorization: Bearer <your key>
+Your first API call
+One request, three typed answers — a route to branch on, an urgency score, and a calibrated escalation flag:
+curl https://jevtypesafeai.com/api/v1/decide \
+ -H "Authorization: Bearer $JEV_API_KEY" \
+ -H "Content-Type: application/json" \
+ -d '{
+ "state": "Customer: I was charged twice and nobody has replied for 3 days.",
+ "questions": {
+ "route": { "type": "choice", "instructions": "Where should this go?",
+ "criteria": { "billing": "money", "bug": "broken", "account": "login" } },
+ "urgency": { "type": "score", "instructions": "How urgent is this?",
+ "criteria": ["routine", "today", "urgent", "critical"] },
+ "escalate": { "type": "noul", "instructions": "Escalate to a human now?" }
+ }
+ }'
+The three primitives
+choice — returns one of your labelled options (up to 255), with per-option probabilities. For routing, classification, intent.
+score — returns a position on an ordered scale you define, plus the distribution. For rating urgency, quality, risk.
+noul — a calibrated yes/no as a probability between 0 and 1. For gates, filters, guardrails.
+Ask several at once in a single call — each comes back independently typed under answers, so one request can classify, score and gate the same input together.
+From TypeScript
+const res = await fetch("https://jevtypesafeai.com/api/v1/decide", {
+ method: "POST",
+ headers: {
+ Authorization: `Bearer ${process.env.JEV_API_KEY}`,
+ "Content-Type": "application/json",
+ },
+ body: JSON.stringify({
+ state: "Customer: I was charged twice and nobody has replied for 3 days.",
+ questions: {
+ route: { type: "choice", instructions: "Where should this go?",
+ criteria: { billing: "money", bug: "broken", account: "login" } },
+ urgency: { type: "score", instructions: "How urgent is this?",
+ criteria: ["routine", "today", "urgent", "critical"] },
+ escalate: { type: "noul", instructions: "Escalate to a human now?" },
+ },
+ }),
+});
+const { answers } = await res.json();
+if (answers.escalate.noul > 0.7) handoffToHuman();
+From Python
+import os, requests
+r = requests.post(
+ "https://jevtypesafeai.com/api/v1/decide",
+ headers={"Authorization": f"Bearer {os.environ['JEV_API_KEY']}"},
+ json={
+ "state": "Customer: I was charged twice and nobody has replied for 3 days.",
+ "questions": {
+ "route": {"type": "choice", "instructions": "Where should this go?",
+ "criteria": {"billing": "money", "bug": "broken", "account": "login"}},
+ "urgency": {"type": "score", "instructions": "How urgent is this?",
+ "criteria": ["routine", "today", "urgent", "critical"]},
+ "escalate": {"type": "noul", "instructions": "Escalate to a human now?"},
+ },
+ },
+ timeout=30,
+)
+ans = r.json()["answers"]
+print(ans["route"]["choice"], ans["escalate"]["noul"])
+The response
+You get back the resolved model, an answers map, and token usage. Each answer is typed: answers.route.choice is one of your criteria keys, answers.urgency.score is a number on your scale, answers.escalate.noul is a probability. Because the types are fixed, you branch in plain code — if (answers.escalate.noul > 0.7) — with no parsing, no regex, and no risk of malformed output.
+Pricing
+The Jev API is billed on input tokens only — output is free. On the hosted route that's $0.42 per million input tokens, roughly $0.001 per decision, prepaid from a small balance. Asking several questions in one call shares the input cost, so batching is cheap. See the pricing page for packs.
+Limits & best practices
+Rate limits: 250,000 tokens/second and 1,200 requests/minute.
+Context: up to ~64k tokens for state + all questions (32k for state + a single longest question).
+Pin the model version (e.g. jev-1.13.0) in production so calibrated thresholds don't drift; jev-latest can change.
+Batch questions into one call rather than many — they run in parallel and share the state cost.
+Use the calibrated confidence to auto-handle the easy cases and escalate only the uncertain ones.
+SDK or raw HTTP
+The Jev API is a single POST, so you can call it with plain fetch/requests and a Bearer key — no SDK required. If you want typed helpers that read your key from the environment, the TypeScript SDK (@typesafe-ai/sdk) wraps the same endpoint. Either way the contract is identical.
+Get a key and go
+You can run the Jev API free in the browser playground with no key to confirm it fits, then get an instant hosted jv_live_ key on the pricing page and make your first real call in minutes. For the full field reference, batch endpoints and ready-made workflows, see the docs.
+FAQ
+What is the Jev API?
+A single HTTP endpoint that returns typed, calibrated decisions — a choice, a score, or a yes/no probability — for a state and a set of questions, instead of generating text. It's built to be called by software: fast (70–500ms), cheap (~$0.001/decision), and structurally unable to return an invalid type.
+What is the Jev API endpoint?
+POST https://jevtypesafeai.com/api/v1/decide for the instant hosted route (jv_live_ key), or POST https://api.typesafe.ai/v1/systemone for official TypeSafe access. Same request shape; authenticate with an Authorization: Bearer header.
+How do I authenticate to the Jev API?
+Send an Authorization: Bearer header with your key. A hosted key (jv_live_...) works at the jevtypesafeai.com gateway; an official TypeSafe key works at api.typesafe.ai. Store the key in an environment variable, never in source.
+What does the Jev API cost?
+Input tokens only, output free — $0.42 per million input tokens on the hosted route, about $0.001 per decision, prepaid. Asking multiple questions in one call shares the input cost.
+Do I need an SDK to use the Jev API?
+No. It's a single POST, so plain fetch or requests with a Bearer key works. The TypeScript SDK (@typesafe-ai/sdk) is an optional convenience wrapper around the same endpoint.
+How is the Jev API different from an LLM API?
+An LLM API returns free text (or JSON you must validate and sometimes retry). The Jev API returns a typed, calibrated value you branch on directly, in 70–500ms. Use an LLM to write; use Jev to decide.
+See also: API docs & reference · How to use the API · Get a Jev API key · TypeScript quickstart · Pricing · Playground
+Related: Jev API key · Jev playground · Jev price
+Call the Jev API today
+Run it free in the browser, then grab an instant hosted jv_live_ key and make your first real call in minutes — self-serve, billed per input token with output free.
+▶ Try Jev freeGet an API key →Jev/typesafe·PlaygroundIndependent Jev playground & developer tools by CODEFASHION TECH LTD.PlaygroundToolsGamesMade with JevJev as a JudgeUse casesGet JevAgent skillJev AIWhat is JevAPIAPI docsEcosystemIntegrationsPricingJev topics© 2026 CODEFASHION TECH LTD.TermsPrivacycontact@jevtypesafeai.com
+Jev is developed by TypeSafe AI.
+Not affiliated with or endorsed by TypeSafe AI.
+The Jev API — one endpoint for typed, calibrated decisions · Jev by TypeSafe AI

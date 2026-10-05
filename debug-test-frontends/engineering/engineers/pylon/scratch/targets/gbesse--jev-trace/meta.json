@@ -1,0 +1,15 @@
+{
+  "full_name": "gbesse/jev-trace",
+  "html_url": "https://github.com/gbesse/jev-trace",
+  "description": "Generate a reviewable requirements-to-code-and-tests matrix with coverage and change impact.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T14:58:22Z",
+  "size": 11,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "f04b606b088d4e3f6f2cde49ccc1d699fd1f36ad"
+}

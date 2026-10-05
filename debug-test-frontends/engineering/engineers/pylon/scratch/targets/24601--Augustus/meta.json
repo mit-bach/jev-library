@@ -1,0 +1,15 @@
+{
+  "full_name": "24601/Augustus",
+  "html_url": "https://github.com/24601/Augustus",
+  "description": "Agent skills for designing, training, evaluating and improving application-specific decision systems. Primitive/model selection, data assembly, export/reload and bounded hill climbing. TypeSafe Jev is the default hosted exemplar; independent of TypeSafe.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-28T15:51:18Z",
+  "size": 20944,
+  "stargazers_count": 11,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://24601.github.io/Augustus/",
+  "language": "Python",
+  "commit": "4e0440eb6301fb27ed5630ce7f58e632d3a8c2db"
+}

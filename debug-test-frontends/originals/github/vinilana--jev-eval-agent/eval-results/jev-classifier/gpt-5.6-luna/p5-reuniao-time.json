@@ -1,0 +1,333 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PQ4SNDBJ894QSTG7K9ZP0A",
+  "at": "2026-09-17T03:39:20.598Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 6,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 6,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8333333333333334,
+  "requiredCovered": 5,
+  "requiredTotal": 6,
+  "completion": 0.8333333333333334,
+  "durationMs": 9611,
+  "usage": {
+    "inputTokens": 4878,
+    "outputTokens": 386,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0014388
+  },
+  "reasoningChars": 0,
+  "reply": "Agendei a reunião com Pedro Alves e Ana Beatriz para amanhã, das 15h às 15h45, e os convites foram enviados. Criei a subtarefa “Preparar pauta” dentro de “Revisar proposta comercial”. Também programei o email para Ana com a pauta, para envio amanhã às 8h.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_find_free_slot",
+      "confidence": 0.46,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 257,
+      "top": [
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.48
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.31
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.15
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.04
+        },
+        {
+          "name": "task_list",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "12:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "calendar_create_meeting",
+      "confidence": 0.73,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 288,
+      "top": [
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.74
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.12
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.1
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.03
+        },
+        {
+          "name": "task_list",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião com Pedro Alves e Ana Beatriz",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.beatriz@example.com"
+        ],
+        "agenda": "Pauta a definir."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "task_list",
+      "confidence": 0.74,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 275,
+      "top": [
+        {
+          "name": "task_list",
+          "p": 0.75
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0.22
+        },
+        {
+          "name": "task_create",
+          "p": 0.02
+        },
+        {
+          "name": "email_send_later",
+          "p": 0.01
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {
+        "list": "",
+        "include_done": false,
+        "due_before": ""
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "task_create_subtask",
+      "confidence": 1,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 299,
+      "top": [
+        {
+          "name": "task_create_subtask",
+          "p": 1
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "transactions_list",
+          "p": 0
+        },
+        {
+          "name": "email_draft",
+          "p": 0
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17",
+        "priority": "medium"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "email_send_later",
+      "confidence": 0.85,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 466,
+      "top": [
+        {
+          "name": "email_send_later",
+          "p": 0.86
+        },
+        {
+          "name": "email_draft",
+          "p": 0.06
+        },
+        {
+          "name": "notes_create",
+          "p": 0.04
+        },
+        {
+          "name": "email_send",
+          "p": 0.03
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.beatriz@example.com"
+        ],
+        "subject": "Pauta da reunião de amanhã",
+        "body": "Olá, Ana!\n\nSegue a pauta da nossa reunião de amanhã, às 15h, com duração prevista de 45 minutos:\n\n- Revisar a proposta comercial\n- Alinhar pontos principais e próximos passos\n\nAté lá!",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.99,
+      "done": 0.89,
+      "gated": false,
+      "latencyMs": 474,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "currency_convert",
+          "p": 0
+        },
+        {
+          "name": "calendar_respond_invite",
+          "p": 0
+        },
+        {
+          "name": "home_set_thermostat",
+          "p": 0
+        },
+        {
+          "name": "transfer_money_scheduled",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 5,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Agendei a reunião com Pedro Alves e Ana Beatriz para amanhã, das 15h às 15h45, e os convites foram enviados. Criei a subtarefa “Preparar pauta” dentro de “Revisar proposta comercial”. Também programei o email para Ana com a pauta, para envio amanhã às 8h."
+    }
+  ]
+}

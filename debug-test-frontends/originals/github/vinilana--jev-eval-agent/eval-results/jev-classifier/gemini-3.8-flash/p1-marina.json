@@ -1,0 +1,229 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PPXM7EK1NS7VQB5ASMN22Z",
+  "at": "2026-09-17T03:35:27.315Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 11127,
+  "usage": {
+    "inputTokens": 3679,
+    "outputTokens": 583,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0049455
+  },
+  "reasoningChars": 0,
+  "reply": "Sim, você tem a reunião \"Reunião com Marina Costa - roadmap Q4\" amanhã, 17/09, das 10:00 às 11:00. Enviei um e-mail para marina.costa@example.com confirmando o horário das 10h e criei um lembrete para você às 09:30 (30 minutos antes).",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_list_events",
+      "confidence": 0.73,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 731,
+      "top": [
+        {
+          "name": "calendar_list_events",
+          "p": 0.74
+        },
+        {
+          "name": "calendar_search_events",
+          "p": 0.26
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "budget_set",
+          "p": 0
+        },
+        {
+          "name": "restaurant_reserve",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "email_send",
+      "confidence": 0.98,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 303,
+      "top": [
+        {
+          "name": "email_send",
+          "p": 0.97
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.01
+        },
+        {
+          "name": "email_draft",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_get_event",
+          "p": 0.01
+        },
+        {
+          "name": "home_lights_control",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação de reunião - Amanhã às 10h",
+        "body": "Olá Marina, tudo bem? Confirmando nossa reunião de amanhã (17/09) às 10h sobre o roadmap Q4. Até lá!"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "reminder_create",
+      "confidence": 0.99,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 281,
+      "top": [
+        {
+          "name": "reminder_create",
+          "p": 0.99
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0
+        },
+        {
+          "name": "flights_status",
+          "p": 0
+        },
+        {
+          "name": "home_device_list",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa (roadmap Q4) em 30 minutos",
+        "date": "2026-09-17",
+        "time": "09:30",
+        "repeat": "none"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.95,
+      "gated": false,
+      "latencyMs": 322,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "web_search",
+          "p": 0
+        },
+        {
+          "name": "weather_forecast",
+          "p": 0
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0
+        },
+        {
+          "name": "weather_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim, você tem a reunião \"Reunião com Marina Costa - roadmap Q4\" amanhã, 17/09, das 10:00 às 11:00. Enviei um e-mail para marina.costa@example.com confirmando o horário das 10h e criei um lembrete para você às 09:30 (30 minutos antes)."
+    }
+  ]
+}

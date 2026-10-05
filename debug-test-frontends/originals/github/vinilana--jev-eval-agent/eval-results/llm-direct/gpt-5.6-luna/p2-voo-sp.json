@@ -1,0 +1,72 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PPVNJGN38K2FWEFB0G55YK",
+  "at": "2026-09-17T03:34:20.351Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 2,
+  "toolCalls": 1,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.3333333333333333,
+  "requiredCovered": 1,
+  "requiredTotal": 3,
+  "completion": 0.3333333333333333,
+  "durationMs": 8392,
+  "usage": {
+    "inputTokens": 10334,
+    "outputTokens": 338,
+    "cacheReadTokens": 9854,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0024724
+  },
+  "reasoningChars": 0,
+  "reply": "Encontrei o voo mais barato: **GOL G31410**, saindo do **Santos Dumont (SDU) às 11h30** e chegando em **Congonhas (CGH) às 12h35**, na sexta-feira (18/09), por **R$ 298**. Para reservar e adicionar à agenda, preciso do seu **nome completo como consta no documento** e da preferência de assento: **janela, corredor ou qualquer um**.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 1000000,
+        "earliest_departure": "00:00",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Encontrei o voo mais barato: **GOL G31410**, saindo do **Santos Dumont (SDU) às 11h30** e chegando em **Congonhas (CGH) às 12h35**, na sexta-feira (18/09), por **R$ 298**. Para reservar e adicionar à agenda, preciso do seu **nome completo como consta no documento** e da preferência de assento: **janela, corredor ou qualquer um**."
+    }
+  ]
+}

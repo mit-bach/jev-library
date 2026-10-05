@@ -1,0 +1,1 @@
+Copied 2026-10-01 from engineering/engineers/lark/ after STOP.md existed. FORMAT-RULES.md is the map. The captures are the sources it cites.

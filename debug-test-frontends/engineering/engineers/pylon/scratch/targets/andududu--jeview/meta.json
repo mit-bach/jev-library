@@ -1,0 +1,15 @@
+{
+  "full_name": "andududu/jeview",
+  "html_url": "https://github.com/andududu/jeview",
+  "description": "An unofficial local visualizer for Jev (TypeSafe): a live view of every call your code makes. Not affiliated with TypeSafe AI.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T21:52:51Z",
+  "size": 873,
+  "stargazers_count": 61,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "",
+  "language": "JavaScript",
+  "commit": "495a4e43e9d67e495a66ab0d9e55ac1c5c4040d6"
+}

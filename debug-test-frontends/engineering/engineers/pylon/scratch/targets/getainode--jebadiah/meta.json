@@ -1,0 +1,15 @@
+{
+  "full_name": "getainode/jebadiah",
+  "html_url": "https://github.com/getainode/jebadiah",
+  "description": "Jebadiah, an open System One decision model: trainer, data builders, evals and every run record",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T19:10:27Z",
+  "size": 1317,
+  "stargazers_count": 3,
+  "license": "Apache-2.0",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://Jebadiah.ai",
+  "language": "Python",
+  "commit": "cc904344061e4ee71d2cb8297eafd2ce1c798f99"
+}

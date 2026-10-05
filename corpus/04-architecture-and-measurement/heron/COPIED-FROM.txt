@@ -1,0 +1,1 @@
+Copied 2026-10-01 from engineering/engineers/heron/ after STOP.md existed. The eleven JSON files are in ../archerhume/. This directory is the index and the other writeups.

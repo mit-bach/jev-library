@@ -1,0 +1,15 @@
+{
+  "full_name": "Laaaaksh/jev-playground",
+  "html_url": "https://github.com/Laaaaksh/jev-playground",
+  "description": "Unofficial bring-your-own-key playground for TypeSafe's Jev model",
+  "default_branch": "main",
+  "pushed_at": "2026-09-27T11:45:07Z",
+  "size": 17,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jev-playground-beta.vercel.app",
+  "language": "JavaScript",
+  "commit": "9a0d9ba518b611d1b24defefc8e6c3f6ac9708e6"
+}

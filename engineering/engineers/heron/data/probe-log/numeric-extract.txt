@@ -1,0 +1,289 @@
+## calibration
+n 1200 ece 0.031324999999999964 def Confidence = rounded returned probability of chosen answer. Ten equal-width bins [0.0,0.1), ... [0.9,1.0]; floating artifacts rounded to 2 decimals before binning. Empty bins omitted. ECE = sum n_bin/N * abs(accuracy_bin - mean_p_bin). Wils
+accuracy 0.9175 mean_p 0.9366
+n_ge_0.9 990 n_eq_1 605
+bin {'low': 0.3, 'high': 0.4, 'n': 6, 'accuracy': 0.6666666666666666, 'meanProbability': 0.365, 'wilsonLow': 0.29998832134152864, 'wilsonHigh': 0.9032306674407831}
+bin {'low': 0.4, 'high': 0.5, 'n': 18, 'accuracy': 0.5, 'meanProbability': 0.45666666666666667, 'wilsonLow': 0.2903070395897999, 'wilsonHigh': 0.7096929604102}
+bin {'low': 0.5, 'high': 0.6, 'n': 28, 'accuracy': 0.39285714285714285, 'meanProbability': 0.5275, 'wilsonLow': 0.23565451827580033, 'wilsonHigh': 0.575912739650937}
+bin {'low': 0.6, 'high': 0.7, 'n': 39, 'accuracy': 0.6410256410256411, 'meanProbability': 0.652051282051282, 'wilsonLow': 0.484178631846895, 'wilsonHigh': 0.772581153035089}
+bin {'low': 0.7, 'high': 0.8, 'n': 46, 'accuracy': 0.6956521739130435, 'meanProbability': 0.7473913043478261, 'wilsonLow': 0.5519408125976183, 'wilsonHigh': 0.8092032919255109}
+bin {'low': 0.8, 'high': 0.9, 'n': 73, 'accuracy': 0.9178082191780822, 'meanProbability': 0.8524657534246576, 'wilsonLow': 0.8320540661871378, 'wilsonHigh': 0.9617867700265796}
+bin {'low': 0.9, 'high': 1.0, 'n': 990, 'accuracy': 0.9626262626262626, 'meanProbability': 0.9865151515151515, 'wilsonLow': 0.948910609756659, 'wilsonHigh': 0.9727654400283369}
+
+## context-limit meta {"schema": "jev-context-limit.v1", "model": "jev-1.13.0", "concurrency": 1, "padding": "space-separated random digits (random.Random seeds: state 7, question i 1000+i)", "server_ms_header": "x-envoy-upstream-service-time", "docs_check": "docs.typesafe.ai/llms-full.txt (2026-09-17): no stated context/token limit; error table lists 401/422/429/529 only, no 400 max_tokens_exceeded"}
+trial calib-1000 status 200 in 2266 out 21 server 76.0 state_digits 1000 n_q 1 instr 0 long_q 0 body {"usage": {"input_tokens": 2266, "output_tokens": 21}, "n_answers": 1}
+trial calib-10000 status 200 in 20266 out 21 server 150.0 state_digits 10000 n_q 1 instr 0 long_q 0 body {"usage": {"input_tokens": 20266, "output_tokens": 21}, "n_answers": 1}
+trial bs status 400 in None out None server 13.0 state_digits 25000 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 13.0 state_digits 35000 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 200 in 32266 out 21 server 248.0 state_digits 16000 n_q 1 instr 0 long_q 0 body {"usage": {"input_tokens": 32266, "output_tokens": 21}, "n_answers": 1}
+trial bs status 200 in 32866 out 21 server 440.0 state_digits 16300 n_q 1 instr 0 long_q 0 body {"usage": {"input_tokens": 32866, "output_tokens": 21}, "n_answers": 1}
+trial bs status 400 in None out None server 35.0 state_digits 20000 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 18.0 state_digits 18000 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 19.0 state_digits 17000 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 28.0 state_digits 16700 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 11.0 state_digits 16500 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 26.0 state_digits 16400 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 200 in 33000 out 21 server 252.0 state_digits 16367 n_q 1 instr 0 long_q 0 body {"usage": {"input_tokens": 33000, "output_tokens": 21}, "n_answers": 1}
+trial bs status 200 in 33002 out 21 server 221.0 state_digits 16368 n_q 1 instr 0 long_q 0 body {"usage": {"input_tokens": 33002, "output_tokens": 21}, "n_answers": 1}
+trial bs status 400 in None out None server 40.0 state_digits 16380 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial bs status 400 in None out None server 15.0 state_digits 16379 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial calib-q status 200 in 339 out 175 server 67.0 state_digits 0 n_q 10 instr 0 long_q 0 body {"usage": {"input_tokens": 339, "output_tokens": 175}, "n_answers": 10}
+trial calib-q status 200 in 2338 out 175 server 133.0 state_digits 1000 n_q 10 instr 0 long_q 0 body {"usage": {"input_tokens": 2338, "output_tokens": 175}, "n_answers": 10}
+trial branch-long-5x0.2L status 200 in 56122 out 89 server 447.0 state_digits 11417 n_q 5 instr 3300 long_q 5 body {"usage": {"input_tokens": 56122, "output_tokens": 89}, "n_answers": 5}
+trial branch-min-2500q status 200 in 43092 out 48897 server 961.0 state_digits 11417 n_q 2500 instr 0 long_q 0 body {"usage": {"input_tokens": 43092, "output_tokens": 48897}, "n_answers": 2500}
+trial branch-min-5000q status 200 in 63092 out 98897 server 1822.0 state_digits 11417 n_q 5000 instr 0 long_q 0 body {"usage": {"input_tokens": 63092, "output_tokens": 98897}, "n_answers": 5000}
+trial branch-long-10x0.2L status 400 in None out None server 51.0 state_digits 11417 n_q 10 instr 3300 long_q 10 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial total-min-8000q status 400 in None out None server 275.0 state_digits 11417 n_q 8000 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial total-bs status 400 in None out None server 181.0 state_digits 11417 n_q 5360 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial total-bs status 200 in 64532 out 102497 server 2070.0 state_digits 11417 n_q 5180 instr 0 long_q 0 body {"usage": {"input_tokens": 64532, "output_tokens": 102497}, "n_answers": 5180}
+trial total-bs status 200 in 65532 out 104997 server 2349.0 state_digits 11417 n_q 5305 instr 0 long_q 0 body {"usage": {"input_tokens": 65532, "output_tokens": 104997}, "n_answers": 5305}
+trial total-bs status 200 in 65572 out 105097 server 1808.0 state_digits 11417 n_q 5310 instr 0 long_q 0 body {"usage": {"input_tokens": 65572, "output_tokens": 105097}, "n_answers": 5310}
+trial total-bs status 400 in None out None server 425.0 state_digits 11417 n_q 5340 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial total-smallstate status 200 in 65402 out 136757 server 2202.0 state_digits 5000 n_q 6893 instr 0 long_q 0 body {"usage": {"input_tokens": 65402, "output_tokens": 136757}, "n_answers": 6893}
+trial total-bs status 200 in 65756 out 105557 server 2275.0 state_digits 11417 n_q 5333 instr 0 long_q 0 body {"usage": {"input_tokens": 65756, "output_tokens": 105557}, "n_answers": 5333}
+trial total-bs status 400 in None out None server 168.0 state_digits 11417 n_q 5339 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial ctrl-branch-just-under status 200 in 33004 out 55 server 273.0 state_digits 11417 n_q 3 instr 4945 long_q 1 body {"usage": {"input_tokens": 33004, "output_tokens": 55}, "n_answers": 3}
+trial ctrl-branch-just-over status 400 in None out None server 18.0 state_digits 11417 n_q 3 instr 4965 long_q 1 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial ctrl-branch-0.4L status 400 in None out None server 23.0 state_digits 11417 n_q 1 instr 6600 long_q 1 body {"detail": {"error_type": "max_tokens_exceeded"}}
+trial ctrl-state-1.05L status 400 in None out None server 12.0 state_digits 17200 n_q 1 instr 0 long_q 0 body {"detail": {"error_type": "max_tokens_exceeded"}}
+
+## evidence metadata {
+"date": "2026-09-17",
+"model": "jev-1.13.0",
+"probeLogRecords": 1029,
+"benchmarkRecords": 6800,
+"sourceDirectory": "jev_recon/",
+"notes": [
+"One date, region, early-access account and model version. Observations do not uniquely identify an implementation.",
+"API service-time numbers are x-envoy-upstream-service-time response headers, not elapsed times measured on the local laptop or isolated GPU timings.",
+"Source logs contain responses and experiment metadata. Request construction is in the named source scripts.",
+"Rounded returned probabilities are used for all aggregates.",
+"Only public-safe aggregate measurements, synthetic probe text and source-relative provenance are included."
+]
+}
+
+### benchmarks
+caveat/metric {"sources": ["bench_results.jsonl", "bench2_results.jsonl"], "sampleUnit": "One benchmark item per request; shuffled MMLU conditions reuse the same underlying 1200 items.", "metric": "Accuracy and mean probability of the chosen answer; Noul uses max(p,1-p).", "caveat": "Equality of these two aggregate values does not establish calibration within probability bands, subgroups or a deployment distribution. No ECE is included because the original summary does not record the binning implementation."}
+row {"name": "arc_challenge", "n": 600, "accuracy": 0.9783333333333334, "meanTopProbability": 0.9850833333333333, "source": "bench_results.jsonl"}
+row {"name": "mmlu", "n": 1200, "accuracy": 0.9175, "meanTopProbability": 0.9365583333333334, "source": "bench_results.jsonl"}
+row {"name": "winogrande", "n": 500, "accuracy": 0.904, "meanTopProbability": 0.93578, "source": "bench_results.jsonl"}
+row {"name": "boolq", "n": 500, "accuracy": 0.904, "meanTopProbability": 0.90156, "source": "bench_results.jsonl"}
+row {"name": "hellaswag", "n": 400, "accuracy": 0.95, "meanTopProbability": 0.9254, "source": "bench_results.jsonl"}
+row {"name": "sciq_tf", "n": 400, "accuracy": 0.9525, "meanTopProbability": 0.9248, "source": "bench_results.jsonl"}
+row {"name": "mmlu_shuffled_neutralkeys", "n": 1200, "accuracy": 0.915, "meanTopProbability": 0.9447166666666666, "source": "bench2_results.jsonl"}
+row {"name": "mmlu_shuffled", "n": 1200, "accuracy": 0.9175, "meanTopProbability": 0.9425749999999999, "source": "bench2_results.jsonl"}
+row {"name": "mmlu_pro", "n": 800, "accuracy": 0.84625, "meanTopProbability": 0.8225625, "source": "bench2_results.jsonl"}
+
+### freshMath
+caveat/metric {"source": "fresh_math_results.json", "caveat": "Newly generated instances reduce exact-item reuse concerns; they do not prove absence of related training examples. Small, different task families cannot by themselves diagnose benchmark contamination."}
+row {"name": "mult3x3", "n": 30, "accuracy": 0.8666666666666667, "meanTopProbability": 0.8296666666666667}
+row {"name": "mult2x2", "n": 25, "accuracy": 0.96, "meanTopProbability": 0.9776}
+row {"name": "word_2step", "n": 25, "accuracy": 0.32, "meanTopProbability": 0.3044}
+row {"name": "linear_eq", "n": 25, "accuracy": 0.68, "meanTopProbability": 0.7012}
+row {"name": "modexp", "n": 25, "accuracy": 0.56, "meanTopProbability": 0.3488}
+row {"name": "binomial", "n": 20, "accuracy": 0.9, "meanTopProbability": 0.866}
+row {"name": "arith_series", "n": 20, "accuracy": 0.4, "meanTopProbability": 0.399}
+row {"name": "times_table", "n": 20, "accuracy": 1, "meanTopProbability": 1.0}
+
+### stateLength
+caveat/metric {"source": {"script": "probe.py", "log": "calls.jsonl", "tag": "state_len_hi"}, "metric": "Server response header x-envoy-upstream-service-time, milliseconds", "caveat": "Shared service load, queueing and scheduling are uncontrolled. A minimum is the smallest observation, not a verified uncontended time. No parameter count or GPU throughput can be identified from this curve."}
+row {"inputTokens": 360, "state": "", "logLines": [642, 649, 656, 664, 673, 676, 680, 684], "n": 8, "minimum": 66.0, "median": 105.0, "maximum": 203.0, "trials": [70.0, 66.0, 98.0, 139.0, 203.0, 109.0, 125.0, 101.0]}
+row {"inputTokens": 1869, "state": "", "logLines": [645, 657, 663, 682, 685, 690, 692, 694], "n": 8, "minimum": 54.0, "median": 114.0, "maximum": 163.0, "trials": [95.0, 94.0, 93.0, 163.0, 162.0, 54.0, 148.0, 133.0]}
+row {"inputTokens": 4941, "state": "", "logLines": [640, 646, 648, 655, 658, 672, 675, 701], "n": 8, "minimum": 59.0, "median": 95.5, "maximum": 195.0, "trials": [72.0, 59.0, 98.0, 148.0, 97.0, 81.0, 195.0, 94.0]}
+row {"inputTokens": 9796, "state": "", "logLines": [641, 651, 654, 659, 667, 669, 671, 679], "n": 8, "minimum": 75.0, "median": 122.0, "maximum": 178.0, "trials": [157.0, 114.0, 130.0, 75.0, 113.0, 110.0, 178.0, 148.0]}
+row {"inputTokens": 15071, "state": "", "logLines": [639, 650, 652, 662, 666, 677, 683, 702], "n": 8, "minimum": 116.0, "median": 124.0, "maximum": 261.0, "trials": [143.0, 121.0, 123.0, 116.0, 153.0, 125.0, 261.0, 116.0]}
+row {"inputTokens": 20423, "state": "", "logLines": [643, 665, 668, 670, 687, 691, 693, 700], "n": 8, "minimum": 145.0, "median": 177.5, "maximum": 230.0, "trials": [186.0, 230.0, 172.0, 209.0, 162.0, 154.0, 145.0, 183.0]}
+row {"inputTokens": 26103, "state": "", "logLines": [644, 647, 661, 678, 686, 689, 696, 697], "n": 8, "minimum": 193.0, "median": 213.0, "maximum": 692.0, "trials": [193.0, 200.0, 218.0, 380.0, 214.0, 692.0, 194.0, 212.0]}
+row {"inputTokens": 29835, "state": "", "logLines": [653, 660, 674, 681, 688, 695, 698, 699], "n": 8, "minimum": 230.0, "median": 237.0, "maximum": 262.0, "trials": [239.0, 235.0, 233.0, 259.0, 249.0, 230.0, 234.0, 262.0]}
+
+### questionCount
+caveat/metric {"source": {"script": "probe.py", "log": "calls.jsonl", "tag": "q_sweep_fine"}, "metric": "Server response header x-envoy-upstream-service-time, milliseconds", "caveat": "Shared service load, queueing and scheduling are uncontrolled. A minimum is the smallest observation, not a verified uncontended time. No parameter count or GPU throughput can be identified from this curve."}
+row {"questions": 100, "state": "short", "logLines": [613, 621, 630], "n": 3, "minimum": 99.0, "median": 100.0, "maximum": 115.0, "trials": [115.0, 99.0, 100.0]}
+row {"questions": 250, "state": "long", "logLines": [614, 618, 636], "n": 3, "minimum": 184.0, "median": 211.0, "maximum": 216.0, "trials": [216.0, 211.0, 184.0]}
+row {"questions": 250, "state": "short", "logLines": [616, 619, 632], "n": 3, "minimum": 103.0, "median": 108.0, "maximum": 203.0, "trials": [203.0, 108.0, 103.0]}
+row {"questions": 500, "state": "long", "logLines": [620, 624, 629], "n": 3, "minimum": 245.0, "median": 302.0, "maximum": 353.0, "trials": [353.0, 245.0, 302.0]}
+row {"questions": 500, "state": "short", "logLines": [612, 625, 637], "n": 3, "minimum": 211.0, "median": 278.0, "maximum": 526.0, "trials": [526.0, 278.0, 211.0]}
+row {"questions": 750, "state": "short", "logLines": [622, 623, 633], "n": 3, "minimum": 261.0, "median": 264.0, "maximum": 606.0, "trials": [261.0, 264.0, 606.0]}
+row {"questions": 1000, "state": "long", "logLines": [627, 628, 634], "n": 3, "minimum": 387.0, "median": 445.0, "maximum": 491.0, "trials": [445.0, 491.0, 387.0]}
+row {"questions": 1000, "state": "short", "logLines": [611, 626, 631], "n": 3, "minimum": 284.0, "median": 638.0, "maximum": 758.0, "trials": [284.0, 638.0, 758.0]}
+row {"questions": 1250, "state": "short", "logLines": [617, 635, 638], "n": 3, "minimum": 366.0, "median": 368.0, "maximum": 506.0, "trials": [368.0, 366.0, 506.0]}
+row {"questions": 1500, "state": "short", "logLines": [609, 610, 615], "n": 3, "minimum": 405.0, "median": 413.0, "maximum": 785.0, "trials": [405.0, 785.0, 413.0]}
+
+### tokenAccounting
+caveat/metric {"source": {"script": "probe.py", "log": "calls.jsonl", "tag": "type_preamble"}}
+row {"combo": "n", "inputTokens": 268, "outputTokens": 21, "logLine": 423}
+row {"combo": "c", "inputTokens": 284, "outputTokens": 32, "logLine": 424}
+row {"combo": "s", "inputTokens": 286, "outputTokens": 18, "logLine": 425}
+row {"combo": "nn", "inputTokens": 276, "outputTokens": 38, "logLine": 426}
+row {"combo": "cc", "inputTokens": 308, "outputTokens": 61, "logLine": 427}
+row {"combo": "ss", "inputTokens": 312, "outputTokens": 32, "logLine": 428}
+row {"combo": "nc", "inputTokens": 292, "outputTokens": 49, "logLine": 429}
+row {"combo": "ns", "inputTokens": 294, "outputTokens": 35, "logLine": 430}
+row {"combo": "cs", "inputTokens": 310, "outputTokens": 47, "logLine": 431}
+row {"combo": "ncs", "inputTokens": 318, "outputTokens": 64, "logLine": 432}
+row {"combo": "c3", "inputTokens": 290, "outputTokens": 39, "logLine": 433}
+row {"combo": "c4", "inputTokens": 296, "outputTokens": 46, "logLine": 434}
+row {"combo": "c2desc", "inputTokens": 302, "outputTokens": 32, "logLine": 435}
+row {"combo": "s3", "inputTokens": 292, "outputTokens": 18, "logLine": 436}
+row {"combo": "n_crit", "inputTokens": 286, "outputTokens": 21, "logLine": 437}
+row {"combo": "n_crit_true", "inputTokens": 280, "outputTokens": 21, "logLine": 438}
+row {"combo": "n_longkey", "inputTokens": 268, "outputTokens": 32, "logLine": 439}
+
+### optionOrder
+{"source": {"script": "probe.py", "function": "exp_option_order", "tag": "option_order", "log": "calls.jsonl"}, "sampleUnit": "One API request; three repeats for each listed order.", "conditions": [{"variant": "orig", "n": 3, "logLines": [297, 298, 299], "pTechnical": [0.87, 0.89, 0.84]}, {"variant": "rev", "n": 3, "logLines": [300, 301, 302], "pTechnical": [0.94, 0.96, 0.93]}, {"variant": "rot2", "n": 3, "logLines": [303, 304, 305], "pTechnical": [0.94, 0.95, 0.95]}]}
+
+### outputAccounting
+{"source": {"script": "probe.py", "log": "calls.jsonl"}, "longId": {"short": {"inputTokens": 268, "outputTokens": 21, "logLine": 423}, "long": {"inputTokens": 268, "outputTokens": 32, "logLine": 439}}, "choice255": [{"logLine": 334, "inputTokens": 2738, "outputTokens": 2714, "serverMs": 86.0}, {"logLine": 339, "inputTokens": 2738, "outputTokens": 2714, "serverMs": 152.0}, {"logLine": 346, "inputTokens": 2738, "outputTokens": 2714, "serverMs": 70.0}], "interpretation": "The output token field changes for an ID outside the apparent model input. It therefore cannot be treated as a count of generated model tokens. Public statements, rather than this field alone, support no autoregressive text generation."}
+
+### tokenizer
+{"sources": ["fingerprint.py", "fingerprint2.py", "fingerprint_results.json", "fingerprint2_results.json"], "candidateNames": ["01-ai/Yi-1.5-9B", "01-ai/Yi-6B", "01-ai/Yi-9B", "Alibaba-NLP/gte-Qwen2-1.5B-instruct", "BAAI/bge-m3", "ByteDance-Seed/Seed-OSS-36B-Base", "Deci/DeciLM-7B", "EleutherAI/gpt-j-6b", "EleutherAI/gpt-neox-20b", "EleutherAI/pythia-1b", "FacebookAI/roberta-base", "GSAI-ML/LLaDA-8B-Base", "HuggingFaceTB/SmolLM-135M", "HuggingFaceTB/SmolLM2-360M", "HuggingFaceTB/SmolLM3-3B", "HuggingFaceTB/SmolLM3-3B-Base", "KORMo-Team/KORMo-10B-sft", "LGAI-EXAONE/EXAONE-4.0-32B", "LLM360/Amber", "LLM360/K2", "LiquidAI/LFM2-1.2B", "LiquidAI/LFM2-8B-A1B", "MiniMaxAI/MiniMax-M1-80k", "MiniMaxAI/MiniMax-M2", "Motif-Technologies/Motif-2.6B", "NousResearch/Llama-2-7b-hf", "NousResearch/Meta-Llama-3.1-8B", "PrimeIntellect/INTELLECT-3", "Qwen/Qwen1.5-7B", "Qwen/Qwen2.5-7B", "Qwen/Qwen3-8B", "Qwen/Qwen3-Next-80B-A3B-Instruct", "Qwen/Qwen3.5-9B", "Qwen/Qwen3.6-35B-A3B", "Qwen/Qwen3.8-27B", "Salesforce/codegen-350M-mono", "ServiceNow-AI/Apriel-1.5-15b-Thinker", "Snowflake/snowflake-arctic-base", "TinyLlama/TinyLlama_v1.1", "Zyphra/Zamba2-2.7B", "adept/fuyu-8b", "ai21labs/Jamba-v0.1", "aleph-alpha/Pharia-1-LLM-7B-control-hf", "allenai/OLMo-2-0425-1B", "allenai/OLMo-2-1124-7B", "allenai/OLMo-7B-hf", "allenai/OLMoE-1B-7B-0924", "allenai/Olmo-3-1025-7B", "answerdotai/ModernBERT-base", "apple/DCLM-7B", "arcee-ai/AFM-4.5B", "arcee-ai/Trinity-Mini", "baidu/ERNIE-4.5-21B-A3B-PT", "bigcode/starcoder2-7b", "bigscience/bloom-560m", "deepseek-ai/DeepSeek-V2-Lite", "deepseek-ai/DeepSeek-V3", "deepseek-ai/DeepSeek-V3.2", "deepseek-ai/deepseek-coder-6.7b-base", "deepseek-ai/deepseek-llm-7b-base", "deepseek-ai/deepseek-moe-16b-base", "facebook/galactica-1.3b", "facebook/opt-1.3b", "facebook/xglm-564M", "google-bert/bert-base-uncased", "google/byt5-small", "google/flan-t5-base", "google/gemma-4-26b-a4b-it", "google/mt5-base", "google/t5-v1_1-base", "google/ul2", "ibm-granite/granite-3.3-8b-base", "ibm-granite/granite-4.0-h-small", "inclusionAI/LLaDA2.0-flash", "inclusionAI/Ling-flash-2.0", "intfloat/multilingual-e5-large", "jinaai/jina-embeddings-v3", "marin-community/marin-8b-base", "meituan-longcat/LongCat-Flash-Chat", "microsoft/Phi-3-mini-4k-instruct", "microsoft/Phi-4", "microsoft/Phi-4-mini-instruct", "microsoft/bitnet-b1.58-2B-4T", "microsoft/deberta-v3-base", "microsoft/phi-2", "mistral-community/Mistral-7B-v0.2", "mistralai/Mamba-Codestral-7B-v0.1", "mistralai/Ministral-8B-
+
+### iia
+{"source": {"script": "batch_c.py", "function": "exp_iia", "line": 6, "log": "calls.jsonl", "tag": "iia"}, "sampleUnit": "Three API requests per condition, each with forty identical questions. Duplicates within a request are not independent experimental replicates. Conditions were blocked, not interleaved.", "addedOption": {"weather": "Bad weather caused it"}, "interpretation": "Changes to pairwise odds conflict with a simple independent fixed-score model followed only by softmax. They do not uniquely imply a final-position readout: list-dependent temperature, rescoring or other interactions can also change odds.", "conditions": [{"variant": "base", "nRequests": 3, "answersPerRequest": 40, "nAnswers": 120, "logLines": [946, 947, 948], "customerVsUnknown": {"meanLogOdds": 0.4848181972453585, "requestMeanLogOdds": [0.5324225307871738, 0.44594262899395937, 0.4760894319549424]}, "customerVsProvider": {"meanLogOdds": 0.9225774253868411, "requestMeanLogOdds": [0.8845481213427998, 1.0005764252573883, 0.8826077295603351]}}, {"variant": "append", "nRequests": 3, "answersPerRequest": 40, "nAnswers": 120, "logLines": [949, 950, 951], "customerVsUnknown": {"meanLogOdds": 0.0835486315002992, "requestMeanLogOdds": [0.07837063563720131, 0.10282610333643899, 0.06944915552725733]}, "customerVsProvider": {"meanLogOdds": 0.6728186780579722, "requestMeanLogOdds": [0.8238357103869842, 0.6119169094267832, 0.5827034143601494]}}, {"variant": "prepend", "nRequests": 3, "answersPerRequest": 40, "nAnswers": 120, "logLines": [952, 953, 954], "customerVsUnknown": {"meanLogOdds": 0.4560602831917332, "requestMeanLogOdds": [0.5459111830848588, 0.4066614276840198, 0.41560823880632114]}, "customerVsProvider": {"meanLogOdds": 0.4196336924913195, "requestMeanLogOdds": [0.5504805188197813, 0.21366524307435802, 0.49475531557981905]}}]}
+
+### questionIsolation
+{"source": {"script": "probe.py", "function": "exp_independence", "line": 228, "log": "calls.jsonl", "tag": "visibility"}, "sampleUnit": "API request; five requests per condition", "question": "Which secret code is mentioned by another question in this request?", "caveat": "The wording asks about another question even when the code is moved to state; the positive control therefore demonstrates retrieval despite that mismatch. Learned instruction boundaries can mimic hard attention isolation.", "conditions": [{"variant": "with_secret", "n": 5, "logLines": [282, 285, 288, 291, 294], "pCode": [0.0, 0.0, 0.0, 0.0, 0.0], "pNoul": [0.04, 0.04, 0.04, 0.04, 0.04]}, {"variant": "without_secret", "n": 5, "logLines": [283, 286, 289, 292, 295], "pCode": [0.0, 0.0, 0.0, 0.0, 0.0], "pNoul": [0.04, 0.04, 0.04, 0.04, 0.04]}, {"variant": "secret_in_state", "n": 5, "logLines": [284, 287, 290, 293, 296], "pCode": [0.9, 0.92, 0.91, 0.92, 0.91], "pNoul": [0.15, 0.16, 0.15, 0.16, 0.15]}]}
+
+### optionVisibility
+{"source": {"script": "probe.py", "function": "exp_opt_visibility", "line": 403, "log": "calls.jsonl", "tag": "opt_visibility"}, "sampleUnit": "API request; four requests per condition", "instructions": "Exactly one option below is correct according to its own description. Which one?", "options": {"alphaWithSecret": "The secret code is ZEBRA-7741. This option is never correct.", "alphaControl": "The sky is often blue. This option is never correct.", "beta": "This option is correct if and only if some other option in this list mentions the code ZEBRA-7741.", "gamma": "This option is correct if and only if no option in this list mentions any secret code."}, "caveat": "Beta itself names the code in every condition. Gamma therefore creates a semantic ambiguity even in the nominal no-secret control. This measures order-dependent behaviour, not a recovered attention mask. A causal final readout can attend to every earlier option.", "conditions": [{"order": "abg", "variant": "with_secret", "n": 4, "logLines": [486, 487, 488, 489], "pBeta": [0.94, 0.94, 0.93, 0.77], "meanPBeta": 0.895, "pGamma": [0.03, 0.03, 0.03, 0.07]}, {"order": "abg", "variant": "without_secret", "n": 4, "logLines": [490, 491, 492, 493], "pBeta": [0.02, 0.02, 0.02, 0.02], "meanPBeta": 0.02, "pGamma": [0.96, 0.96, 0.96, 0.96]}, {"order": "bga", "variant": "with_secret", "n": 4, "logLines": [494, 495, 496, 497], "pBeta": [0.01, 0.01, 0.02, 0.01], "meanPBeta": 0.0125, "pGamma": [0.97, 0.97, 0.96, 0.97]}, {"order": "bga", "variant": "without_secret", "n": 4, "logLines": [498, 499, 500, 501], "pBeta": [0.01, 0.01, 0.01, 0.01], "meanPBeta": 0.01, "pGamma": [0.98, 0.98, 0.98, 0.98]}, {"order": "gba", "variant": "with_secret", "n": 4, "logLines": [502, 503, 504, 505], "pBeta": [0.02, 0.05, 0.05, 0.03], "meanPBeta": 0.0375, "pGamma": [0.96, 0.93, 0.93, 0.96]}, {"order": "gba", "variant": "without_secret", "n": 4, "logLines": [506, 507, 508, 509], "pBeta": [0.02, 0.02, 0.02, 0.02], "meanPBeta": 0.02, "pGamma": [0.97, 0.97, 0.97, 0.97]}]}
+
+### noise
+{"sources": {"script": "probe.py", "log": "calls.jsonl", "tags": ["noise", "dup", "determinism"]}, "caveat": "These observed differences do not identify randomness, numerical precision, batch scheduling or worker count.", "repeatNoulQuestions": [{"questionSlot": "s0", "nRequests": 30, "minimum": 0.99, "maximum": 0.99, "sampleStdDev": 0.0, "probabilities": [0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99], "logLines": [531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560]}, {"questionSlot": "s1", "nRequests": 30, "minimum": 0.98, "maximum": 0.99, "sampleStdDev": 0.0018257418583505554, "probabilities": [0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.98, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99], "logLines": [531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560]}, {"questionSlot": "s2", "nRequests": 30, "minimum": 0.02, "maximum": 0.02, "sampleStdDev": 0.0, "probabilities": [0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02], "logLines": [531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560]}, {"questionSlot": "s3", "nRequests": 30, "minimum": 0.56, "maximum": 0.61, "sampleStdDev": 0.012972118642263698, "probabilities": [0.6, 0.59, 0.58, 0.58, 0.56, 0.59, 0.6, 0.59, 0.56, 0.6, 0.58, 0.59, 0.59, 0.61, 0.58, 0.59, 0.57, 0.59, 0.59, 0.6, 0.58, 0.61, 0.59, 0.59, 0.58, 0.57, 0.6, 0.59, 0.58, 0.61], "logLines": [531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559, 560]}, {"questionSlot": "s4", "nRequests": 30, "minimum": 0.9, "maximum": 0.91, "sampleStdDev": 0.005040069329937313, "probabilities": [0.9, 0.9, 0.9, 0.9, 0.9, 0.91, 0.91, 0.9, 0.91, 0.9, 0.91, 0.91, 0.91, 0.9, 0.9, 0.91, 0.91, 0.9, 0.9, 0.9, 0.9, 0.91, 0.91, 0.9, 0.91, 0.91, 0.9, 0.9, 0.9, 0.91], "logLines": [531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 54
+
+### confidence
+{"source": "https://github.com/typesafe-ai/system-one-adapter-python/blob/main/src/system_one_adapter/_utils/confidence_metrics.py", "choiceFormula": "First normalize p to sum to 1. For K>1: (max(p)-1/K)/(1-1/K). K=1 returns 1.", "scoreFormula": "max(0, 1 - sum_i p_i*abs(i-mode(p)) / mean_i abs(i-(K-1)/2)), using normalized p. K=1 returns 1.", "interpretation": "Public adapter code; the production API is not open source. Formula agreement supports the interpretation, but rounded API probabilities can prevent exact reconstruction."}
+
+### tokenizerDiagnostics
+caveat/metric {"source": {"script": "probe.py", "function": "exp_tokenizer", "log": "calls.jsonl", "tag": "tokenizer"}, "baseline": "State is the string x; all shown probes use the same question scaffolding.", "interpretation": "The 100-digit string adds 99 input tokens relative to x. If x is one token and wrapper effects are unchanged, that is 100 digit tokens. The repeated whitespace counts are similarly relative measurements."}
+row {"probe": "base_x", "characters": 1, "inputTokens": 273, "logLine": 21}
+row {"probe": "spaces200", "characters": 200, "inputTokens": 275, "logLine": 23}
+row {"probe": "newlines200", "characters": 200, "inputTokens": 297, "logLine": 24}
+row {"probe": "tabs50", "characters": 50, "inputTokens": 275, "logLine": 25}
+row {"probe": "a100", "characters": 100, "inputTokens": 297, "logLine": 26}
+row {"probe": "digits100", "characters": 100, "inputTokens": 372, "logLine": 27}
+
+## followup-summary
+attempted 146 succeeded 146 unit One question per API request; two repeats per exact relational condition, ten randomized request blocks for odds interventions.
+rel {"placement": "option", "order": ["alpha", "beta", "gamma"], "n": 8, "accuracy": 0.75, "meanPCorrect": 0.49625, "pCorrect": [0.62, 0.48, 0.56, 0.25, 0.33, 0.63, 0.6, 0.5], "trialIndices": [4, 9, 15, 18, 22, 27, 36, 53]}
+rel {"placement": "option", "order": ["alpha", "gamma", "beta"], "n": 8, "accuracy": 0.75, "meanPCorrect": 0.55625, "pCorrect": [0.44, 0.52, 0.56, 0.33, 0.33, 0.81, 0.6, 0.86], "trialIndices": [6, 34, 37, 51, 58, 64, 74, 86]}
+rel {"placement": "option", "order": ["beta", "alpha", "gamma"], "n": 8, "accuracy": 0.5, "meanPCorrect": 0.4925, "pCorrect": [0.83, 0.29, 0.79, 0.77, 0.1, 0.27, 0.1, 0.79], "trialIndices": [10, 11, 23, 49, 67, 73, 81, 95]}
+rel {"placement": "option", "order": ["beta", "gamma", "alpha"], "n": 8, "accuracy": 1, "meanPCorrect": 0.8875, "pCorrect": [0.94, 0.81, 0.91, 0.94, 0.92, 0.9, 0.83, 0.85], "trialIndices": [46, 47, 60, 62, 70, 84, 85, 92]}
+rel {"placement": "option", "order": ["gamma", "alpha", "beta"], "n": 8, "accuracy": 0.875, "meanPCorrect": 0.5625, "pCorrect": [0.78, 0.38, 0.79, 0.63, 0.5, 0.63, 0.3, 0.49], "trialIndices": [0, 1, 30, 39, 40, 59, 68, 79]}
+rel {"placement": "option", "order": ["gamma", "beta", "alpha"], "n": 8, "accuracy": 1, "meanPCorrect": 0.8725, "pCorrect": [0.93, 0.93, 0.81, 0.84, 0.95, 0.8, 0.9400000000000001, 0.78], "trialIndices": [2, 21, 24, 25, 31, 33, 38, 66]}
+rel {"placement": "state", "order": ["alpha", "beta", "gamma"], "n": 8, "accuracy": 1, "meanPCorrect": 1.0, "pCorrect": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "trialIndices": [3, 17, 28, 42, 54, 56, 63, 65]}
+rel {"placement": "state", "order": ["alpha", "gamma", "beta"], "n": 8, "accuracy": 1, "meanPCorrect": 1.0, "pCorrect": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "trialIndices": [5, 14, 26, 55, 57, 61, 75, 90]}
+rel {"placement": "state", "order": ["beta", "alpha", "gamma"], "n": 8, "accuracy": 1, "meanPCorrect": 1.0, "pCorrect": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "trialIndices": [7, 19, 43, 71, 76, 78, 83, 94]}
+rel {"placement": "state", "order": ["beta", "gamma", "alpha"], "n": 8, "accuracy": 1, "meanPCorrect": 1.0, "pCorrect": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "trialIndices": [35, 44, 48, 52, 72, 88, 91, 93]}
+rel {"placement": "state", "order": ["gamma", "alpha", "beta"], "n": 8, "accuracy": 1, "meanPCorrect": 1.0, "pCorrect": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "trialIndices": [8, 12, 13, 32, 45, 69, 77, 87]}
+rel {"placement": "state", "order": ["gamma", "beta", "alpha"], "n": 8, "accuracy": 1, "meanPCorrect": 1.0, "pCorrect": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0], "trialIndices": [16, 20, 29, 41, 50, 80, 82, 89]}
+odds {"variant": "base4", "numerator": "customer", "denominator": "provider", "n": 10, "meanLogOdds": 0.8266550034007486}
+odds {"variant": "null4", "numerator": "customer", "denominator": "provider", "n": 10, "meanLogOdds": 0.7199520640320766}
+odds {"variant": "append5", "numerator": "customer", "denominator": "provider", "n": 10, "meanLogOdds": 0.7060441217306145}
+odds {"variant": "replace5", "numerator": "customer", "denominator": "provider", "n": 10, "meanLogOdds": 0.6319479006734974}
+odds {"variant": "null5", "numerator": "customer", "denominator": "provider", "n": 10, "meanLogOdds": 0.6659411640144767}
+odds {"variant": "base4", "numerator": "customer", "denominator": "unknown", "n": 10, "meanLogOdds": 0.43206925563738974}
+odds {"variant": "null4", "numerator": "customer", "denominator": "unknown", "n": 10, "meanLogOdds": 0.3315169387626084}
+odds {"variant": "append5", "numerator": "customer", "denominator": "unknown", "n": 10, "meanLogOdds": 0.09729154576886148}
+odds {"variant": "replace5", "numerator": "customer", "denominator": "unknown", "n": 10, "meanLogOdds": 0.21014866232687796}
+odds {"variant": "null5", "numerator": "customer", "denominator": "unknown", "n": 10, "meanLogOdds": 0.11287637054102032}
+pair {"treatment": "null4", "control": "base4", "denominator": "provider", "nBlocks": 10, "meanLogOddsChange": -0.10670293936867208, "blockChanges": [0.04445176257083383, -0.003034903695154023, 0.3892922488625634, -0.6974421048428261, -0.1519309230889455, 0.15082288973458358, -0.06692461842289255, -0.15642082836179727, -0.7132917466524129, 0.13744883020932674], "standardErrorAcrossBlocks": 0.11198006608779199}
+pair {"treatment": "null5", "control": "append5", "denominator": "provider", "nBlocks": 10, "meanLogOddsChange": -0.040102957716137776, "blockChanges": [-0.07709394033228367, -0.1491741696949762, 0.24946085963158315, -0.12468478848422915, 0.0, -0.02242246405583259, 0.06713930283762859, 0.0, -0.12111082574905807, -0.22314355131420982], "standardErrorAcrossBlocks": 0.04207959162486665}
+pair {"treatment": "append5", "control": "base4", "denominator": "provider", "nBlocks": 10, "meanLogOddsChange": -0.12061088167013416, "blockChanges": [0.1910552367627092, -0.0930904230660119, -0.05085841723349083, -0.4449239448487121, -0.12783337150988505, 0.12672533815552323, -0.22314355131420982, -0.2029408439966902, -0.41318715420207475, 0.03208831455150063], "standardErrorAcrossBlocks": 0.06628004350880487}
+pair {"treatment": "replace5", "control": "append5", "denominator": "provider", "nBlocks": 10, "meanLogOddsChange": -0.07409622105711712, "blockChanges": [-0.24424194375579134, -0.2503392941226998, 0.11884067721451885, -0.23638877806423042, 0.23361485118150516, -0.04652001563489305, 0.2242011928723453, 0.022472855852058604, -0.02580064594473319, -0.5368011101692514], "standardErrorAcrossBlocks": 0.07701056712269905}
+pair {"treatment": "null4", "control": "base4", "denominator": "unknown", "nBlocks": 10, "meanLogOddsChange": -0.10055231687478135, "blockChanges": [-0.029852963149681166, 0.17269684341974517, 0.02638675517319483, -0.5501906474758398, -0.4861330111756191, 0.10023110361852355, -0.05422155416663893, -0.2368423956723718, -0.12335222838919269, 0.1757549290700664], "standardErrorAcrossBlocks": 0.08058985100273616}
+pair {"treatment": "null5", "control": "append5", "denominator": "unknown", "nBlocks": 10, "meanLogOddsChange": 0.01558482477215885, "blockChanges": [0.11000089521432843, -0.1826968617336198, -0.0038535693159900825, 0.25830746377187674, 0.1310282624064041, 0.08125596541900881, 0.34652257247471446, -0.2583074637718766, -0.15455875981659833, -0.17185025692665928], "standardErrorAcrossBlocks": 0.0644445986032606}
+pair {"treatment": "append5", "control": "base4", "denominator": "unknown", "nBlocks": 10, "meanLogOddsChange": -0.3347777098685283, "blockChanges": [-0.08701137698962974, -0.1801018000556417, -0.24049218964882269, -0.8673386112706499, -0.5648928450362664, -0.19715978296021816, -0.4780358009429999, -0.3422029113301981, -0.31140445989213233, -0.07913732055872374], "standardErrorAcrossBlocks": 0.0771860426923752}
+pair {"treatment": "replace5", "control": "append5", "denominator": "unknown", "nBlocks": 10, "meanLogOddsChange": 0.11285711655801647, "blockChanges": [-0.12503744375203033, -0.04781503001122554, 0.15687804960768909, 0.26260238805475744, 0.3541718137206139, 0.05715841383994841, 0.3402001067352274, 0.19035372849121893, 0.051977055097950864, -0.11191791620398536], "standardErrorAcrossBlocks": 0.05577999793056128}
+
+## latency-rerun meta {"model": "jev-1.13.0", "date": "2026-09-17", "seed": 20260917, "concurrency": 1, "reps": 8, "context_state_chars": [400, 8000, 24000, 48000, 72000, 96000, 120000, 138000], "question_counts": [1, 25, 50, 100, 175, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375, 1500], "short_state_chars": 1200}
+lat ('context', 400) n 8 med_server 57.5 min_server 44.0 max_server 107.0 med_in 360.0 med_out 20.0 statuses [200]
+lat ('context', 8000) n 8 med_server 84.0 min_server 56.0 max_server 172.0 med_in 1869.0 med_out 20.0 statuses [200]
+lat ('context', 24000) n 8 med_server 81.0 min_server 64.0 max_server 150.0 med_in 4941.0 med_out 20.0 statuses [200]
+lat ('context', 48000) n 8 med_server 89.0 min_server 81.0 max_server 153.0 med_in 9796.0 med_out 20.0 statuses [200]
+lat ('context', 72000) n 8 med_server 153.0 min_server 132.0 max_server 212.0 med_in 15071.0 med_out 20.0 statuses [200]
+lat ('context', 96000) n 8 med_server 185.0 min_server 148.0 max_server 243.0 med_in 20423.0 med_out 20.0 statuses [200]
+lat ('context', 120000) n 8 med_server 200.0 min_server 187.0 max_server 262.0 med_in 26103.0 med_out 20.0 statuses [200]
+lat ('context', 138000) n 8 med_server 218.0 min_server 211.0 max_server 244.0 med_in 29835.0 med_out 20.0 statuses [200]
+lat ('questions', 1) n 8 med_server 86.5 min_server 65.0 max_server 133.0 med_in 538.0 med_out 21.0 statuses [200]
+lat ('questions', 25) n 8 med_server 72.0 min_server 50.0 max_server 105.0 med_in 960.0 med_out 444.0 statuses [200]
+lat ('questions', 50) n 8 med_server 81.0 min_server 51.0 max_server 117.0 med_in 1398.0 med_out 894.0 statuses [200]
+lat ('questions', 100) n 8 med_server 82.0 min_server 65.0 max_server 118.0 med_in 2262.0 med_out 1794.0 statuses [200]
+lat ('questions', 175) n 8 med_server 99.5 min_server 79.0 max_server 173.0 med_in 3561.0 med_out 3219.0 statuses [200]
+lat ('questions', 250) n 8 med_server 132.0 min_server 97.0 max_server 171.0 med_in 4869.0 med_out 4644.0 statuses [200]
+lat ('questions', 375) n 8 med_server 162.0 min_server 131.0 max_server 392.0 med_in 7053.0 med_out 7019.0 statuses [200]
+lat ('questions', 500) n 8 med_server 181.0 min_server 160.0 max_server 203.0 med_in 9199.0 med_out 9394.0 statuses [200]
+lat ('questions', 625) n 8 med_server 213.0 min_server 199.0 max_server 372.0 med_in 11372.0 med_out 11769.0 statuses [200]
+lat ('questions', 750) n 8 med_server 245.5 min_server 223.0 max_server 449.0 med_in 13548.0 med_out 14144.0 statuses [200]
+lat ('questions', 875) n 8 med_server 315.5 min_server 243.0 max_server 636.0 med_in 15691.0 med_out 16519.0 statuses [200]
+lat ('questions', 1000) n 8 med_server 453.5 min_server 276.0 max_server 613.0 med_in 17862.0 med_out 18894.0 statuses [200]
+lat ('questions', 1125) n 8 med_server 358.5 min_server 290.0 max_server 679.0 med_in 20035.0 med_out 21394.0 statuses [200]
+lat ('questions', 1250) n 8 med_server 483.0 min_server 315.0 max_server 1042.0 med_in 22205.0 med_out 23894.0 statuses [200]
+lat ('questions', 1375) n 8 med_server 395.5 min_server 356.0 max_server 611.0 med_in 24358.0 med_out 26394.0 statuses [200]
+lat ('questions', 1500) n 8 med_server 610.0 min_server 408.0 max_server 990.0 med_in 26524.0 med_out 28894.0 statuses [200]
+
+## option-count main meta {"schema": "jev-option-count-latency.v1", "state": "Customer message: my card was charged twice for the same order and I would like the duplicate refunded.", "reps": 8, "workers": 4, "server_ms_header": "x-envoy-upstream-service-time"}
+followup meta {"schema": "jev-option-count-latency-followup.v1"}
+oc (1, 2, 'long') n 8 med_server 86.0 med_in 340.0 med_out 71.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 2, 'short') n 8 med_server 76.0 med_in 316.0 med_out 35.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 10, 'long') n 8 med_server 84.5 med_in 493.0 med_out 232.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 10, 'short') n 8 med_server 90.5 med_in 373.0 med_out 100.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 50, 'long') n 8 med_server 94.0 med_in 1293.0 med_out 1072.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 50, 'short') n 8 med_server 89.0 med_in 693.0 med_out 460.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 200, 'long') n 8 med_server 93.0 med_in 4394.0 med_out 4323.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (1, 200, 'short') n 8 med_server 75.5 med_in 1994.0 med_out 1911.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 2, 'long') n 8 med_server 74.5 med_in 1510.0 med_out 1374.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 2, 'short') n 8 med_server 87.0 med_in 1030.0 med_out 654.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 10, 'long') n 8 med_server 81.5 med_in 4570.0 med_out 4595.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 10, 'short') n 8 med_server 88.5 med_in 2170.0 med_out 1955.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 50, 'long') n 8 med_server 190.0 med_in 20570.0 med_out 21405.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 50, 'short') n 8 med_server 115.0 med_in 8570.0 med_out 9165.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 200, 'long') n 8 med_server 44.5 med_in None med_out None keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+oc (20, 200, 'short') n 8 med_server 254.5 med_in 34590.0 med_out 38185.0 keys ['attempts', 'body', 'in_tok', 'index', 'labels', 'n_opt', 'n_q', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+followup n 20 keys ['attempts', 'body', 'cond', 'in_tok', 'index', 'out_tok', 'payload', 'rep', 'request_id', 'server_ms', 'status', 'wall_ms']
+ocf {"index": 0, "cond": "C_control", "rep": 0, "status": 200, "attempts": [200], "wall_ms": 655.2, "server_ms": 73.0, "request_id": "req_01a0aeaa63dc705fa76ba0b910c11ac6", "in_tok": 316, "out_tok": 35}
+ocf {"index": 1, "cond": "C_control", "rep": 2, "status": 200, "attempts": [200], "wall_ms": 656.3, "server_ms": 82.0, "request_id": "req_01a0aeaa63d8771c9a41429dde08b98b", "in_tok": 316, "out_tok": 35}
+ocf {"index": 2, "cond": "A_big_state", "rep": 1, "status": 200, "attempts": [200], "wall_ms": 1258.8, "server_ms": 150.0, "request_id": "req_01a0aeaa63d074c18c9f987132367185", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 3, "cond": "B_big_questions", "rep": 5, "status": 200, "attempts": [200], "wall_ms": 1250.6, "server_ms": 140.0, "request_id": "req_01a0aeaa63d577f8af8decf8b1103db9", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 4, "cond": "C_control", "rep": 1, "status": 200, "attempts": [200], "wall_ms": 276.1, "server_ms": 87.0, "request_id": "req_01a0aeaa64e27ecaa57b6b452214a08d", "in_tok": 316, "out_tok": 35}
+ocf {"index": 5, "cond": "A_big_state", "rep": 5, "status": 200, "attempts": [200], "wall_ms": 916.9, "server_ms": 182.0, "request_id": "req_01a0aeaa64e5747993db3832bf65118a", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 6, "cond": "B_big_questions", "rep": 1, "status": 200, "attempts": [200], "wall_ms": 952.5, "server_ms": 206.0, "request_id": "req_01a0aeaa65f875f28525ae22a83192ac", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 7, "cond": "A_big_state", "rep": 3, "status": 200, "attempts": [200], "wall_ms": 736.2, "server_ms": 188.0, "request_id": "req_01a0aeaa673d7166be004eb512b05b94", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 8, "cond": "B_big_questions", "rep": 2, "status": 200, "attempts": [200], "wall_ms": 524.2, "server_ms": 158.0, "request_id": "req_01a0aeaa67407e5da5b35931ab8e1248", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 9, "cond": "A_big_state", "rep": 7, "status": 200, "attempts": [200], "wall_ms": 585.4, "server_ms": 216.0, "request_id": "req_01a0aeaa687e7fd38657031e5f581a4a", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 10, "cond": "B_big_questions", "rep": 4, "status": 200, "attempts": [200], "wall_ms": 573.5, "server_ms": 388.0, "request_id": "req_01a0aeaa69b379c59d000933b0f3addb", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 11, "cond": "B_big_questions", "rep": 0, "status": 200, "attempts": [200], "wall_ms": 597.6, "server_ms": 223.0, "request_id": "req_01a0aeaa69b875c4b542982a39897fd8", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 12, "cond": "C_control", "rep": 3, "status": 200, "attempts": [200], "wall_ms": 271.1, "server_ms": 85.0, "request_id": "req_01a0aeaa6a1f7aa7b1cd317d430a0e6c", "in_tok": 316, "out_tok": 35}
+ocf {"index": 13, "cond": "B_big_questions", "rep": 7, "status": 200, "attempts": [200], "wall_ms": 614.1, "server_ms": 245.0, "request_id": "req_01a0aeaa6ac971a7bc0043e368bd6417", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 14, "cond": "A_big_state", "rep": 6, "status": 200, "attempts": [200], "wall_ms": 742.8, "server_ms": 377.0, "request_id": "req_01a0aeaa6b30767d9b656eac294eb5de", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 15, "cond": "A_big_state", "rep": 0, "status": 200, "attempts": [200], "wall_ms": 351.6, "server_ms": 166.0, "request_id": "req_01a0aeaa6b9179e59a4bc09e34b5b640", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 16, "cond": "B_big_questions", "rep": 3, "status": 200, "attempts": [200], "wall_ms": 367.4, "server_ms": 178.0, "request_id": "req_01a0aeaa6c16784b8c972422797cc099", "in_tok": 20090, "out_tok": 654}
+ocf {"index": 17, "cond": "A_big_state", "rep": 4, "status": 200, "attempts": [200], "wall_ms": 364.9, "server_ms": 180.0, "request_id": "req_01a0aeaa6cf576ae941fa243c05bbf40", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 18, "cond": "A_big_state", "rep": 2, "status": 200, "attempts": [200], "wall_ms": 377.3, "server_ms": 190.0, "request_id": "req_01a0aeaa6d357b08a7779c507b416fd9", "in_tok": 19319, "out_tok": 35}
+ocf {"index": 19, "cond": "B_big_questions", "rep": 6, "status": 200, "attempts": [200], "wall_ms": 380.4, "server_ms": 185.0, "request_id": "req_01a0aeaa6d8379a0b27391eaad2df951", "in_tok": 20090, "out_tok": 654}
+
+## option-injection meta {"model": "jev-1.13.0", "workers": 3, "state": "Reference status: indigo.", "instructions": "Select the option whose condition matches the reference status."}
+summary [{"cond": "neutral|baseline", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": null, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [369], "choices": ["o3"]}, {"cond": "greek|baseline", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": null, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [365], "choices": ["gamma"]}, {"cond": "neutral|keycolon|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.1733, 0.8267, 0.0], "containing": 0.1733, "correct_o3": 0.8267, "next_after_o3_o4": 0.0, "sd_o3": 0.0499, "in_tok": [381], "choices": ["o3"]}, {"cond": "neutral|numbered|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.0333, 0.9667, 0.0], "containing": 0.0333, "correct_o3": 0.9667, "next_after_o3_o4": 0.0, "sd_o3": 0.0047, "in_tok": [379], "choices": ["o3"]}, {"cond": "neutral|json|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.0133, 0.9867, 0.0], "containing": 0.0133, "correct_o3": 0.9867, "next_after_o3_o4": 0.0, "sd_o3": 0.0047, "in_tok": [382], "choices": ["o3"]}, {"cond": "neutral|xml|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.0333, 0.9667, 0.0], "containing": 0.0333, "correct_o3": 0.9667, "next_after_o3_o4": 0.0, "sd_o3": 0.0047, "in_tok": [385], "choices": ["o3"]}, {"cond": "neutral|markdown|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.1433, 0.8567, 0.0], "containing": 0.1433, "correct_o3": 0.8567, "next_after_o3_o4": 0.0, "sd_o3": 0.0249, "in_tok": [381], "choices": ["o3"]}, {"cond": "neutral|plain|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.0533, 0.9467, 0.0], "containing": 0.0533, "correct_o3": 0.9467, "next_after_o3_o4": 0.0, "sd_o3": 0.017, "in_tok": [377], "choices": ["o3"]}, {"cond": "greek|keycolon|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.01, 0.98, 0.01], "containing": 0.01, "correct_o3": 0.98, "next_after_o3_o4": 0.01, "sd_o3": 0.0, "in_tok": [376], "choices": ["gamma"]}, {"cond": "greek|numbered|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.0367, 0.9633, 0.0], "containing": 0.0367, "correct_o3": 0.9633, "next_after_o3_o4": 0.0, "sd_o3": 0.0094, "in_tok": [375], "choices": ["gamma"]}, {"cond": "greek|plain|host=o2|fake=indigo", "n": 3, "mean_p": [0.0, 0.0967, 0.9033, 0.0], "containing": 0.0967, "correct_o3": 0.9033, "next_after_o3_o4": 0.0, "sd_o3": 0.0403, "in_tok": [373], "choices": ["gamma"]}, {"cond": "neutral|keycolon|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [380], "choices": ["o3"]}, {"cond": "neutral|numbered|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [378], "choices": ["o3"]}, {"cond": "neutral|json|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [381], "choices": ["o3"]}, {"cond": "neutral|xml|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [384], "choices": ["o3"]}, {"cond": "neutral|markdown|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [380], "choices": ["o3"]}, {"cond": "neutral|plain|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [376], "choices": ["o3"]}, {"cond": "greek|keycolon|host=o2|fake=green", "n": 3, "mean_p": [0.0, 0.0, 1.0, 0.0], "containing": 0.0, "correct_o3": 1.0, "next_after_o3_o4": 0.0, "sd_o3": 0.0, "in_tok": [375], "choices": ["gamma"]}, {"cond": "neutral|keycolon|host=o1|fake=indigo", "n": 3, "mean_p": [0.07, 0.0, 0.93, 0.0], "containing": 0.07, "correct_o3": 0.93, "next_after_o3_o4": 0.0, "sd_o3": 0.0082, "in_tok": [381], "choices": ["o3"]}, {"cond": "neutral|numbered|host=o1|fake=indigo", "n": 3, "mean_p": [0.07, 0.0
+phases type dict n 5
+phase keys ['pilot', 'main', 'ambig_pilot', 'ambig_pilot2', 'ambig_a5']
+
+## option-position top ['meta', 'phases']
+meta {"model": "jev-1.13.0", "workers": 4, "server_ms_header": "x-envoy-upstream-service-time"}
+phases {"cap": {"started": 1789639332.5043662, "api_calls": 7, "trials": [{"index": 0, "template": "cap", "n": 255, "position": 0, "correct_key": "o1", "status": 200, "attempts": [200], "server_ms": 142.0, "wall_ms": 949.0, "in_tok": 2472, "out_tok": 2460, "request_id": "req_01a0aed115b97cfeba700e4b93f4504c", "p_correct": 0.3, "rank": 1, "ties_at_pc": 0, "argmax_correct": true, "choice": "o1", "confidence": 0.29, "n_returned": 255, "prob_sum": 1.0, "top5": [["o1", 0.3], ["o100", 0.03], ["o255", 0.02], ["o2", 0.02], ["o200", 0.02]]}, {"index": 1, "template": "cap", "n": 256, "position": 0, "correct_key": "o1", "status": 400, "attempts": [400], "server_ms": 14.0, "wall_ms": 825.6, "in_tok": null, "out_tok": null, "request_id": "req_01a0aed115c27498b4baefa164d49ffe", "error_body": "{\"detail\": \"Too many choices. Must have at most 255 choices.\"}"}, {"index": 2, "template": "cap", "n": 257, "position": 0, "correct_key": "o1", "status": 400, "attempts": [400], "server_ms": 25.0, "wall_ms": 811.6, "in_tok": null, "out_tok": null, "request_id": "req_01a0aed115ab7c50aed57a380c58b2d5", "error_body": "{\"detail\": \"Too many choices. Must have at most 255 choices.\"}"}, {"index": 3, "template": "cap", "n": 300, "position": 0, "correct_key": "o1", "status": 400, "attempts": [400], "server_ms": 18.0, "wall_ms": 808.4, "in_tok": null, "out_tok": null, "request_id": "req_01a0aed115ac7b3580c17679cc23b2f0", "error_body": "{\"detail\": \"Too many choices. Must have at most 255 choices.\"}"}, {"ind
+
+## output-token top ['description', 'questionIds', 'batches', 'states', 'words', 'inputVersusOutput']
+description "Output- and input-token accounting probes, 17 September 2026. Question IDs, batch sizes, state difficulty, word IDs and matched state/ID strings."
+questionIds dict keys ['schema', 'created_utc', 'seed', 'planned_requests', 'notes', 'trials']
+batches dict keys ['schema', 'created_utc', 'planned_requests', 'notes', 'trials']
+states dict keys ['schema', 'created_utc', 'planned_requests', 'notes', 'trials']
+words dict keys ['schema', 'created_utc', 'planned_requests', 'notes', 'trials']
+inputVersusOutput dict keys ['schema', 'created_utc', 'planned_requests', 'notes', 'trials']
+
+## tokenizer top ['meta', 'trials']
+meta {"schema": "jev-tokenizer-fingerprint.v1", "model": "jev-1.13.0", "question": {"n1": {"type": "noul", "instructions": "x"}}, "empty_state_input_tokens_pilot": 267, "note": "tokens(S) = input_tokens - input_tokens(state=\"\")"}
+trials list 421
+ item keys ['attempts', 'body', 'family', 'in_tok', 'index', 'label', 'out_tok', 'payload', 'request_id', 'server_ms', 'state', 'status', 'wall_ms']
+ item0 {"index": 0, "family": "run", "label": "run['e']x64", "state": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "payload": {"model": "jev-1.13.0", "state": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "questions": {"n1": {"type": "noul", "instructions": "x"}}}, "status": 200, "attempts": [200], "wall_ms": 708.0, "server_ms": 110.0, "request_id": "req_01a0a
+
+## followup-trials 2026-09-17T04:04:46.348585+00:00 planned 146 n 146 notes ["Synthetic public-safe payloads. No credentials, request identifiers or private headers are stored.", "Question criteria preserve insertion order. Relational trials are globally randomized; odds variants are randomized within each block.", "Service header is retained for provenance, not used to infer model throughput or local speed.", "All successful requests contain one question. No retries; failed requests remain failures.", "A relational order effect would not uniquely identify a causal mask. A null result would not establish bidirectionality."]
+experiments {'relational_order': 96, 'odds_intervention': 50}
+response models {'jev-1.13.0'}

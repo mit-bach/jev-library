@@ -1,0 +1,15 @@
+{
+  "full_name": "DevMortimer/pi-typesafe",
+  "html_url": "https://github.com/DevMortimer/pi-typesafe",
+  "description": "TypeSafe decisions for Pi: batched evaluation tool, terminal playground, and typed API for extension authors",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T23:24:22Z",
+  "size": 494,
+  "stargazers_count": 47,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "3a498ea1ba90c041c52e7632e8f292c1d706ac52"
+}

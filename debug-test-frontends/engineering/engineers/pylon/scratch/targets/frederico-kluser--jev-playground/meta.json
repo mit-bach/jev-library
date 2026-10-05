@@ -1,0 +1,15 @@
+{
+  "full_name": "frederico-kluser/jev-playground",
+  "html_url": "https://github.com/frederico-kluser/jev-playground",
+  "description": "Playground for the Jev (TypeSafe System One) decision model via OpenRouter: typed questions (noul/choice/score), calibrated probabilities, latency/tokens/cost metrics, and Postman/cURL export.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T00:11:14Z",
+  "size": 291,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://jev-playground.vercel.app",
+  "language": "TypeScript",
+  "commit": "4edca2814216a7558f600e5ebc731410fffa19e7"
+}

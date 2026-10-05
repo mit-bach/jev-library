@@ -1,0 +1,55 @@
+{
+  "uid": "jev-shadow-spike",
+  "title": "Jev Shadow Routing (experimental)",
+  "tags": ["jev", "shadow", "experimental"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": {"from": "now-24h", "to": "now"},
+  "templating": {"list": [{"name": "DS_PROMETHEUS", "type": "datasource", "query": "prometheus", "current": {"text": "Prometheus", "value": "Prometheus"}}]},
+  "panels": [
+    {
+      "id": 1, "title": "Jev suggestion vs baseline (decisions/min)", "type": "timeseries",
+      "gridPos": {"x": 0, "y": 0, "w": 16, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [{"refId": "A", "expr": "sum by (jev_tier, baseline_tier) (rate(jev_shadow_decisions_total{outcome=\"success\"}[5m])) * 60", "legendFormat": "Jev {{jev_tier}} / baseline {{baseline_tier}}"}],
+      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": []}, "options": {}
+    },
+    {
+      "id": 2, "title": "Agreement among successful comparable calls", "type": "stat",
+      "gridPos": {"x": 16, "y": 0, "w": 8, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [{"refId": "A", "expr": "sum(increase(jev_shadow_decisions_total{outcome=\"success\",comparison=\"match\"}[24h])) / clamp_min(sum(increase(jev_shadow_decisions_total{outcome=\"success\",comparison=~\"match|different\"}[24h])), 1)", "legendFormat": "agreement"}],
+      "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}, "overrides": []}, "options": {"reduceOptions": {"calcs": ["lastNotNull"], "fields": "", "values": false}}
+    },
+    {
+      "id": 3, "title": "Jev latency p95 (ms)", "type": "timeseries",
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [{"refId": "A", "expr": "histogram_quantile(0.95, sum by (le) (rate(jev_shadow_latency_ms_bucket[5m])))", "legendFormat": "p95 latency"}],
+      "fieldConfig": {"defaults": {"unit": "ms"}, "overrides": []}, "options": {}
+    },
+    {
+      "id": 4, "title": "Reported Jev cost (USD/hour)", "type": "timeseries",
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [{"refId": "A", "expr": "sum(rate(jev_shadow_cost_usd_total[1h])) * 3600", "legendFormat": "USD/hour"}],
+      "fieldConfig": {"defaults": {"unit": "currencyUSD"}, "overrides": []}, "options": {}
+    },
+    {
+      "id": 5, "title": "Confidence distribution", "type": "timeseries",
+      "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [{"refId": "A", "expr": "histogram_quantile(0.5, sum by (le) (rate(jev_shadow_confidence_bucket[5m])))", "legendFormat": "median confidence"}],
+      "fieldConfig": {"defaults": {"unit": "percentunit", "min": 0, "max": 1}, "overrides": []}, "options": {}
+    },
+    {
+      "id": 6, "title": "Shadow failures and skips (decisions/min)", "type": "timeseries",
+      "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8},
+      "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+      "targets": [{"refId": "A", "expr": "sum by (outcome) (rate(jev_shadow_decisions_total{outcome!=\"success\"}[5m])) * 60", "legendFormat": "{{outcome}}"}],
+      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": []}, "options": {}
+    }
+  ]
+}

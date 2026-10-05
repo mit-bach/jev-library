@@ -1,0 +1,298 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode: next-themes puts `.dark` on <html>, so the theme
+   switch works and `dark:` utilities follow it (DESIGN 13.1). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+	--font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+	--radius-sm: 6px;
+	--radius: 10px;
+	--radius-lg: 16px;
+
+	/* One step up from Tailwind's defaults (12 / 14 / 16 px), which read too
+	   small on the dense race and result screens. */
+	--text-xs: 0.8125rem;
+	--text-sm: 0.9375rem;
+	--text-base: 1.0625rem;
+
+	--animate-rise: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+	--animate-fade-in: fade-in 0.2s ease-out;
+	--animate-fade-out: fade-out 0.15s ease-in;
+	--animate-pop-in: pop-in 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+	--animate-pop-out: pop-out 0.12s ease-in;
+	--animate-slide-in-left: slide-in-left 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+	--animate-slide-out-left: slide-out-left 0.2s ease-in;
+	--animate-slide-in-right: slide-in-right 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+	--animate-slide-out-right: slide-out-right 0.2s ease-in;
+	--animate-grow-x: grow-x 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+	--animate-shimmer: shimmer 1.6s linear infinite;
+	/* The hues drift and, separately, pulse like a slow heartbeat: full size
+	   and strength at the peak, down to 30% size at the low. `translate` and
+	   `scale` are separate properties, so the two animations never clash. */
+	--animate-drift:
+		drift 14s ease-in-out infinite alternate, hue-pulse 7s ease-in-out infinite alternate;
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+	}
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+	}
+	@keyframes fade-out {
+		to {
+			opacity: 0;
+		}
+	}
+	@keyframes pop-in {
+		from {
+			opacity: 0;
+			transform: scale(0.95) translateY(-4px);
+		}
+	}
+	@keyframes pop-out {
+		to {
+			opacity: 0;
+			transform: scale(0.96);
+		}
+	}
+	@keyframes slide-in-left {
+		from {
+			transform: translateX(-100%);
+		}
+	}
+	@keyframes slide-out-left {
+		to {
+			transform: translateX(-100%);
+		}
+	}
+	@keyframes slide-in-right {
+		from {
+			transform: translateX(100%);
+		}
+	}
+	@keyframes slide-out-right {
+		to {
+			transform: translateX(100%);
+		}
+	}
+	@keyframes grow-x {
+		from {
+			transform: scaleX(0);
+		}
+	}
+	@keyframes drift {
+		to {
+			translate: 6% 8%;
+		}
+	}
+	@keyframes hue-pulse {
+		to {
+			scale: 0.3;
+			opacity: 0.35;
+		}
+	}
+	@keyframes shimmer {
+		from {
+			background-position: 200% 0;
+		}
+		to {
+			background-position: -200% 0;
+		}
+	}
+}
+
+/* Role-named tokens (DESIGN 13.1). Contrast is checked by
+   src/app/theme-tokens.test.ts; recheck when a value changes. */
+:root {
+	--bg: #f3e5c8;
+	--surface: #fffbf3;
+	--surface-hover: #f8eedb;
+	--border: #e3d1ad;
+	--border-strong: #857a66;
+	--text: #1f2328;
+	--text-muted: #56503f;
+	--text-faint: #655e4c;
+	--accent: #1b7240;
+	--accent-hover: #17633a;
+	--accent-ink: #ffffff;
+	--highlight: #f2a33a;
+	--highlight-ink: #1f2328;
+	--success: #1b7240;
+	--warning: #8a5200;
+	--danger: #b42318;
+	--jev: #0a706b;
+	--llm: #7a3fd1;
+	--code: #46566a;
+	/* Shadows are tinted with the cream's own brown so cards lift off the
+	   background instead of looking grey. */
+	--elev-1: 0 1px 2px rgb(110 80 30 / 0.1), 0 4px 14px -4px rgb(110 80 30 / 0.18);
+	--elev-2: 0 2px 4px rgb(110 80 30 / 0.1), 0 16px 32px -10px rgb(110 80 30 / 0.3);
+	/* The three decorative hues behind pages: the racer colors in light,
+	   with orange top-right and purple at the bottom. */
+	--hue-1: var(--jev);
+	--hue-2: var(--highlight);
+	--hue-3: var(--llm);
+	--glow-strength: 16%;
+	--brand-gradient: linear-gradient(100deg, var(--accent), var(--jev) 45%, var(--llm));
+}
+
+.dark {
+	--bg: #0f1216;
+	--surface: #181c22;
+	--surface-hover: #222830;
+	--border: #2c333c;
+	--border-strong: #68737f;
+	--text: #e1e8ef;
+	--text-muted: #a5b1bd;
+	--text-faint: #94a0ad;
+	--accent: #6bc46d;
+	--accent-hover: #85d187;
+	--accent-ink: #0f1216;
+	--highlight: #f0883e;
+	--highlight-ink: #0f1216;
+	--success: #6bc46d;
+	--warning: #daaa3f;
+	--danger: #f78a82;
+	--jev: #39c5bb;
+	--llm: #b69cff;
+	--code: #9fb0c3;
+	--elev-1:
+		inset 0 1px 0 rgb(255 255 255 / 0.04), 0 1px 2px rgb(0 0 0 / 0.5),
+		0 6px 18px -6px rgb(0 0 0 / 0.7);
+	--elev-2:
+		inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 4px rgb(0 0 0 / 0.5),
+		0 18px 36px -10px rgb(0 0 0 / 0.8);
+	/* Warm gold for the brand text and the bottom hue: it stands off the
+	   dark blue crisply where a cyan or green blurs into it. */
+	--gold: #ecc56a;
+	/* Dark uses calmer, cooler hues at lower strength: the bright racer
+	   colors (and orange) glow too loudly on near-black. */
+	--hue-1: #2a9d94;
+	--hue-2: #4a64b8;
+	--hue-3: var(--gold);
+	--glow-strength: 14%;
+	--brand-gradient: linear-gradient(100deg, #8ad98c, var(--gold));
+}
+
+@theme inline {
+	--color-hue-1: var(--hue-1);
+	--color-hue-2: var(--hue-2);
+	--color-hue-3: var(--hue-3);
+	--shadow-card: var(--elev-1);
+	--shadow-card-hover: var(--elev-2);
+	--color-bg: var(--bg);
+	--color-surface: var(--surface);
+	--color-surface-hover: var(--surface-hover);
+	--color-border: var(--border);
+	--color-border-strong: var(--border-strong);
+	--color-text: var(--text);
+	--color-text-muted: var(--text-muted);
+	--color-text-faint: var(--text-faint);
+	--color-accent: var(--accent);
+	--color-accent-hover: var(--accent-hover);
+	--color-accent-ink: var(--accent-ink);
+	--color-highlight: var(--highlight);
+	--color-highlight-ink: var(--highlight-ink);
+	--color-success: var(--success);
+	--color-warning: var(--warning);
+	--color-danger: var(--danger);
+	--color-jev: var(--jev);
+	--color-llm: var(--llm);
+	--color-code: var(--code);
+}
+
+/* Soft hues of the three racers behind every page, so the cream (or the
+   dark) has depth. They are decoration only: no text sits on a hue alone. */
+body {
+	background-color: var(--bg);
+	background-image:
+		radial-gradient(
+			60rem 36rem at -10% -10%,
+			color-mix(in oklab, var(--hue-1) var(--glow-strength), transparent),
+			transparent 70%
+		),
+		radial-gradient(
+			50rem 32rem at 110% 0%,
+			color-mix(in oklab, var(--hue-2) var(--glow-strength), transparent),
+			transparent 70%
+		),
+		radial-gradient(
+			60rem 40rem at 50% 120%,
+			color-mix(in oklab, var(--hue-3) var(--glow-strength), transparent),
+			transparent 70%
+		);
+	background-attachment: fixed;
+	color: var(--text);
+	font-family: var(--font-sans);
+}
+
+::selection {
+	background-color: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* Page enter: each top-level block of a page rises in turn. `backwards` fill
+   leaves no transform behind once it ends, so sticky and fixed children
+   still work. */
+.page-enter > * > * {
+	animation: var(--animate-rise);
+}
+.page-enter > * > :nth-child(2) {
+	animation-delay: 50ms;
+}
+.page-enter > * > :nth-child(3) {
+	animation-delay: 100ms;
+}
+.page-enter > * > :nth-child(4) {
+	animation-delay: 150ms;
+}
+.page-enter > * > :nth-child(5) {
+	animation-delay: 200ms;
+}
+.page-enter > * > :nth-child(n + 6) {
+	animation-delay: 250ms;
+}
+
+/* Gradient headline text in the racer colors. Each stop passes AA on its
+   own, so the text does too. */
+.text-brand {
+	background-image: var(--brand-gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+/* The drifting hues start at different points of the drift and pulse. */
+.hue-blobs > :nth-child(2) {
+	animation-delay: -5s;
+}
+.hue-blobs > :nth-child(3) {
+	animation-delay: -9s;
+}
+
+/* Loading skeletons shimmer instead of blinking. */
+.skeleton {
+	background-image: linear-gradient(
+		90deg,
+		var(--surface-hover) 0%,
+		color-mix(in oklab, var(--surface-hover), var(--surface) 70%) 50%,
+		var(--surface-hover) 100%
+	);
+	background-size: 200% 100%;
+	animation: var(--animate-shimmer);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

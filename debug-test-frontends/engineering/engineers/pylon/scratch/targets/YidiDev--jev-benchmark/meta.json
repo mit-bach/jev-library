@@ -1,0 +1,15 @@
+{
+  "full_name": "YidiDev/jev-benchmark",
+  "html_url": "https://github.com/YidiDev/jev-benchmark",
+  "description": "Rubric-Based Zero-Shot Classification Benchmark: Jev vs Claude Haiku 4.5 vs Claude Sonnet 5 vs OpenJev on rubric-conditioned classification, chained decision execution, and exam grading -- with full price tracking.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-28T20:07:21Z",
+  "size": 9250,
+  "stargazers_count": 3,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "9bbc7ab560db1a2acc24c7c42e06205032169ff3"
+}

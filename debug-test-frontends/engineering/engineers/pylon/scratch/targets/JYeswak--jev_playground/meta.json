@@ -1,0 +1,15 @@
+{
+  "full_name": "JYeswak/jev_playground",
+  "html_url": "https://github.com/JYeswak/jev_playground",
+  "description": "Measure what Jev can actually do before you build on it. Graded findings, ruled-out candidates, and recipes with stop-conditions. 0 promotions \u2014 on purpose.",
+  "default_branch": "main",
+  "pushed_at": "2026-10-02T20:24:58Z",
+  "size": 64084,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "57458dd93e3c35b38fd11778d3e39a040f9cd977"
+}

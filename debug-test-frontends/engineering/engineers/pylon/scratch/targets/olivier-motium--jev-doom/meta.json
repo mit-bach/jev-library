@@ -1,0 +1,15 @@
+{
+  "full_name": "olivier-motium/jev-doom",
+  "html_url": "https://github.com/olivier-motium/jev-doom",
+  "description": "Watch Jev play Freedoom in a local dashboard. TypeSafe direct and Vercel AI Gateway, inspectable decisions, and bounded spending.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-21T12:33:03Z",
+  "size": 70,
+  "stargazers_count": 2,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "13589d2b97d18940423933262834aa3e376ffcdc"
+}

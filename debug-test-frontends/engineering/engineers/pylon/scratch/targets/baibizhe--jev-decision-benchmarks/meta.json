@@ -1,0 +1,15 @@
+{
+  "full_name": "baibizhe/jev-decision-benchmarks",
+  "html_url": "https://github.com/baibizhe/jev-decision-benchmarks",
+  "description": "JEV decision benchmark results on MetaTool, When2Call, and BFCL V4, with bilingual tables and reproducible reports.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-19T16:15:09Z",
+  "size": 418,
+  "stargazers_count": 1,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "32705c33920b710c11593c8ef99e557d450f933b"
+}

@@ -1,0 +1,98 @@
+{
+  "name": "@tontoko/jev-browser",
+  "version": "0.14.2",
+  "description": "Grounded Jev browser automation: a shared Playwright SDK, persistent CLI, and MCP server",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.15.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp.d.ts",
+      "import": "./dist/mcp.js"
+    },
+    "./playwright": {
+      "types": "./dist/playwright.d.ts",
+      "import": "./dist/playwright.js"
+    }
+  },
+  "bin": {
+    "jev-browser": "dist/cli.js",
+    "jev-browser-mcp": "dist/mcp-stdio.js"
+  },
+  "files": [
+    "dist",
+    "!dist/dom.js",
+    "README.md",
+    "README.ja.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.txt",
+    "examples",
+    "docs",
+    "skills"
+  ],
+  "scripts": {
+    "build": "tsc && esbuild src/dom.ts --bundle --platform=browser --format=iife --global-name=JevDOM --outfile=dist/dom.bundle.cjs",
+    "test": "node scripts/test.mjs",
+    "check": "npm run build && npm test",
+    "test:live": "node --test --test-concurrency=1 --test-timeout=90000 test/live.mjs test/live-adapters.mjs test/live-extended.mjs test/live-release.mjs test/live-goal.mjs test/live-goal-adapters.mjs",
+    "prepack": "npm run build",
+    "check:examples": "tsc --ignoreConfig --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 --lib ES2022,DOM,ESNext.Disposable --types node --skipLibCheck --strict --noUncheckedIndexedAccess examples/playwright.spec.ts examples/playwright.config.ts examples/semantic.spec.ts",
+    "check:package": "node scripts/check-package.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome lint --error-on-warnings",
+    "test:live:matrix": "node --test --test-timeout=300000 test/live-goal-matrix.mjs",
+    "example:goal": "node examples/goal.mjs",
+    "test:live:semantic": "node --test --test-concurrency=1 --test-timeout=120000 test/live-semantic.mjs",
+    "test:live:resume": "node --test --test-concurrency=1 --test-timeout=90000 test/live-resume.mjs",
+    "test:live:refinement": "node --test --test-concurrency=1 --test-timeout=90000 test/live-refinement.mjs",
+    "test:live:observed": "node --test --test-concurrency=1 --test-timeout=90000 test/live-observed-selection.mjs",
+    "prebuild": "node --input-type=module -e \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "@typesafe-ai/sdk": "0.6.0"
+  },
+  "peerDependencies": {
+    "playwright-core": ">=1.62.0 <2",
+    "zod": "^4.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.14",
+    "@modelcontextprotocol/client": "2.1.0",
+    "@playwright/test": "1.63.0",
+    "@types/node": "22.20.4",
+    "dom-accessibility-api": "0.7.1",
+    "esbuild": "0.28.2",
+    "playwright-core": "1.63.0",
+    "typescript": "7.0.2",
+    "zod": "4.6.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tontoko/jev-browser.git"
+  },
+  "homepage": "https://github.com/tontoko/jev-browser#readme",
+  "bugs": {
+    "url": "https://github.com/tontoko/jev-browser/issues"
+  },
+  "keywords": [
+    "jev",
+    "playwright",
+    "mcp",
+    "browser-automation",
+    "stagehand",
+    "cli",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p2-voo-sp",
+  "title": "Voo pra São Paulo + agenda",
+  "tier": "basic",
+  "prompt": "Sexta-feira preciso estar em São Paulo pra uma reunião às 14h. Procura o voo mais barato saindo do Rio de manhã, reserva pra mim e coloca o voo na minha agenda.",
+  "sessionId": "wrun_01M2PPRRT78969J6TYD6VSKHFP",
+  "at": "2026-09-17T03:32:52.044Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "calendar": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 15135,
+  "usage": {
+    "inputTokens": 49296,
+    "outputTokens": 806,
+    "cacheReadTokens": 47232,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.015756
+  },
+  "reasoningChars": 1181,
+  "reply": "Pronto! Encontrei e reservei o voo mais barato da manhã:\n\n- **GOL G31410** — Rio (SDU) → São Paulo (CGH)\n- Sexta, 18/09/2026, das **11:30 às 12:35**\n- **R$ 298** — código de reserva **ABC123**\n\nTambém já adicionei o voo à sua agenda (11:30–12:35). Você chega ao centro de SP por volta das 13h, o que dá cerca de 1h de folga antes da reunião das 14h — se quiser mais margem, posso trocar por um voo mais cedo.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_book",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius",
+        "seat_preference": "any"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "calendar_create_event",
+      "detail": {
+        "title": "Voo GOL G31410 — Rio (SDU) → São Paulo (CGH)",
+        "date": "2026-09-18",
+        "start_time": "11:30",
+        "end_time": "12:35",
+        "location": "Aeroporto Santos Dumont (SDU) → Congonhas (CGH)"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Encontrei e reservei o voo mais barato da manhã:\n\n- **GOL G31410** — Rio (SDU) → São Paulo (CGH)\n- Sexta, 18/09/2026, das **11:30 às 12:35**\n- **R$ 298** — código de reserva **ABC123**\n\nTambém já adicionei o voo à sua agenda (11:30–12:35). Você chega ao centro de SP por volta das 13h, o que dá cerca de 1h de folga antes da reunião das 14h — se quiser mais margem, posso trocar por um voo ma"
+    }
+  ]
+}

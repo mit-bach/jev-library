@@ -1,0 +1,152 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "opus-5",
+  "modelLabel": "Claude Opus 5",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PV2M30H2810KJGRM1RH88S",
+  "at": "2026-09-17T04:48:12.722Z",
+  "modelId": "openrouter/anthropic/claude-opus-5",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "contacts": 2,
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 18671,
+  "usage": {
+    "inputTokens": 72201,
+    "outputTokens": 1166,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.390155
+  },
+  "reasoningChars": 89,
+  "reply": "Prontinho:\n\n- **Reunião** marcada para amanhã (17/09) das 15h às 15h45, num horário livre da sua agenda, com convites enviados para Pedro Alves e Ana Beatriz (link: https://meet.example.com/abc-defg-hij).\n- **Subtarefa \"Preparar pauta\"** criada dentro de \"Revisar proposta comercial\", com prazo amanhã e prioridade alta.\n- **Email com a pauta** agendado para a Ana amanhã às 08h.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Pedro Alves"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Ana Beatriz"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "12:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {},
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião Vinícius, Pedro e Ana",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@example.com",
+          "ana.souza@example.com"
+        ],
+        "agenda": "Alinhamento da proposta comercial"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17",
+        "priority": "high"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.souza@example.com"
+        ],
+        "subject": "Pauta da reunião de hoje às 15h",
+        "body": "Oi Ana, tudo bem?\n\nSeguem os pontos da nossa reunião de hoje, às 15h (45 min), com o Pedro também:\n\n1. Revisão da proposta comercial\n2. Pontos financeiros e ajustes de valores\n3. Prazos e próximos passos\n4. Definição de responsáveis\n\nLink da reunião: https://meet.example.com/abc-defg-hij\n\nQualquer ponto adicional, me avise antes do encontro.\n\nAbraço,\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/anthropic/claude-opus-5"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Prontinho:\n\n- **Reunião** marcada para amanhã (17/09) das 15h às 15h45, num horário livre da sua agenda, com convites enviados para Pedro Alves e Ana Beatriz (link: https://meet.example.com/abc-defg-hij).\n- **Subtarefa \"Preparar pauta\"** criada dentro de \"Revisar proposta comercial\", com prazo amanhã e prioridade alta.\n- **Email com a pauta** agendado para a Ana amanhã às 08h."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "poisson-labs/jev-replay",
+  "html_url": "https://github.com/poisson-labs/jev-replay",
+  "description": "Measures whether TypeSafe's Jev decision model flips actions on identical replays near shipped thresholds across 12,705 calls. Replication data, harness, and independent verification.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-23T16:49:06Z",
+  "size": 6884,
+  "stargazers_count": 0,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://poissonlabs.ai/research/jev-paired-replay",
+  "language": "Python",
+  "commit": "ecc958fb627250538d7c71e62566feab1cff8166"
+}

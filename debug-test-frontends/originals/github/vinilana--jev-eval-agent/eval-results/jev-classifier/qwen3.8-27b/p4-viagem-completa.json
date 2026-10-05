@@ -1,0 +1,371 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PS4484H3X5HP35WWY48JFS",
+  "at": "2026-09-17T04:14:08.816Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 7,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 7,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 22588,
+  "usage": {
+    "inputTokens": 10879,
+    "outputTokens": 578,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0038020059999999993
+  },
+  "reasoningChars": 0,
+  "reply": "Tudo pronto para sexta (18/09): segurei o voo mais barato (GOL G31410, R$298, saindo de SDU 11h30 → CGH 12h35, código HLD-4471, sem pagamento), reservei o Ibis Paulista (R$260/noite, 1,1 km da reunião, confirmação HTL-7781), bloqueei sua agenda das 8h às 18h como \"Viagem SP\" e avisei a Marina por WhatsApp que a viagem está confirmada.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.01,
+      "gated": false,
+      "latencyMs": 341,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "transfer_money_scheduled",
+          "p": 0
+        },
+        {
+          "name": "hotels_book",
+          "p": 0
+        },
+        {
+          "name": "task_list",
+          "p": 0
+        },
+        {
+          "name": "reminder_list",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_hold",
+      "confidence": 0.98,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 287,
+      "top": [
+        {
+          "name": "flights_hold",
+          "p": 0.98
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.01
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.01
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "food_order",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "hotels_search_nearby",
+      "confidence": 0.54,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 354,
+      "top": [
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.55
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.43
+        },
+        {
+          "name": "flights_book",
+          "p": 0.02
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "directions_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "hotels_book",
+      "confidence": 0.93,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 480,
+      "top": [
+        {
+          "name": "hotels_book",
+          "p": 0.94
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.04
+        },
+        {
+          "name": "flights_book",
+          "p": 0.01
+        },
+        {
+          "name": "contacts_search",
+          "p": 0
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_2",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "calendar_block_time",
+      "confidence": 0.98,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 601,
+      "top": [
+        {
+          "name": "calendar_block_time",
+          "p": 0.98
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.01
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "directions_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.86,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 948,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.87
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.12
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0
+        },
+        {
+          "name": "calendar_set_out_of_office",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 5,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "A viagem está confirmada!"
+      },
+      "ok": true
+    },
+    {
+      "step": 6,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.93,
+      "done": 0.58,
+      "gated": false,
+      "latencyMs": 520,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.94
+        },
+        {
+          "name": "flights_hold",
+          "p": 0.02
+        },
+        {
+          "name": "flights_book",
+          "p": 0.02
+        },
+        {
+          "name": "web_search",
+          "p": 0.01
+        },
+        {
+          "name": "transfer_money_scheduled",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 6,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo pronto para sexta (18/09): segurei o voo mais barato (GOL G31410, R$298, saindo de SDU 11h30 → CGH 12h35, código HLD-4471, sem pagamento), reservei o Ibis Paulista (R$260/noite, 1,1 km da reunião, confirmação HTL-7781), bloqueei sua agenda das 8h às 18h como \"Viagem SP\" e avisei a Marina por WhatsApp que a viagem está confirmada."
+    }
+  ]
+}

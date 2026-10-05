@@ -1,0 +1,71 @@
+site_name: jev-shadow
+site_description: >-
+  Shadow-mode observational adapter for TypeSafe Jev routing decisions -- a
+  privacy-bounded spike that never influences a production decision.
+site_url: https://ianlintner.github.io/jev-shadow-adapter/
+repo_url: https://github.com/ianlintner/jev-shadow-adapter
+repo_name: ianlintner/jev-shadow-adapter
+edit_uri: edit/main/docs/
+copyright: MIT licensed. Independent spike, not affiliated with any vendor.
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+# md_in_html is required for the custom HTML summary cards on the home page to
+# render their Markdown headings and lists. Without it the cards show literal
+# "## Heading" text, which a strict MkDocs build does not flag as an error.
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  # Required for the :material-...: / :octicons-...: icon shortcodes used in
+  # the home page cards. Without it the icon names render as literal text.
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Overview: index.md
+  - Threat model: threat-model.md
+  - Privacy boundary: privacy-boundary.md
+  - Integration: integration.md
+  - Rollback: rollback.md
+  - Measurement limits: measurement-limits.md
+  - Future enforcement: future-enforcement.md
+  - Run the example locally: example-service.md
+
+strict: true

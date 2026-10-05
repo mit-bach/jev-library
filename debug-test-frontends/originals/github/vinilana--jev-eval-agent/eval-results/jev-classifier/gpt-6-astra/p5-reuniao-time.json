@@ -1,0 +1,333 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p5-reuniao-time",
+  "title": "Reunião com convites, subtarefa e email agendado",
+  "tier": "complex",
+  "prompt": "Marca uma reunião de 45 minutos com o Pedro Alves e a Ana Beatriz amanhã à tarde, num horário em que eu esteja livre, mandando convite pros dois. Depois cria uma subtarefa 'Preparar pauta' dentro da minha tarefa 'Revisar proposta comercial' e agenda um email pra Ana com a pauta da reunião pra ser enviado amanhã às 8h.",
+  "sessionId": "wrun_01M2PW0BMEV9HXRMVY9VTTM18G",
+  "at": "2026-09-17T05:04:27.477Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 6,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 6,
+  "idealToolCalls": 7,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 2,
+    "task": 2,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8333333333333334,
+  "requiredCovered": 5,
+  "requiredTotal": 6,
+  "completion": 0.8333333333333334,
+  "durationMs": 19044,
+  "usage": {
+    "inputTokens": 5048,
+    "outputTokens": 458,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.07338
+  },
+  "reasoningChars": 0,
+  "reply": "Reunião marcada para amanhã, **17/09, das 15h às 15h45**, em um horário livre na sua agenda, com convites enviados a Pedro Alves e Ana Beatriz.\n\nCriei a subtarefa **“Preparar pauta”** dentro de **“Revisar proposta comercial”**. Também agendei o email para Ana amanhã às **8h**, com a pauta: revisão da proposta comercial, próximos passos e definição de responsáveis.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_find_free_slot",
+      "confidence": 0.41,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 284,
+      "top": [
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0.43
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.4
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.1
+        },
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.06
+        },
+        {
+          "name": "calendar_list_calendars",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_find_free_slot",
+      "detail": {
+        "date": "2026-09-17",
+        "duration_minutes": 45,
+        "earliest": "12:00",
+        "latest": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "calendar_create_meeting",
+      "confidence": 0.71,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 302,
+      "top": [
+        {
+          "name": "calendar_create_meeting",
+          "p": 0.72
+        },
+        {
+          "name": "calendar_create_event",
+          "p": 0.15
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.08
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0.04
+        },
+        {
+          "name": "task_list",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "calendar_create_meeting",
+      "detail": {
+        "title": "Reunião sobre proposta comercial com Pedro Alves e Ana Beatriz",
+        "date": "2026-09-17",
+        "start_time": "15:00",
+        "duration_minutes": 45,
+        "attendee_emails": [
+          "pedro.alves@empresa.com",
+          "ana.beatriz@empresa.com"
+        ],
+        "agenda": "Revisar proposta comercial, alinhar próximos passos e definir responsáveis."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "task_list",
+      "confidence": 0.8,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 310,
+      "top": [
+        {
+          "name": "task_list",
+          "p": 0.81
+        },
+        {
+          "name": "task_create_subtask",
+          "p": 0.16
+        },
+        {
+          "name": "task_create",
+          "p": 0.02
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0
+        },
+        {
+          "name": "ride_estimate",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "task_list",
+      "detail": {
+        "list": "",
+        "include_done": false,
+        "due_before": ""
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "task_create_subtask",
+      "confidence": 1,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 301,
+      "top": [
+        {
+          "name": "task_create_subtask",
+          "p": 1
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0
+        },
+        {
+          "name": "reminder_delete",
+          "p": 0
+        },
+        {
+          "name": "contacts_list_birthdays",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "task_create_subtask",
+      "detail": {
+        "parent_task_id": "t_1",
+        "title": "Preparar pauta",
+        "due_date": "2026-09-17",
+        "priority": "high"
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "email_send_later",
+      "confidence": 0.87,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 509,
+      "top": [
+        {
+          "name": "email_send_later",
+          "p": 0.89
+        },
+        {
+          "name": "notes_create",
+          "p": 0.05
+        },
+        {
+          "name": "email_draft",
+          "p": 0.03
+        },
+        {
+          "name": "email_send",
+          "p": 0.02
+        },
+        {
+          "name": "task_update",
+          "p": 0.01
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "email_send_later",
+      "detail": {
+        "to": [
+          "ana.beatriz@empresa.com"
+        ],
+        "subject": "Pauta da reunião sobre proposta comercial — 17/09 às 15h",
+        "body": "Olá, Ana!\n\nNossa reunião com Pedro Alves está marcada para 17/09, das 15h às 15h45 (horário de Brasília).\n\nPauta:\n- Revisar a proposta comercial;\n- Alinhar os próximos passos;\n- Definir os responsáveis.\n\nLink da reunião: https://meet.example.com/abc-defg-hij\n\nAté lá!\nVinícius",
+        "send_date": "2026-09-17",
+        "send_time": "08:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.92,
+      "gated": false,
+      "latencyMs": 531,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0
+        },
+        {
+          "name": "email_list_unread",
+          "p": 0
+        },
+        {
+          "name": "reminder_update",
+          "p": 0
+        },
+        {
+          "name": "budget_get",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 5,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Reunião marcada para amanhã, **17/09, das 15h às 15h45**, em um horário livre na sua agenda, com convites enviados a Pedro Alves e Ana Beatriz.\n\nCriei a subtarefa **“Preparar pauta”** dentro de **“Revisar proposta comercial”**. Também agendei o email para Ana amanhã às **8h**, com a pauta: revisão da proposta comercial, próximos passos e definição de responsáveis."
+    }
+  ]
+}

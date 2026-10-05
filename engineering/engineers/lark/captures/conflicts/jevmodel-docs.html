@@ -1,0 +1,499 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="Astro v6.3.8"><meta name="theme-color" content="#08090d"><meta name="robots" content="index, follow, max-image-preview:large"><title>Jev API Documentation: Endpoint, Request Body, and Response Fields</title><meta name="description" content="Developer reference for the jevmodel.org Jev API. POST /v1/systemone with a Bearer key — state plus typed choice, score, and noul questions, structured answers, input-token billing, limits, errors, and the remote MCP server."><meta name="author" content="Jev Model Guide"><link rel="canonical" href="https://jevmodel.org/docs/"><link rel="alternate" hreflang="en" href="https://jevmodel.org/docs/"><link rel="alternate" hreflang="zh-Hans" href="https://jevmodel.org/zh/docs/"><link rel="alternate" hreflang="zh-Hant" href="https://jevmodel.org/zh-tw/docs/"><link rel="alternate" hreflang="ja" href="https://jevmodel.org/ja/docs/"><link rel="alternate" hreflang="ko" href="https://jevmodel.org/ko/docs/"><link rel="alternate" hreflang="de" href="https://jevmodel.org/de/docs/"><link rel="alternate" hreflang="es" href="https://jevmodel.org/es/docs/"><link rel="alternate" hreflang="fr" href="https://jevmodel.org/fr/docs/"><link rel="alternate" hreflang="pt" href="https://jevmodel.org/pt/docs/"><link rel="alternate" hreflang="it" href="https://jevmodel.org/it/docs/"><link rel="alternate" hreflang="pl" href="https://jevmodel.org/pl/docs/"><link rel="alternate" hreflang="x-default" href="https://jevmodel.org/docs/"><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/logo.png"><link rel="alternate" type="text/plain" href="/llms.txt" title="LLM index"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:locale:alternate" content="zh_CN"><meta property="og:locale:alternate" content="zh_TW"><meta property="og:locale:alternate" content="ja_JP"><meta property="og:locale:alternate" content="ko_KR"><meta property="og:locale:alternate" content="de_DE"><meta property="og:locale:alternate" content="es_ES"><meta property="og:locale:alternate" content="fr_FR"><meta property="og:locale:alternate" content="pt_BR"><meta property="og:locale:alternate" content="it_IT"><meta property="og:locale:alternate" content="pl_PL"><meta property="og:title" content="Jev API Documentation: Endpoint, Request Body, and Response Fields"><meta property="og:description" content="Developer reference for the jevmodel.org Jev API. POST /v1/systemone with a Bearer key — state plus typed choice, score, and noul questions, structured answers, input-token billing, limits, errors, and the remote MCP server."><meta property="og:url" content="https://jevmodel.org/docs/"><meta property="og:site_name" content="Jev Model Guide"><meta property="og:image" content="https://jevmodel.org/og.png"><meta property="og:image:alt" content="Jev API Documentation: Endpoint, Request Body, and Response Fields"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Jev API Documentation: Endpoint, Request Body, and Response Fields"><meta name="twitter:description" content="Developer reference for the jevmodel.org Jev API. POST /v1/systemone with a Bearer key — state plus typed choice, score, and noul questions, structured answers, input-token billing, limits, errors, and the remote MCP server."><meta name="twitter:image" content="https://jevmodel.org/og.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Jev API Documentation: Endpoint, Request Body, and Response Fields","description":"Developer reference for the jevmodel.org Jev API. POST /v1/systemone with a Bearer key — state plus typed choice, score, and noul questions, structured answers, input-token billing, limits, errors, and the remote MCP server.","url":"https://jevmodel.org/docs/","datePublished":"2026-09-20","dateModified":"2026-09-24","inLanguage":"en","author":{"@type":"Organization","name":"Jev Model Guide","url":"https://jevmodel.org"},"publisher":{"@type":"Organization","name":"Jev Model Guide","url":"https://jevmodel.org"},"image":"https://jevmodel.org/og.png","about":["Jev","TypeSafe AI","System One models"]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"jevmodel.org","item":"https://jevmodel.org/"},{"@type":"ListItem","position":2,"name":"API documentation","item":"https://jevmodel.org/docs/"}]}</script><script>(function(){const openPanelApiUrl = "https://openpanel.charliecs.cloud/api";
+const openPanelClientId = "7b52505b-fe1a-407e-b125-49e97c01260f";
+
+      window.op = window.op || function () {
+        var queue = [];
+        return new Proxy(function () {
+          arguments.length && queue.push([].slice.call(arguments));
+        }, {
+          get: function (_target, key) {
+            return key === 'q' ? queue : function () {
+              queue.push([key].concat([].slice.call(arguments)));
+            };
+          },
+          has: function (_target, key) {
+            return key === 'q';
+          },
+        });
+      }();
+
+      window.op('init', {
+        apiUrl: openPanelApiUrl,
+        clientId: openPanelClientId,
+        trackScreenViews: true,
+        trackOutgoingLinks: true,
+        trackAttributes: true,
+        disabled: ['localhost', '127.0.0.1'].includes(location.hostname),
+      });
+      window.op('setGlobalProperties', {
+        app: 'jevmodel',
+        locale: document.documentElement.lang,
+      });
+    })();</script><script src="https://openpanel.dev/op1.js" defer async></script><link rel="stylesheet" href="/_astro/BaseLayout.Cf2TvAdq.css"></head> <body> <dialog class="signin-dialog" id="signin-dialog" aria-labelledby="signin-title" data-stage="login"> <form method="dialog" class="signin-close-row"><button class="signin-close" aria-label="Close">×</button></form> <span class="kicker">jevmodel.org account</span> <h2 id="signin-title">Sign in for 100,000 free input tokens</h2> <p id="signin-body">About 500 Jev requests in the playground or from your own code with an API key. Packs start at $9.90 when you need more. No card required.</p> <div id="signin-email" hidden> <form id="signin-email-form" class="signin-form"> <label class="signin-label" for="signin-email-input">Email</label> <input class="signin-input" id="signin-email-input" name="email" type="email" autocomplete="email" required placeholder="name@example.com"> <div id="signin-password-field"> <label class="signin-label" for="signin-password-input">Password</label> <input class="signin-input" id="signin-password-input" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters"> </div> <button class="button button-primary signin-submit" id="signin-email-submit" type="submit">Sign in with email</button> </form> <form id="signin-verify-form" class="signin-form" hidden> <label class="signin-label" for="signin-code-input">Verify email</label> <input class="signin-input signin-code" id="signin-code-input" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required placeholder="000000"> <button class="button button-primary signin-submit" type="submit">Verify email</button> <button class="signin-text-btn" id="signin-resend" type="button">Resend code</button> </form> <form id="signin-password-form" class="signin-form" hidden> <label class="signin-label" for="signin-new-password">Password</label> <input class="signin-input" id="signin-new-password" name="password" type="password" autocomplete="new-password" minlength="8" required placeholder="At least 8 characters"> <label class="signin-label" for="signin-confirm-password">Confirm password</label> <input class="signin-input" id="signin-confirm-password" name="confirm" type="password" autocomplete="new-password" minlength="8" required> <button class="button button-primary signin-submit" type="submit">Create account</button> </form> <p class="signin-switch" id="signin-switch"> <button class="signin-text-btn" id="signin-toggle" type="button">Create an account</button> </p> <p class="signin-switch" id="signin-forgot-row"> <button class="signin-text-btn" id="signin-forgot" type="button">Forgot password?</button> </p> </div> <p class="signin-or" id="signin-or" hidden>or</p> <div id="google-signin-button" class="google-slot"></div> <p class="signin-error" id="signin-error" hidden></p> <small class="signin-fine">By signing in you agree to our <a href="/terms/">terms</a>. We only use your email for your account.</small> </dialog> <script>(function(){const fallbackGoogleClientId = "";
+const signinText = {"title":"Sign in for 100,000 free input tokens","body":"About 500 Jev requests in the playground or from your own code with an API key. Packs start at $9.90 when you need more. No card required.","configuring":"Sign-in is being configured. Please check back soon.","failed":"Sign-in failed. Please try again.","loading":"Loading Google sign-in…","loadFailed":"Could not load Google sign-in. Check your connection and try again.","loginSubmit":"Sign in with email","registerSubmit":"Send verification code","createAccount":"Create an account","haveAccount":"Already have an account?","verifyTitle":"Check your email","verifyBody":"Enter the 6-digit code we sent to {email}.","verifySubmit":"Verify email","passwordTitle":"Set your password","passwordBody":"Use at least 8 characters. This password is what you will use to sign in.","passwordSubmit":"Create account","passwordsMismatch":"Passwords do not match","sending":"Sending…","verifying":"Verifying…","forgotTitle":"Reset your password","forgotBody":"Enter your email and we will send a reset link.","forgotSubmit":"Send reset link","forgotSent":"If this email is registered, a reset link is on its way."};
+const googleLocale = "en";
+
+  (function () {
+    if (window.jevSession) return;
+    var state = { me: null, providersLoaded: false, googleClientId: '', emailEnabled: true, stage: 'login', pendingEmail: '' };
+
+    function track(name, props) { try { window.op && window.op('track', name, props || {}); } catch (e) {} }
+
+    function fingerprint() {
+      var id = '';
+      try { id = localStorage.getItem('jev_fp') || ''; } catch (e) {}
+      if (!id) {
+        id = (crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now()).replace(/-/g, '');
+        try { localStorage.setItem('jev_fp', id); } catch (e) {}
+      }
+      var traits = [navigator.language, screen.width + 'x' + screen.height, Intl.DateTimeFormat().resolvedOptions().timeZone, navigator.hardwareConcurrency].join('|');
+      return (id + '.' + btoa(unescape(encodeURIComponent(traits))).replace(/[^a-zA-Z0-9]/g, '')).slice(0, 120);
+    }
+
+    async function api(path, init) {
+      var res = await fetch(path, Object.assign({ credentials: 'include', headers: { 'content-type': 'application/json' } }, init || {}));
+      var body = await res.json().catch(function () { return {}; });
+      return { ok: res.ok, status: res.status, body: body };
+    }
+
+    var pendingMe = null;
+    function me(force) {
+      if (state.me && !force) return Promise.resolve(state.me);
+      if (pendingMe && !force) return pendingMe;
+      var p = api('/api/auth/me').then(function (r) {
+        state.me = (r.body && r.body.data) || { status: 'anonymous', credits: 0 };
+        document.dispatchEvent(new CustomEvent('jev:session', { detail: state.me }));
+        return state.me;
+      }).finally(function () { if (pendingMe === p) pendingMe = null; });
+      pendingMe = p;
+      return p;
+    }
+
+    async function ensureSession() {
+      var current = await me();
+      if (current.status !== 'anonymous') return current;
+      var r = await api('/api/auth/guest-login', { method: 'POST', body: JSON.stringify({ fingerprint: fingerprint() }) });
+      if (r.ok) track('guest_started', {});
+      return me(true);
+    }
+
+    function $(id) { return document.getElementById(id); }
+    function setError(text) {
+      var err = $('signin-error');
+      if (!err) return;
+      err.hidden = !text;
+      err.textContent = text || '';
+    }
+    function fill(id, text) { var el = $(id); if (el) el.textContent = text; }
+
+    function setStage(stage) {
+      state.stage = stage;
+      var dialog = $('signin-dialog');
+      if (dialog) dialog.dataset.stage = stage;
+      var titles = { login: signinText.title, register: signinText.title, verify: signinText.verifyTitle, password: signinText.passwordTitle, forgot: signinText.forgotTitle };
+      var bodies = {
+        login: signinText.body,
+        register: signinText.body,
+        verify: signinText.verifyBody.replace('{email}', state.pendingEmail || ''),
+        password: signinText.passwordBody,
+        forgot: signinText.forgotBody,
+      };
+      fill('signin-title', titles[stage] || signinText.title);
+      fill('signin-body', bodies[stage] || signinText.body);
+      $('signin-email-form').hidden = stage !== 'login' && stage !== 'register' && stage !== 'forgot';
+      $('signin-password-field').hidden = stage !== 'login';
+      $('signin-password-input').required = stage === 'login';
+      $('signin-verify-form').hidden = stage !== 'verify';
+      $('signin-password-form').hidden = stage !== 'password';
+      $('signin-switch').hidden = stage !== 'login' && stage !== 'register' && stage !== 'forgot';
+      $('signin-forgot-row').hidden = stage !== 'login';
+      $('signin-or').hidden = !state.emailEnabled || (stage !== 'login' && stage !== 'register') || !state.googleClientId;
+      $('google-signin-button').hidden = stage !== 'login' && stage !== 'register';
+      fill('signin-email-submit', stage === 'register' ? signinText.registerSubmit : stage === 'forgot' ? signinText.forgotSubmit : signinText.loginSubmit);
+      fill('signin-toggle', stage === 'login' ? signinText.createAccount : signinText.haveAccount || signinText.loginSubmit);
+      setError('');
+    }
+
+    function loadGoogleScript() {
+      var src = 'https://accounts.google.com/gsi/client';
+      return new Promise(function (resolve, reject) {
+        if (window.google && window.google.accounts) { resolve(); return; }
+        var existing = document.querySelector('script[src="' + src + '"]');
+        if (existing) {
+          existing.addEventListener('load', function () { resolve(); });
+          existing.addEventListener('error', reject);
+          return;
+        }
+        var s = document.createElement('script');
+        s.src = src; s.async = true; s.onload = resolve; s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    async function loadProviders() {
+      if (state.providersLoaded) return;
+      state.providersLoaded = true;
+      try {
+        var r = await api('/api/auth/providers');
+        var list = (r.body && r.body.data && (r.body.data.providers || r.body.data)) || [];
+        var google = Array.isArray(list) ? list.find(function (p) { return p.provider === 'google' || p.name === 'google'; }) : list.google;
+        var email = Array.isArray(list) ? list.find(function (p) { return p.provider === 'email'; }) : null;
+        state.googleClientId = (google && (google.client_id || google.clientId)) || fallbackGoogleClientId || '';
+        state.emailEnabled = email ? Number(email.is_enabled) === 1 : true;
+      } catch (e) {
+        state.googleClientId = state.googleClientId || fallbackGoogleClientId || '';
+      }
+      $('signin-email').hidden = !state.emailEnabled;
+    }
+
+    async function renderGoogle() {
+      var slot = $('google-signin-button');
+      if (!state.googleClientId) {
+        slot.textContent = state.emailEnabled ? '' : signinText.configuring;
+        slot.hidden = !state.googleClientId && state.emailEnabled;
+        return;
+      }
+      slot.hidden = state.stage !== 'login' && state.stage !== 'register';
+      slot.textContent = signinText.loading;
+      try { await loadGoogleScript(); } catch (e) {}
+      if (!window.google || !window.google.accounts) {
+        slot.textContent = signinText.loadFailed;
+        return;
+      }
+      window.google.accounts.id.initialize({ client_id: state.googleClientId, callback: onCredential, ux_mode: 'popup' });
+      slot.innerHTML = '';
+      window.google.accounts.id.renderButton(slot, { theme: 'filled_black', size: 'large', text: 'continue_with', width: 280, locale: googleLocale });
+    }
+
+    async function finishSignedIn(source) {
+      track('auth_success', { source: source || 'email' });
+      $('signin-dialog').close();
+      await me(true);
+    }
+
+    async function onCredential(response) {
+      var r = await api('/api/auth/google-login', { method: 'POST', body: JSON.stringify({ credential: response.credential }) });
+      if (r.ok && r.body.code === 200) {
+        await finishSignedIn('google');
+        return;
+      }
+      track('auth_failed', { source: 'google' });
+      setError((r.body && r.body.message) || signinText.failed);
+    }
+
+    async function openSignIn(source) {
+      var dialog = $('signin-dialog');
+      if (!dialog.open) dialog.showModal();
+      track('signin_opened', { source: source || 'unknown' });
+      setStage('login');
+      await loadProviders();
+      setStage(state.stage);
+      await renderGoogle();
+    }
+
+    async function logout() {
+      await api('/api/auth/logout', { method: 'POST' });
+      state.me = null;
+      try { location.reload(); } catch (e) { await me(true); }
+    }
+
+    async function submitEmail(event) {
+      event.preventDefault();
+      var email = $('signin-email-input').value.trim();
+      var password = $('signin-password-input').value;
+      if (!email) return;
+      setError('');
+      fill('signin-email-submit', signinText.sending);
+      if (state.stage === 'forgot') {
+        var reset = await api('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email: email }) });
+        fill('signin-email-submit', signinText.forgotSubmit);
+        if (reset.ok && reset.body.code === 200) {
+          $('signin-email-form').hidden = true;
+          fill('signin-body', signinText.forgotSent);
+          return;
+        }
+        setError((reset.body && reset.body.message) || signinText.failed);
+        return;
+      }
+      if (state.stage === 'login') {
+        var login = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email: email, password: password }) });
+        fill('signin-email-submit', signinText.loginSubmit);
+        if (login.ok && login.body.code === 200) {
+          await finishSignedIn('email');
+          return;
+        }
+        if (login.body && login.body.data && login.body.data.requires_verification) {
+          state.pendingEmail = email;
+          setStage('verify');
+          setError(login.body.message || '');
+          return;
+        }
+        track('auth_failed', { source: 'email' });
+        setError((login.body && login.body.message) || signinText.failed);
+        return;
+      }
+      var register = await api('/api/auth/register', { method: 'POST', body: JSON.stringify({ email: email }) });
+      fill('signin-email-submit', signinText.registerSubmit);
+      if (register.ok && register.body.code === 200) {
+        state.pendingEmail = email;
+        track('register_code_sent', {});
+        setStage('verify');
+        return;
+      }
+      track('auth_failed', { source: 'register' });
+      setError((register.body && register.body.message) || signinText.failed);
+    }
+
+    async function submitVerify(event) {
+      event.preventDefault();
+      var code = $('signin-code-input').value.trim();
+      if (!state.pendingEmail || code.length !== 6) return;
+      setError('');
+      var r = await api('/api/auth/verify-email', { method: 'POST', body: JSON.stringify({ email: state.pendingEmail, code: code }) });
+      if (r.ok && r.body.code === 200) {
+        setStage('password');
+        return;
+      }
+      setError((r.body && r.body.message) || signinText.failed);
+    }
+
+    async function submitPassword(event) {
+      event.preventDefault();
+      var password = $('signin-new-password').value;
+      var confirm = $('signin-confirm-password').value;
+      if (password !== confirm) { setError(signinText.passwordsMismatch); return; }
+      setError('');
+      var r = await api('/api/auth/set-registration-password', { method: 'POST', body: JSON.stringify({ password: password }) });
+      if (r.ok && r.body.code === 200) {
+        await finishSignedIn('email_register');
+        return;
+      }
+      setError((r.body && r.body.message) || signinText.failed);
+    }
+
+    async function resendCode() {
+      if (!state.pendingEmail) return;
+      var r = await api('/api/auth/resend-code', { method: 'POST', body: JSON.stringify({ email: state.pendingEmail }) });
+      if (!(r.ok && r.body.code === 200)) setError((r.body && r.body.message) || signinText.failed);
+    }
+
+    $('signin-email-form').addEventListener('submit', submitEmail);
+    $('signin-verify-form').addEventListener('submit', submitVerify);
+    $('signin-password-form').addEventListener('submit', submitPassword);
+    $('signin-resend').addEventListener('click', resendCode);
+    $('signin-toggle').addEventListener('click', function () {
+      setStage(state.stage === 'login' ? 'register' : 'login');
+      if (state.googleClientId) renderGoogle();
+    });
+    $('signin-forgot').addEventListener('click', function () {
+      setStage('forgot');
+    });
+
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-signin]');
+      if (t) { e.preventDefault(); openSignIn(t.getAttribute('data-signin')); }
+      var l = e.target.closest && e.target.closest('[data-logout]');
+      if (l) { e.preventDefault(); logout(); }
+    });
+
+    window.jevSession = { me: me, ensureSession: ensureSession, openSignIn: openSignIn, logout: logout, api: api, track: track };
+  })();
+})();</script> <div class="ambient-grid" aria-hidden="true"></div> <header class="site-header" id="site-header"> <div class="header-pill"> <div class="shell header-inner"> <a class="brand" href="/" aria-label="Jev Model Guide home"> <img class="brand-mark" src="/logo.png" width="28" height="28" alt=""> <span>jev<span class="muted">/model</span></span> </a> <nav class="desktop-nav" aria-label="Primary navigation"> <a class="nav-cta-live" href="/playground/" data-track="cta_clicked" data-source="header" data-destination="playground">Playground</a> <a href="/batch/" data-track="cta_clicked" data-source="header" data-destination="batch">Batch</a> <a class="nav-new" href="/agent-tools/" data-track="cta_clicked" data-source="header" data-destination="agent_tools">Agents<em class="nav-new-badge">new</em></a> <details class="nav-drop nav-mega"> <summary aria-haspopup="true">Use cases <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"></path></svg></summary> <nav aria-label="Use cases"> <div class="nav-mega-grid"> <div class="nav-mega-col"> <a class="nav-mega-label" href="/use-cases/evaluation/"><span class="nav-mega-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></span>Evaluation &amp; quality</a> <a class="nav-mega-item" href="/use-cases/llm-as-a-judge/">LLM as a Judge</a><a class="nav-mega-item" href="/use-cases/ai-agent-evaluation/">AI Agent Evaluation</a> </div><div class="nav-mega-col"> <a class="nav-mega-label" href="/use-cases/data-matching/"><span class="nav-mega-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></span>Data matching</a> <a class="nav-mega-item" href="/use-cases/entity-matching/">Entity Matching</a> </div><div class="nav-mega-col"> <a class="nav-mega-label" href="/use-cases/retrieval/"><span class="nav-mega-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>Retrieval &amp; knowledge</a> <a class="nav-mega-item" href="/use-cases/rag-evaluation/">RAG Evaluation</a><a class="nav-mega-item" href="/use-cases/web-context/">Live Web Context</a><a class="nav-mega-item" href="/use-cases/context-compaction/">Context Compaction</a> </div><div class="nav-mega-col"> <a class="nav-mega-label" href="/use-cases/routing/"><span class="nav-mega-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="19" r="3"/><circle cx="18" cy="19" r="3"/><path d="M15.5 6.5 8.5 17.5"/><path d="m8 19 7.5-1"/></svg></span>Routing &amp; decisions</a> <a class="nav-mega-item" href="/use-cases/ai-routing/">LLM Router</a><a class="nav-mega-item" href="/use-cases/support-triage/">Support Triage</a><a class="nav-mega-item" href="/use-cases/tool-call-guardrails/">Tool-Call Guardrails</a> </div> </div> <a class="nav-drop-all" href="/use-cases/">All use cases <span aria-hidden="true">→</span></a> </nav> </details> <details class="nav-drop"> <summary aria-haspopup="true">Models <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"></path></svg></summary> <nav aria-label="Models"> <a class="nav-drop-item" href="/what-is-jev/"> <span class="nav-drop-ico nav-drop-tile ">J</span> <span class="nav-drop-text"><b>Jev</b><small>System One decisions for text and JSON</small></span> </a><a class="nav-drop-item" href="/what-is-laya/"> <span class="nav-drop-ico nav-drop-tile nav-drop-tile-laya">L</span> <span class="nav-drop-text"><b>Laya<em class="nav-drop-badge ">Beta</em></b><small>Short-text models, coming soon</small></span> </a><a class="nav-drop-item" href="/openai-decisions-api/"> <span class="nav-drop-ico nav-drop-tile nav-drop-tile-openai">O</span> <span class="nav-drop-text"><b>OpenAI Decisions<em class="nav-drop-badge nav-drop-badge-preview">Preview</em></b><small>OpenAI’s new decision API, compared with Jev</small></span> </a><a class="nav-drop-item" href="/how-to-use-jev/"> <span class="nav-drop-ico nav-drop-tile ">?</span> <span class="nav-drop-text"><b>How to use Jev</b><small>Setup, request shape, and examples</small></span> </a> </nav> </details> <a href="/docs/" aria-current="page" data-track="cta_clicked" data-source="header" data-destination="docs">Docs</a> <a href="/dashboard/" data-track="cta_clicked" data-source="header" data-destination="dashboard">API</a> <a class="nav-pricing" href="/pricing/" data-track="cta_clicked" data-source="header" data-destination="pricing">Pricing<em class="nav-off-badge">50% off</em></a> <a href="/blog/" data-track="cta_clicked" data-source="header" data-destination="guides">Guides</a> <a class="nav-outbound" href="https://jevfinder.com" target="_blank" rel="noopener noreferrer" data-track="outbound_clicked" data-destination="jevfinder" data-source="header">Jev builds <span aria-hidden="true">↗</span></a> </nav> <div class="header-actions"> <details class="lang-switch"> <summary aria-label="Language"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"></path></svg><span class="lang-switch-label">English</span></summary> <nav aria-label="Language"> <a href="/docs/" hreflang="en" lang="en" aria-current="true" data-track="language_switched" data-locale="en">English</a><a href="/zh/docs/" hreflang="zh-Hans" lang="zh-CN" data-track="language_switched" data-locale="zh">简体中文</a><a href="/zh-tw/docs/" hreflang="zh-Hant" lang="zh-TW" data-track="language_switched" data-locale="zh-tw">繁體中文</a><a href="/ja/docs/" hreflang="ja" lang="ja" data-track="language_switched" data-locale="ja">日本語</a><a href="/ko/docs/" hreflang="ko" lang="ko" data-track="language_switched" data-locale="ko">한국어</a><a href="/de/docs/" hreflang="de" lang="de" data-track="language_switched" data-locale="de">Deutsch</a><a href="/es/docs/" hreflang="es" lang="es" data-track="language_switched" data-locale="es">Español</a><a href="/fr/docs/" hreflang="fr" lang="fr" data-track="language_switched" data-locale="fr">Français</a><a href="/pt/docs/" hreflang="pt" lang="pt" data-track="language_switched" data-locale="pt">Português</a><a href="/it/docs/" hreflang="it" lang="it" data-track="language_switched" data-locale="it">Italiano</a><a href="/pl/docs/" hreflang="pl" lang="pl" data-track="language_switched" data-locale="pl">Polski</a> </nav> </details> <div class="hdr-account" id="hdr-account" data-state="loading"> <button class="hdr-signin" type="button" data-signin="header">Sign in</button> <a class="hdr-credits" href="/dashboard/" id="hdr-credits" data-track="cta_clicked" data-source="header" data-destination="account"> <span class="hdr-avatar" id="hdr-avatar" aria-hidden="true"></span> <span><b id="hdr-credit-count">0</b> tokens</span> </a> <button class="hdr-logout" id="hdr-logout" type="button" data-logout hidden>Sign out</button> </div> <a class="button button-small button-primary header-cta" href="/playground/" data-track="cta_clicked" data-source="header" data-destination="playground">Try Jev free <span aria-hidden="true">→</span></a> </div> <details class="mobile-menu"> <summary aria-label="Open navigation"><span></span><span></span><span></span></summary> <nav aria-label="Mobile navigation"> <a class="nav-cta-live" href="/playground/" data-track="cta_clicked" data-source="mobile_nav" data-destination="playground">Jev playground</a> <a href="/batch/" data-track="cta_clicked" data-source="mobile_nav" data-destination="batch">Batch</a> <a href="/agent-tools/" data-track="cta_clicked" data-source="mobile_nav" data-destination="agent_tools">Agents<em class="nav-new-badge">new</em></a> <a href="/use-cases/" data-track="cta_clicked" data-source="mobile_nav" data-destination="use_cases">Use cases</a> <a href="/what-is-jev/">What is Jev</a> <a href="/how-to-use-jev/">How to use Jev</a> <a href="/dashboard/" data-track="cta_clicked" data-source="mobile_nav" data-destination="dashboard">Jev API</a> <a href="/docs/" data-track="cta_clicked" data-source="mobile_nav" data-destination="docs">Docs</a> <a class="nav-pricing" href="/pricing/" data-track="cta_clicked" data-source="mobile_nav" data-destination="pricing">Pricing · from $9.90<em class="nav-off-badge">50% off</em></a> <a href="/jev-pricing/">Jev pricing</a> <a href="/get-jev/" data-track="cta_clicked" data-source="mobile_nav" data-destination="get_jev">Get Jev access</a> <a href="/jev-api-open/">Jev API is open</a> <a href="/blog/">Guides</a> <a class="nav-outbound" href="https://jevfinder.com" target="_blank" rel="noopener noreferrer" data-track="outbound_clicked" data-destination="jevfinder" data-source="mobile_nav">Jev builds <span aria-hidden="true">↗</span></a> <a href="/dashboard/">Account &amp; API keys</a> <button class="hdr-logout-mobile" id="hdr-logout-mobile" type="button" data-logout hidden>Sign out</button> <a href="https://typesafe.ai" target="_blank" rel="noopener noreferrer" data-track="outbound_clicked" data-destination="typesafe" data-source="mobile_nav">TypeSafe AI ↗</a> <span class="mobile-lang"> <a href="/docs/" lang="en" aria-current="true" data-track="language_switched" data-locale="en">English</a><a href="/zh/docs/" lang="zh-CN" data-track="language_switched" data-locale="zh">简体中文</a><a href="/zh-tw/docs/" lang="zh-TW" data-track="language_switched" data-locale="zh-tw">繁體中文</a><a href="/ja/docs/" lang="ja" data-track="language_switched" data-locale="ja">日本語</a><a href="/ko/docs/" lang="ko" data-track="language_switched" data-locale="ko">한국어</a><a href="/de/docs/" lang="de" data-track="language_switched" data-locale="de">Deutsch</a><a href="/es/docs/" lang="es" data-track="language_switched" data-locale="es">Español</a><a href="/fr/docs/" lang="fr" data-track="language_switched" data-locale="fr">Français</a><a href="/pt/docs/" lang="pt" data-track="language_switched" data-locale="pt">Português</a><a href="/it/docs/" lang="it" data-track="language_switched" data-locale="it">Italiano</a><a href="/pl/docs/" lang="pl" data-track="language_switched" data-locale="pl">Polski</a> </span> </nav> </details> </div> </div> </header> <div class="lang-suggest" id="lang-suggest" hidden> <div class="shell"><span id="lang-suggest-text"></span> <a id="lang-suggest-link" href="/" data-track="language_suggest_clicked"></a><button type="button" id="lang-suggest-close" aria-label="Dismiss">×</button></div> </div> <main>  <div class="shell docs-page"> <div class="guide-hero docs-hero"> <span class="eyebrow"><i></i>Jev Model · Developer reference</span> <h1>Jev API documentation</h1> <p>Call the hosted Jev decision API with one state and a set of typed questions — get back a choice, a score, and yes/no probabilities your code can branch on. This reference covers the wire format, response fields, billing, failure handling, and the remote MCP server for agents.</p> <div class="hero-actions"> <a class="button button-primary" href="/dashboard/" data-track="cta_clicked" data-source="docs_hero" data-destination="dashboard">+ New key <span aria-hidden="true">→</span></a> <a class="button button-ghost" href="/playground/" data-track="cta_clicked" data-source="docs_hero" data-destination="playground">Try the playground <span aria-hidden="true">→</span></a> </div> <div class="doc-endpoints"> <span>Base URL <code>https://jevmodel.org</code></span> <span>Evaluation <code>POST /v1/systemone</code> · <code>POST /mcp</code></span> </div> </div> <div class="guide-layout docs-layout"> <aside class="doc-aside"> <span class="doc-aside-title">On this page</span> <nav class="doc-group" aria-label="Start here"> <b>Start here</b> <a href="#overview">Overview</a><a href="#authentication">Authentication</a><a href="#endpoint">HTTP endpoint</a> </nav><nav class="doc-group" aria-label="Decision API"> <b>Decision API</b> <a href="#request-body">Request body</a><a href="#question-types">Question types</a><a href="#response-json">Response JSON</a><a href="#billing">Billing</a> </nav><nav class="doc-group" aria-label="Reference"> <b>Reference</b> <a href="#models-limits">Models and limits</a><a href="#errors">Errors and retries</a> </nav><nav class="doc-group" aria-label="Agents"> <b>Agents</b> <a href="#mcp">MCP server</a><a href="#workflows">Playground to API</a> </nav> </aside> <article class="doc-content"> <section id="overview" class="doc-section"> <h2>Overview</h2> <p>Jev evaluates one state — a support ticket, a chat log, a tool call, any text or JSON you pass — against a set of typed questions, and returns structured answers your code can branch on. It does not generate text.</p> <p>One request can ask up to 8 questions; they are evaluated together and share the state input cost. The request body is the same shape TypeSafe’s SystemOne API accepts — to move a working integration, swap the base URL and the Bearer key.</p> <ul class="guide-list"> <li>POST <code>https://jevmodel.org/v1/systemone</code> — the single decision endpoint.</li><li>CORS is open (<code>access-control-allow-origin: *</code>), so the endpoint answers from any origin. Keep your key on a server anyway.</li><li>The <a href="/playground/">playground</a> sends the identical request shape through your browser session — what you preview there is what you send.</li> </ul> </section> <section id="authentication" class="doc-section"> <h2>Authentication</h2> <p>Every API call needs a jevmodel.org API key. Create one in <a href="/dashboard/">Dashboard → API keys</a>; keys start with <code>sk-</code> and are shown once at creation. Store it as an environment variable, for example <code>JEVMODEL_API_KEY</code>.</p> <div class="doc-code"> <div class="doc-code-bar"><span>Authorization header</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>Authorization: Bearer $JEVMODEL_API_KEY</code></pre> </div> <p>Keys belong to your account’s token balance and can be revoked from the dashboard. Never ship a key in client-side code or commit it to a repository — if a key leaks, revoke it and mint a new one. The playground authenticates with your signed-in browser session instead and does not need a key.</p> </section> <section id="endpoint" class="doc-section"> <h2>HTTP endpoint</h2> <p>Send a JSON body to the evaluation endpoint with Bearer authentication:</p> <div class="doc-code"> <div class="doc-code-bar"><span>HTTP request</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>POST /v1/systemone HTTP/1.1
+Host: jevmodel.org
+Authorization: Bearer $JEVMODEL_API_KEY
+Content-Type: application/json
+Idempotency-Key: ticket-4821-run-1   # optional</code></pre> </div> <p><code>Idempotency-Key</code> is optional (up to 100 characters). Retries sent with the same key reuse the original billing record, so a retried request cannot be charged twice for the same input.</p> <div class="doc-code"> <div class="doc-code-bar"><span>Full cURL example</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>curl -X POST https://jevmodel.org/v1/systemone \
+  -H &quot;Authorization: Bearer $JEVMODEL_API_KEY&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d &#39;{
+    &quot;model&quot;: &quot;jev-latest&quot;,
+    &quot;state&quot;: &quot;The customer has been billed twice and wants a refund today.&quot;,
+    &quot;questions&quot;: {
+      &quot;route&quot;: {
+        &quot;type&quot;: &quot;choice&quot;,
+        &quot;instructions&quot;: &quot;Which queue should own this ticket?&quot;,
+        &quot;criteria&quot;: {
+          &quot;billing&quot;: &quot;Payments, refunds, invoices&quot;,
+          &quot;technical&quot;: &quot;Product errors and usage problems&quot;,
+          &quot;sales&quot;: &quot;Pricing, upgrades, new business&quot;
+        }
+      },
+      &quot;escalate&quot;: {
+        &quot;type&quot;: &quot;noul&quot;,
+        &quot;instructions&quot;: &quot;Does this need a human right now?&quot;
+      },
+      &quot;urgency&quot;: {
+        &quot;type&quot;: &quot;score&quot;,
+        &quot;instructions&quot;: &quot;How urgent is this for the customer?&quot;,
+        &quot;criteria&quot;: [&quot;routine&quot;, &quot;soon&quot;, &quot;urgent&quot;, &quot;critical&quot;]
+      }
+    }
+  }&#39;</code></pre> </div> </section> <section id="request-body" class="doc-section"> <h2>Request body</h2> <p>One JSON object with a state and a map of questions:</p> <div class="doc-code"> <div class="doc-code-bar"><span>Request body</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>{
+  &quot;model&quot;: &quot;jev-latest&quot;,
+  &quot;state&quot;: &quot;The customer has been billed twice and wants a refund today.&quot;,
+  &quot;questions&quot;: {
+    &quot;route&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;instructions&quot;: &quot;Which queue should own this ticket?&quot;,
+      &quot;criteria&quot;: {
+        &quot;billing&quot;: &quot;Payments, refunds, invoices&quot;,
+        &quot;technical&quot;: &quot;Product errors and usage problems&quot;,
+        &quot;sales&quot;: &quot;Pricing, upgrades, new business&quot;
+      }
+    },
+    &quot;escalate&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;instructions&quot;: &quot;Does this need a human right now?&quot;
+    },
+    &quot;urgency&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;instructions&quot;: &quot;How urgent is this for the customer?&quot;,
+      &quot;criteria&quot;: [&quot;routine&quot;, &quot;soon&quot;, &quot;urgent&quot;, &quot;critical&quot;]
+    }
+  }
+}</code></pre> </div> <table class="doc-table"> <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead> <tbody> <tr><td><code>model</code></td><td>string</td><td>Optional; defaults to <code>jev-latest</code>.</td></tr><tr><td><code>state</code></td><td>string, object, or array</td><td>Required. Serialized form is limited to 8,000 characters.</td></tr><tr><td><code>questions</code></td><td>object</td><td>Required map of 1–8 question names to typed definitions. Names are identifiers: letters, digits, and <code>_</code>, at most 64 characters.</td></tr> </tbody> </table> <p>Each question needs a <code>type</code> and <code>instructions</code> (up to 1,800 characters) telling the model what to decide. <code>criteria</code> supplies the answer space — required for choice and score, optional for noul.</p> </section> <section id="question-types" class="doc-section"> <h2>Question types</h2> <p>Choose the answer shape your application can act on.</p> <table class="doc-table"> <thead><tr><th>Type</th><th>Criteria</th><th>Answer</th></tr></thead> <tbody> <tr><td><code>noul</code></td><td>Optional <code>true</code> / <code>false</code> label descriptions.</td><td><code>noul</code> — the probability of yes, from 0 to 1.</td></tr><tr><td><code>choice</code></td><td>Object of 2–20 option keys mapped to descriptions.</td><td>Selected <code>choice</code>, a <code>probabilities</code> map, and <code>confidence</code>.</td></tr><tr><td><code>score</code></td><td>Ordered array of 2–10 levels.</td><td>Numeric <code>score</code> (may be fractional) and <code>confidence</code>.</td></tr> </tbody> </table> <p>Serialized criteria are limited to 2,000 characters per question. Validation failures return 422 before any tokens are reserved — bad requests are never billed.</p> </section> <section id="response-json" class="doc-section"> <h2>Response JSON</h2> <p>A 200 response is the model output itself: the resolved model, one answer per question name, and usage. The values below are illustrative — run the request for real output.</p> <div class="doc-code"> <div class="doc-code-bar"><span>Illustrative 200 response</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>{
+  &quot;model&quot;: &quot;jev-latest&quot;,
+  &quot;answers&quot;: {
+    &quot;route&quot;: {
+      &quot;type&quot;: &quot;choice&quot;,
+      &quot;choice&quot;: &quot;billing&quot;,
+      &quot;probabilities&quot;: { &quot;billing&quot;: 0.93, &quot;technical&quot;: 0.05, &quot;sales&quot;: 0.02 },
+      &quot;confidence&quot;: 0.93
+    },
+    &quot;escalate&quot;: {
+      &quot;type&quot;: &quot;noul&quot;,
+      &quot;noul&quot;: 0.12
+    },
+    &quot;urgency&quot;: {
+      &quot;type&quot;: &quot;score&quot;,
+      &quot;score&quot;: 1.4,
+      &quot;confidence&quot;: 0.88
+    }
+  },
+  &quot;usage&quot;: { &quot;input_tokens&quot;: 136, &quot;output_tokens&quot;: 18 }
+}</code></pre> </div> <ul class="guide-list"> <li><code>answers</code> is keyed by your question names — you read the fields you asked for.</li><li>For <code>choice</code>, branch on the selected label and inspect <code>probabilities</code> when you need the full distribution.</li><li><code>noul</code> is P(yes) — your code picks the action threshold.</li><li><code>usage.input_tokens</code> is what this call actually billed; output tokens are free.</li> </ul> </section> <section id="billing" class="doc-section"> <h2>Billing</h2> <p>The API bills input tokens only — output is free. Each call reserves an estimate up front, then settles to the actual <code>usage.input_tokens</code> the model reports. If Jev fails upstream, the reservation is fully refunded automatically.</p> <ul class="guide-list"> <li>Sign in once and get <a href="/pricing/">100,000 input tokens free</a>; paid packs start at $9.90 and never expire.</li><li>Insufficient balance returns <code>402</code> before Jev is called.</li><li><code>X-Tokens-Remaining</code> on every 200 response is your balance after settlement.</li><li>Estimate it yourself: <code>ceil(JSON.stringify({state, questions}).length / 4)</code>.</li> </ul> </section> <section id="models-limits" class="doc-section"> <h2>Models and limits</h2> <p><code>jev-latest</code> is the default and the model currently served — the <code>model</code> field is optional. Laya variants shown in the playground are upcoming and not yet exposed through this endpoint.</p> <table class="doc-table"> <thead><tr><th>Limit</th><th>Value</th></tr></thead> <tbody> <tr><td>Questions per request</td><td>8</td></tr><tr><td>Question name</td><td>Identifier ≤ 64 characters</td></tr><tr><td>Serialized <code>state</code></td><td>8,000 characters</td></tr><tr><td><code>instructions</code> per question</td><td>1,800 characters</td></tr><tr><td>Choice options / score levels</td><td>2–20 options, 2–10 levels</td></tr><tr><td>Serialized <code>criteria</code></td><td>2,000 characters per question</td></tr><tr><td>Rate limit</td><td>120 requests / minute per key</td></tr> </tbody> </table> <p>These figures describe the API validator; the upstream model may have its own context limits.</p> </section> <section id="errors" class="doc-section"> <h2>Errors and retries</h2> <p>Errors return a JSON envelope with a machine-readable <code>type</code> and a human <code>message</code>:</p> <div class="doc-code"> <div class="doc-code-bar"><span>Error response</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>{
+  &quot;error&quot;: {
+    &quot;type&quot;: &quot;invalid_request_error&quot;,
+    &quot;message&quot;: &quot;At most 8 questions per request.&quot;
+  }
+}</code></pre> </div> <table class="doc-table"> <thead><tr><th>Status</th><th>Type</th><th>Cause</th><th>Charged?</th></tr></thead> <tbody> <tr><td><code>401</code></td><td><code>authentication_error</code></td><td>Missing, invalid, or revoked key.</td><td>No</td></tr><tr><td><code>402</code></td><td><code>insufficient_credits</code></td><td>Estimated input tokens exceed your balance.</td><td>No</td></tr><tr><td><code>422</code></td><td><code>invalid_request_error</code></td><td>Body failed validation — see <code>message</code>.</td><td>No</td></tr><tr><td><code>429</code></td><td><code>rate_limit_error</code></td><td>More than 120 requests this minute.</td><td>No</td></tr><tr><td><code>502</code></td><td><code>upstream_error</code></td><td>Jev could not complete the call.</td><td>No — refunded</td></tr> </tbody> </table> <p>Retry 429 and 502 with exponential backoff — the rate window is per minute, so short pauses are usually enough. Send an <code>Idempotency-Key</code> when retrying so a repeated request settles against the same billing record instead of charging twice.</p> </section> <section id="mcp" class="doc-section"> <h2>MCP server for agents</h2> <p>jevmodel.org also runs a remote MCP server over Streamable HTTP at <code>https://jevmodel.org/mcp</code>. It exposes four tools — <code>jev_decide</code> (the full state-plus-questions contract), <code>jev_noul</code>, <code>jev_choice</code>, and <code>jev_score</code> — so coding agents like Claude Code, Cursor, or Cline can call Jev without writing HTTP.</p> <div class="doc-code"> <div class="doc-code-bar"><span>Claude Code</span><button class="doc-copy" type="button">Copy</button></div> <pre><code>claude mcp add --transport http jev https://jevmodel.org/mcp \
+  --header &quot;Authorization: Bearer $JEVMODEL_API_KEY&quot;</code></pre> </div> <ul class="guide-list"> <li>Same <code>Authorization: Bearer sk-…</code> key and the same token balance as this API — <code>tools/call</code> bills input tokens only.</li><li><code>initialize</code>, <code>ping</code>, and <code>tools/list</code> are unauthenticated; only <code>tools/call</code> uses your key.</li><li><code>GET /mcp</code> returns a JSON discovery card for agents and humans.</li> </ul> <p>Setup commands for Claude Code, Cursor, and the matching agent skill (judgment playbook) are on the <a href="/agent-tools/">agent tools</a> page.</p> <p><a class="text-link" href="/agent-tools/" data-track="cta_clicked" data-source="docs_mcp" data-destination="agent_tools">Agent tools guide <span aria-hidden="true">→</span></a></p> </section> <section id="workflows" class="doc-section"> <h2>Playground to API</h2> <p>Build the scenario in the <a href="/playground/">playground</a> first — the request preview shows the exact JSON body your application should send, and <em>Copy API example</em> gives you the matching cURL. When the answers look right, create a key in the dashboard and swap the browser session for Bearer authentication.</p> <p>More reading: <a href="/how-to-use-jev/">How to use Jev</a> walks through a first call end to end, and <a href="/api/">Jev API examples</a> has production patterns for each question type.</p> </section> </article> </div> </div> <section class="shell api-access-band"> <div> <span class="kicker">API keys</span> <h2>Call Jev with your key.</h2> <p>Send state plus typed questions to the local Jev endpoint. Successful requests charge input tokens. Add an Idempotency-Key header when retrying.</p> </div> <a class="button button-primary" href="/dashboard/" data-track="cta_clicked" data-source="docs_footer" data-destination="dashboard">+ New key <span aria-hidden="true">→</span></a> </section> <script>(function(){const copyLabel = "Copy";
+const copiedLabel = "Copied";
+
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.doc-aside a[href^="#"]'));
+      var sections = links
+        .map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); })
+        .filter(Boolean);
+      function onScroll() {
+        var active = sections[0];
+        for (var i = 0; i < sections.length; i++) {
+          if (sections[i].getBoundingClientRect().top <= 140) active = sections[i];
+        }
+        links.forEach(function (a) {
+          a.classList.toggle('is-active', active && a.getAttribute('href') === '#' + active.id);
+        });
+      }
+      document.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      document.querySelectorAll('.doc-copy').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var code = btn.closest('.doc-code');
+          var text = code ? code.querySelector('pre').innerText : '';
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = copiedLabel;
+            setTimeout(function () { btn.textContent = copyLabel; }, 1600);
+          });
+        });
+      });
+    })();
+  })();</script>  </main> <footer class="site-footer"> <div class="shell footer-grid"> <div> <a class="brand" href="/"> <img class="brand-mark" src="/logo.png" width="28" height="28" alt=""> <span>jev<span class="muted">/model</span></span> </a> <p class="footer-note">Independent notes for TypeSafe AI’s Jev System One model. Not affiliated with TypeSafe.</p> <span class="footer-label">Support</span> <a href="/cdn-cgi/l/email-protection#9ae9efeaeaf5e8eedaf0ffecf7f5fefff6b4f5e8fd"><span class="__cf_email__" data-cfemail="74070104041b0600341e1102191b1011185a1b0613">[email&#160;protected]</span></a> </div> <div> <span class="footer-label">Learn</span> <a href="/what-is-jev/">What is Jev AI?</a> <a href="/is-jev-open-source/">Is Jev open source?</a> <a href="/get-jev/" data-track="cta_clicked" data-source="footer" data-destination="get_jev">How to get Jev access</a> <a href="/jev-api-open/">Jev API is open</a> <a href="/jev-vs-laya/">Jev vs Laya</a> <a href="/what-is-laya/">What is Laya</a> <a href="/jev-vs-gpt/">Jev vs GPT</a> <a href="/jev-vs-claude/">Jev vs Claude</a> <a href="/openai-decisions-api/">OpenAI Decisions API</a> </div> <div> <span class="footer-label">Build</span> <a href="/playground/" data-track="cta_clicked" data-source="footer" data-destination="playground">Jev playground</a> <a href="/pricing/">Playground &amp; API credits</a> <a href="/how-to-use-jev/" data-track="cta_clicked" data-source="footer" data-destination="how_to_use">How to use Jev</a> <a href="/api/">Jev API examples</a> <a href="/docs/" data-track="cta_clicked" data-source="footer" data-destination="docs">API documentation</a> <a href="/jev-pricing/">Jev pricing</a> <a href="/benchmarks/">Jev benchmarks</a> <a href="/jevbench/">JevBench leaderboard</a> <a href="/agent-tools/" data-track="cta_clicked" data-source="footer" data-destination="agent_tools">Jev agent tools</a> <a href="/jev-alternatives/">Jev alternatives</a> <a href="/use-cases/">Jev use cases</a> </div> <div> <span class="footer-label">Disclosure</span> <p class="footer-note">Jev Model Guide is independent and is not affiliated with, endorsed by, or operated by TypeSafe AI.</p> <a href="/terms/">Terms</a> </div> </div> <div class="shell footer-bottom"><span>Updated September 24, 2026</span><a href="https://typesafe.ai" target="_blank" rel="noopener noreferrer" data-track="outbound_clicked" data-destination="typesafe" data-source="footer">TypeSafe AI ↗</a></div> </footer> <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>(function(){const runsLeftTitle = "{n} tokens left";
+const guestLabel = "Guest";
+const signOutLabel = "Sign out";
+const suggestions = {"en":{"text":"This page is available in English.","cta":"Read in English","href":"/docs/"},"zh":{"text":"此页面有中文版。","cta":"切换到中文","href":"/zh/docs/"},"zh-tw":{"text":"此頁面有繁體中文版。","cta":"切換到繁體中文","href":"/zh-tw/docs/"},"ja":{"text":"このページには日本語版があります。","cta":"日本語で読む","href":"/ja/docs/"},"ko":{"text":"이 페이지는 한국어로도 볼 수 있습니다.","cta":"한국어로 보기","href":"/ko/docs/"},"de":{"text":"Diese Seite gibt es auch auf Deutsch.","cta":"Auf Deutsch lesen","href":"/de/docs/"},"es":{"text":"Esta página está disponible en español.","cta":"Leer en español","href":"/es/docs/"},"fr":{"text":"Cette page est également disponible en français.","cta":"Lire en français","href":"/fr/docs/"},"pt":{"text":"Esta página também está disponível em português.","cta":"Ler em português","href":"/pt/docs/"},"it":{"text":"Questa pagina è disponibile anche in italiano.","cta":"Leggi in italiano","href":"/it/docs/"},"pl":{"text":"Ta strona jest dostępna również po polsku.","cta":"Czytaj po polsku","href":"/pl/docs/"}};
+const currentLocale = "en";
+const htmlLang = "en";
+
+      (function () {
+        var slot = document.getElementById('hdr-account');
+        function render(me) {
+          var status = me && me.status;
+          var signedIn = status === 'user';
+          var isGuest = status === 'guest';
+          slot.dataset.state = signedIn ? 'user' : isGuest ? 'guest' : 'anonymous';
+          var logout = document.getElementById('hdr-logout');
+          var logoutMobile = document.getElementById('hdr-logout-mobile');
+          if (logout) logout.hidden = !signedIn;
+          if (logoutMobile) logoutMobile.hidden = !signedIn;
+          if (!(signedIn || isGuest)) return;
+          var credits = Number(me.credits || 0);
+          document.getElementById('hdr-credit-count').textContent = credits.toLocaleString(htmlLang);
+          var user = me.user || {};
+          var link = document.getElementById('hdr-credits');
+          var left = runsLeftTitle.replace('{n}', credits.toLocaleString(htmlLang));
+          var who = signedIn ? (user.email || 'Account') : guestLabel;
+          link.title = who + ' · ' + left;
+          link.setAttribute('aria-label', left);
+          var avatar = document.getElementById('hdr-avatar');
+          if (signedIn && user.picture) {
+            avatar.innerHTML = '';
+            var img = document.createElement('img');
+            img.src = user.picture; img.alt = ''; img.referrerPolicy = 'no-referrer';
+            img.onerror = function () { avatar.textContent = (user.name || user.email || '?').charAt(0).toUpperCase(); };
+            avatar.appendChild(img);
+          } else {
+            avatar.textContent = signedIn ? (user.name || user.email || '?').charAt(0).toUpperCase() : guestLabel.charAt(0);
+          }
+        }
+        document.addEventListener('jev:session', function (e) { render(e.detail); });
+
+        // Suggest (never force) the visitor's browser language when this page exists in it.
+        try {
+          var dismissed = localStorage.getItem('jev_lang_dismissed');
+          var langs = (navigator.languages || [navigator.language || '']).map(function (l) { return String(l).toLowerCase(); });
+          var match = null;
+          for (var i = 0; i < langs.length && !match; i++) {
+            var tag = langs[i], base = tag.split('-')[0];
+            if (base === 'zh') match = (/hant|tw|hk|mo/.test(tag) && suggestions['zh-tw']) ? 'zh-tw' : 'zh';
+            else if (suggestions[tag]) match = tag;
+            else if (suggestions[base]) match = base;
+          }
+          if (match && suggestions[match] && match !== currentLocale && dismissed !== match) {
+            var s = suggestions[match];
+            document.getElementById('lang-suggest-text').textContent = s.text;
+            var a = document.getElementById('lang-suggest-link');
+            a.textContent = s.cta + ' →'; a.href = s.href; a.lang = match; a.dataset.locale = match;
+            document.getElementById('lang-suggest').hidden = false;
+            document.getElementById('lang-suggest-close').addEventListener('click', function () {
+              document.getElementById('lang-suggest').hidden = true;
+              try { localStorage.setItem('jev_lang_dismissed', match); } catch (e) {}
+            });
+          }
+        } catch (e) {}
+        if (window.jevSession) window.jevSession.me().catch(function () { render(null); });
+
+        document.addEventListener('click', function (event) {
+          var target = event.target;
+          document.querySelectorAll('.nav-drop[open], .lang-switch[open]').forEach(function (node) {
+            if (!node.contains(target)) node.removeAttribute('open');
+          });
+        });
+        document.querySelectorAll('.nav-drop, .lang-switch').forEach(function (node) {
+          node.addEventListener('toggle', function () {
+            if (!node.open) return;
+            document.querySelectorAll('.nav-drop[open], .lang-switch[open]').forEach(function (other) {
+              if (other !== node) other.removeAttribute('open');
+            });
+          });
+        });
+
+        // Condense the header into a floating pill once the page scrolls (jevnet-style).
+        var headerEl = document.getElementById('site-header');
+        var onScroll = function () {
+          headerEl.classList.toggle('is-condensed', window.scrollY > 20);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      })();
+    })();</script> </body> </html>

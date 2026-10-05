@@ -1,0 +1,15 @@
+Rendered 2026-10-01 with a browser. The saved model-page.html is a script shell (pulse placeholders). This text is the rendered body.
+
+Page title: Jev 1.13 - API Pricing & Providers | OpenRouter
+URL: https://openrouter.ai/typesafe/jev-1.13
+Visible id: typesafe/jev-1.13
+IN / OUT PRICE: $0.042 / $0 per 1M
+CONTEXT: 32K
+
+The collapsed FAQ includes the question "What is the context length of Jev 1.13?" The answer was not expanded. The visible CONTEXT figure on the page is 32K.
+
+Catalog JSON saved beside this file (models-decisions.json), fetched the same day:
+- typesafe/jev-1.13 context_length 32000, pricing prompt 0.000000042, completion 0, modality text->decisions
+- ~typesafe/jev-latest context_length 32000, same price, modality text->decisions
+
+OpenRouter's own hub page (jev.md) says: "Context length is 32,000 tokens. That's the state you send plus the questions."

@@ -1,0 +1,180 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PQ0CXTR6M7P5EGCTT0RM49",
+  "at": "2026-09-17T03:36:59.286Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 2,
+  "failedToolCalls": 0,
+  "jevCalls": 3,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.6666666666666666,
+  "requiredCovered": 2,
+  "requiredTotal": 3,
+  "completion": 0.6666666666666666,
+  "durationMs": 12215,
+  "usage": {
+    "inputTokens": 2898,
+    "outputTokens": 407,
+    "cacheReadTokens": 1152,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0013578
+  },
+  "reasoningChars": 0,
+  "reply": "Sim, você tem reunião amanhã de manhã: **Reunião com Marina Costa – roadmap Q4**, 17/09 às 10:00 (Google Meet).\n\nJá enviei o email de confirmação para marina.costa@example.com com o horário. Não consegui criar o lembrete de 30 minutos antes — a ferramenta de lembretes não está disponível no momento. Se quiser, posso criar um alarme para as 09:30 em vez do lembrete.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_list_events",
+      "confidence": 0.71,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 684,
+      "top": [
+        {
+          "name": "calendar_list_events",
+          "p": 0.72
+        },
+        {
+          "name": "calendar_search_events",
+          "p": 0.28
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "food_order",
+          "p": 0
+        },
+        {
+          "name": "calendar_set_out_of_office",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "email_send",
+      "confidence": 0.97,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 254,
+      "top": [
+        {
+          "name": "email_send",
+          "p": 0.97
+        },
+        {
+          "name": "email_draft",
+          "p": 0.01
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.01
+        },
+        {
+          "name": "calendar_get_event",
+          "p": 0.01
+        },
+        {
+          "name": "expenses_summary_by_merchant",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação: Reunião amanhã às 10:00",
+        "body": "Oi, Marina!\n\nSó confirmando nossa reunião de amanhã (17/09), às 10:00, sobre o roadmap do Q4. Nos falamos pelo Google Meet.\n\nAté amanhã!\nVinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "alarm_set",
+      "confidence": 0.79,
+      "done": 0.04,
+      "gated": true,
+      "latencyMs": 713,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 0.8
+        },
+        {
+          "name": "alarm_set",
+          "p": 0.07
+        },
+        {
+          "name": "task_create",
+          "p": 0.05
+        },
+        {
+          "name": "reminder_create",
+          "p": 0.03
+        },
+        {
+          "name": "message_send",
+          "p": 0.03
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim, você tem reunião amanhã de manhã: **Reunião com Marina Costa – roadmap Q4**, 17/09 às 10:00 (Google Meet).\n\nJá enviei o email de confirmação para marina.costa@example.com com o horário. Não consegui criar o lembrete de 30 minutos antes — a ferramenta de lembretes não está disponível no momento. Se quiser, posso criar um alarme para as 09:30 em vez do lembrete."
+    }
+  ]
+}

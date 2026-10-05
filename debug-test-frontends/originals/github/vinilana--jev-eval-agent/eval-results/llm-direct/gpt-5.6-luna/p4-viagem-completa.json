@@ -1,0 +1,154 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PPW8GGA79DR8PNSC636SSF",
+  "at": "2026-09-17T03:34:43.731Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 7,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 6,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "contacts": 1,
+    "message": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8571428571428571,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 12447,
+  "usage": {
+    "inputTokens": 23432,
+    "outputTokens": 775,
+    "cacheReadTokens": 22006,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0056164000000000006
+  },
+  "reasoningChars": 436,
+  "reply": "Viagem organizada para sexta, **18/09**:\n\n- Voo GOL G31410, SDU → CGH, **11h30–12h35**, segurado sem pagamento — código **HLD-4471** (válido até 18/09 às 2h).\n- Hotel **Ibis Paulista**, a 1,1 km da reunião, **R$ 260/noite**, reservado para 18–19/09 — confirmação **HTL-7781**.\n- Agenda bloqueada das **8h às 18h** como “Viagem SP”.\n- Marina avisada por WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "max_price_brl": 100000,
+        "earliest_departure": "06:00",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00",
+        "calendar": "work"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_2",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "Marina"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina Costa",
+        "text": "Oi, Marina! A viagem para São Paulo está confirmada: voo GOL G31410, saindo do SDU às 11h30 e chegando em CGH às 12h35 (reserva em espera, sem pagamento ainda), e hospedagem no Ibis Paulista de sexta para sábado. Reunião às 14h na Av. Paulista, 1000.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Viagem organizada para sexta, **18/09**:\n\n- Voo GOL G31410, SDU → CGH, **11h30–12h35**, segurado sem pagamento — código **HLD-4471** (válido até 18/09 às 2h).\n- Hotel **Ibis Paulista**, a 1,1 km da reunião, **R$ 260/noite**, reservado para 18–19/09 — confirmação **HTL-7781**.\n- Agenda bloqueada das **8h às 18h** como “Viagem SP”.\n- Marina avisada por WhatsApp."
+    }
+  ]
+}

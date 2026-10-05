@@ -1,0 +1,15 @@
+{
+  "full_name": "imom39a/jev-playground",
+  "html_url": "https://github.com/imom39a/jev-playground",
+  "description": "Local JEV experiments: route decisions, Minesweeper solvers, and drone simulation",
+  "default_branch": "main",
+  "pushed_at": "2026-09-28T09:46:38Z",
+  "size": 13424,
+  "stargazers_count": 0,
+  "license": "Apache-2.0",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "f6ebdf22ca4875f191096eb54c835de4b2ffdeb6"
+}

@@ -1,0 +1,372 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "deepseek-v4.1-flash",
+  "modelLabel": "DeepSeek V4.1 Flash",
+  "promptId": "p4-viagem-completa",
+  "title": "Viagem completa: segurar voo, hotel perto, bloquear agenda, avisar",
+  "tier": "complex",
+  "prompt": "Sexta preciso ir a São Paulo pra reunião das 14h na Av. Paulista, 1000. Segura (sem pagar ainda) o voo mais barato saindo do Rio de manhã, acha um hotel a menos de 2 km da reunião por até R$ 500 a noite pra sexta (uma noite), reserva esse hotel, bloqueia minha agenda das 8h às 18h de sexta como 'Viagem SP' e, no final, avisa a Marina por mensagem que a viagem está confirmada.",
+  "sessionId": "wrun_01M2PQ1JYXPN2QZVJDSVNAA9JE",
+  "at": "2026-09-17T03:37:52.200Z",
+  "modelId": "openrouter/deepseek/deepseek-v4.1-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 7,
+  "toolCalls": 6,
+  "failedToolCalls": 0,
+  "jevCalls": 7,
+  "idealToolCalls": 6,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "flights": 2,
+    "hotels": 2,
+    "calendar": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 6,
+  "requiredTotal": 6,
+  "completion": 1,
+  "durationMs": 26383,
+  "usage": {
+    "inputTokens": 11487,
+    "outputTokens": 1084,
+    "cacheReadTokens": 2560,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.004746899999999999
+  },
+  "reasoningChars": 0,
+  "reply": "Tudo pronto para a sua viagem a São Paulo! Resumo do que fiz:\n\n- **Voo (segurado, sem pagar):** GOL G31410, saindo do Rio (SDU) às 11:30 e chegando em SP (CGH) às 12:35, R$ 298 — o mais barato da manhã. Código do bloqueio: **HLD-4471** (expira em 18/09 às 02:00).\n- **Hotel:** Ibis Paulista, a 1,1 km da reunião, R$ 260 a noite (1 noite, 18→19/09). Reserva confirmada: **HTL-7781**.\n- **Agenda:** Sexta das 8h às 18h bloqueada como \"Viagem SP\".\n- **Marina:** avisada por mensagem que a viagem está confirmada.\n\nChegando às 12:35, dá tempo tranquilo para a reunião das 14h na Av. Paulista, 1000. Bom lembrar que o voo precisa ser pago antes das 02:00 de sexta para não perder a reserva.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "flights_search",
+      "confidence": 0.99,
+      "done": 0.01,
+      "gated": false,
+      "latencyMs": 258,
+      "top": [
+        {
+          "name": "flights_search",
+          "p": 1
+        },
+        {
+          "name": "transfer_money_scheduled",
+          "p": 0
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0
+        },
+        {
+          "name": "task_list",
+          "p": 0
+        },
+        {
+          "name": "email_label",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "flights_search",
+      "detail": {
+        "from": "Rio de Janeiro",
+        "to": "São Paulo",
+        "date": "2026-09-18",
+        "latest_departure": "12:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "flights_hold",
+      "confidence": 0.96,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 270,
+      "top": [
+        {
+          "name": "flights_hold",
+          "p": 0.96
+        },
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.03
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.01
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "transactions_list",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "flights_hold",
+      "detail": {
+        "flight_id": "fl_4",
+        "passenger_name": "Vinícius"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "hotels_search_nearby",
+      "confidence": 0.68,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 537,
+      "top": [
+        {
+          "name": "hotels_search_nearby",
+          "p": 0.69
+        },
+        {
+          "name": "hotels_search",
+          "p": 0.31
+        },
+        {
+          "name": "home_set_alarm_system",
+          "p": 0
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "calendar_delete_event",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "hotels_search_nearby",
+      "detail": {
+        "near": "Av. Paulista, 1000, São Paulo",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "max_distance_km": 2,
+        "max_price_per_night_brl": 500
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "hotels_book",
+      "confidence": 0.97,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 548,
+      "top": [
+        {
+          "name": "hotels_book",
+          "p": 0.98
+        },
+        {
+          "name": "calendar_block_time",
+          "p": 0.02
+        },
+        {
+          "name": "notes_get",
+          "p": 0
+        },
+        {
+          "name": "calendar_find_free_slot",
+          "p": 0
+        },
+        {
+          "name": "health_log_workout",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 3,
+      "kind": "tool",
+      "name": "hotels_book",
+      "detail": {
+        "hotel_id": "h_2",
+        "check_in": "2026-09-18",
+        "check_out": "2026-09-19",
+        "guests": 1
+      },
+      "ok": true
+    },
+    {
+      "step": 4,
+      "kind": "jev",
+      "name": "calendar_block_time",
+      "confidence": 0.99,
+      "done": 0.04,
+      "gated": false,
+      "latencyMs": 524,
+      "top": [
+        {
+          "name": "calendar_block_time",
+          "p": 1
+        },
+        {
+          "name": "flights_search",
+          "p": 0
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0
+        },
+        {
+          "name": "task_list",
+          "p": 0
+        },
+        {
+          "name": "reminder_list",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 4,
+      "kind": "tool",
+      "name": "calendar_block_time",
+      "detail": {
+        "label": "Viagem SP",
+        "date": "2026-09-18",
+        "start_time": "08:00",
+        "end_time": "18:00"
+      },
+      "ok": true
+    },
+    {
+      "step": 5,
+      "kind": "jev",
+      "name": "message_send",
+      "confidence": 0.91,
+      "done": 0.05,
+      "gated": false,
+      "latencyMs": 592,
+      "top": [
+        {
+          "name": "message_send",
+          "p": 0.92
+        },
+        {
+          "name": "contacts_search",
+          "p": 0.07
+        },
+        {
+          "name": "respond_to_user",
+          "p": 0.01
+        },
+        {
+          "name": "flights_search",
+          "p": 0
+        },
+        {
+          "name": "task_list",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 5,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "Marina",
+        "text": "Oi, Marina! Passando pra avisar que a viagem a São Paulo está confirmada. 😊\n\nVou na sexta (18/09) de manhã, reunião às 14h na Av. Paulista, 1000, e volto depois. Já está tudo organizado: voo, hotel e agenda bloqueada."
+      },
+      "ok": true
+    },
+    {
+      "step": 6,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 0.99,
+      "done": 0.87,
+      "gated": false,
+      "latencyMs": 569,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "home_set_alarm_system",
+          "p": 0
+        },
+        {
+          "name": "home_camera_status",
+          "p": 0
+        },
+        {
+          "name": "calendar_delete_event",
+          "p": 0
+        },
+        {
+          "name": "transfer_money",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "kind": "model",
+      "name": "openrouter/deepseek/deepseek-v4.1-flash"
+    },
+    {
+      "step": 6,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Tudo pronto para a sua viagem a São Paulo! Resumo do que fiz:\n\n- **Voo (segurado, sem pagar):** GOL G31410, saindo do Rio (SDU) às 11:30 e chegando em SP (CGH) às 12:35, R$ 298 — o mais barato da manhã. Código do bloqueio: **HLD-4471** (expira em 18/09 às 02:00).\n- **Hotel:** Ibis Paulista, a 1,1 km da reunião, R$ 260 a noite (1 noite, 18→19/09). Reserva confirmada: **HTL-7781**.\n- **Agenda:** Sex"
+    }
+  ]
+}

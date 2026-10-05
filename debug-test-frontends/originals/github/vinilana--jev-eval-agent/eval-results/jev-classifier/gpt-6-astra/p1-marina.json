@@ -1,0 +1,230 @@
+{
+  "mode": "jev-classifier",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p1-marina",
+  "title": "Confirmar reunião + lembrete",
+  "tier": "basic",
+  "prompt": "Amanhã de manhã eu tenho reunião com a Marina? Se sim, manda um email pra ela confirmando o horário e cria um lembrete pra mim 30 minutos antes.",
+  "sessionId": "wrun_01M2PVWAF8XKP1Y38A1YDRQFXM",
+  "at": "2026-09-17T05:02:07.277Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 4,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "calendar": 1,
+    "email": 1,
+    "reminder": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 11059,
+  "usage": {
+    "inputTokens": 2657,
+    "outputTokens": 243,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.03872
+  },
+  "reasoningChars": 0,
+  "reply": "Sim, amanhã (17/09) você tem reunião com Marina Costa das 10h às 11h, pelo Google Meet. Enviei um email confirmando o horário e criei um lembrete para 9h30, 30 minutos antes.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "jev",
+      "name": "calendar_list_events",
+      "confidence": 0.73,
+      "done": 0.02,
+      "gated": false,
+      "latencyMs": 833,
+      "top": [
+        {
+          "name": "calendar_list_events",
+          "p": 0.74
+        },
+        {
+          "name": "calendar_search_events",
+          "p": 0.26
+        },
+        {
+          "name": "bill_list_upcoming",
+          "p": 0
+        },
+        {
+          "name": "home_set_thermostat",
+          "p": 0
+        },
+        {
+          "name": "task_create",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "calendar_list_events",
+      "detail": {
+        "start_date": "2026-09-17",
+        "end_date": "2026-09-17"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "jev",
+      "name": "email_send",
+      "confidence": 0.98,
+      "done": 0.03,
+      "gated": false,
+      "latencyMs": 305,
+      "top": [
+        {
+          "name": "email_send",
+          "p": 0.99
+        },
+        {
+          "name": "calendar_get_event",
+          "p": 0.01
+        },
+        {
+          "name": "health_log_workout",
+          "p": 0
+        },
+        {
+          "name": "contacts_search",
+          "p": 0
+        },
+        {
+          "name": "email_read",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "email_send",
+      "detail": {
+        "to": [
+          "marina.costa@example.com"
+        ],
+        "subject": "Confirmação da reunião de amanhã — roadmap Q4",
+        "body": "Oi, Marina!\n\nConfirmo nossa reunião de amanhã, 17/09, das 10h às 11h (horário de Brasília), pelo Google Meet, para conversarmos sobre o roadmap Q4.\n\nAté amanhã!\nVinícius",
+        "cc": []
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "jev",
+      "name": "reminder_create",
+      "confidence": 0.99,
+      "done": 0.06,
+      "gated": false,
+      "latencyMs": 273,
+      "top": [
+        {
+          "name": "reminder_create",
+          "p": 1
+        },
+        {
+          "name": "task_complete",
+          "p": 0
+        },
+        {
+          "name": "calendar_list_events",
+          "p": 0
+        },
+        {
+          "name": "invest_portfolio_get",
+          "p": 0
+        },
+        {
+          "name": "food_order",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "reminder_create",
+      "detail": {
+        "text": "Reunião com Marina Costa às 10h pelo Google Meet — roadmap Q4.",
+        "date": "2026-09-17",
+        "time": "09:30",
+        "repeat": "none"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "jev",
+      "name": "respond_to_user",
+      "confidence": 1,
+      "done": 0.95,
+      "gated": false,
+      "latencyMs": 283,
+      "top": [
+        {
+          "name": "respond_to_user",
+          "p": 1
+        },
+        {
+          "name": "bill_pay",
+          "p": 0
+        },
+        {
+          "name": "health_log_workout",
+          "p": 0
+        },
+        {
+          "name": "call_start",
+          "p": 0
+        },
+        {
+          "name": "message_search",
+          "p": 0
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Sim, amanhã (17/09) você tem reunião com Marina Costa das 10h às 11h, pelo Google Meet. Enviei um email confirmando o horário e criei um lembrete para 9h30, 30 minutos antes."
+    }
+  ]
+}

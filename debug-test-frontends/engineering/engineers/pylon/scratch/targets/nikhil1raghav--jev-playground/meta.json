@@ -1,0 +1,15 @@
+{
+  "full_name": "nikhil1raghav/jev-playground",
+  "html_url": "https://github.com/nikhil1raghav/jev-playground",
+  "description": "Toy projects testing Jev (TypeSafe System One): snake autopilot, Todoist sorter, HN re-ranker, Dangerous Dave autopilot",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T05:04:01Z",
+  "size": 206,
+  "stargazers_count": 1,
+  "license": null,
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "C",
+  "commit": "67043996a299fbf8ad44ec1cd4929381c752a415"
+}

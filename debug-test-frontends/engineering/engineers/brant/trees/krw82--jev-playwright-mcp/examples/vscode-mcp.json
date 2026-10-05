@@ -1,0 +1,20 @@
+// VS Code — save as .vscode/mcp.json in your workspace.
+// VS Code config files are JSONC, so these comments are fine.
+// Replace /absolute/path/to/jev-playwright-mcp with your checkout path.
+// "--headless" is an upstream Playwright MCP flag and is optional.
+{
+  "servers": {
+    "jev-playwright": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/absolute/path/to/jev-playwright-mcp/cli.js",
+        "--jev-mode=all",
+        "--headless"
+      ],
+      "env": {
+        "TYPESAFE_API_KEY": "tsk_YOUR_KEY_HERE"
+      }
+    }
+  }
+}

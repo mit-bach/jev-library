@@ -1,0 +1,99 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-5.6-luna",
+  "modelLabel": "GPT-5.6 Luna",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PPVY0A1STN1Q07H4YGRXXQ",
+  "at": "2026-09-17T03:34:31.113Z",
+  "modelId": "openrouter/openai/gpt-5.6-luna",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 10589,
+  "usage": {
+    "inputTokens": 15366,
+    "outputTokens": 345,
+    "cacheReadTokens": 14891,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.0034872
+  },
+  "reasoningChars": 853,
+  "reply": "Você gastou **R$ 942,50** com restaurantes em setembro, **R$ 142,50 acima** do limite de R$ 800,00. Criei a tarefa **“Revisar orçamento de restaurantes”** para hoje e enviei o resumo por WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurantes",
+        "due_date": "2026-09-16",
+        "priority": "high",
+        "list": "Pessoal",
+        "notes": "Gastos com restaurante em setembro: R$ 942,50, acima do limite de R$ 800,00."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Resumo de setembro: você gastou R$ 942,50 com restaurantes — R$ 142,50 acima do limite de R$ 800,00. Criei uma tarefa para revisar o orçamento.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-5.6-luna"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50** com restaurantes em setembro, **R$ 142,50 acima** do limite de R$ 800,00. Criei a tarefa **“Revisar orçamento de restaurantes”** para hoje e enviei o resumo por WhatsApp."
+    }
+  ]
+}

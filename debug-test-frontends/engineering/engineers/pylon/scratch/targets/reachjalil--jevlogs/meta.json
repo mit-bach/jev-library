@@ -1,0 +1,15 @@
+{
+  "full_name": "reachjalil/jevlogs",
+  "html_url": "https://github.com/reachjalil/jevlogs",
+  "description": "Open-source Jev log triage for OpenTelemetry. Score the signal before expensive LLM analysis.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-22T03:35:36Z",
+  "size": 3387,
+  "stargazers_count": 17,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "JavaScript",
+  "commit": "217d2b70bfb327a0038b21851c1c9c143eb80469"
+}

@@ -1,0 +1,43 @@
+# Counted run (HYPOTHESES.md, amendment 2). Hosted Jev, pinned, against two LLM judges.
+# Sizes are per source, before the 70/30 test/dev split; null means every row.
+seed: 0
+splits: [dev, test]
+concurrency: [1, 4]
+results_dir: results/full
+manifest: manifests/full.jsonl  # committed: the frozen row set, ids + labels + text hashes
+
+sources:
+  deepset: null
+  in_the_wild: 1500
+  aegis2_prompts: 1500
+  xstest: null
+  aegis2_responses: 1500
+  beavertails: 1500
+  ai4privacy: 1500
+
+guards:
+  jev:
+    type: systemone
+    model: jev-1.13.0
+    input_per_mtok: 0.042
+    output_per_mtok: 0
+  jev-decomposed:
+    type: systemone
+    model: jev-1.13.0
+    input_per_mtok: 0.042
+    output_per_mtok: 0
+    decompose: true
+  gemini-flash:
+    type: gemini
+    model: gemini-3.6-flash
+    input_per_mtok: 0.75  # until 2026-12-31, then 1.50
+    output_per_mtok: 3.75  # thinking billed as output; 7.50 from 2027
+  claude-haiku:
+    type: claude
+    model: claude-haiku-4-5
+  jev-then-gemini:
+    type: cascade
+    fast: jev
+    slow: gemini-flash
+
+run: [jev, jev-decomposed, gemini-flash, claude-haiku, jev-then-gemini]

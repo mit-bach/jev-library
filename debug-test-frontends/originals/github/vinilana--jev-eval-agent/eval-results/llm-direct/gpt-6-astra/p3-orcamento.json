@@ -1,0 +1,104 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gpt-6-astra",
+  "modelLabel": "GPT-6 Astra",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PVG3XVS4DA0GC5FQT63NZ4",
+  "at": "2026-09-17T04:55:27.056Z",
+  "modelId": "openrouter/openai/gpt-6-astra",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 4,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 10781,
+  "usage": {
+    "inputTokens": 20428,
+    "outputTokens": 237,
+    "cacheReadTokens": 20005,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.21613
+  },
+  "reasoningChars": 0,
+  "reply": "Você gastou **R$ 942,50** com restaurantes neste mês — **R$ 142,50 acima** dos R$ 800.\n\nCriei a tarefa “Revisar o orçamento de restaurantes” e enviei o resumo pelo WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar o orçamento de restaurantes",
+        "due_date": "",
+        "priority": "medium",
+        "list": "",
+        "notes": "Em setembro de 2026, os gastos com restaurantes chegaram a R$ 942,50, ultrapassando o limite de R$ 800,00 em R$ 142,50."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 2,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Você gastou R$ 942,50 com restaurantes neste mês (setembro de 2026), R$ 142,50 acima do limite de R$ 800,00. Criei a tarefa “Revisar o orçamento de restaurantes”.",
+        "channel": "whatsapp"
+      },
+      "ok": true
+    },
+    {
+      "step": 3,
+      "kind": "model",
+      "name": "openrouter/openai/gpt-6-astra"
+    },
+    {
+      "step": 3,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Você gastou **R$ 942,50** com restaurantes neste mês — **R$ 142,50 acima** dos R$ 800.\n\nCriei a tarefa “Revisar o orçamento de restaurantes” e enviei o resumo pelo WhatsApp."
+    }
+  ]
+}

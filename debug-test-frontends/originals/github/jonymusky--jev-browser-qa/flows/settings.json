@@ -1,0 +1,14 @@
+{
+  "name": "settings-via-goal",
+  "steps": [
+    { "goto": "/auth/login" },
+    { "fill": "#email", "value": "${QA_EMAIL}" },
+    { "press": "#email", "key": "Enter" },
+    { "waitForSelector": "#password" },
+    { "fill": "#password", "value": "${QA_PASSWORD}" },
+    { "press": "#password", "key": "Enter" },
+    { "waitForUrl": "!/auth/login" },
+    { "goal": "Open the account or workspace settings screen. Do not change any setting.", "maxSteps": 8, "denyNames": ["cerrar sesi", "logout", "sign out", "eliminar", "delete", "borrar", "guardar", "save"] },
+    { "expect": "A settings or configuration screen is displayed." }
+  ]
+}

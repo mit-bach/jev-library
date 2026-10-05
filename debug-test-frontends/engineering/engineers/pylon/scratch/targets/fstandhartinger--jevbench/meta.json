@@ -1,0 +1,15 @@
+{
+  "full_name": "fstandhartinger/jevbench",
+  "html_url": "https://github.com/fstandhartinger/jevbench",
+  "description": "JevBench v1 - a benchmark for Jev-class typed decision models: smart, cheap, fast, reliable, open.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-29T11:25:01Z",
+  "size": 48804,
+  "stargazers_count": 199,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://benchmarkheaven.com/jev-models",
+  "language": "Python",
+  "commit": "bb05a335bc809e61b20c0f745d25499a82b326fc"
+}

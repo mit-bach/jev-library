@@ -1,0 +1,15 @@
+{
+  "full_name": "Chandler-Sun/chat2jev",
+  "html_url": "https://github.com/Chandler-Sun/chat2jev",
+  "description": "Convert legacy chat completion API request to Typesafe jev API",
+  "default_branch": "main",
+  "pushed_at": "2026-09-23T02:45:29Z",
+  "size": 2145,
+  "stargazers_count": 2,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": "https://chat2jev.myai.family",
+  "language": "TypeScript",
+  "commit": "fef7b1f734ad272477d0f71894c74c0d03cb306d"
+}

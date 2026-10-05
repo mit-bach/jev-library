@@ -1,0 +1,10 @@
+# Runtime dependency floors for the jev-shadow docs toolchain.
+#
+# Deliberately `>=` floors, not `==` exact pins. An exact pin on a
+# pyo3/maturin-backed package (pydantic-core, or anything else that compiles a
+# wheel) fails to build when the build host's Python is newer than that pin's
+# target, and the correct fix is bumping the floor, not downgrading the
+# interpreter. The runtime package itself is pure stdlib -- see pyproject.toml.
+mkdocs>=1.5
+mkdocs-material>=9.5
+mkdocs-material[imaging]>=9.5

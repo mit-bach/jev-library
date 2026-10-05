@@ -1,0 +1,15 @@
+{
+  "full_name": "dayhaysoos/jevals",
+  "html_url": "https://github.com/dayhaysoos/jevals",
+  "description": "Local evaluation workbench for TypeSafe Jev",
+  "default_branch": "main",
+  "pushed_at": "2026-09-18T14:51:10Z",
+  "size": 362,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "af6fecc0776dd5d97d5dc89fc0a72cae5e3e2580"
+}

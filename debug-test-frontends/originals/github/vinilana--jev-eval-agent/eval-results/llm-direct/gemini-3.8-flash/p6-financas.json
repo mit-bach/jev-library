@@ -1,0 +1,123 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "gemini-3.8-flash",
+  "modelLabel": "Gemini 3.8 Flash",
+  "promptId": "p6-financas",
+  "title": "Gastos por restaurante, checklist, PIX agendado e lembrete por local",
+  "tier": "complex",
+  "prompt": "Vê em quais restaurantes eu mais gastei esse mês e cria uma nota em formato checklist com os 3 lugares onde mais gastei. Agenda uma transferência de R$ 300 pra minha mãe pro dia 25 e me lembra de olhar a fatura do cartão quando eu chegar em casa.",
+  "sessionId": "wrun_01M2PPQWK8DQ2XAP2ZAS581NB7",
+  "at": "2026-09-17T03:32:13.829Z",
+  "modelId": "openrouter/google/gemini-3.8-flash",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 5,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 4,
+  "extraToolCalls": 1,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "contacts": 1,
+    "notes": 1,
+    "transfer": 1,
+    "reminder": 1
+  },
+  "idealPath": false,
+  "efficiency": 0.8,
+  "requiredCovered": 4,
+  "requiredTotal": 4,
+  "completion": 1,
+  "durationMs": 5823,
+  "usage": {
+    "inputTokens": 28269,
+    "outputTokens": 1192,
+    "cacheReadTokens": 0,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.02567175
+  },
+  "reasoningChars": 262,
+  "reply": "Pronto! Aqui está o resumo das ações realizadas:\n\n1. **Restaurantes e Nota:** Identifiquei que seus maiores gastos em restaurantes neste mês foram no **Sushi Leblon** (R$ 240,00), **Bar do Momo** (R$ 198,00) e **Outback** (R$ 190,00), e criei uma nota em formato de checklist com esse top 3.\n2. **Transferência Agendada:** Agendei uma transferência de **R$ 300,00** para sua mãe (Regina) para o dia **25/09/2026**.\n3. **Lembrete:** Configurei um lembrete para você **olhar a fatura do cartão** assim que chegar em casa.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary_by_merchant",
+      "detail": {
+        "month": "2026-09",
+        "category": "Restaurantes"
+      },
+      "ok": true
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "contacts_search",
+      "detail": {
+        "query": "mãe"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "notes_create_checklist",
+      "detail": {
+        "title": "Top 3 Restaurantes mais frequentados - Setembro",
+        "items": [
+          "Sushi Leblon (R$ 240,00)",
+          "Bar do Momo (R$ 198,00)",
+          "Outback (R$ 190,00)"
+        ]
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "transfer_money_scheduled",
+      "detail": {
+        "to": "Mãe (Regina)",
+        "amount_brl": 300,
+        "date": "2026-09-25",
+        "description": "Transferência para mãe"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "reminder_create_location",
+      "detail": {
+        "text": "Olhar a fatura do cartão",
+        "place": "home",
+        "trigger": "arrive"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/google/gemini-3.8-flash"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "Pronto! Aqui está o resumo das ações realizadas:\n\n1. **Restaurantes e Nota:** Identifiquei que seus maiores gastos em restaurantes neste mês foram no **Sushi Leblon** (R$ 240,00), **Bar do Momo** (R$ 198,00) e **Outback** (R$ 190,00), e criei uma nota em formato de checklist com esse top 3.\n2. **Transferência Agendada:** Agendei uma transferência de **R$ 300,00** para sua mãe (Regina) para o dia *"
+    }
+  ]
+}

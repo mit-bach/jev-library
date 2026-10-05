@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Jev on TypeSafe · jev.pro</title><meta name="description" content="First-party Jev setup: waitlist, console key, POST /v1/systemone, official SDKs, pin jev-1.13.0. Dated 2026-09-21."><meta name="robots" content="index,follow"><link rel="canonical" href="https://jev.pro/access/jev-on-typesafe"><meta property="og:type" content="article"><meta property="og:site_name" content="jev.pro"><meta property="og:title" content="Jev on TypeSafe"><meta property="og:description" content="First-party Jev setup: waitlist, console key, POST /v1/systemone, official SDKs, pin jev-1.13.0. Dated 2026-09-21."><meta property="og:url" content="https://jev.pro/access/jev-on-typesafe"><meta property="og:locale" content="en_US"><meta property="article:modified_time" content="2026-09-21T00:00:00.000Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Jev on TypeSafe"><meta name="twitter:description" content="First-party Jev setup: waitlist, console key, POST /v1/systemone, official SDKs, pin jev-1.13.0. Dated 2026-09-21."><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#f35815"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-E6XRBX0GR2"></script><script>(function(){const measurementId = "G-E6XRBX0GR2";
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", measurementId);
+      })();</script><link rel="stylesheet" href="/_astro/BaseLayout.BSODmw4r.css"></head><body><a class="skip-link" href="#content">Skip to content</a><header class="site-header"><div class="shell"><a class="brand" href="/">jev.pro<small>Field guide · curious → Pro</small></a><nav class="nav" aria-label="Primary"><a href="/explainers">Explainers</a><a href="/primitives">Primitives</a><a href="/access" aria-current="page">Access</a><a href="/api">API</a><a href="/usecases">Use cases</a><a href="/comparisons">Comparisons</a><a href="/open">Open</a><a href="/glossary">Glossary</a><a href="/blog">Blog</a><a href="/top-repos">Top Repos</a></nav></div></header><main id="content" class="site-main"><article class="prose"><p class="meta"><a href="/access">Access</a> · Last updated <time datetime="2026-09-21T00:00:00.000Z">2026-09-21</time></p><h1>Jev on TypeSafe</h1><p><strong>Jev on TypeSafe</strong> is the first-party door: a console key, <code>POST https://api.typesafe.ai/v1/systemone</code>, and the official SDKs. Snapshot: <strong>2026-09-21</strong>. Jev is TypeSafe’s System One decision model — text <code>state</code> in, typed answers out. This is a setup guide, not a checkout.</p>
+<p>Channel hub: <a href="/access/jev-channels">Jev channels</a>. Compact curl twin: <a href="/api/first-api-call">first API call</a>. Waitlist only: <a href="/access/get-access">how to get access</a>.</p>
+<h2 id="1-waitlist-console-key">1. Waitlist, console, key</h2>
+<ol>
+<li>Join early access from <a href="https://typesafe.ai">typesafe.ai</a>. The 15 September 2026 launch post says TypeSafe is bringing people off the waitlist. This site cannot expedite it.</li>
+<li>When invited, open <a href="https://console.typesafe.ai">console.typesafe.ai</a>. Optional: official <a href="/access/playground">Playground</a> — paste state, add a Noul, then mix types.</li>
+<li>Create an API key in the dashboard. Store it as <code>TYPESAFE_API_KEY</code>. Never paste it into jev.pro. Details: <a href="/access/api-keys">API keys</a>.</li>
+</ol>
+<p>No console yet? You can still call Jev through <a href="/access/jev-on-openrouter">OpenRouter</a> or <a href="/access/jev-on-vercel-ai-gateway">Vercel AI Gateway</a>.</p>
+<h2 id="2-endpoint-and-model-pin-confirm-on-docs">2. Endpoint and model pin (confirm on docs)</h2>
+<p>TypeSafe’s <a href="https://docs.typesafe.ai/introduction/quickstart">quick start</a> and <a href="https://docs.typesafe.ai/api">API reference</a> document:</p>
+<ul>
+<li>URL: <strong><code>POST https://api.typesafe.ai/v1/systemone</code></strong></li>
+<li>Auth: <code>Authorization: Bearer &lt;API_KEY&gt;</code></li>
+<li>Body: <code>model</code>, <code>state</code>, <code>questions</code></li>
+<li>List aliases: <code>jev-latest</code> and <code>jev-preview</code> currently point at <strong><code>jev-1.13.0</code></strong> (<a href="https://docs.typesafe.ai/models">models</a>)</li>
+<li>Hello-world can send <code>jev-latest</code>. Pin <strong><code>jev-1.13.0</code></strong> (the versioned id on the models page) before you tune confidence floors. OpenRouter’s catalog string <code>jev-1.13</code> is a <strong>different door</strong>. Log the resolved <code>model</code> on the response.</li>
+</ul>
+<p>Do <strong>not</strong> send OpenRouter’s <code>typesafe/jev-1.13</code> or Vercel’s <code>typesafe-ai/jev</code> to this host. Do <strong>not</strong> use a chat-completions URL.</p>
+<p>Vendor list price on the models page this day: <strong>$0.042 / MTok</strong> input ($42 / Btok). Output tokens are free. Rate limits on that page: <strong>250,000 tokens/second</strong> and <strong>1,200 RPM</strong>, described as <strong>dynamic</strong>. Context: <strong>64k</strong> tokens per request; <strong>32k</strong> for <code>state</code> plus the longest question.</p>
+<h2 id="3-first-curl-noul">3. First curl (Noul)</h2>
+<p>From the official quick start (compacted):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#F97583">export</span><span style="color:#E1E4E8"> TYPESAFE_API_KEY</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">...   </span><span style="color:#6A737D"># console key, not from this site</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#9ECBFF"> https://api.typesafe.ai/v1/systemone</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> &quot;Authorization: Bearer </span><span style="color:#E1E4E8">$TYPESAFE_API_KEY</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> &quot;Content-Type: application/json&quot;</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -d</span><span style="color:#9ECBFF"> @-</span><span style="color:#F97583"> &lt;&lt;</span><span style="color:#9ECBFF">&#39;EOF&#39;</span></span>
+<span class="line"><span style="color:#9ECBFF">{</span></span>
+<span class="line"><span style="color:#9ECBFF">  &quot;state&quot;: &quot;Hi, I&#39;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#39;m losing sales. Please help ASAP.&quot;,</span></span>
+<span class="line"><span style="color:#9ECBFF">  &quot;model&quot;: &quot;jev-latest&quot;,</span></span>
+<span class="line"><span style="color:#9ECBFF">  &quot;questions&quot;: {</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;urgency&quot;: {</span></span>
+<span class="line"><span style="color:#9ECBFF">      &quot;type&quot;: &quot;noul&quot;,</span></span>
+<span class="line"><span style="color:#9ECBFF">      &quot;instructions&quot;: &quot;Does this message express urgency?&quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    }</span></span>
+<span class="line"><span style="color:#9ECBFF">  }</span></span>
+<span class="line"><span style="color:#9ECBFF">}</span></span>
+<span class="line"><span style="color:#9ECBFF">EOF</span></span></code></pre>
+<p>Expect <code>answers.urgency.noul</code> in 0–1 and a resolved <code>&quot;model&quot;: &quot;jev-1.13.0&quot;</code> (TypeSafe’s published example). Noul has <strong>no</strong> <code>confidence</code> field.</p>
+<h2 id="4-same-state-choice--score--noul">4. Same state: Choice + Score + Noul</h2>
+<p>Official quick-start body (three question types, one HTTP call):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;state&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Hi, I&#39;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#39;m losing sales. Please help ASAP.&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;model&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;jev-1.13.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;questions&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;department&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;choice&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;instructions&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Which team should handle this&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;criteria&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">        &quot;billing&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Payment or subscription issues&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        &quot;technical&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Bugs or integration problems&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        &quot;sales&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Pricing or account questions&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">      }</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;frustration&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;score&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;instructions&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;How frustrated the customer appears&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;criteria&quot;</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;Calm, just stating facts&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;Frustrated but civil&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;Very angry, strong language&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">      ]</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;is_urgent&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;noul&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;instructions&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;The message conveys urgency or time-sensitivity&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>TypeSafe’s published mixed response (theirs — do not treat the probabilities as a benchmark):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;model&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;jev-1.13.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;answers&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;department&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;choice&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;choice&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;technical&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;confidence&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.78</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;probabilities&quot;</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">&quot;technical&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.85</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;sales&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;billing&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.15</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;frustration&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;score&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;score&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;confidence&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;legend&quot;</span><span style="color:#E1E4E8">: {</span></span>
+<span class="line"><span style="color:#79B8FF">        &quot;0&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Calm, just stating facts&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        &quot;1&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Frustrated but civil&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">        &quot;2&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Very angry, strong language&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">      },</span></span>
+<span class="line"><span style="color:#79B8FF">      &quot;probabilities&quot;</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">&quot;0&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;1&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;2&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">0.0</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#79B8FF">    &quot;is_urgent&quot;</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">&quot;type&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;noul&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;noul&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">1.0</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#79B8FF">  &quot;usage&quot;</span><span style="color:#E1E4E8">: { </span><span style="color:#79B8FF">&quot;input_tokens&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">392</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">&quot;output_tokens&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">65</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>Questions run in <strong>parallel</strong> against the ingested <code>state</code>.</p>
+<p>Yes/no on this door is <strong><code>noul</code></strong>, not Vercel AI SDK’s <code>boolean</code>. Copy-pasting <code>boolean</code> here is a documented 422 / invalid-request class of failure.</p>
+<h2 id="5-python-sdk">5. Python SDK</h2>
+<p>Requires <strong>Python ≥ 3.10</strong>. Official package: <code>typesafe-sdk</code>. The client reads <code>TYPESAFE_API_KEY</code> and defaults to <code>jev-latest</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">pip</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> typesafe-sdk</span></span>
+<span class="line"><span style="color:#6A737D"># or: uv add typesafe-sdk</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> typesafe_sdk </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> Choice, Noul, Score, TypeSafeClient</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">client </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> TypeSafeClient()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">ticket </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;Hi, I&#39;ve been trying to connect my Stripe account for 3 days &quot;</span></span>
+<span class="line"><span style="color:#9ECBFF">    &quot;and the integration keeps failing. I&#39;m losing sales. Please help ASAP.&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">response </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> client.system_one(</span></span>
+<span class="line"><span style="color:#FFAB70">    model</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;jev-1.13.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">    state</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">ticket,</span></span>
+<span class="line"><span style="color:#FFAB70">    questions</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;department&quot;</span><span style="color:#E1E4E8">: Choice(</span></span>
+<span class="line"><span style="color:#FFAB70">            instructions</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;Which team should handle this&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">            criteria</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#9ECBFF">                &quot;billing&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Payment or subscription issues&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                &quot;technical&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Bugs or integration problems&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                &quot;sales&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;Pricing or account questions&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">            },</span></span>
+<span class="line"><span style="color:#E1E4E8">        ),</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;frustration&quot;</span><span style="color:#E1E4E8">: Score(</span></span>
+<span class="line"><span style="color:#FFAB70">            instructions</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;How frustrated the customer appears&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">            criteria</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">[</span></span>
+<span class="line"><span style="color:#9ECBFF">                &quot;Calm, just stating facts&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                &quot;Frustrated but civil&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">                &quot;Very angry, strong language&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">            ],</span></span>
+<span class="line"><span style="color:#E1E4E8">        ),</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;is_urgent&quot;</span><span style="color:#E1E4E8">: Noul(</span></span>
+<span class="line"><span style="color:#FFAB70">            instructions</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">&quot;The message conveys urgency or time-sensitivity&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        ),</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(response.model)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(response.answers[</span><span style="color:#9ECBFF">&quot;department&quot;</span><span style="color:#E1E4E8">].choice)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(response.answers[</span><span style="color:#9ECBFF">&quot;frustration&quot;</span><span style="color:#E1E4E8">].score)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(response.answers[</span><span style="color:#9ECBFF">&quot;is_urgent&quot;</span><span style="color:#E1E4E8">].noul)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(response.usage)</span></span></code></pre>
+<p>More: <a href="/api/python-sdk">Python SDK</a>.</p>
+<h2 id="6-typescript-sdk">6. TypeScript SDK</h2>
+<p>Requires <strong>Node.js 20+</strong>. Official package: <code>@typesafe-ai/sdk</code>. Method name is <code>systemOne</code>. Helpers infer answer types.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> @typesafe-ai/sdk</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { choice, TypeSafeClient } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> &quot;@typesafe-ai/sdk&quot;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> client</span><span style="color:#F97583"> =</span><span style="color:#F97583"> new</span><span style="color:#B392F0"> TypeSafeClient</span><span style="color:#E1E4E8">(); </span><span style="color:#6A737D">// reads TYPESAFE_API_KEY</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> response</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> client.</span><span style="color:#B392F0">systemOne</span><span style="color:#E1E4E8">({</span></span>
+<span class="line"><span style="color:#E1E4E8">  model: </span><span style="color:#9ECBFF">&quot;jev-1.13.0&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  state: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    document:</span></span>
+<span class="line"><span style="color:#9ECBFF">      &quot;Hi, I&#39;ve been trying to connect my Stripe account for 3 days and the integration keeps failing. I&#39;m losing sales. Please help ASAP.&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  questions: {</span></span>
+<span class="line"><span style="color:#E1E4E8">    department: </span><span style="color:#B392F0">choice</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Which team should handle this&quot;</span><span style="color:#E1E4E8">, {</span></span>
+<span class="line"><span style="color:#E1E4E8">      billing: </span><span style="color:#9ECBFF">&quot;Payment or subscription issues&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      technical: </span><span style="color:#9ECBFF">&quot;Bugs or integration problems&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      sales: </span><span style="color:#9ECBFF">&quot;Pricing or account questions&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    }),</span></span>
+<span class="line"><span style="color:#E1E4E8">    frustration: {</span></span>
+<span class="line"><span style="color:#E1E4E8">      type: </span><span style="color:#9ECBFF">&quot;score&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      instructions: </span><span style="color:#9ECBFF">&quot;How frustrated the customer appears&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      criteria: [</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;Calm, just stating facts&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;Frustrated but civil&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;Very angry, strong language&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      ],</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">    is_urgent: {</span></span>
+<span class="line"><span style="color:#E1E4E8">      type: </span><span style="color:#9ECBFF">&quot;noul&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">      instructions: </span><span style="color:#9ECBFF">&quot;The message conveys urgency or time-sensitivity&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    },</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">});</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(response.model);</span></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(response.answers.department.choice);</span></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(response.answers.frustration.score);</span></span>
+<span class="line"><span style="color:#E1E4E8">console.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(response.answers.is_urgent.noul);</span></span></code></pre>
+<p>Bare constructor (no helpers) also works: pass <code>{ type: &quot;noul&quot;, instructions: &quot;...&quot; }</code> like the HTTP body. More: <a href="/api/javascript-sdk">JavaScript SDK</a>.</p>
+<p>Optional: TypeSafe’s <a href="/api/agent-skill">agent skill</a> (<code>npx skills add typesafe-ai/skills --skill typesafe-ai</code>) still needs <strong>your</strong> key.</p>
+<h2 id="7-errors-and-limits-documented">7. Errors and limits (documented)</h2>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Retry?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>401</td>
+<td>Missing or invalid key</td>
+<td>No — fix the secret</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Body failed validation</td>
+<td>No — fix <code>model</code> / <code>state</code> / <code>questions</code></td>
+</tr>
+<tr>
+<td>429</td>
+<td>Token/s or RPM limit</td>
+<td>Yes — honor <code>retry-after</code></td>
+</tr>
+<tr>
+<td>529</td>
+<td>Overloaded</td>
+<td>Yes — backoff</td>
+</tr>
+</tbody>
+</table>
+<p>Official SDKs retry 429/529 by default. Full table: <a href="/api/errors-and-retries">errors and retries</a>. Higher limits: TypeSafe says contact <strong><a href="/cdn-cgi/l/email-protection#2a594b464f596a5e535a4f594b4c4f044b43"><span class="__cf_email__" data-cfemail="f48795989187b4808d849187959291da959d">[email&#160;protected]</span></a></strong> (models page). Version aliases: <a href="/api/models-and-aliases">models and aliases</a>.</p>
+<p>A <strong>200</strong> with Noul ≈ 0.5 is not an HTTP error. Schema-safe ≠ factually correct.</p>
+<h2 id="when-this-door-wins">When this door wins</h2>
+<p>Official pin, Playground, first-party 64k envelope, TypeSafe MSA. When it loses: you are still on the waitlist — use <a href="/access/jev-on-openrouter">OpenRouter</a> or <a href="/access/jev-on-vercel-ai-gateway">Vercel</a>. Invoice sketch: <a href="/access/pricing">Jev pricing</a>. Independent field notes: <a href="/open/jev-review">Jev review</a>.</p>
+<h2 id="faq">FAQ</h2>
+<h3 id="is-the-first-party-model-id-jev-113-or-jev-1130">Is the first-party model id <code>jev-1.13</code> or <code>jev-1.13.0</code>?</h3>
+<p>Docs pin <strong><code>jev-1.13.0</code></strong>. Aliases are <code>jev-latest</code> / <code>jev-preview</code>. OpenRouter’s public id is <code>typesafe/jev-1.13</code> — different door.</p>
+<h3 id="does-jevpro-issue-a-typesafe-key">Does jev.pro issue a TypeSafe key?</h3>
+<p>No.</p>
+<h3 id="can-i-use-chat-completions">Can I use chat completions?</h3>
+<p>No. System One only.</p>
+<h2 id="what-this-page-does-not-claim">What this page does not claim</h2>
+<ul>
+<li>No invented free tier or enterprise SKU.</li>
+<li>No independent latency SLO. TypeSafe’s 70–500 ms launch-post range is <strong>their</strong> measurement.</li>
+<li>No key issuance.</li>
+</ul><section class="source-box" style="margin-top: 2rem;"><h2>Sources</h2><ul><li><a href="https://docs.typesafe.ai/introduction/quickstart">Quick start</a></li><li><a href="https://docs.typesafe.ai/models">Models</a></li><li><a href="https://docs.typesafe.ai/sdk">Client SDKs</a></li><li><a href="https://docs.typesafe.ai/sdk/javascript">JavaScript SDK</a></li><li><a href="https://docs.typesafe.ai/api">API reference</a></li></ul></section><nav class="related" aria-label="Related pages"><h2>Related on jev.pro</h2><ul><li><a href="/access">/access</a></li><li><a href="/access/jev-channels">Jev channels</a></li><li><a href="/access/get-access">How to get access to Jev</a></li><li><a href="/access/api-keys">Jev API keys</a></li><li><a href="/access/pricing">Jev pricing</a></li><li><a href="/api/first-api-call">Your first Jev API call</a></li><li><a href="/api/python-sdk">TypeSafe Python SDK</a></li><li><a href="/api/javascript-sdk">TypeSafe JavaScript SDK</a></li><li><a href="/open/jev-review">Jev review</a></li></ul></nav></article></main><footer class="site-footer"><div class="shell"><p>jev.pro is an independent unofficial guide to help Jev builders work at a Pro level. Not affiliated with TypeSafe AI.</p><section class="newsletter-subscribe is-compact" data-nl-root data-nl-source="footer"><p class="newsletter-heading">Daily JEV Briefing</p><form class="newsletter-form" method="post" action="/api/newsletter/subscribe"><input type="text" name="company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><input type="hidden" name="source" value="footer"><label class="newsletter-field"><span class="visually-hidden">Email</span><input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@work.com"></label><button type="submit" class="btn-primary">Subscribe</button></form><p class="newsletter-status" role="status" aria-live="polite" hidden></p></section><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">var e={pending:`Check your email to confirm the subscription.`,already_subscribed:`You are already subscribed.`,invalid_email:`Enter a valid email address.`,error:`Could not subscribe. Try again in a moment.`};function t(e,t,n){let r=e.querySelector(`.newsletter-status`);r&&(r.hidden=!1,r.textContent=t,r.classList.toggle(`is-ok`,n===`ok`),r.classList.toggle(`is-err`,n===`err`))}async function n(n){n.preventDefault();let r=n.currentTarget,i=r.closest(`[data-nl-root]`);if(!i)return;let a=new FormData(r);if(String(a.get(`company`)??``).trim()){t(i,e.pending,`ok`),r.reset();return}let o=String(a.get(`email`)??``).trim(),s=String(a.get(`source`)??i.dataset.nlSource??`unknown`),c=r.querySelector(`button[type="submit"]`);c&&(c.disabled=!0);try{let n=await fetch(`/api/newsletter/subscribe`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({email:o,source:s})}),a=await n.json().catch(()=>({}));if(!n.ok||a.ok===!1){t(i,e[a.error??``]??e.error,`err`);return}t(i,e[a.status??``]??e.pending,`ok`),r.reset()}catch{t(i,e.error,`err`)}finally{c&&(c.disabled=!1)}}document.querySelectorAll(`[data-nl-root]`).forEach(e=>{let t=e.querySelector(`form`);t&&!t.dataset.nlBound&&(t.dataset.nlBound=`1`,t.addEventListener(`submit`,n))});</script><p>Official docs: <a href="https://docs.typesafe.ai">https://docs.typesafe.ai</a> · <a href="/newsletter">Newsletter</a> · <a href="/blog">Blog</a></p></div></footer></body></html>

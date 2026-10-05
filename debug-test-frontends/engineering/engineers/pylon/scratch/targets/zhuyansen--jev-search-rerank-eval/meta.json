@@ -1,0 +1,15 @@
+{
+  "full_name": "zhuyansen/jev-search-rerank-eval",
+  "html_url": "https://github.com/zhuyansen/jev-search-rerank-eval",
+  "description": "Does a TypeSafe Jev rerank beat embedding search? Graded relevance eval (9,831 pairs, 164 zh/en queries) over the Agent Skills Hub catalog, with the judge-circularity bias measured.",
+  "default_branch": "main",
+  "pushed_at": "2026-09-18T09:00:15Z",
+  "size": 6231,
+  "stargazers_count": 10,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "Python",
+  "commit": "c896f14e944182e17a002dd7546f06ba3788d586"
+}

@@ -1,0 +1,15 @@
+{
+  "full_name": "wagnerjt/jev-playground",
+  "html_url": "https://github.com/wagnerjt/jev-playground",
+  "description": "System One-Compatible API Playground",
+  "default_branch": "main",
+  "pushed_at": "2026-09-30T22:37:10Z",
+  "size": 234,
+  "stargazers_count": 1,
+  "license": "MIT",
+  "archived": false,
+  "fork": false,
+  "homepage": null,
+  "language": "TypeScript",
+  "commit": "2d09ec1c1e504f7ec4386a2b9d4edc5fe6069dbc"
+}

@@ -1,0 +1,11 @@
+repo: https://github.com/typesafe-ai/skills
+ref: main
+commit: 65a39f393687675ce170e6094757de20370365b9
+commit_date: 2026-09-12T05:42:05Z
+subject: Release v0.5.7
+retrieved: 2026-10-01
+tree: skills/typesafe-ai/
+files: LICENSE, SKILL.md
+references: none. The GitHub contents API for skills/typesafe-ai at this commit listed two files. There is no references/ directory.
+skill_md_sha256: 71ea90d7906c6554c4f4c460ef7361b2d26f59116ccdae986dc6d997b9389f52
+verified_against: raw.githubusercontent.com at the same commit, byte-identical to the local clone at originals/github/typesafe-ai-skills

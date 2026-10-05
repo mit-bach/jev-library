@@ -1,0 +1,96 @@
+{
+  "mode": "llm-direct",
+  "modelKey": "qwen3.8-27b",
+  "modelLabel": "Qwen 3.8 27B",
+  "promptId": "p3-orcamento",
+  "title": "Gastos com restaurante + tarefa",
+  "tier": "basic",
+  "prompt": "Quanto eu gastei com restaurante esse mês? Se passou de R$ 800, cria uma tarefa pra eu revisar o orçamento e me manda um resumo por mensagem.",
+  "sessionId": "wrun_01M2PRSBFY39CKKQ3HFQR02F53",
+  "at": "2026-09-17T04:08:07.266Z",
+  "modelId": "openrouter/qwen/qwen3.8-27b",
+  "status": "waiting",
+  "succeeded": true,
+  "modelSteps": 3,
+  "toolCalls": 3,
+  "failedToolCalls": 0,
+  "jevCalls": 0,
+  "idealToolCalls": 3,
+  "extraToolCalls": 0,
+  "distractorCalls": 0,
+  "distractorTools": [],
+  "toolCategories": {
+    "expenses": 1,
+    "task": 1,
+    "message": 1
+  },
+  "idealPath": true,
+  "efficiency": 1,
+  "requiredCovered": 3,
+  "requiredTotal": 3,
+  "completion": 1,
+  "durationMs": 14071,
+  "usage": {
+    "inputTokens": 40880,
+    "outputTokens": 399,
+    "cacheReadTokens": 21504,
+    "costUsd": 0,
+    "estimatedCostUsd": 0.00976577
+  },
+  "reasoningChars": 207,
+  "reply": "\n\nVocê gastou **R$ 942,50** com restaurante em setembro — passou do limite de R$ 800,00 em R$ 142,50. Criei a tarefa \"Revisar orçamento de restaurantes\" (alta prioridade) e enviei o resumo por mensagem no seu WhatsApp.",
+  "timeline": [
+    {
+      "step": 0,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 0,
+      "kind": "tool",
+      "name": "expenses_summary",
+      "detail": {
+        "month": "2026-09",
+        "category": "Restaurante"
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "task_create",
+      "detail": {
+        "title": "Revisar orçamento de restaurantes",
+        "priority": "high",
+        "notes": "Gasto de setembro: R$ 942,50, acima do limite de R$ 800,00."
+      },
+      "ok": true
+    },
+    {
+      "step": 1,
+      "kind": "tool",
+      "name": "message_send",
+      "detail": {
+        "to": "me",
+        "text": "Resumo de gastos com restaurante (set/2026): R$ 942,50 — passou do limite de R$ 800,00 em R$ 142,50. Criei uma tarefa de alta prioridade para revisar o orçamento."
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "kind": "model",
+      "name": "openrouter/qwen/qwen3.8-27b"
+    },
+    {
+      "step": 2,
+      "kind": "message",
+      "name": "assistant",
+      "detail": "\n\nVocê gastou **R$ 942,50** com restaurante em setembro — passou do limite de R$ 800,00 em R$ 142,50. Criei a tarefa \"Revisar orçamento de restaurantes\" (alta prioridade) e enviei o resumo por mensagem no seu WhatsApp."
+    }
+  ]
+}
